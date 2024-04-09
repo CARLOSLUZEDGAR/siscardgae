@@ -339,7 +339,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <label class="form-control-label" for="text-input">Fecha de Expiración</label>
+                  <label class="form-control-label" for="text-input">Fecha de Expiración (Certificado Medico)</label>
                   <input type="date" v-model="per_fechaexpiracion" class="form-control" :class="{ 'is-invalid' : $v.per_fechaexpiracion.$error, 'is-valid':!$v.per_fechaexpiracion.$invalid }">
                   <div class="invalid-feedback">
                       <span v-if="!$v.per_fechaexpiracion.required">Este campo es Requerido</span>
@@ -570,7 +570,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <label class="form-control-label" for="text-input">Fecha de Expiración</label>
+                  <label class="form-control-label" for="text-input">Fecha de Expiración (Certificado Medico)</label>
                   <input type="date" v-model="per_fechaexpiracionA" class="form-control" :class="{ 'is-invalid' : $v.per_fechaexpiracionA.$error, 'is-valid':!$v.per_fechaexpiracionA.$invalid }">
                   <div class="invalid-feedback">
                       <span v-if="!$v.per_fechaexpiracionA.required">Este campo es Requerido</span>
