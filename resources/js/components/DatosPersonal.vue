@@ -194,14 +194,12 @@
                   <label class="form-control-label" for="text-input">Grado</label>
                     <select class="form-control" v-model="per_grado" :class="{ 'is-invalid' : $v.per_grado.$error, 'is-valid':!$v.per_grado.$invalid }">
                         <option value="" disabled>SELECCIONE</option>
-                        <option v-for="grado in arrayGrado" :key="grado.id" :value="grado.id"  v-text="grado.nombre"></option>                        
+                        <option v-for="grado in arrayGrado" :key="grado.id" :value="grado.id" v-text="grado.nombre"></option>                        
                     </select>
                     <div class="invalid-feedback">
                         <span v-if="!$v.per_grado.required">Este campo es Requerido</span>
                     </div>
                 </div>
-                
-                
               </div>
               <div class="form-group row">
                 <div class="col-md-6">
