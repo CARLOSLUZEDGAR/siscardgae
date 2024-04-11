@@ -1016,10 +1016,8 @@ export default new Router ({
 
         
 
-        //Fin TTE CRUZ
-
-        /* DATOS PERSONAL */
-        {
+        
+        {//DGAE
             path: '/DatosPersonal',
             name: 'DatosPersonal',
             component: require('./components/DatosPersonal.vue').default,
@@ -1032,6 +1030,25 @@ export default new Router ({
                 }
             }
         },
+        
+        {//DGAE
+            path: '/RegistroPersonal',
+            name: 'RegistroPersonal',
+            component: require('./components/RegistroPersonal.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-per')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
+
+
+
+
         {
             path: '/DatosPersonal/:e',
             name: 'Personal_datos',

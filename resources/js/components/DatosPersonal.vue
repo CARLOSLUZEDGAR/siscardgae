@@ -37,13 +37,13 @@
                     </h3>  
                   </div>                  
                   <div class="col-sm-4" v-if="$auth.can('insert-per')">
-                    <!-- <router-link to='/nuevoPersonal' @click.native="$router.go()">
+                    <!-- <router-link to='/RegistroPersonal' @click.native="$router.go()">
                       <button type="button" class="btn btn-primary btn-sm float-right">
                         <i class="fas fa-plus"></i> Registrar Nuevo Personal
                       </button>
                     </router-link>  -->
-                    <button class="btn btn-primary btn-sm float-right" type="submit" @click="NuevoPersonal()">
-                        <i class="fas fa-plus"></i>&nbsp; REGISTRAR NUEVO PERSONAL
+                    <button class="btn btn-primary btn-sm float-right" type="submit" @click="Registro()">
+                      <i class="fas fa-plus"></i>&nbsp; REGISTRAR NUEVO PERSONAL
                     </button>
                   </div>
                 </div>  
@@ -220,7 +220,7 @@
               <div class="form-group row">
                 <div class="col-md-6">
                     <label class="form-control-label" for="text-input">Nombres</label>
-                    <input type="text" v-model="per_nombre" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_nombre.$error, 'is-valid':!$v.per_nombre.$invalid }">
+                    <input type="text" v-model.trim="per_nombre" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_nombre.$error, 'is-valid':!$v.per_nombre.$invalid }">
                     <div class="invalid-feedback">
                         <span v-if="!$v.per_nombre.required">Este campo es Requerido</span>
                     </div>
@@ -228,7 +228,7 @@
                 <div class="col-md-6">
                     <label class="form-control-label" for="text-input">Ap. Paterno</label>
                     <!-- <input type="text" v-model="per_appaterno" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_appaterno.$error, 'is-valid':!$v.per_appaterno.$invalid }"> -->
-                    <input type="text" v-model="per_appaterno" class="form-control" style="text-transform:uppercase;">
+                    <input type="text" v-model.trim="per_appaterno" class="form-control" style="text-transform:uppercase;">
 
                     <!-- <div class="invalid-feedback">
                         <span v-if="!$v.per_appaterno.required">Este campo es Requerido</span>
@@ -239,7 +239,7 @@
                 <div class="col-md-6">
                   <label class="form-control-label" for="text-input">Ap. Materno</label>
                   <!-- <input type="text" v-model="per_apmaterno" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_apmaterno.$error, 'is-valid':!$v.per_apmaterno.$invalid }"> -->
-                    <input type="text" v-model="per_apmaterno" class="form-control" style="text-transform:uppercase;">
+                    <input type="text" v-model.trim="per_apmaterno" class="form-control" style="text-transform:uppercase;">
                   <!-- <div class="invalid-feedback">
                       <span v-if="!$v.per_apmaterno.required">Este campo es Requerido</span>
                   </div> -->
@@ -266,7 +266,7 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-control-label" for="text-input">Celular </label>
-                    <input type="text" v-model="per_celular" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_celular.$error, 'is-valid':!$v.per_celular.$invalid }">
+                    <input type="text" v-model.number="per_celular" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_celular.$error, 'is-valid':!$v.per_celular.$invalid }">
                     <div class="invalid-feedback">
                         <span v-if="!$v.per_celular.required">Este campo es Requerido</span>
                     </div>
@@ -275,7 +275,7 @@
               <div class="form-group row">  
                 <div class="col-md-6">
                     <label class="form-control-label" for="text-input">E-mail </label>
-                    <input type="text" v-model="per_email" class="form-control" :class="{ 'is-invalid' : $v.per_email.$error, 'is-valid':!$v.per_email.$invalid }">
+                    <input type="text" v-model.trim="per_email" class="form-control" :class="{ 'is-invalid' : $v.per_email.$error, 'is-valid':!$v.per_email.$invalid }">
                     <div class="invalid-feedback">
                         <span v-if="!$v.per_email.required">Este campo es Requerido</span>
                     </div>
@@ -316,7 +316,7 @@
               <div class="form-group row">
                 <div class="col-md-12">
                     <label class="form-control-label" for="text-input">Dirección</label>
-                    <input type="text" v-model="per_direccion" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_direccion.$error, 'is-valid':!$v.per_direccion.$invalid }">
+                    <input type="text" v-model.trim="per_direccion" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_direccion.$error, 'is-valid':!$v.per_direccion.$invalid }">
                     <div class="invalid-feedback">
                         <span v-if="!$v.per_direccion.required">Este campo es Requerido</span>
                     </div>
@@ -325,7 +325,7 @@
               <div class="form-group row">
                   <div class="col-md-12">
                       <label class="form-control-label" for="text-input">Observación</label>
-                      <textarea name="textarea" class="form-control" rows="3" v-model="per_observaciones" style="text-transform:uppercase"></textarea>
+                      <textarea name="textarea" class="form-control" rows="3" v-model.trim="per_observaciones" style="text-transform:uppercase"></textarea>
                   </div>
               </div>
               <div class="form-group row">
@@ -947,6 +947,23 @@ export default {
     this.ListarPersonal(1);
   },
   methods: {
+
+    
+
+Registro(){
+  this.$router.push({
+                name: "RegistroPersonal",
+                //ENVIO DE DATOS
+                // params:{
+                //     d: datos
+                // }
+                
+            });
+},
+
+
+
+
     cambiarPagina(page,buscar,criterio){
         let me = this;
         //actualizando la pagina actual
