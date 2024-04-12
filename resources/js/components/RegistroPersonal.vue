@@ -264,7 +264,7 @@
                                     <label class="form-control-label" for="text-input">GRADO Y NOMBRE: {{per_grado}} {{per_nombre}} {{per_appaterno}} {{per_apmaterno}}</label>
                                 </div>
                             </div>
-                            <div class="table-wrapper-scroll-y my-custom-scrollbar" id="myTable" style="font-size: 12pt;" >
+                            <div class="table-wrapper-scroll-y my-custom-scrollbar" id="myTable" style="font-size: 12pt;">
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
                                         <tr>
@@ -368,7 +368,9 @@
                             <div class="form-group row">
                                 <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
                                 &nbsp;
-                                <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button>
+                                <!-- <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button> -->
+                                <button type="button" class="btn btn-danger" @click="CrearPersonal()"><i class="fas fa-forward"></i>&nbsp; GUARDAR</button>
+
                             </div>
                         </div>
 
@@ -1011,7 +1013,7 @@
     },
     methods: {
 
-        Atras(){
+        Atras(){ //DGAE
             this.$router.push({
                 name: "DatosPersonal",
                 //ENVIO DE DATOS
@@ -1022,13 +1024,42 @@
             });
         },
 
-
-        nextStep() {
+        nextStep() { //DGAE
           if (this.currentStep < 3) {
-            this.currentStep++;
+            if(this.currentStep == 1){
+                if(!this.$v.validationGroupReg.$invalid){
+                  this.currentStep++;
+                }else{
+                    this.$v.validationGroupReg.$touch();
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Ingrese todos los datos requeridos',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })   
+                }
+            }
+            // if(this.currentStep == 2){
+            //     if(!this.$v.validationGroupReg.$invalid){
+            //       this.currentStep++;
+            //     }else{
+            //         this.$v.validationGroupReg.$touch();
+            //         Swal.fire({
+            //             icon: 'warning',
+            //             title: 'Ingrese todos los datos requeridos',
+            //             showConfirmButton: false,
+            //             timer: 2000
+            //         })   
+            //     }
+            // }
+            // else{
+
+            // }
+            // this.currentStep++;
           }
         },
-        previousStep() {
+
+        previousStep() { //DGAE
           if (this.currentStep > 1) {
             this.currentStep--;
           }
