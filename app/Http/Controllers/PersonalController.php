@@ -1064,65 +1064,7 @@ class PersonalController extends Controller
                 'sysuser' => Auth::user()->id
              ]);
             $percodigo = $personal->per_codigo;
-            $perloc = PersonalLocalidades::create([
-                'per_codigo' => $percodigo,
-                'depa_codigo' => $request->data['departamento']['id'],
-                'prov_codigo' => $request->data['provincia']['id'],
-                'loca_codigo' => $request->data['localidad']['id'],
-                'estado' => 1,
-                'sysuser' => Auth::user()->id
-            ]);
-            $persit = PersonalSituacion::create([
-                'per_codigo' => $percodigo,
-                'sit_cod' => $request->data['situacion']['id'],
-                'subsit_cod' => $request->data['subsituacion']['id'],
-                'detsit_cod' => $request->data['detalleSituacion']['id'],
-                'documento' => $request->data['sitTipoDocumento'],
-                'fecha_documento' => $request->data['sitFechaDocumento'],
-                'fecha' => $request->data['sitFechaDocumento'],
-                'nrodoc' => $request->data['sitNroDocumento'],
-                'ficticia' => $request->data['sitFechaDocumento'],
-                'promo' => '2021',
-                'observacion' => $request->data['sitObser'],
-                'estado' => 1,
-                'sysuser' => Auth::user()->id
-            ]);
-            $peresc = PersonalEscalafon::create([
-                'per_codigo' => $percodigo,
-                'esca_cod' => $request->data['escalafon']['id'],
-                'subesc_cod' => $request->data['subescalafon']['id'],
-                'gra_cod' => $request->data['grado']['id'],
-                'documento' => $request->data['sitTipoDocumento'],
-                'fecha_doc' => $request->data['sitFechaDocumento'],
-                'fecha' => $request->data['sitFechaDocumento'],
-                'cm' => $request->data['cm'],
-                'nro_doc' => $request->data['sitNroDocumento'],
-                'observacion' => $request->data['sitObser'],
-                'estado' => 1,
-                'sysuser' => Auth::user()->id
-            ]);
-            $percom = PersonalEstudio::create([
-                'per_codigo' => $percodigo,
-                'est_cod' => $request->data['estudios']['id'],
-                'documento' => $request->data['comDocumento'],
-                'fecha_documento' => $request->data['comFechaDocumento'],
-                'nrodoc' => $request->data['comNroDocumento'],
-                'observacion' => $request->data['comObser'],
-                'estado' => 1,
-                'sysuser' => Auth::user()->id
-            ]);
-            $peresp = PersonalEspecialidades::create([
-                'per_codigo' => $percodigo,
-                'espe_cod' => $request->data['especialidad']['id'],
-                'subespe_cod' => $request->data['subespecialidad']['id'],
-                'documento' => $request->data['comDocumento'],
-                'fecha_documento' => $request->data['comFechaDocumento'],
-                'fecha' => $request->data['comFechaDocumento'],
-                'nrodoc' => $request->data['comNroDocumento'],
-                'observacion' => $request->data['comObser'],
-                'estado' => 1,
-                'sysuser' => Auth::user()->id
-            ]);
+            
             $fechaP = Carbon::parse($request->data['fechDocDest'])->subYear()->isoFormat('YYYY');
             $personal_destino = PersonalDestinos::create([
                 //'CAMPO DE LA TABLA' => $request->NOMBRE Q VIENE DE LA VISTA

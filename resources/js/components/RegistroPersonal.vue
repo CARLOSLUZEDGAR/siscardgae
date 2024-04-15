@@ -225,7 +225,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fotografia</label>
-                                    <!-- <input type="file" class="form-control" @change="obtenerImagen" accept="image/*" :class="{ 'is-invalid' : $v.per_fechaemision.$error, 'is-valid':!$v.per_fechaemision.$invalid }"> -->
+                                    <!-- <input type="file" class="form-control" @change="obtenerImagen" accept="image/*" :class="{ 'is-invalid' : $v.per.foto.$error, 'is-valid':!$v.per.foto.$invalid }"> -->
                                     <input type="file" class="form-control" @change="obtenerImagen" accept="image/*">
                                     <!-- <div class="invalid-feedback">
                                         <div v-if="!$v.per_foto.required">Ingrese valor porfavor.</div>
@@ -282,7 +282,8 @@
                                                 <label class="form-control-label" for="text-input">CARNET DE IDENTIDAD</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerImagen" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerCi" accept=".pdf">
+                                                <span v-if="$v.doc_ci.required">Por favor, carga un archivo.</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -293,7 +294,7 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO DE NACIMIENTO</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerImagen" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerNacimiento" accept=".pdf">
                                             </td>
                                         </tr>
                                         <tr>
@@ -304,7 +305,7 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO DE EGRESO</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerImagen" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerEgreso" accept=".pdf">
                                             </td>
                                         </tr>
                                         <tr>
@@ -315,7 +316,7 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO DE ESPECIALIZACIÓN</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerImagen" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerEspecializacion" accept=".pdf">
                                             </td>
                                         </tr>
                                         <tr>
@@ -326,7 +327,7 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO MEDICO</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerImagen" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerMedico" accept=".pdf">
                                             </td>
                                         </tr>
                                         <tr>
@@ -337,7 +338,7 @@
                                                 <label class="form-control-label" for="text-input">TITULO EDUCATIVO</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerImagen" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerTitulo" accept=".pdf">
                                             </td>
                                         </tr>
                                         <tr>
@@ -348,7 +349,7 @@
                                                 <label class="form-control-label" for="text-input">LIBRETA MILITAR</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerImagen" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerLibreta" accept=".pdf">
                                             </td>
                                         </tr>
                                         <tr>
@@ -359,7 +360,7 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO DE APROBACIÓN DE EXAMEN</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerImagen" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerAprobacion" accept=".pdf">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -370,7 +371,6 @@
                                 &nbsp;
                                 <!-- <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button> -->
                                 <button type="button" class="btn btn-danger" @click="CrearPersonal()"><i class="fas fa-forward"></i>&nbsp; GUARDAR</button>
-
                             </div>
                         </div>
 
@@ -752,11 +752,12 @@
   </template>
   
   <script>
-  import { required, between, minLength, maxLength, alpha, numeric, email} from "vuelidate/lib/validators";
+  import { required, between, minLength, maxLength, alpha, numeric, email, helpers} from "vuelidate/lib/validators";
   export default {
     data() {
       return {
         // INICIO VARIABLES DGAE
+        
         currentStep: 1,
         per_foto : '',
         per_categoria : '',
@@ -784,6 +785,15 @@
           month: "2-digit"
         }).format(new Date()),
         per_fechaexpiracion : '',
+
+        doc_ci : null,
+        doc_nacimiento : '',
+        doc_egreso : '',
+        doc_especializacion : '',
+        doc_medico : '',
+        doc_titulo : '',
+        doc_libreta : '',
+        doc_aprobacion : '',
   
         // per_fechaemision : new Date(),
         // per_fechaexpiracion : new Date(),
@@ -868,8 +878,6 @@
             per_ci: { required },
             per_cm : { required },
             per_nombre : { required },
-            // per_appaterno : { required },
-            // per_apmaterno : { required },
             per_sexo : { required },
             per_celular : { required },
             per_email : { required },
@@ -880,6 +888,15 @@
             per_comlinguistica : { required },
             per_fechaemision: { required },
             per_fechaexpiracion: { required },
+
+            doc_ci : { required },
+            doc_nacimiento : { required },
+            doc_titulo : { required },
+            doc_aprobacion : { required },
+            doc_egreso : { required },
+            doc_especializacion : { required },
+            doc_libreta : { required },
+            doc_medico : { required },
   
             per_fotoA: { required },
             per_categoriaA : { required },
@@ -889,8 +906,6 @@
             per_ciA: { required },
             per_cmA: { required },
             per_nombreA: { required },
-            // per_appaternoA: { required },
-            // per_apmaternoA: { required },
             per_sexoA: { required },
             per_celularA: { required },
             per_emailA: { required },
@@ -903,11 +918,11 @@
             per_comlinguisticaA : { required },
             per_fechaemisionA: { required },
             per_fechaexpiracionA: { required },
-            // per_observaciones : { required },
-            // observacion: { required },
+            per_observaciones : { required },
+            observacion: { required },
   
-            // nombreA: { required },
-            // observacionA: { required },
+            nombreA: { required },
+            observacionA: { required },
   
             na_pais: { required },
             na_abreviatura: { required },
@@ -926,8 +941,6 @@
             'per_ci',
             'per_cm',
             'per_nombre',
-            // 'per_appaterno',
-            // 'per_apmaterno',
             'per_sexo',
             'per_celular',
             'per_email',
@@ -938,28 +951,26 @@
             'per_comlinguistica',
             'per_fechaemision',
             'per_fechaexpiracion'],
-  
-            validationGroupRenew: [
-            'per_fotoA',
-            'per_categoriaA',
-            'per_nacionalidadA',
-            'per_entidadA',
-            'per_gradoA',
-            'per_ciA',
-            'per_cmA',
-            'per_nombreA',
-            // 'per_appaternoA',
-            // 'per_apmaternoA',
-            'per_sexoA',
-            'per_celularA',
-            'per_emailA',
-            'per_fechnacA',
-            'per_direccionA',
-            'per_titlicA',
-            'per_habilitacionA',
-            'per_comlinguisticaA',
-            'per_fechaemisionA',
-            'per_fechaexpiracionA'],
+
+            // validationGroupRenew: [
+            // 'per_fotoA',
+            // 'per_categoriaA',
+            // 'per_nacionalidadA',
+            // 'per_entidadA',
+            // 'per_gradoA',
+            // 'per_ciA',
+            // 'per_cmA',
+            // 'per_nombreA',
+            // 'per_sexoA',
+            // 'per_celularA',
+            // 'per_emailA',
+            // 'per_fechnacA',
+            // 'per_direccionA',
+            // 'per_titlicA',
+            // 'per_habilitacionA',
+            // 'per_comlinguisticaA',
+            // 'per_fechaemisionA',
+            // 'per_fechaexpiracionA'],
   
             validationGroupNewNacionalidad: [
             'na_pais',
@@ -969,7 +980,11 @@
             validationGroupNewEntidad: [
             'en_pais',
             'en_entidad',
-            'en_sigla']
+            'en_sigla'],
+            
+            validationGroupDocument:[
+            'doc_ci'
+            ]
           },
   
    computed: {
@@ -1013,6 +1028,10 @@
     },
     methods: {
 
+      obtenerCi(event) {
+      this.file = event.target.files[0];
+    },
+
         Atras(){ //DGAE
             this.$router.push({
                 name: "DatosPersonal",
@@ -1039,6 +1058,7 @@
                     })   
                 }
             }
+
             // if(this.currentStep == 2){
             //     if(!this.$v.validationGroupReg.$invalid){
             //       this.currentStep++;
@@ -1071,13 +1091,14 @@
         },
 
 
-
-    //   cambiarPagina(page,buscar,criterio){
-    //       let me = this;
-    //       //actualizando la pagina actual
-    //       me.pagination.current_page = page;
-    //       me.ListarPersonal(page,buscar,criterio);
-    //   },
+        handleFileChange(event) {
+      const file = event.target.files[0];
+      if (!file) {
+        this.selectedFile = null;
+        this.errorMessage = 'No se seleccionó ningún archivo.';
+        return;
+      }
+    },
     
       obtenerImagen(e){
           try {
@@ -1092,7 +1113,7 @@
               
           }
       },
-  
+
       obtenerImagenA(e){
           try {
               var fileReader = new FileReader();
@@ -1263,6 +1284,7 @@
                           // me.password = '';
                           me.arrayDatPer = response.data.personal;
                           me.GenerarCarnet(me.arrayDatPer.id_personal);
+                          me.Atras();
                           me.ListarPersonal(1);
                           this.$v.$reset();
                       } 
