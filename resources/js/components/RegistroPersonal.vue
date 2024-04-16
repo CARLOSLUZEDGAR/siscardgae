@@ -43,7 +43,7 @@
                         </button>
                       </router-link>  -->
                       <button class="btn btn-danger btn-sm float-right" type="submit" @click="Atras()">
-                        <i class="fas fa-plus"></i>&nbsp; ATRAS
+                        <i class="fas fa-arrow-left"></i>&nbsp; ATRAS
                       </button>
                     </div>
                   </div>  
@@ -282,8 +282,10 @@
                                                 <label class="form-control-label" for="text-input">CARNET DE IDENTIDAD</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerCi" accept=".pdf">
-                                                <span v-if="$v.doc_ci.required">Por favor, carga un archivo.</span>
+                                                <input type="file" class="form-control" @change="obtenerCi" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_ci.$error, 'is-valid':!$v.doc_ci.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.doc_ci.required">Por favor, carga un archivo.</span>
+                                                </div>  
                                             </td>
                                         </tr>
                                         <tr>
@@ -294,7 +296,10 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO DE NACIMIENTO</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerNacimiento" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerNacimiento" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_nacimiento.$error, 'is-valid':!$v.doc_nacimiento.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.doc_nacimiento.required">Por favor, carga un archivo.</span>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -305,8 +310,11 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO DE EGRESO</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerEgreso" accept=".pdf">
-                                            </td>
+                                                <input type="file" class="form-control" @change="obtenerEgreso" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_egreso.$error, 'is-valid':!$v.doc_egreso.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.doc_egreso.required">Por favor, carga un archivo.</span>
+                                                </div>
+                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -316,7 +324,10 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO DE ESPECIALIZACIÓN</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerEspecializacion" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerEspecializacion" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_especializacion.$error, 'is-valid':!$v.doc_especializacion.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.doc_especializacion.required">Por favor, carga un archivo.</span>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -327,7 +338,10 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO MEDICO</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerMedico" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerMedico" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_medico.$error, 'is-valid':!$v.doc_medico.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.doc_medico.required">Por favor, carga un archivo.</span>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -338,7 +352,10 @@
                                                 <label class="form-control-label" for="text-input">TITULO EDUCATIVO</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerTitulo" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerTitulo" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_titulo.$error, 'is-valid':!$v.doc_titulo.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.doc_titulo.required">Por favor, carga un archivo.</span>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -349,7 +366,10 @@
                                                 <label class="form-control-label" for="text-input">LIBRETA MILITAR</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerLibreta" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerLibreta" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_libreta.$error, 'is-valid':!$v.doc_libreta.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.doc_libreta.required">Por favor, carga un archivo.</span>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -360,7 +380,10 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO DE APROBACIÓN DE EXAMEN</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerAprobacion" accept=".pdf">
+                                                <input type="file" class="form-control" @change="obtenerAprobacion" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_aprobacion.$error, 'is-valid':!$v.doc_aprobacion.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.doc_aprobacion.required">Por favor, carga un archivo.</span>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -786,7 +809,7 @@
         }).format(new Date()),
         per_fechaexpiracion : '',
 
-        doc_ci : null,
+        doc_ci : '',
         doc_nacimiento : '',
         doc_egreso : '',
         doc_especializacion : '',
@@ -835,6 +858,7 @@
         arrayNacionalidadA : [],
         v : 0,
         vA : 0,
+        vCI : 0,
   
         na_pais : '',
         na_abreviatura : '',
@@ -953,8 +977,8 @@
             'per_fechaexpiracion'],
 
             // validationGroupRenew: [
-            // 'per_fotoA',
-            // 'per_categoriaA',
+            // 'per_f
+            // 'per_categoriotoA',aA',
             // 'per_nacionalidadA',
             // 'per_entidadA',
             // 'per_gradoA',
@@ -983,8 +1007,14 @@
             'en_sigla'],
             
             validationGroupDocument:[
-            'doc_ci'
-            ]
+            'doc_ci',
+            'doc_nacimiento',
+            'doc_titulo',
+            'doc_aprobacion',
+            'doc_egreso',
+            'doc_especializacion',
+            'doc_libreta',
+            'doc_medico']
           },
   
    computed: {
@@ -1028,36 +1058,32 @@
     },
     methods: {
 
-      obtenerCi(event) {
-      this.file = event.target.files[0];
-    },
+    //   obtenerCi(event) {
+    //   this.doc_ci = event.target.files[0];
+    // },
 
         Atras(){ //DGAE
             this.$router.push({
-                name: "DatosPersonal",
-                //ENVIO DE DATOS
-                // params:{
-                //     d: datos
-                // }
-                
+                name: "DatosPersonal",  
             });
         },
 
         nextStep() { //DGAE
           if (this.currentStep < 3) {
-            if(this.currentStep == 1){
-                if(!this.$v.validationGroupReg.$invalid){
-                  this.currentStep++;
-                }else{
-                    this.$v.validationGroupReg.$touch();
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Ingrese todos los datos requeridos',
-                        showConfirmButton: false,
-                        timer: 2000
-                    })   
-                }
-            }
+            // if(this.currentStep == 1){
+            //     if(!this.$v.validationGroupReg.$invalid){
+            //       this.currentStep++;
+            //     }else{
+            //         this.$v.validationGroupReg.$touch();
+            //         Swal.fire({
+            //             icon: 'warning',
+            //             title: 'Ingrese todos los datos requeridos',
+            //             showConfirmButton: false,
+            //             timer: 2000
+            //         })   
+            //     }
+            // }
+            this.currentStep++;
 
             // if(this.currentStep == 2){
             //     if(!this.$v.validationGroupReg.$invalid){
@@ -1099,7 +1125,118 @@
         return;
       }
     },
+
+    obtenerCi(e){
+      try {
+              var fileReader = new FileReader();
+  
+              fileReader.onload = (e) => {
+                  this.doc_ci = e.target.result;
+              }
+              fileReader.readAsDataURL(e.target.files[0])
+              this.vCI = 1;
+          } catch (error) {
+              
+          }
+    },
+
+    obtenerNacimiento(e){
+      try {
+              var fileReader = new FileReader();
+  
+              fileReader.onload = (e) => {
+                  this.doc_nacimiento = e.target.result;
+              }
+              fileReader.readAsDataURL(e.target.files[0])
+              this.vNAC = 1;
+          } catch (error) {
+              
+          }
+    },
+
+    obtenerEgreso(e){
+      try {
+              var fileReader = new FileReader();
+  
+              fileReader.onload = (e) => {
+                  this.doc_egreso = e.target.result;
+              }
+              fileReader.readAsDataURL(e.target.files[0])
+              this.vNAC = 1;
+          } catch (error) {
+              
+          }
+    },
+
+    obtenerEspecializacion(e){
+      try {
+              var fileReader = new FileReader();
+  
+              fileReader.onload = (e) => {
+                  this.doc_especializacion = e.target.result;
+              }
+              fileReader.readAsDataURL(e.target.files[0])
+              this.vNAC = 1;
+          } catch (error) {
+              
+          }
+    },
+
+    obtenerMedico(e){
+      try {
+              var fileReader = new FileReader();
+  
+              fileReader.onload = (e) => {
+                  this.doc_medico = e.target.result;
+              }
+              fileReader.readAsDataURL(e.target.files[0])
+              this.vNAC = 1;
+          } catch (error) {
+              
+          }
+    },
+
+    obtenerTitulo(e){
+      try {
+              var fileReader = new FileReader();
+  
+              fileReader.onload = (e) => {
+                  this.doc_titulo = e.target.result;
+              }
+              fileReader.readAsDataURL(e.target.files[0])
+              this.vNAC = 1;
+          } catch (error) {
+              
+          }
+    },
+
+    obtenerLibreta(e){
+      try {
+              var fileReader = new FileReader();
+  
+              fileReader.onload = (e) => {
+                  this.doc_libreta = e.target.result;
+              }
+              fileReader.readAsDataURL(e.target.files[0])
+              this.vNAC = 1;
+          } catch (error) {
+              
+          }
+    },
     
+    obtenerAprobacion(e){
+      try {
+              var fileReader = new FileReader();
+  
+              fileReader.onload = (e) => {
+                  this.doc_aprobacion = e.target.result;
+              }
+              fileReader.readAsDataURL(e.target.files[0])
+              this.vNAC = 1;
+          } catch (error) {
+              
+          }
+    },
       obtenerImagen(e){
           try {
               var fileReader = new FileReader();
@@ -1230,7 +1367,7 @@
       },
   
       CrearPersonal(){ //DGAE
-        if(!this.$v.validationGroupReg.$invalid){
+        if(!this.$v.validationGroupDocument.$invalid){
           swal.fire({
               title: '¿Desea registrar?', // TITULO 
               icon: 'question', //ICONO (success, warnning, error, info, question)
@@ -1279,7 +1416,7 @@
                       });
                       if (!response.data.code) {
                           // $('#NuevoUsuario').modal('hide');
-                          $('#ModalNewPersonal').modal('hide');
+                          // $('#ModalNewPersonal').modal('hide');
                           // me.nick = '';
                           // me.password = '';
                           me.arrayDatPer = response.data.personal;
@@ -1302,7 +1439,7 @@
               }
           })
         }else{
-            this.$v.validationGroupReg.$touch();
+            this.$v.validationGroupDocument.$touch();
             Swal.fire({
                 icon: 'warning',
                 title: 'Ingrese todos los datos requeridos',
