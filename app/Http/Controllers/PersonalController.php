@@ -184,6 +184,46 @@ class PersonalController extends Controller
         ]); 
     }
 
+    public function DatosPersonal(Request $request)//DGAE
+    {
+        $personal = DB::table('personals as p')
+                    ->join('personal_licencias as pl','p.id','pl.id_personal')
+                    ->join('nacionalidads as n','p.id_nacionalidad','n.id')
+                    ->join('entidads as e','pl.id_entidad','e.id')
+                    ->join('grados as g','pl.id_grado','g.id')
+                    ->join('licencias as l','pl.id_licencia','l.id')
+                    ->join('habilitacions as h','pl.id_habilitacion','h.id')
+                    ->join('competencia_linguisticas as cl','pl.id_comp_linguistica','cl.id')
+                    ->select('p.id as id_personal',
+                        'n.nacionalidad',
+                        'n.pais',
+                        'p.per_foto',
+                        'p.per_nombre',
+                        'p.per_paterno',
+                        'p.per_materno',
+                        'p.per_ci',
+                        'p.per_sexo',
+                        'p.per_fecha_nacimiento',
+                        'pl.id as id_licencia',
+                        'pl.id_entidad',
+                        'e.entidad',
+                        'g.abreviatura',
+                        'l.licencia',
+                        'l.traduccion',
+                        'h.habilitacion',
+                        'h.traduccion as htraduccion',
+                        'cl.nivel',
+                        'cl.traduccion as cltraduccion',
+                        'pl.observacion',
+                        'pl.fecha_emision',
+                        'pl.fecha_expiracion'
+                        )
+                    ->where('p.id',$request->personal_id)
+                    ->where('pl.estado',1)
+                    ->first();
+        return ['personal' => $personal];
+    }
+
     public function RenovarPersonal(Request $request) //DGAE
     {
         $personal_foto = Personal::select('per_foto')

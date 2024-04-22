@@ -6,8 +6,8 @@
           <div class="row mb-2">
             <div class="col-sm-6">            
               <h1>
-                <i class="far fa-bookmark"></i>
-                Registrar Personal
+                <i class="far fa-registered"></i>&nbsp;
+                REGISTRAR PERSONAL
                 <!-- <small>Personal</small> -->
               </h1>
             </div>
@@ -52,7 +52,7 @@
                     <form @submit.prevent="handleSubmit">
                         <!-- Paso 1 -->
                         <div class="step" v-if="currentStep === 1">
-                            <h3><i class="far fa-bookmark"></i>&nbsp;Paso 1: INFORMACIÓN PERSONAL</h3>
+                            <h3><i class="fas fa-inbox"></i>&nbsp;PASO 1: INFORMACIÓN PERSONAL</h3>
                             <br>
                             <div class="form-group row">
                                 <div class="col-md-3">
@@ -225,11 +225,10 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fotografia</label>
-                                    <!-- <input type="file" class="form-control" @change="obtenerImagen" accept="image/*" :class="{ 'is-invalid' : $v.per.foto.$error, 'is-valid':!$v.per.foto.$invalid }"> -->
-                                    <input type="file" class="form-control" @change="obtenerImagen" accept="image/*">
-                                    <!-- <div class="invalid-feedback">
-                                        <div v-if="!$v.per_foto.required">Ingrese valor porfavor.</div>
-                                    </div> -->
+                                    <input type="file" class="form-control" @change="obtenerImagen" accept="image/*" v-bind:class="{ 'is-invalid': $v.per_foto.$error, 'is-valid':!$v.per_foto.$invalid }">
+                                    <div class="invalid-feedback">
+                                        <div v-if="!$v.per_foto.required">Por favor, carga un archivo.</div>
+                                    </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fecha de Emisión</label>
@@ -252,11 +251,11 @@
                         </div>
                         <!-- Paso 2 -->
                         <div class="step" v-if="currentStep === 2">
-                            <h3><i class="far fa-folder"></i>&nbsp;Paso 2: DOCUMENTACIÓN PERSONAL</h3>
+                            <h3><i class="far fa-folder"></i>&nbsp;PASO 2: DOCUMENTACIÓN PERSONAL</h3>
                             <br>
                             <div class="form-group row">
-                                <div class="col-md-12" style="background-color: aquamarine;">
-                                    <label class="form-control-label" for="text-input">LOS DOCUMENTOS DEBEN ESTAR EN FORMATO PDF.</label>
+                                <div class="col-md-12" style="background-color:gold;">
+                                    <label class="form-control-label" for="text-input">LOS DOCUMENTOS DEBEN ESTAR EN FORMATO PDF <i class="fa fa-file-pdf"></i>.</label>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -275,7 +274,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 <label class="form-control-label" for="text-input">1</label>
                                             </td>
                                             <td>
@@ -289,7 +288,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 <label class="form-control-label" for="text-input">2</label>
                                             </td>
                                             <td>
@@ -303,7 +302,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 <label class="form-control-label" for="text-input">3</label>
                                             </td>
                                             <td>
@@ -317,7 +316,7 @@
                                              </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 <label class="form-control-label" for="text-input">4</label>
                                             </td>
                                             <td>
@@ -331,7 +330,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 <label class="form-control-label" for="text-input">5</label>
                                             </td>
                                             <td>
@@ -345,7 +344,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 <label class="form-control-label" for="text-input">6</label>
                                             </td>
                                             <td>
@@ -359,7 +358,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 <label class="form-control-label" for="text-input">7</label>
                                             </td>
                                             <td>
@@ -373,7 +372,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 <label class="form-control-label" for="text-input">8</label>
                                             </td>
                                             <td>
@@ -393,7 +392,7 @@
                                 <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
                                 &nbsp;
                                 <!-- <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button> -->
-                                <button type="button" class="btn btn-danger" @click="CrearPersonal()"><i class="fas fa-forward"></i>&nbsp; GUARDAR</button>
+                                <button type="button" class="btn btn-danger" @click="CrearPersonal()"><i class="fas fa-address-card"></i>&nbsp; GUARDAR/GENERAR</button>
                             </div>
                         </div>
 
@@ -418,29 +417,6 @@
           <!-- ./row -->
         </div>
         <!-- /.container-fluid -->
-        <!-- Modal Nuevo Personal -->
-        <div class="modal fade" id="ModalNewPersonal">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title-registro"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar()">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @click="CrearPersonal()">Generar</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">Cerrar</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
         <!-- Modal Renovar Personal -->
         <div class="modal fade" id="ModalRenewPersonal">
           <div class="modal-dialog modal-lg">
@@ -1054,13 +1030,9 @@
       },
     mounted() {
         this.NuevoPersonal();
-      this.ListarPersonal(1);
+        // this.ListarPersonal(1);
     },
     methods: {
-
-    //   obtenerCi(event) {
-    //   this.doc_ci = event.target.files[0];
-    // },
 
         Atras(){ //DGAE
             this.$router.push({
@@ -1287,6 +1259,14 @@
         this.per_comlinguistica = '',
         this.per_observaciones = '',
         this.per_fechaexpiracion = '',
+        this.doc_ci = '',
+        this.doc_nacimiento = '',
+        this.doc_titulo = '',
+        this.doc_aprobacion = '',
+        this.doc_egreso = '',
+        this.doc_especializacion = '',
+        this.doc_libreta = '',
+        this.doc_medico = '',
         this.v = 0,
         // $('#ModalNewPersonal').modal('show');
         // $(".modal-header").css("background-color", "#007bff");

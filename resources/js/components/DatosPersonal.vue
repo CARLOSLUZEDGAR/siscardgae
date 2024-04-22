@@ -7,7 +7,7 @@
           <div class="col-sm-6">            
             <h1>
               <i class="far fa-bookmark"></i>
-              Datos del Personal
+              DATOS DEL PERSONAL
               <!-- <small>Personal</small> -->
             </h1>
           </div>
@@ -43,7 +43,7 @@
                       </button>
                     </router-link>  -->
                     <button class="btn btn-primary btn-sm float-right" type="submit" @click="Registro()">
-                      <i class="fas fa-plus"></i>&nbsp; REGISTRAR NUEVO PERSONAL
+                      <i class="fas fa-user-plus"></i>&nbsp; REGISTRAR NUEVO PERSONAL
                     </button>
                   </div>
                 </div>  
@@ -64,11 +64,11 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center">Ap. Paterno</th>
-                                    <th class="text-center">Ap. Materno</th>
-                                    <th class="text-center">Nombres</th>
-                                    <th class="text-center">C. Identidad</th>
-                                    <th class="text-center">Opciones</th>
+                                    <th class="text-center">AP. PATERNO</th>
+                                    <th class="text-center">AP. MATERNO</th>
+                                    <th class="text-center">NOMBRES</th>
+                                    <th class="text-center">C. IDENTIDAD</th>
+                                    <th class="text-center">OPCIONES</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,7 +80,7 @@
                                     <td v-text="personal.per_nombre"></td>
                                     <td v-text="personal.per_ci"></td>
                                     <td style="width:100px; text-align:center">
-                                        <button type="button" @click="EditarPersonal(personal)" class="btn btn-success btn-sm">
+                                        <button type="button" @click="Renovar(personal.id)" class="btn btn-success btn-sm">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </button>
                                         <!-- <button type="button" @click="ReportePersona(personal.per_codigo)" class="btn btn-warning btn-sm">
@@ -950,13 +950,13 @@ export default {
 
     
 
-Registro(){
+Renovar(personalid){
   this.$router.push({
-                name: "RegistroPersonal",
+                name: "RenovarPersonal",
                 //ENVIO DE DATOS
-                // params:{
-                //     d: datos
-                // }
+                params:{
+                    personalid: personalid
+                }
                 
             });
 },

@@ -32,6 +32,8 @@ Route::post('/renovarPersonal','PersonalController@RenovarPersonal');
 Route::get('/carnet','CarnetController@GenerarCarnet');
 Route::post('/crearNacionalidad','NacionalidadController@CrearNacionalidad');
 Route::post('/crearEntidad','EntidadController@CrearEntidad');
+Route::post('/datosPersonal','PersonalController@DatosPersonal');
+
 
 
 
@@ -99,7 +101,7 @@ Route::get('/cuadroDatosPersonal', 'ReporteDatosPersonalesController@createPDF')
 //FIN ELIMINAR
 
 //FIN REPORTE
-Route::post('/datosPersonal','PersonalDatosController@perdatdest');
+// Route::post('/datosPersonal','PersonalDatosController@perdatdest');
 
 /**PERSONAL ESPECIALIDADES */
 Route::post('/listarEspecialidades','EspecialidadController@ListarEspecialidad');

@@ -78,7 +78,7 @@
                   @can('escalafon', Model::class)
                   <li class="nav-item">{{-- ESCALAFON --}}
                     <a href="#" class="nav-link">
-                      <i class="nav-icon fab fa-elementor"></i>
+                      <i class="nav-icon fas fa-plane"></i>
                       <p>
                         AERONAVES
                         <i class="fa fa-angle-left right"></i>

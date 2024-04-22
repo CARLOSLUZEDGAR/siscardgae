@@ -1045,6 +1045,20 @@ export default new Router ({
             }
         },
 
+        {//DGAE
+            path: '/RenovarPersonal',
+            name: 'RenovarPersonal',
+            component: require('./components/RenovarPersonal.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-per')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
 
 
 
