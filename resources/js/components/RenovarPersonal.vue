@@ -225,7 +225,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fotografia</label>
-                                    <input type="file" class="form-control" @change="obtenerImagen" accept="image/*" v-bind:class="{ 'is-invalid': $v.per_foto.$error, 'is-valid':!$v.per_foto.$invalid }">
+                                    <input type="file" class="form-control" @change="obtenerImagenA" accept="image/*" v-bind:class="{ 'is-invalid': $v.per_foto.$error, 'is-valid':!$v.per_foto.$invalid }">
                                     <div class="invalid-feedback">
                                         <div v-if="!$v.per_foto.required">Por favor, carga un archivo.</div>
                                     </div>
@@ -417,333 +417,12 @@
           <!-- ./row -->
         </div>
         <!-- /.container-fluid -->
-        <!-- Modal Renovar Personal -->
-        <div class="modal fade" id="ModalRenewPersonal">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title-registro"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar()">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="form-group row">
-                  <div class="col-md-4">
-                      <div class="row">
-                          <template v-if="vA == 0">
-                              <img :src="'/img/personal/'+imagenA" width="150px" height="150px" style="border: 1.5px solid black;">
-                          </template>
-                          <template v-else>
-                              <img :src="imagenA" width="150px" height="150px" style="border: 1.5px solid black;">
-                          </template> 
-                      </div>                       
-                  </div>
-                  <div class="col-md-8">
-                    <label class="form-control-label" for="text-input">Fotografia</label>
-                      <input type="file" class="form-control" @change="obtenerImagenA" accept="imageA/*">
-                      <!-- <input type="file" class="form-control" @change="obtenerImagen" accept="image/*" :class="hasError('foto') ? 'is-invalid' : ''"> -->
-                      <!-- <div v-if="hasError('foto')" class="invalid-feedback">
-                          <div class="error" v-if="!$v.per_fotoA.required">Ingrese valor porfavor.</div>
-                      </div> -->
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Categoria</label>
-                      <select class="form-control" v-model="per_categoriaA" @click="listarLicencia(per_entidadA,per_categoriaA)" :class="{ 'is-invalid' : $v.per_categoriaA.$error, 'is-valid':!$v.per_categoriaA.$invalid }">
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="categoria in arrayCategoria" :key="categoria.id" :value="categoria.id"  v-text="categoria.categoria"></option>
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_categoriaA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Nacionalidad</label>
-                      <select class="form-control" v-model="per_nacionalidadA" @click="listarEntidad(per_nacionalidadA)" :class="{ 'is-invalid' : $v.per_nacionalidadA.$error, 'is-valid':!$v.per_nacionalidadA.$invalid }" disabled>
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="nacionalidad in arrayNacionalidad" :key="nacionalidad.id" :value="nacionalidad.id"  v-text="nacionalidad.pais"></option>
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_nacionalidadA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Entidad</label>
-                    <select class="form-control" v-model="per_entidadA" @click="listarGrado(per_entidadA),listarLicencia(per_entidadA,per_categoriaA)" :class="{ 'is-invalid' : $v.per_entidadA.$error, 'is-valid':!$v.per_entidadA.$invalid }">
-                        <option value="" disabled>SELECCIONE</option>
-                        <option v-for="entidad in arrayEntidad" :key="entidad.id" :value="entidad.id"  v-text="entidad.entidad"></option>                        
-                    </select>
-                    <div class="invalid-feedback">
-                        <span v-if="!$v.per_entidadA.required">Este campo es Requerido</span>
-                    </div>
-                  </div>
-                  <!-- <div class="col-md-1">
-                    <button type="button" class="btn btn btn-success" style="border-radius: 50%;" @click="NuevaEntidad()">+</button>
-                  </div> -->
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Grado</label>
-                      <select class="form-control" v-model="per_gradoA" :class="{ 'is-invalid' : $v.per_gradoA.$error, 'is-valid':!$v.per_gradoA.$invalid }">
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="grado in arrayGrado" :key="grado.id" :value="grado.id"  v-text="grado.nombre"></option>                        
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_gradoA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Carnet de Identidad (Identificación Personal)</label>
-                      <input type="text" v-model="per_ciA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_ciA.$error, 'is-valid':!$v.per_ciA.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_ciA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Carnet Militar (Identificación Institucional)</label>
-                      <input type="text" v-model="per_cmA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_cmA.$error, 'is-valid':!$v.per_cmA.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_cmA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>                             
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Nombres</label>
-                      <input type="text" v-model="per_nombreA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_nombreA.$error, 'is-valid':!$v.per_nombreA.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_nombreA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Ap. Paterno</label>
-                      <!-- <input type="text" v-model="per_appaternoA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_appaternoA.$error, 'is-valid':!$v.per_appaternoA.$invalid }"> -->
-                      <input type="text" v-model="per_appaternoA" class="form-control" style="text-transform:uppercase;">
-                      <!-- <div class="invalid-feedback">
-                          <span v-if="!$v.per_appaternoA.required">Este campo es Requerido</span>
-                      </div> -->
-                  </div>                               
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Ap. Materno</label>
-                    <!-- <input type="text" v-model="per_apmaternoA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_apmaternoA.$error, 'is-valid':!$v.per_apmaternoA.$invalid }"> -->
-                    <input type="text" v-model="per_apmaternoA" class="form-control" style="text-transform:uppercase;">
-                    <!-- <div class="invalid-feedback">
-                        <span v-if="!$v.per_apmaternoA.required">Este campo es Requerido</span>
-                    </div> -->
-                  </div> 
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Fecha Nacimiento</label>
-                    <input type="date" v-model="per_fechnacA" class="form-control" :class="{ 'is-invalid' : $v.per_fechnacA.$error, 'is-valid':!$v.per_fechnacA.$invalid }" disabled>
-                    <div class="invalid-feedback">
-                        <span v-if="!$v.per_fechnacA.required">Este campo es Requerido</span>
-                    </div>
-                  </div>
-                  </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Sexo</label>
-                    <select class="form-control" v-model="per_sexoA" :class="{ 'is-invalid' : $v.per_sexoA.$error, 'is-valid':!$v.per_sexoA.$invalid }">
-                        <option value="" disabled>SELECCIONE</option>
-                        <option value="MASCULINO">MASCULINO</option>
-                        <option value="FEMENINO">FEMENINO</option>
-                    </select>
-                    <div class="invalid-feedback">
-                        <span v-if="!$v.per_sexoA.required">Este campo es Requerido</span>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Celular </label>
-                      <input type="text" v-model="per_celularA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_celularA.$error, 'is-valid':!$v.per_celularA.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_celularA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">E-mail </label>
-                      <input type="text" v-model="per_emailA" class="form-control" :class="{ 'is-invalid' : $v.per_emailA.$error, 'is-valid':!$v.per_emailA.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_emailA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Titulo de la Licencia</label>
-                      <select class="form-control" v-model="per_titlicA" @click="listarHabilitacion(per_titlicA)" :class="{ 'is-invalid' : $v.per_titlicA.$error, 'is-valid':!$v.per_titlicA.$invalid }">
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="licencia in arrayLicencia" :key="licencia.id" :value="licencia.id"  v-text="licencia.licencia"></option>                        
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_titlicA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Habilitación</label>
-                      <select class="form-control" v-model="per_habilitacionA" :class="{ 'is-invalid' : $v.per_habilitacionA.$error, 'is-valid':!$v.per_habilitacionA.$invalid }">
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="habilitacion in arrayHabilitacion" :key="habilitacion.id" :value="habilitacion.id"  v-text="habilitacion.habilitacion"></option>                        
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_habilitacionA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>  
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Competencia Linguistica</label>
-                      <select class="form-control" v-model="per_comlinguisticaA" :class="{ 'is-invalid' : $v.per_comlinguisticaA.$error, 'is-valid':!$v.per_comlinguisticaA.$invalid }">
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="linguistica in arrayCompetenciaLinguistica" :key="linguistica.id" :value="linguistica.id"  v-text="linguistica.nivel"></option>                        
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_comlinguisticaA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-12">
-                      <label class="form-control-label" for="text-input">Dirección</label>
-                      <input type="text" v-model="per_direccionA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_direccionA.$error, 'is-valid':!$v.per_direccionA.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_direccionA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-12">
-                        <label class="form-control-label" for="text-input">Observación</label>
-                        <textarea name="textarea" class="form-control" rows="3" v-model="per_observacionesA" style="text-transform:uppercase"></textarea>
-                    </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Fecha de Emisión</label>
-                    <input type="date" v-model="per_fechaemisionA" class="form-control" :class="{ 'is-invalid' : $v.per_fechaemisionA.$error, 'is-valid':!$v.per_fechaemisionA.$invalid }" disabled>
-                    <div class="invalid-feedback">
-                        <span v-if="!$v.per_fechaemisionA.required">Este campo es Requerido</span>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Fecha de Expiración (Certificado Medico)</label>
-                    <input type="date" v-model="per_fechaexpiracionA" class="form-control" :class="{ 'is-invalid' : $v.per_fechaexpiracionA.$error, 'is-valid':!$v.per_fechaexpiracionA.$invalid }">
-                    <div class="invalid-feedback">
-                        <span v-if="!$v.per_fechaexpiracionA.required">Este campo es Requerido</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @click="RenovarPersonal()">Generar</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">Cerrar</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
+        
         <!-- Modal Nuevo Nacionalidad -->
-        <div class="modal fade" id="ModalNewNacionalidad">
-          <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title-aumentar"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar()">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="form-group row">
-                  <div class="col-md-12">
-                      <label class="form-control-label" for="text-input">Pais</label>
-                      <input type="text" v-model="na_pais" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.na_pais.$error, 'is-valid':!$v.na_pais.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.na_pais.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                  <div class="col-md-12">
-                      <label class="form-control-label" for="text-input">Abreviatura</label>
-                      <input type="text" v-model="na_abreviatura" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.na_abreviatura.$error, 'is-valid':!$v.na_abreviatura.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.na_abreviatura.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-12">
-                      <label class="form-control-label" for="text-input">Nacionalidad</label>
-                      <input type="text" v-model="na_nacionalidad" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.na_nacionalidad.$error, 'is-valid':!$v.na_nacionalidad.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.na_nacionalidad.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @click="CrearNacionalidad()">Registrar</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">Cerrar</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
+       
         <!-- /.modal -->
         <!-- Modal Nuevo Entidad -->
-        <div class="modal fade" id="ModalNewEntidad">
-          <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title-aumentar"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar()">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="form-group row">
-                  <div class="col-md-12">
-                      <label class="form-control-label" for="text-input">Pais</label>
-                      <select class="form-control" v-model="en_pais" v-on:change="changeItem1(rowId, $event)" :class="{ 'is-invalid' : $v.en_pais.$error, 'is-valid':!$v.en_pais.$invalid }" disabled>
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="nacionalidad in arrayNacionalidad" :key="nacionalidad.id" :value="nacionalidad.id"  v-text="nacionalidad.pais"></option>
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.en_pais.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                  <div class="col-md-12">
-                      <label class="form-control-label" for="text-input">Entidad</label>
-                      <input type="text" v-model="en_entidad" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.en_entidad.$error, 'is-valid':!$v.en_entidad.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.en_entidad.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-12">
-                      <label class="form-control-label" for="text-input">Sigla</label>
-                      <input type="text" v-model="en_sigla" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.en_sigla.$error, 'is-valid':!$v.en_sigla.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.en_sigla.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @click="CrearEntidad()">Registrar</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">Cerrar</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
+        
         <!-- /.modal -->
       </section>
       <!-- /.content -->
@@ -902,39 +581,39 @@
             doc_libreta : { required },
             doc_medico : { required },
   
-            per_fotoA: { required },
-            per_categoriaA : { required },
-            per_nacionalidadA: { required },
-            per_entidadA: { required },
-            per_gradoA: { required },
-            per_ciA: { required },
-            per_cmA: { required },
-            per_nombreA: { required },
-            per_sexoA: { required },
-            per_celularA: { required },
-            per_emailA: { required },
-            per_fechnacA: { required },
-            per_direccionA: { required },
-            per_titlicA: { required },
-            per_habilitacionA: { required },
-            per_comlinguisticaA: { required },
-            per_habilitacionA : { required },
-            per_comlinguisticaA : { required },
-            per_fechaemisionA: { required },
-            per_fechaexpiracionA: { required },
-            per_observaciones : { required },
-            observacion: { required },
+            // per_fotoA: { required },
+            // per_categoriaA : { required },
+            // per_nacionalidadA: { required },
+            // per_entidadA: { required },
+            // per_gradoA: { required },
+            // per_ciA: { required },
+            // per_cmA: { required },
+            // per_nombreA: { required },
+            // per_sexoA: { required },
+            // per_celularA: { required },
+            // per_emailA: { required },
+            // per_fechnacA: { required },
+            // per_direccionA: { required },
+            // per_titlicA: { required },
+            // per_habilitacionA: { required },
+            // per_comlinguisticaA: { required },
+            // per_habilitacionA : { required },
+            // per_comlinguisticaA : { required },
+            // per_fechaemisionA: { required },
+            // per_fechaexpiracionA: { required },
+            // per_observaciones : { required },
+            // observacion: { required },
   
-            nombreA: { required },
-            observacionA: { required },
+            // nombreA: { required },
+            // observacionA: { required },
   
-            na_pais: { required },
-            na_abreviatura: { required },
-            na_nacionalidad: { required },
+            // na_pais: { required },
+            // na_abreviatura: { required },
+            // na_nacionalidad: { required },
   
-            en_pais: { required },
-            en_entidad: { required },
-            en_sigla: { required },
+            // en_pais: { required },
+            // en_entidad: { required },
+            // en_sigla: { required },
   
             validationGroupReg: [
             'per_foto',
@@ -976,15 +655,15 @@
             // 'per_fechaemisionA',
             // 'per_fechaexpiracionA'],
   
-            validationGroupNewNacionalidad: [
-            'na_pais',
-            'na_abreviatura',
-            'na_nacionalidad'],
+            // validationGroupNewNacionalidad: [
+            // 'na_pais',
+            // 'na_abreviatura',
+            // 'na_nacionalidad'],
   
-            validationGroupNewEntidad: [
-            'en_pais',
-            'en_entidad',
-            'en_sigla'],
+            // validationGroupNewEntidad: [
+            // 'en_pais',
+            // 'en_entidad',
+            // 'en_sigla'],
             
             validationGroupDocument:[
             'doc_ci',
@@ -1033,8 +712,8 @@
           }
       },
     mounted() {
-        this.NuevoPersonal();
         this.DatosPersonal(this.personal_id)
+        // this.EditarPersonal(this.array);
     },
     methods: {
 
@@ -1045,7 +724,8 @@
                 personal_id: personal_id,
             })
             .then(function (response) {
-                me.arrayDatosPersonal = response.data.personal.data;
+                me.arrayDatosPersonal = response.data.personal;
+                me.EditarPersonal(me.arrayDatosPersonal);
             })
             .catch(function (error) {
                 // handle error
@@ -1247,7 +927,7 @@
               var fileReader = new FileReader();
   
               fileReader.onload = (e) => {
-                  this.per_fotoA = e.target.result;
+                  this.per_foto = e.target.result;
               }
               fileReader.readAsDataURL(e.target.files[0])
               this.vA = 1;
@@ -1256,7 +936,7 @@
           }
       },
   
-      NuevoPersonal(){ //DGAE
+      Personal(){ //DGAE
         this.$v.validationGroupReg.$reset(),
         this.per_foto = '',
         this.per_categoria = '',
@@ -1301,41 +981,47 @@
       },
   
       EditarPersonal(personal){ //DGAE
-        // this.$v.validationGroupRenew.$reset(),
-        // this.per_id = personal.id,
-        // this.per_fotoA = personal.per_foto,
-        // this.per_categoriaA = personal.id_categoria,
-        // this.per_nacionalidadA = personal.id_nacionalidad,
-        // this.per_entidadA = personal.id_entidad,
-        // this.per_gradoA = personal.id_grado,
-        // this.per_ciA = personal.per_ci,
-        // this.per_cmA = personal.per_cm,
-        // this.per_nombreA = personal.per_nombre,
-        // this.per_appaternoA = personal.per_paterno,
-        // this.per_apmaternoA = personal.per_materno,
-        // this.per_sexoA = personal.per_sexo,
-        // this.per_celularA = personal.per_celular,
-        // this.per_emailA = personal.per_mail,
-        // this.per_fechnacA = personal.per_fecha_nacimiento,
-        // this.per_direccionA = personal.per_direccion,
-        // this.per_titlicA = personal.id_licencia,
-        // this.per_habilitacionA = personal.id_habilitacion,
-        // this.per_comlinguisticaA = personal.id_complinguistica,
-        // this.per_observacionesA = personal.observacion,
-        // // this.per_fechaemisionA = '',
-        // this.per_fechaexpiracionA = '',
-        // this.vA = 0,
-        // $('#ModalRenewPersonal').modal('show');
+        this.$v.validationGroupReg.$reset(),
+        this.per_foto = personal.per_foto,
+        this.per_categoria = personal.id_categoria,
+        this.per_nacionalidad = personal.idnacionalidad,
+        this.per_entidad = personal.id_entidad,
+        this.per_grado = personal.id_grado,
+        this.per_ci = personal.per_ci,
+        this.per_cm = personal.per_cm,
+        this.per_nombre = personal.per_nombre,
+        this.per_appaterno = personal.per_paterno,
+        this.per_apmaterno = personal.per_materno,
+        this.per_sexo = personal.per_sexo,
+        this.per_celular = personal.per_celular,
+        this.per_email = personal.per_mail,
+        this.per_fechnac = personal.per_fecha_nacimiento,
+        this.per_titlic = personal.id_licencia,
+        this.per_direccion = personal.per_direccion,
+        this.per_habilitacion = personal.id_habilitacion,
+        this.per_comlinguistica = personal.id_comp_linguistica,
+        this.per_observaciones = '',
+        this.per_fechaexpiracion = '',
+        this.doc_ci = '',
+        this.doc_nacimiento = '',
+        this.doc_titulo = '',
+        this.doc_aprobacion = '',
+        this.doc_egreso = '',
+        this.doc_especializacion = '',
+        this.doc_libreta = '',
+        this.doc_medico = '',
+        this.v = 0,
+        // $('#ModalNewPersonal').modal('show');
         // $(".modal-header").css("background-color", "#007bff");
         // $(".modal-header").css("color", "white" );
-        // $(".modal-title-registro").text("Renovación Personal");
-        // this.listarCategoria();
-        // this.listarNacionalidad();
-        // this.listarEntidad(this.per_nacionalidadA);
-        // this.listarGrado(this.per_entidadA);
-        // this.listarLicencia(this.per_entidadA,this.per_categoriaA);
-        // this.listarHabilitacion(this.per_titlicA);
-        // this.listarCompetenciaLinguistica()
+        // $(".modal-title-registro").text("Registro Personal");
+        this.listarCategoria();
+        this.listarNacionalidad();
+        this.listarEntidad(this.per_nacionalidad);
+        this.listarGrado(this.per_entidad);
+        this.listarLicencia(this.per_entidad,this.per_categoria);
+        this.listarHabilitacion(this.per_titlic);
+        this.listarCompetenciaLinguistica()
       },
   
       NuevaNacionalidad(){ //DGAE

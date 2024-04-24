@@ -948,6 +948,11 @@ export default {
   },
   methods: {
 
+    Registro(){
+      this.$router.push({
+                    name: "RegistroPersonal",  
+                });
+    },
     
 
 Renovar(personalid){
@@ -960,9 +965,6 @@ Renovar(personalid){
                 
             });
 },
-
-
-
 
     cambiarPagina(page,buscar,criterio){
         let me = this;
