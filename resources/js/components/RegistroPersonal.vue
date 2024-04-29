@@ -37,11 +37,6 @@
                       </h3>  
                     </div>                  
                     <div class="col-sm-4" v-if="$auth.can('insert-per')">
-                      <!-- <router-link to='/DatosPersonal' @click.native="$router.go()">
-                        <button type="button" class="btn btn-primary btn-sm float-right">
-                          <i class="fas fa-plus"></i> ATRAS
-                        </button>
-                      </router-link>  -->
                       <button class="btn btn-danger btn-sm float-right" type="submit" @click="Atras()">
                         <i class="fas fa-arrow-left"></i>&nbsp; ATRAS
                       </button>
@@ -49,7 +44,7 @@
                   </div>  
                 </div>
                 <div class="card-body">
-                    <form @submit.prevent="handleSubmit">
+                    <form>
                         <!-- Paso 1 -->
                         <div class="step" v-if="currentStep === 1">
                             <h3><i class="fas fa-inbox"></i>&nbsp;PASO 1: INFORMACIÓN PERSONAL</h3>
@@ -417,237 +412,6 @@
           <!-- ./row -->
         </div>
         <!-- /.container-fluid -->
-        <!-- Modal Renovar Personal -->
-        <div class="modal fade" id="ModalRenewPersonal">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title-registro"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar()">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="form-group row">
-                  <div class="col-md-4">
-                      <div class="row">
-                          <template v-if="vA == 0">
-                              <img :src="'/img/personal/'+imagenA" width="150px" height="150px" style="border: 1.5px solid black;">
-                          </template>
-                          <template v-else>
-                              <img :src="imagenA" width="150px" height="150px" style="border: 1.5px solid black;">
-                          </template> 
-                      </div>                       
-                  </div>
-                  <div class="col-md-8">
-                    <label class="form-control-label" for="text-input">Fotografia</label>
-                      <input type="file" class="form-control" @change="obtenerImagenA" accept="imageA/*">
-                      <!-- <input type="file" class="form-control" @change="obtenerImagen" accept="image/*" :class="hasError('foto') ? 'is-invalid' : ''"> -->
-                      <!-- <div v-if="hasError('foto')" class="invalid-feedback">
-                          <div class="error" v-if="!$v.per_fotoA.required">Ingrese valor porfavor.</div>
-                      </div> -->
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Categoria</label>
-                      <select class="form-control" v-model="per_categoriaA" @click="listarLicencia(per_entidadA,per_categoriaA)" :class="{ 'is-invalid' : $v.per_categoriaA.$error, 'is-valid':!$v.per_categoriaA.$invalid }">
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="categoria in arrayCategoria" :key="categoria.id" :value="categoria.id"  v-text="categoria.categoria"></option>
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_categoriaA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Nacionalidad</label>
-                      <select class="form-control" v-model="per_nacionalidadA" @click="listarEntidad(per_nacionalidadA)" :class="{ 'is-invalid' : $v.per_nacionalidadA.$error, 'is-valid':!$v.per_nacionalidadA.$invalid }" disabled>
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="nacionalidad in arrayNacionalidad" :key="nacionalidad.id" :value="nacionalidad.id"  v-text="nacionalidad.pais"></option>
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_nacionalidadA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Entidad</label>
-                    <select class="form-control" v-model="per_entidadA" @click="listarGrado(per_entidadA),listarLicencia(per_entidadA,per_categoriaA)" :class="{ 'is-invalid' : $v.per_entidadA.$error, 'is-valid':!$v.per_entidadA.$invalid }">
-                        <option value="" disabled>SELECCIONE</option>
-                        <option v-for="entidad in arrayEntidad" :key="entidad.id" :value="entidad.id"  v-text="entidad.entidad"></option>                        
-                    </select>
-                    <div class="invalid-feedback">
-                        <span v-if="!$v.per_entidadA.required">Este campo es Requerido</span>
-                    </div>
-                  </div>
-                  <!-- <div class="col-md-1">
-                    <button type="button" class="btn btn btn-success" style="border-radius: 50%;" @click="NuevaEntidad()">+</button>
-                  </div> -->
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Grado</label>
-                      <select class="form-control" v-model="per_gradoA" :class="{ 'is-invalid' : $v.per_gradoA.$error, 'is-valid':!$v.per_gradoA.$invalid }">
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="grado in arrayGrado" :key="grado.id" :value="grado.id"  v-text="grado.nombre"></option>                        
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_gradoA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Carnet de Identidad (Identificación Personal)</label>
-                      <input type="text" v-model="per_ciA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_ciA.$error, 'is-valid':!$v.per_ciA.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_ciA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Carnet Militar (Identificación Institucional)</label>
-                      <input type="text" v-model="per_cmA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_cmA.$error, 'is-valid':!$v.per_cmA.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_cmA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>                             
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Nombres</label>
-                      <input type="text" v-model="per_nombreA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_nombreA.$error, 'is-valid':!$v.per_nombreA.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_nombreA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Ap. Paterno</label>
-                      <!-- <input type="text" v-model="per_appaternoA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_appaternoA.$error, 'is-valid':!$v.per_appaternoA.$invalid }"> -->
-                      <input type="text" v-model="per_appaternoA" class="form-control" style="text-transform:uppercase;">
-                      <!-- <div class="invalid-feedback">
-                          <span v-if="!$v.per_appaternoA.required">Este campo es Requerido</span>
-                      </div> -->
-                  </div>                               
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Ap. Materno</label>
-                    <!-- <input type="text" v-model="per_apmaternoA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_apmaternoA.$error, 'is-valid':!$v.per_apmaternoA.$invalid }"> -->
-                    <input type="text" v-model="per_apmaternoA" class="form-control" style="text-transform:uppercase;">
-                    <!-- <div class="invalid-feedback">
-                        <span v-if="!$v.per_apmaternoA.required">Este campo es Requerido</span>
-                    </div> -->
-                  </div> 
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Fecha Nacimiento</label>
-                    <input type="date" v-model="per_fechnacA" class="form-control" :class="{ 'is-invalid' : $v.per_fechnacA.$error, 'is-valid':!$v.per_fechnacA.$invalid }" disabled>
-                    <div class="invalid-feedback">
-                        <span v-if="!$v.per_fechnacA.required">Este campo es Requerido</span>
-                    </div>
-                  </div>
-                  </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Sexo</label>
-                    <select class="form-control" v-model="per_sexoA" :class="{ 'is-invalid' : $v.per_sexoA.$error, 'is-valid':!$v.per_sexoA.$invalid }">
-                        <option value="" disabled>SELECCIONE</option>
-                        <option value="MASCULINO">MASCULINO</option>
-                        <option value="FEMENINO">FEMENINO</option>
-                    </select>
-                    <div class="invalid-feedback">
-                        <span v-if="!$v.per_sexoA.required">Este campo es Requerido</span>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">Celular </label>
-                      <input type="text" v-model="per_celularA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_celularA.$error, 'is-valid':!$v.per_celularA.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_celularA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                      <label class="form-control-label" for="text-input">E-mail </label>
-                      <input type="text" v-model="per_emailA" class="form-control" :class="{ 'is-invalid' : $v.per_emailA.$error, 'is-valid':!$v.per_emailA.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_emailA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Titulo de la Licencia</label>
-                      <select class="form-control" v-model="per_titlicA" @click="listarHabilitacion(per_titlicA)" :class="{ 'is-invalid' : $v.per_titlicA.$error, 'is-valid':!$v.per_titlicA.$invalid }">
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="licencia in arrayLicencia" :key="licencia.id" :value="licencia.id"  v-text="licencia.licencia"></option>                        
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_titlicA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Habilitación</label>
-                      <select class="form-control" v-model="per_habilitacionA" :class="{ 'is-invalid' : $v.per_habilitacionA.$error, 'is-valid':!$v.per_habilitacionA.$invalid }">
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="habilitacion in arrayHabilitacion" :key="habilitacion.id" :value="habilitacion.id"  v-text="habilitacion.habilitacion"></option>                        
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_habilitacionA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>  
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Competencia Linguistica</label>
-                      <select class="form-control" v-model="per_comlinguisticaA" :class="{ 'is-invalid' : $v.per_comlinguisticaA.$error, 'is-valid':!$v.per_comlinguisticaA.$invalid }">
-                          <option value="" disabled>SELECCIONE</option>
-                          <option v-for="linguistica in arrayCompetenciaLinguistica" :key="linguistica.id" :value="linguistica.id"  v-text="linguistica.nivel"></option>                        
-                      </select>
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_comlinguisticaA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-12">
-                      <label class="form-control-label" for="text-input">Dirección</label>
-                      <input type="text" v-model="per_direccionA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_direccionA.$error, 'is-valid':!$v.per_direccionA.$invalid }">
-                      <div class="invalid-feedback">
-                          <span v-if="!$v.per_direccionA.required">Este campo es Requerido</span>
-                      </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-12">
-                        <label class="form-control-label" for="text-input">Observación</label>
-                        <textarea name="textarea" class="form-control" rows="3" v-model="per_observacionesA" style="text-transform:uppercase"></textarea>
-                    </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Fecha de Emisión</label>
-                    <input type="date" v-model="per_fechaemisionA" class="form-control" :class="{ 'is-invalid' : $v.per_fechaemisionA.$error, 'is-valid':!$v.per_fechaemisionA.$invalid }" disabled>
-                    <div class="invalid-feedback">
-                        <span v-if="!$v.per_fechaemisionA.required">Este campo es Requerido</span>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <label class="form-control-label" for="text-input">Fecha de Expiración (Certificado Medico)</label>
-                    <input type="date" v-model="per_fechaexpiracionA" class="form-control" :class="{ 'is-invalid' : $v.per_fechaexpiracionA.$error, 'is-valid':!$v.per_fechaexpiracionA.$invalid }">
-                    <div class="invalid-feedback">
-                        <span v-if="!$v.per_fechaexpiracionA.required">Este campo es Requerido</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @click="RenovarPersonal()">Generar</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">Cerrar</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
         <!-- Modal Nuevo Nacionalidad -->
         <div class="modal fade" id="ModalNewNacionalidad">
           <div class="modal-dialog modal-sm">
@@ -777,7 +541,6 @@
         per_habilitacion : '',
         per_comlinguistica : '',
         per_observaciones : '',
-        // fechaemision : new Date(),
         per_fechaemision : new Intl.DateTimeFormat("az", {
           year: "numeric",
           day: "2-digit",
@@ -796,32 +559,7 @@
   
         // per_fechaemision : new Date(),
         // per_fechaexpiracion : new Date(),
-        per_id : '',
-        per_fotoA : '',
-        per_categoriaA : '',
-        per_entidadA : '',
-        per_gradoA : '',
-        per_ciA : '',
-        per_cmA : '',
-        per_nombreA : '',
-        per_appaternoA : '',
-        per_apmaternoA : '',
-        per_nacionalidadA : '',
-        per_sexoA : '',
-        per_celularA : '',
-        per_emailA : '',
-        per_fechnacA : '',
-        per_direccionA : '',
-        per_titlicA : '',
-        per_habilitacionA : '',
-        per_comlinguisticaA : '',
-        per_observacionesA : '',
-        per_fechaemisionA : new Intl.DateTimeFormat("az", {
-    year: "numeric",
-    day: "2-digit",
-    month: "2-digit"
-  }).format(new Date()),
-        per_fechaexpiracionA : '',
+        
         arrayCategoria : [],
         arrayEntidad : [],
         arrayGrado : [],
@@ -898,32 +636,6 @@
             doc_libreta : { required },
             doc_medico : { required },
   
-            per_fotoA: { required },
-            per_categoriaA : { required },
-            per_nacionalidadA: { required },
-            per_entidadA: { required },
-            per_gradoA: { required },
-            per_ciA: { required },
-            per_cmA: { required },
-            per_nombreA: { required },
-            per_sexoA: { required },
-            per_celularA: { required },
-            per_emailA: { required },
-            per_fechnacA: { required },
-            per_direccionA: { required },
-            per_titlicA: { required },
-            per_habilitacionA: { required },
-            per_comlinguisticaA: { required },
-            per_habilitacionA : { required },
-            per_comlinguisticaA : { required },
-            per_fechaemisionA: { required },
-            per_fechaexpiracionA: { required },
-            per_observaciones : { required },
-            observacion: { required },
-  
-            nombreA: { required },
-            observacionA: { required },
-  
             na_pais: { required },
             na_abreviatura: { required },
             na_nacionalidad: { required },
@@ -951,26 +663,6 @@
             'per_comlinguistica',
             'per_fechaemision',
             'per_fechaexpiracion'],
-
-            // validationGroupRenew: [
-            // 'per_f
-            // 'per_categoriotoA',aA',
-            // 'per_nacionalidadA',
-            // 'per_entidadA',
-            // 'per_gradoA',
-            // 'per_ciA',
-            // 'per_cmA',
-            // 'per_nombreA',
-            // 'per_sexoA',
-            // 'per_celularA',
-            // 'per_emailA',
-            // 'per_fechnacA',
-            // 'per_direccionA',
-            // 'per_titlicA',
-            // 'per_habilitacionA',
-            // 'per_comlinguisticaA',
-            // 'per_fechaemisionA',
-            // 'per_fechaexpiracionA'],
   
             validationGroupNewNacionalidad: [
             'na_pais',
@@ -1034,181 +726,148 @@
     },
     methods: {
 
-        Atras(){ //DGAE
-            this.$router.push({
-                name: "DatosPersonal",  
-            });
-        },
+      Atras(){ //DGAE
+          this.$router.push({
+              name: "DatosPersonal",  
+          });
+      },
 
-        nextStep() { //DGAE
-          if (this.currentStep < 3) {
-            // if(this.currentStep == 1){
-            //     if(!this.$v.validationGroupReg.$invalid){
-            //       this.currentStep++;
-            //     }else{
-            //         this.$v.validationGroupReg.$touch();
-            //         Swal.fire({
-            //             icon: 'warning',
-            //             title: 'Ingrese todos los datos requeridos',
-            //             showConfirmButton: false,
-            //             timer: 2000
-            //         })   
-            //     }
-            // }
-            this.currentStep++;
-
-            // if(this.currentStep == 2){
-            //     if(!this.$v.validationGroupReg.$invalid){
-            //       this.currentStep++;
-            //     }else{
-            //         this.$v.validationGroupReg.$touch();
-            //         Swal.fire({
-            //             icon: 'warning',
-            //             title: 'Ingrese todos los datos requeridos',
-            //             showConfirmButton: false,
-            //             timer: 2000
-            //         })   
-            //     }
-            // }
-            // else{
-
-            // }
-            // this.currentStep++;
-          }
-        },
-
-        previousStep() { //DGAE
-          if (this.currentStep > 1) {
-            this.currentStep--;
-          }
-        },
-        handleSubmit() {
-          // Aquí puedes manejar el envío del formulario
-        //   console.log('Formulario enviado:', this.formData);
-          // Realiza cualquier otra acción, como enviar los datos a un servidor
-        },
-
-
-        handleFileChange(event) {
-      const file = event.target.files[0];
-      if (!file) {
-        this.selectedFile = null;
-        this.errorMessage = 'No se seleccionó ningún archivo.';
-        return;
-      }
-    },
-
-    obtenerCi(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_ci = e.target.result;
+      nextStep() { //DGAE
+        if (this.currentStep < 3) {
+          if(this.currentStep == 1){
+              if(!this.$v.validationGroupReg.$invalid){
+                this.currentStep++;
+              }else{
+                  this.$v.validationGroupReg.$touch();
+                  Swal.fire({
+                      icon: 'warning',
+                      title: 'Ingrese todos los datos requeridos',
+                      showConfirmButton: false,
+                      timer: 2000
+                  })   
               }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vCI = 1;
-          } catch (error) {
-              
           }
-    },
+        }
+      },
 
-    obtenerNacimiento(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_nacimiento = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
+      previousStep() { //DGAE
+        if (this.currentStep > 1) {
+          this.currentStep--;
+        }
+      },
 
-    obtenerEgreso(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_egreso = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
+      obtenerCi(e){
+        try {
+                var fileReader = new FileReader();
 
-    obtenerEspecializacion(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_especializacion = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
+                fileReader.onload = (e) => {
+                    this.doc_ci = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vCI = 1;
+            } catch (error) {
+                
+            }
+      },
 
-    obtenerMedico(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_medico = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
-
-    obtenerTitulo(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_titulo = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
-
-    obtenerLibreta(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_libreta = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
+      obtenerNacimiento(e){
+        try {
+                var fileReader = new FileReader();
     
-    obtenerAprobacion(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_aprobacion = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
+                fileReader.onload = (e) => {
+                    this.doc_nacimiento = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+      },
+
+      obtenerEgreso(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_egreso = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+      },
+
+      obtenerEspecializacion(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_especializacion = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+      },
+
+      obtenerMedico(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_medico = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+      },
+
+      obtenerTitulo(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_titulo = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+      },
+
+      obtenerLibreta(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_libreta = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+      },
+    
+      obtenerAprobacion(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_aprobacion = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+      },
+
       obtenerImagen(e){
           try {
               var fileReader = new FileReader();
@@ -1223,20 +882,6 @@
           }
       },
 
-      obtenerImagenA(e){
-          try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.per_fotoA = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vA = 1;
-          } catch (error) {
-              
-          }
-      },
-  
       NuevoPersonal(){ //DGAE
         this.$v.validationGroupReg.$reset(),
         this.per_foto = '',
@@ -1268,10 +913,6 @@
         this.doc_libreta = '',
         this.doc_medico = '',
         this.v = 0,
-        // $('#ModalNewPersonal').modal('show');
-        // $(".modal-header").css("background-color", "#007bff");
-        // $(".modal-header").css("color", "white" );
-        // $(".modal-title-registro").text("Registro Personal");
         this.listarCategoria();
         this.listarNacionalidad();
         this.listarEntidad(this.per_nacionalidad);
@@ -1279,44 +920,6 @@
         this.listarLicencia(this.per_entidad,this.per_categoria);
         this.listarHabilitacion(this.per_titlic);
         this.listarCompetenciaLinguistica()
-      },
-  
-      EditarPersonal(personal){ //DGAE
-        // this.$v.validationGroupRenew.$reset(),
-        // this.per_id = personal.id,
-        // this.per_fotoA = personal.per_foto,
-        // this.per_categoriaA = personal.id_categoria,
-        // this.per_nacionalidadA = personal.id_nacionalidad,
-        // this.per_entidadA = personal.id_entidad,
-        // this.per_gradoA = personal.id_grado,
-        // this.per_ciA = personal.per_ci,
-        // this.per_cmA = personal.per_cm,
-        // this.per_nombreA = personal.per_nombre,
-        // this.per_appaternoA = personal.per_paterno,
-        // this.per_apmaternoA = personal.per_materno,
-        // this.per_sexoA = personal.per_sexo,
-        // this.per_celularA = personal.per_celular,
-        // this.per_emailA = personal.per_mail,
-        // this.per_fechnacA = personal.per_fecha_nacimiento,
-        // this.per_direccionA = personal.per_direccion,
-        // this.per_titlicA = personal.id_licencia,
-        // this.per_habilitacionA = personal.id_habilitacion,
-        // this.per_comlinguisticaA = personal.id_complinguistica,
-        // this.per_observacionesA = personal.observacion,
-        // // this.per_fechaemisionA = '',
-        // this.per_fechaexpiracionA = '',
-        // this.vA = 0,
-        // $('#ModalRenewPersonal').modal('show');
-        // $(".modal-header").css("background-color", "#007bff");
-        // $(".modal-header").css("color", "white" );
-        // $(".modal-title-registro").text("Renovación Personal");
-        // this.listarCategoria();
-        // this.listarNacionalidad();
-        // this.listarEntidad(this.per_nacionalidadA);
-        // this.listarGrado(this.per_entidadA);
-        // this.listarLicencia(this.per_entidadA,this.per_categoriaA);
-        // this.listarHabilitacion(this.per_titlicA);
-        // this.listarCompetenciaLinguistica()
       },
   
       NuevaNacionalidad(){ //DGAE
@@ -1402,7 +1005,6 @@
                           me.arrayDatPer = response.data.personal;
                           me.GenerarCarnet(me.arrayDatPer.id_personal);
                           me.Atras();
-                          me.ListarPersonal(1);
                           this.$v.$reset();
                       } 
                   })
@@ -1420,90 +1022,6 @@
           })
         }else{
             this.$v.validationGroupDocument.$touch();
-            Swal.fire({
-                icon: 'warning',
-                title: 'Ingrese todos los datos requeridos',
-                showConfirmButton: false,
-                timer: 2000
-            })
-            
-        }
-      },
-  
-      RenovarPersonal(){ //DGAE
-        if(!this.$v.validationGroupRenew.$invalid){
-          swal.fire({
-              title: '¿Desea Renovar?', // TITULO 
-              icon: 'question', //ICONO (success, warnning, error, info, question)
-              showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-              confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-              cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
-              confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
-              cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
-              buttonsStyling: true,
-              reverseButtons: true
-              }).then((result) => {
-              if (result.value) {
-                  let me = this;
-                  axios
-                  .post("/renovarPersonal", {
-                    id_personal : me.per_id,
-                    foto : me.per_fotoA,
-                    categoria : me.per_categoriaA,
-                    nacionalidad: me.per_nacionalidadA,
-                    entidad : me.per_entidadA,
-                    grado : me.per_gradoA,
-                    ci : me.per_ciA,
-                    cm : me.per_cmA,
-                    nombre : me.per_nombreA,
-                    ap_paterno : me.per_appaternoA,
-                    ap_materno : me.per_apmaternoA,
-                    sexo : me.per_sexoA,
-                    celular : me.per_celularA,
-                    email : me.per_emailA,
-                    fech_nac : me.per_fechnacA,
-                    direccion : me.per_direccionA,
-                    tit_licencia : me.per_titlicA,
-                    habilitacion : me.per_habilitacionA,
-                    linguistica : me.per_comlinguisticaA,
-                    observacion : me.per_observacionesA,
-                    fech_emision : me.per_fechaemisionA,
-                    fech_expiracion : me.per_fechaexpiracionA
-                  })
-                  .then(function (response) {
-                      
-                      console.log(response);
-                      swal.fire({
-                          title: 'Se realizo el renovación correctamente', //TITULO
-                          // response.data.mensaje, //TEXTO DE MENSAJE
-                          // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
-                          // response.personal_foto
-                      });
-                      if (!response.data.code) {
-                          // $('#NuevoUsuario').modal('hide');
-                          $('#ModalRenewPersonal').modal('hide');
-                          // me.nick = '';
-                          // me.password = '';
-                          me.arrayDatPer = response.data.personal;
-                          me.GenerarCarnet(me.arrayDatPer.id_personal);
-                          me.ListarPersonal(1);
-                          this.$v.$reset();
-                      } 
-                  })
-                  .catch(function (error) {
-                      // handle error
-                      console.log(error);
-                  })
-              }else{
-                    swal.fire(
-                      "Informacion", //TITULO
-                      "Solicitud cancelada.", //TEXTO DE MENSAJE
-                      "info" // TIPO DE MODAL (success, warnning, error, info)
-                  );
-              }
-          })
-        }else{
-            this.$v.validationGroupRenew.$touch();
             Swal.fire({
                 icon: 'warning',
                 title: 'Ingrese todos los datos requeridos',
@@ -1642,187 +1160,130 @@
         }
       },
   
-      ListarPersonal(page){
-              let me = this;
-              axios
-              .post("/listarPersonal", {
-                  page: page,
-                  buscar: me.buscar.toUpperCase(),
-              })
-              .then(function (response) {
-                  me.listaPersonal = response.data.personal.data;
-                  me.pagination =response.data.pagination
-              })
-              .catch(function (error) {
-                  // handle error
-                  console.log(error);
-              })
-          },
+      listarCategoria(){ //DGAE
+          let me = this;
+          axios
+        .post("/listarCategoria", {
+        })
+        .then(function (response) {
+          me.arrayCategoria = response.data.categorias
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      },
   
-          listarCategoria(){ //DGAE
-              let me = this;
-              axios
-            .post("/listarCategoria", {
-            })
-            .then(function (response) {
-             me.arrayCategoria = response.data.categorias
-            })
-            .catch(function (error) {
-              // handle error
-              console.log(error);
-            })
-          },
+      listarNacionalidad(){ //DGAE
+          let me = this;
+          axios
+        .post("/listarNacionalidad", {
+        })
+        .then(function (response) {
+          me.arrayNacionalidad = response.data.nacionalidades
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      },
   
-          listarNacionalidad(){ //DGAE
-              let me = this;
-              axios
-            .post("/listarNacionalidad", {
-            })
-            .then(function (response) {
-             me.arrayNacionalidad = response.data.nacionalidades
-            })
-            .catch(function (error) {
-              // handle error
-              console.log(error);
-            })
-          },
+      listarEntidad(nacionalidad){ //DGAE
+          let me = this;
+          axios
+        .post("/listarEntidad", {
+          id_nacionalidad : nacionalidad,
+        })
+        .then(function (response) {
+          me.arrayEntidad = response.data.entidades
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      },
   
-          // selectNacionalidad(nacionalidad){ //DGAE
-          //     let me = this;
-          //     axios
-          //   .post("/selectNacionalidad", {
-          //     id_nacionalidadA : nacionalidad,
-          //   })
-          //   .then(function (response) {
-          //    me.arrayNacionalidadA = response.data.nacionalidades
-          //   })
-          //   .catch(function (error) {
-          //     // handle error
-          //     console.log(error);
-          //   })
-          // },
+      listarGrado(entidad){ //DGAE
+          let me = this;
+          axios
+        .post("/listarGrado", {
+          id_entidad : entidad,
+        })
+        .then(function (response) {
+          me.arrayGrado = response.data.grados
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      },
   
-          listarEntidad(nacionalidad){ //DGAE
-              let me = this;
-              axios
-            .post("/listarEntidad", {
-              id_nacionalidad : nacionalidad,
-            })
-            .then(function (response) {
-             me.arrayEntidad = response.data.entidades
-            })
-            .catch(function (error) {
-              // handle error
-              console.log(error);
-            })
-          },
+      listarLicencia(entidad,categoria){ //DGAE
+          let me = this;
+          axios
+        .post("/listarLicencia", {
+          id_entidad : entidad,
+          id_categoria : categoria
+        })
+        .then(function (response) {
+          me.arrayLicencia = response.data.licencias
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      },
   
-          listarGrado(entidad){ //DGAE
-              let me = this;
-              axios
-            .post("/listarGrado", {
-              id_entidad : entidad,
-            })
-            .then(function (response) {
-             me.arrayGrado = response.data.grados
-            })
-            .catch(function (error) {
-              // handle error
-              console.log(error);
-            })
-          },
+      listarHabilitacion(licencia){ //DGAE
+          let me = this;
+          axios
+        .post("/listarHabilitacion", {
+          id_titlicencia : licencia,
+        })
+        .then(function (response) {
+          me.arrayHabilitacion = response.data.habilitaciones
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      },
   
-          listarLicencia(entidad,categoria){ //DGAE
-              let me = this;
-              axios
-            .post("/listarLicencia", {
-              id_entidad : entidad,
-              id_categoria : categoria
-            })
-            .then(function (response) {
-             me.arrayLicencia = response.data.licencias
-            })
-            .catch(function (error) {
-              // handle error
-              console.log(error);
-            })
-          },
+      listarCompetenciaLinguistica(){ //DGAE
+          let me = this;
+          axios
+        .post("/listarCompetenciaLinguistica", {
+        })
+        .then(function (response) {
+          me.arrayCompetenciaLinguistica = response.data.comp_linguisticas
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      },
+
+      GenerarCarnet(id_personal){ //DGAE
+          // this.$v.$reset();
+          // if(!this.$v.$invalid){
+          // window.open('http://sipefab.fab.bo/certificadoDestAscenso?id_p='+id_personal);
+          window.open('http://127.0.0.1:8000/carnet?id_p='+id_personal);
+          // }else{
+          //     this.$v.$touch();
+          //     Swal.fire({
+          //         icon: 'warning',
+          //         title: 'Ingrese todos los datos requeridos',
+          //         showConfirmButton: false,
+          //         timer: 2000
+          //     })
+              
+          // }
+      },
   
-          listarHabilitacion(licencia){ //DGAE
-              let me = this;
-              axios
-            .post("/listarHabilitacion", {
-              id_titlicencia : licencia,
-            })
-            .then(function (response) {
-             me.arrayHabilitacion = response.data.habilitaciones
-            })
-            .catch(function (error) {
-              // handle error
-              console.log(error);
-            })
-          },
-  
-          listarCompetenciaLinguistica(){ //DGAE
-              let me = this;
-              axios
-            .post("/listarCompetenciaLinguistica", {
-            })
-            .then(function (response) {
-             me.arrayCompetenciaLinguistica = response.data.comp_linguisticas
-            })
-            .catch(function (error) {
-              // handle error
-              console.log(error);
-            })
-          },
-  
-          BuscarPersona(){ //DGAE
-              clearTimeout(this.setTiemoutBuscador);
-              this.setTiemoutBuscador = setTimeout(() => {
-                  this.ListarPersonal(1)
-              }, 360)
-          },
-  
-  
-          GenerarCarnet(id_personal){ //DGAE
-              // this.$v.$reset();
-              // if(!this.$v.$invalid){
-              // window.open('http://sipefab.fab.bo/certificadoDestAscenso?id_p='+id_personal);
-              window.open('http://127.0.0.1:8000/carnet?id_p='+id_personal);
-              // }else{
-              //     this.$v.$touch();
-              //     Swal.fire({
-              //         icon: 'warning',
-              //         title: 'Ingrese todos los datos requeridos',
-              //         showConfirmButton: false,
-              //         timer: 2000
-              //     })
-                  
-              // }
-          },
-  
-      EnvioDatos(datos){
-        this.$router.push({
-            name: "Personal_datos",
-            //ENVIO DE DATOS
-            params:{
-                e: datos
-            }
-            
-        });
-      } 
     },
   };
   
   </script>
   
   <style>
-  /* Agregar estilos para el formulario */
-  .step {
-      /* display: none; */
-    }
-    .step.active {
-      /* display: block; */
-    }
   </style>

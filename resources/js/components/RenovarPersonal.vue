@@ -37,11 +37,6 @@
                       </h3>  
                     </div>                  
                     <div class="col-sm-4" v-if="$auth.can('insert-per')">
-                      <!-- <router-link to='/DatosPersonal' @click.native="$router.go()">
-                        <button type="button" class="btn btn-primary btn-sm float-right">
-                          <i class="fas fa-plus"></i> ATRAS
-                        </button>
-                      </router-link>  -->
                       <button class="btn btn-danger btn-sm float-right" type="submit" @click="Atras()">
                         <i class="fas fa-arrow-left"></i>&nbsp; ATRAS
                       </button>
@@ -49,7 +44,7 @@
                   </div>  
                 </div>
                 <div class="card-body">
-                    <form @submit.prevent="handleSubmit">
+                    <form>
                         <!-- Paso 1 -->
                         <div class="step" v-if="currentStep === 1">
                             <h3><i class="fas fa-inbox"></i>&nbsp;PASO 1: INFORMACIÓN PERSONAL</h3>
@@ -216,7 +211,7 @@
                                 <div class="col-md-3">
                                     <div class="row">
                                         <template v-if="v == 0">
-                                            <img :src="'/img/avatar.jpg'" width="150px" height="150px" style="border: 1.5px solid black; text-align: center">
+                                            <img :src="'/img/personal/'+imagen" width="150px" height="150px" style="border: 1.5px solid black; text-align: center">
                                         </template>
                                         <template v-else>
                                             <img :src="imagen" width="150px" height="150px" style="border: 1.5px solid black; text-align: center">
@@ -225,7 +220,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fotografia</label>
-                                    <input type="file" class="form-control" @change="obtenerImagenA" accept="image/*" v-bind:class="{ 'is-invalid': $v.per_foto.$error, 'is-valid':!$v.per_foto.$invalid }">
+                                    <input type="file" class="form-control" @change="obtenerImagen" accept="image/*" v-bind:class="{ 'is-invalid': $v.per_foto.$error, 'is-valid':!$v.per_foto.$invalid }">
                                     <div class="invalid-feedback">
                                         <div v-if="!$v.per_foto.required">Por favor, carga un archivo.</div>
                                     </div>
@@ -392,7 +387,7 @@
                                 <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
                                 &nbsp;
                                 <!-- <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button> -->
-                                <button type="button" class="btn btn-danger" @click="CrearPersonal()"><i class="fas fa-address-card"></i>&nbsp; GUARDAR/GENERAR</button>
+                                <button type="button" class="btn btn-danger" @click="RenovarPersonal()"><i class="fas fa-address-card"></i>&nbsp; GUARDAR/GENERAR</button>
                             </div>
                         </div>
 
@@ -417,13 +412,6 @@
           <!-- ./row -->
         </div>
         <!-- /.container-fluid -->
-        
-        <!-- Modal Nuevo Nacionalidad -->
-       
-        <!-- /.modal -->
-        <!-- Modal Nuevo Entidad -->
-        
-        <!-- /.modal -->
       </section>
       <!-- /.content -->
     </div>
@@ -473,35 +461,6 @@
         doc_titulo : '',
         doc_libreta : '',
         doc_aprobacion : '',
-  
-        // per_fechaemision : new Date(),
-        // per_fechaexpiracion : new Date(),
-        per_id : '',
-        per_fotoA : '',
-        per_categoriaA : '',
-        per_entidadA : '',
-        per_gradoA : '',
-        per_ciA : '',
-        per_cmA : '',
-        per_nombreA : '',
-        per_appaternoA : '',
-        per_apmaternoA : '',
-        per_nacionalidadA : '',
-        per_sexoA : '',
-        per_celularA : '',
-        per_emailA : '',
-        per_fechnacA : '',
-        per_direccionA : '',
-        per_titlicA : '',
-        per_habilitacionA : '',
-        per_comlinguisticaA : '',
-        per_observacionesA : '',
-        per_fechaemisionA : new Intl.DateTimeFormat("az", {
-    year: "numeric",
-    day: "2-digit",
-    month: "2-digit"
-  }).format(new Date()),
-        per_fechaexpiracionA : '',
 
         arrayDatosPersonal : [],
 
@@ -581,40 +540,6 @@
             doc_libreta : { required },
             doc_medico : { required },
   
-            // per_fotoA: { required },
-            // per_categoriaA : { required },
-            // per_nacionalidadA: { required },
-            // per_entidadA: { required },
-            // per_gradoA: { required },
-            // per_ciA: { required },
-            // per_cmA: { required },
-            // per_nombreA: { required },
-            // per_sexoA: { required },
-            // per_celularA: { required },
-            // per_emailA: { required },
-            // per_fechnacA: { required },
-            // per_direccionA: { required },
-            // per_titlicA: { required },
-            // per_habilitacionA: { required },
-            // per_comlinguisticaA: { required },
-            // per_habilitacionA : { required },
-            // per_comlinguisticaA : { required },
-            // per_fechaemisionA: { required },
-            // per_fechaexpiracionA: { required },
-            // per_observaciones : { required },
-            // observacion: { required },
-  
-            // nombreA: { required },
-            // observacionA: { required },
-  
-            // na_pais: { required },
-            // na_abreviatura: { required },
-            // na_nacionalidad: { required },
-  
-            // en_pais: { required },
-            // en_entidad: { required },
-            // en_sigla: { required },
-  
             validationGroupReg: [
             'per_foto',
             'per_categoria',
@@ -634,36 +559,6 @@
             'per_comlinguistica',
             'per_fechaemision',
             'per_fechaexpiracion'],
-
-            // validationGroupRenew: [
-            // 'per_f
-            // 'per_categoriotoA',aA',
-            // 'per_nacionalidadA',
-            // 'per_entidadA',
-            // 'per_gradoA',
-            // 'per_ciA',
-            // 'per_cmA',
-            // 'per_nombreA',
-            // 'per_sexoA',
-            // 'per_celularA',
-            // 'per_emailA',
-            // 'per_fechnacA',
-            // 'per_direccionA',
-            // 'per_titlicA',
-            // 'per_habilitacionA',
-            // 'per_comlinguisticaA',
-            // 'per_fechaemisionA',
-            // 'per_fechaexpiracionA'],
-  
-            // validationGroupNewNacionalidad: [
-            // 'na_pais',
-            // 'na_abreviatura',
-            // 'na_nacionalidad'],
-  
-            // validationGroupNewEntidad: [
-            // 'en_pais',
-            // 'en_entidad',
-            // 'en_sigla'],
             
             validationGroupDocument:[
             'doc_ci',
@@ -707,9 +602,6 @@
           imagen(){
               return this.per_foto;
           },
-          imagenA(){
-              return this.per_fotoA;
-          }
       },
     mounted() {
         this.DatosPersonal(this.personal_id)
@@ -726,6 +618,7 @@
             .then(function (response) {
                 me.arrayDatosPersonal = response.data.personal;
                 me.EditarPersonal(me.arrayDatosPersonal);
+                // me.obtenerImagen();
             })
             .catch(function (error) {
                 // handle error
@@ -741,38 +634,19 @@
 
         nextStep() { //DGAE
           if (this.currentStep < 3) {
-            // if(this.currentStep == 1){
-            //     if(!this.$v.validationGroupReg.$invalid){
-            //       this.currentStep++;
-            //     }else{
-            //         this.$v.validationGroupReg.$touch();
-            //         Swal.fire({
-            //             icon: 'warning',
-            //             title: 'Ingrese todos los datos requeridos',
-            //             showConfirmButton: false,
-            //             timer: 2000
-            //         })   
-            //     }
-            // }
-            this.currentStep++;
-
-            // if(this.currentStep == 2){
-            //     if(!this.$v.validationGroupReg.$invalid){
-            //       this.currentStep++;
-            //     }else{
-            //         this.$v.validationGroupReg.$touch();
-            //         Swal.fire({
-            //             icon: 'warning',
-            //             title: 'Ingrese todos los datos requeridos',
-            //             showConfirmButton: false,
-            //             timer: 2000
-            //         })   
-            //     }
-            // }
-            // else{
-
-            // }
-            // this.currentStep++;
+            if(this.currentStep == 1){
+                if(!this.$v.validationGroupReg.$invalid){
+                  this.currentStep++;
+                }else{
+                    this.$v.validationGroupReg.$touch();
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Ingrese todos los datos requeridos',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })   
+                }
+            }
           }
         },
 
@@ -781,753 +655,382 @@
             this.currentStep--;
           }
         },
-        handleSubmit() {
-          // Aquí puedes manejar el envío del formulario
-        //   console.log('Formulario enviado:', this.formData);
-          // Realiza cualquier otra acción, como enviar los datos a un servidor
+
+        obtenerCi(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_ci = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vCI = 1;
+            } catch (error) {
+                
+            }
         },
 
-
-        handleFileChange(event) {
-      const file = event.target.files[0];
-      if (!file) {
-        this.selectedFile = null;
-        this.errorMessage = 'No se seleccionó ningún archivo.';
-        return;
-      }
-    },
-
-    obtenerCi(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_ci = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vCI = 1;
-          } catch (error) {
-              
-          }
-    },
-
-    obtenerNacimiento(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_nacimiento = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
-
-    obtenerEgreso(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_egreso = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
-
-    obtenerEspecializacion(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_especializacion = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
-
-    obtenerMedico(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_medico = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
-
-    obtenerTitulo(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_titulo = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
-
-    obtenerLibreta(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_libreta = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
+        obtenerNacimiento(e){
+        try {
+                var fileReader = new FileReader();
     
-    obtenerAprobacion(e){
-      try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.doc_aprobacion = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vNAC = 1;
-          } catch (error) {
-              
-          }
-    },
-      obtenerImagen(e){
-          try {
-              var fileReader = new FileReader();
-  
-              fileReader.onload = (e) => {
-                  this.per_foto = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.v = 1;
-          } catch (error) {
-              
-          }
-      },
+                fileReader.onload = (e) => {
+                    this.doc_nacimiento = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+        },
 
-      obtenerImagenA(e){
-          try {
-              var fileReader = new FileReader();
+        obtenerEgreso(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_egreso = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+        },
+
+        obtenerEspecializacion(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_especializacion = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+        },
+
+        obtenerMedico(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_medico = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+        },
+
+        obtenerTitulo(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_titulo = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+        },
+
+        obtenerLibreta(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_libreta = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+        },
+    
+        obtenerAprobacion(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.doc_aprobacion = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.vNAC = 1;
+            } catch (error) {
+                
+            }
+        },
+
+        obtenerImagen(e){
+            try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.per_foto = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                this.v = 1;
+            } catch (error) {
+                
+            }
+        },
   
-              fileReader.onload = (e) => {
-                  this.per_foto = e.target.result;
-              }
-              fileReader.readAsDataURL(e.target.files[0])
-              this.vA = 1;
-          } catch (error) {
-              
-          }
-      },
+        EditarPersonal(personal){ //DGAE
+            this.$v.validationGroupReg.$reset(),
+            this.per_foto = personal.per_foto,
+            this.per_categoria = personal.id_categoria,
+            this.per_nacionalidad = personal.idnacionalidad,
+            this.per_entidad = personal.id_entidad,
+            this.per_grado = personal.id_grado,
+            this.per_ci = personal.per_ci,
+            this.per_cm = personal.per_cm,
+            this.per_nombre = personal.per_nombre,
+            this.per_appaterno = personal.per_paterno,
+            this.per_apmaterno = personal.per_materno,
+            this.per_sexo = personal.per_sexo,
+            this.per_celular = personal.per_celular,
+            this.per_email = personal.per_mail,
+            this.per_fechnac = personal.per_fecha_nacimiento,
+            this.per_titlic = personal.id_licencia,
+            this.per_direccion = personal.per_direccion,
+            this.per_habilitacion = personal.id_habilitacion,
+            this.per_comlinguistica = personal.id_comp_linguistica,
+            this.per_observaciones = '',
+            this.per_fechaexpiracion = '',
+            this.doc_ci = '',
+            this.doc_nacimiento = '',
+            this.doc_titulo = '',
+            this.doc_aprobacion = '',
+            this.doc_egreso = '',
+            this.doc_especializacion = '',
+            this.doc_libreta = '',
+            this.doc_medico = '',
+            this.v = 0,
+            this.listarCategoria();
+            this.listarNacionalidad();
+            this.listarEntidad(this.per_nacionalidad);
+            this.listarGrado(this.per_entidad);
+            this.listarLicencia(this.per_entidad,this.per_categoria);
+            this.listarHabilitacion(this.per_titlic);
+            this.listarCompetenciaLinguistica()
+        },
   
-      Personal(){ //DGAE
-        this.$v.validationGroupReg.$reset(),
-        this.per_foto = '',
-        this.per_categoria = '',
-        this.per_nacionalidad = '',
-        this.per_entidad = '',
-        this.per_grado = '',
-        this.per_ci = '',
-        this.per_cm = '',
-        this.per_nombre = '',
-        this.per_appaterno = '',
-        this.per_apmaterno = '',
-        this.per_sexo = '',
-        this.per_celular = '',
-        this.per_email = '',
-        this.per_fechnac = '',
-        this.per_titlic = '',
-        this.per_direccion = '',
-        this.per_habilitacion = '',
-        this.per_comlinguistica = '',
-        this.per_observaciones = '',
-        this.per_fechaexpiracion = '',
-        this.doc_ci = '',
-        this.doc_nacimiento = '',
-        this.doc_titulo = '',
-        this.doc_aprobacion = '',
-        this.doc_egreso = '',
-        this.doc_especializacion = '',
-        this.doc_libreta = '',
-        this.doc_medico = '',
-        this.v = 0,
-        // $('#ModalNewPersonal').modal('show');
-        // $(".modal-header").css("background-color", "#007bff");
-        // $(".modal-header").css("color", "white" );
-        // $(".modal-title-registro").text("Registro Personal");
-        this.listarCategoria();
-        this.listarNacionalidad();
-        this.listarEntidad(this.per_nacionalidad);
-        this.listarGrado(this.per_entidad);
-        this.listarLicencia(this.per_entidad,this.per_categoria);
-        this.listarHabilitacion(this.per_titlic);
-        this.listarCompetenciaLinguistica()
-      },
-  
-      EditarPersonal(personal){ //DGAE
-        this.$v.validationGroupReg.$reset(),
-        this.per_foto = personal.per_foto,
-        this.per_categoria = personal.id_categoria,
-        this.per_nacionalidad = personal.idnacionalidad,
-        this.per_entidad = personal.id_entidad,
-        this.per_grado = personal.id_grado,
-        this.per_ci = personal.per_ci,
-        this.per_cm = personal.per_cm,
-        this.per_nombre = personal.per_nombre,
-        this.per_appaterno = personal.per_paterno,
-        this.per_apmaterno = personal.per_materno,
-        this.per_sexo = personal.per_sexo,
-        this.per_celular = personal.per_celular,
-        this.per_email = personal.per_mail,
-        this.per_fechnac = personal.per_fecha_nacimiento,
-        this.per_titlic = personal.id_licencia,
-        this.per_direccion = personal.per_direccion,
-        this.per_habilitacion = personal.id_habilitacion,
-        this.per_comlinguistica = personal.id_comp_linguistica,
-        this.per_observaciones = '',
-        this.per_fechaexpiracion = '',
-        this.doc_ci = '',
-        this.doc_nacimiento = '',
-        this.doc_titulo = '',
-        this.doc_aprobacion = '',
-        this.doc_egreso = '',
-        this.doc_especializacion = '',
-        this.doc_libreta = '',
-        this.doc_medico = '',
-        this.v = 0,
-        // $('#ModalNewPersonal').modal('show');
-        // $(".modal-header").css("background-color", "#007bff");
-        // $(".modal-header").css("color", "white" );
-        // $(".modal-title-registro").text("Registro Personal");
-        this.listarCategoria();
-        this.listarNacionalidad();
-        this.listarEntidad(this.per_nacionalidad);
-        this.listarGrado(this.per_entidad);
-        this.listarLicencia(this.per_entidad,this.per_categoria);
-        this.listarHabilitacion(this.per_titlic);
-        this.listarCompetenciaLinguistica()
-      },
-  
-      NuevaNacionalidad(){ //DGAE
-        this.$v.validationGroupNewNacionalidad.$reset(),
-        this.na_pais = '',
-        this.na_abreviatura = '',
-        this.na_nacionalidad = '',
-        this.vNN = 0,
-        $('#ModalNewNacionalidad').modal('show');
-        $(".modal-header").css("background-color", "#007bff");
-        $(".modal-header").css("color", "white" );
-        $(".modal-title-aumentar").text("Nueva Nacionalidad");
-        this.listarNacionalidad();
-      },
-  
-      NuevaEntidad(){ //DGAE
-        this.$v.validationGroupNewEntidad.$reset(),
-        this.en_pais = this.per_nacionalidad,
-        this.en_entidad = '',
-        this.en_sigla = '',
-        this.vNE = 0,
-        $('#ModalNewEntidad').modal('show');
-        $(".modal-header").css("background-color", "#007bff");
-        $(".modal-header").css("color", "white" );
-        $(".modal-title-aumentar").text("Nueva Entidad");
-        this.listarNacionalidad();
-        this.listarEntidad(this.per_nacionalidad);
-      },
-  
-      CrearPersonal(){ //DGAE
-        if(!this.$v.validationGroupDocument.$invalid){
-          swal.fire({
-              title: '¿Desea registrar?', // TITULO 
-              icon: 'question', //ICONO (success, warnning, error, info, question)
-              showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-              confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-              cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
-              confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
-              cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
-              buttonsStyling: true,
-              reverseButtons: true
-              }).then((result) => {
-              if (result.value) {
-                  let me = this;
-                  axios
-                  .post("/crearPersonal", {
-                    foto : me.per_foto,
-                    categoria : me.per_categoria,
-                    nacionalidad: me.per_nacionalidad,
-                    entidad : me.per_entidad,
-                    grado : me.per_grado,
-                    ci : me.per_ci,
-                    cm : me. per_cm,
-                    nombre : me.per_nombre,
-                    ap_paterno : me.per_appaterno,
-                    ap_materno : me.per_apmaterno,
-                    sexo : me.per_sexo,
-                    celular : me.per_celular,
-                    email : me.per_email,
-                    fech_nac : me.per_fechnac,
-                    direccion : me.per_direccion,
-                    tit_licencia : me.per_titlic,
-                    habilitacion : me.per_habilitacion,
-                    linguistica : me.per_comlinguistica,
-                    observacion : me.per_observaciones,
-                    fech_emision : me.per_fechaemision,
-                    fech_expiracion : me.per_fechaexpiracion
-                  })
-                  .then(function (response) {
-                      
-                      console.log(response);
-                      swal.fire({
-                          title: 'Se realizo el registro correctamente', //TITULO
-                          // response.data.mensaje, //TEXTO DE MENSAJE
-                          // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
-                          // response.personal
-                      });
-                      if (!response.data.code) {
-                          // $('#NuevoUsuario').modal('hide');
-                          // $('#ModalNewPersonal').modal('hide');
-                          // me.nick = '';
-                          // me.password = '';
-                          me.arrayDatPer = response.data.personal;
-                          me.GenerarCarnet(me.arrayDatPer.id_personal);
-                          me.Atras();
-                          me.ListarPersonal(1);
-                          this.$v.$reset();
-                      } 
-                  })
-                  .catch(function (error) {
-                      // handle error
-                      console.log(error);
-                  })
-              }else{
-                    swal.fire(
-                      "Informacion", //TITULO
-                      "Solicitud cancelada.", //TEXTO DE MENSAJE
-                      "info" // TIPO DE MODAL (success, warnning, error, info)
-                  );
-              }
-          })
-        }else{
-            this.$v.validationGroupDocument.$touch();
-            Swal.fire({
-                icon: 'warning',
-                title: 'Ingrese todos los datos requeridos',
-                showConfirmButton: false,
-                timer: 2000
+        RenovarPersonal(){ //DGAE
+            if(!this.$v.validationGroupDocument.$invalid){
+            swal.fire({
+                title: '¿Desea Renovar?', // TITULO 
+                icon: 'question', //ICONO (success, warnning, error, info, question)
+                showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+                confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+                cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
+                confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
+                cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
+                buttonsStyling: true,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+                    axios
+                    .post("/renovarPersonal", {
+                        id_personal : me.personal_id,
+                        foto : me.per_foto,
+                        categoria : me.per_categoria,
+                        nacionalidad: me.per_nacionalidad,
+                        entidad : me.per_entidad,
+                        grado : me.per_grado,
+                        ci : me.per_ci,
+                        cm : me.per_cm,
+                        nombre : me.per_nombre,
+                        ap_paterno : me.per_appaterno,
+                        ap_materno : me.per_apmaterno,
+                        sexo : me.per_sexo,
+                        celular : me.per_celular,
+                        email : me.per_email,
+                        fech_nac : me.per_fechnac,
+                        direccion : me.per_direccion,
+                        tit_licencia : me.per_titlic,
+                        habilitacion : me.per_habilitacion,
+                        linguistica : me.per_comlinguistica,
+                        observacion : me.per_observaciones,
+                        fech_emision : me.per_fechaemision,
+                        fech_expiracion : me.per_fechaexpiracion
+                    })
+                    .then(function (response) {
+                        
+                        console.log(response);
+                        swal.fire({
+                            title: 'Se realizo el renovación correctamente', //TITULO
+                            // response.data.mensaje, //TEXTO DE MENSAJE
+                            // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
+                            // response.personal_foto
+                        });
+                        if (!response.data.code) {
+                            // $('#NuevoUsuario').modal('hide');
+                            // $('#ModalRenewPersonal').modal('hide');
+                            // me.nick = '';
+                            // me.password = '';
+                            me.arrayDatPer = response.data.personal;
+                            //   me.GenerarCarnet(me.arrayDatPer.id_personal);
+                            me.GenerarCarnet(me.personal_id);
+                            me.Atras();
+                            this.$v.$reset();
+                        } 
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    })
+                }else{
+                        swal.fire(
+                        "Informacion", //TITULO
+                        "Solicitud cancelada.", //TEXTO DE MENSAJE
+                        "info" // TIPO DE MODAL (success, warnning, error, info)
+                    );
+                }
             })
-            
-        }
-      },
+            }else{
+                this.$v.validationGroupDocument.$touch();
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Ingrese todos los datos requeridos',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                
+            }
+        },
   
-      RenovarPersonal(){ //DGAE
-        if(!this.$v.validationGroupRenew.$invalid){
-          swal.fire({
-              title: '¿Desea Renovar?', // TITULO 
-              icon: 'question', //ICONO (success, warnning, error, info, question)
-              showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-              confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-              cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
-              confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
-              cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
-              buttonsStyling: true,
-              reverseButtons: true
-              }).then((result) => {
-              if (result.value) {
-                  let me = this;
-                  axios
-                  .post("/renovarPersonal", {
-                    id_personal : me.per_id,
-                    foto : me.per_fotoA,
-                    categoria : me.per_categoriaA,
-                    nacionalidad: me.per_nacionalidadA,
-                    entidad : me.per_entidadA,
-                    grado : me.per_gradoA,
-                    ci : me.per_ciA,
-                    cm : me.per_cmA,
-                    nombre : me.per_nombreA,
-                    ap_paterno : me.per_appaternoA,
-                    ap_materno : me.per_apmaternoA,
-                    sexo : me.per_sexoA,
-                    celular : me.per_celularA,
-                    email : me.per_emailA,
-                    fech_nac : me.per_fechnacA,
-                    direccion : me.per_direccionA,
-                    tit_licencia : me.per_titlicA,
-                    habilitacion : me.per_habilitacionA,
-                    linguistica : me.per_comlinguisticaA,
-                    observacion : me.per_observacionesA,
-                    fech_emision : me.per_fechaemisionA,
-                    fech_expiracion : me.per_fechaexpiracionA
-                  })
-                  .then(function (response) {
-                      
-                      console.log(response);
-                      swal.fire({
-                          title: 'Se realizo el renovación correctamente', //TITULO
-                          // response.data.mensaje, //TEXTO DE MENSAJE
-                          // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
-                          // response.personal_foto
-                      });
-                      if (!response.data.code) {
-                          // $('#NuevoUsuario').modal('hide');
-                          $('#ModalRenewPersonal').modal('hide');
-                          // me.nick = '';
-                          // me.password = '';
-                          me.arrayDatPer = response.data.personal;
-                          me.GenerarCarnet(me.arrayDatPer.id_personal);
-                          me.ListarPersonal(1);
-                          this.$v.$reset();
-                      } 
-                  })
-                  .catch(function (error) {
-                      // handle error
-                      console.log(error);
-                  })
-              }else{
-                    swal.fire(
-                      "Informacion", //TITULO
-                      "Solicitud cancelada.", //TEXTO DE MENSAJE
-                      "info" // TIPO DE MODAL (success, warnning, error, info)
-                  );
-              }
-          })
-        }else{
-            this.$v.validationGroupRenew.$touch();
-            Swal.fire({
-                icon: 'warning',
-                title: 'Ingrese todos los datos requeridos',
-                showConfirmButton: false,
-                timer: 2000
-            })
-            
-        }
-      },
-  
-      CrearNacionalidad(){ //DGAE
-        if(!this.$v.validationGroupNewNacionalidad.$invalid){
-          swal.fire({
-              title: '¿Desea registrar?', // TITULO 
-              icon: 'question', //ICONO (success, warnning, error, info, question)
-              showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-              confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-              cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
-              confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
-              cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
-              buttonsStyling: true,
-              reverseButtons: true
-              }).then((result) => {
-              if (result.value) {
-                  let me = this;
-                  axios
-                  .post("/crearNacionalidad", {
-                    pais : me.na_pais,
-                    nacionalidad: me.na_nacionalidad,
-                    abreviatura : me.na_abreviatura,
-                  })
-                  .then(function (response) {
-                      
-                      console.log(response);
-                      swal.fire({
-                          title: 'Se realizo el registro correctamente', //TITULO
-                          // response.data.mensaje, //TEXTO DE MENSAJE
-                          // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
-                          // response.personal
-                      });
-                      // this.listarNacionalidad();
-                      if (!response.data.code) {
-                          // $('#NuevoUsuario').modal('hide');
-                          $('#ModalNewNacionalidad').modal('hide');
-                          me.listarNacionalidad();
-                          // me.nick = '';
-                          // me.password = '';
-                          this.$v.$reset();
-                      } 
-                  })
-                  .catch(function (error) {
-                      // handle error
-                      console.log(error);
-                  })
-              }else{
-                    swal.fire(
-                      "Informacion", //TITULO
-                      "Solicitud cancelada.", //TEXTO DE MENSAJE
-                      "info" // TIPO DE MODAL (success, warnning, error, info)
-                  );
-              }
-          })
-        }else{
-            this.$v.validationGroupNewNacionalidad.$touch();
-            Swal.fire({
-                icon: 'warning',
-                title: 'Ingrese todos los datos requeridos',
-                showConfirmButton: false,
-                timer: 2000
-            })
-            
-        }
-      },
-  
-      CrearEntidad(){ //DGAE
-        if(!this.$v.validationGroupNewEntidad.$invalid){
-          swal.fire({
-              title: '¿Desea registrar?', // TITULO 
-              icon: 'question', //ICONO (success, warnning, error, info, question)
-              showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-              confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-              cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
-              confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
-              cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
-              buttonsStyling: true,
-              reverseButtons: true
-              }).then((result) => {
-              if (result.value) {
-                  let me = this;
-                  axios
-                  .post("/crearEntidad", {
-                    pais : me.en_pais,
-                    entidad: me.en_entidad,
-                    sigla : me.en_sigla,
-                  })
-                  .then(function (response) {
-                      
-                      console.log(response);
-                      swal.fire({
-                          title: 'Se realizo el registro correctamente', //TITULO
-                          // response.data.mensaje, //TEXTO DE MENSAJE
-                          // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
-                          // response.personal
-                      });
-                      // this.listarNacionalidad();
-                      if (!response.data.code) {
-                          // $('#NuevoUsuario').modal('hide');
-                          $('#ModalNewEntidad').modal('hide');
-                          me.listarEntidad(me.per_nacionalidad);
-                          // me.nick = '';
-                          // me.password = '';
-                          this.$v.$reset();
-                      } 
-                  })
-                  .catch(function (error) {
-                      // handle error
-                      console.log(error);
-                  })
-              }else{
-                    swal.fire(
-                      "Informacion", //TITULO
-                      "Solicitud cancelada.", //TEXTO DE MENSAJE
-                      "info" // TIPO DE MODAL (success, warnning, error, info)
-                  );
-              }
-          })
-        }else{
-            this.$v.validationGroupNewEntidad.$touch();
-            Swal.fire({
-                icon: 'warning',
-                title: 'Ingrese todos los datos requeridos',
-                showConfirmButton: false,
-                timer: 2000
-            })
-            
-        }
-      },
-  
-      ListarPersonal(page){
-              let me = this;
-              axios
-              .post("/listarPersonal", {
-                  page: page,
-                  buscar: me.buscar.toUpperCase(),
-              })
-              .then(function (response) {
-                  me.listaPersonal = response.data.personal.data;
-                  me.pagination =response.data.pagination
-              })
-              .catch(function (error) {
-                  // handle error
-                  console.log(error);
-              })
-          },
-  
-          listarCategoria(){ //DGAE
-              let me = this;
-              axios
+        listarCategoria(){ //DGAE
+                let me = this;
+                axios
             .post("/listarCategoria", {
             })
             .then(function (response) {
-             me.arrayCategoria = response.data.categorias
+                me.arrayCategoria = response.data.categorias
             })
             .catch(function (error) {
-              // handle error
-              console.log(error);
+                // handle error
+                console.log(error);
             })
-          },
+        },
   
-          listarNacionalidad(){ //DGAE
-              let me = this;
-              axios
+        listarNacionalidad(){ //DGAE
+                let me = this;
+                axios
             .post("/listarNacionalidad", {
             })
             .then(function (response) {
-             me.arrayNacionalidad = response.data.nacionalidades
+                me.arrayNacionalidad = response.data.nacionalidades
             })
             .catch(function (error) {
-              // handle error
-              console.log(error);
+                // handle error
+                console.log(error);
             })
-          },
+        },
   
-          // selectNacionalidad(nacionalidad){ //DGAE
-          //     let me = this;
-          //     axios
-          //   .post("/selectNacionalidad", {
-          //     id_nacionalidadA : nacionalidad,
-          //   })
-          //   .then(function (response) {
-          //    me.arrayNacionalidadA = response.data.nacionalidades
-          //   })
-          //   .catch(function (error) {
-          //     // handle error
-          //     console.log(error);
-          //   })
-          // },
-  
-          listarEntidad(nacionalidad){ //DGAE
-              let me = this;
-              axios
+        listarEntidad(nacionalidad){ //DGAE
+                let me = this;
+                axios
             .post("/listarEntidad", {
-              id_nacionalidad : nacionalidad,
+                id_nacionalidad : nacionalidad,
             })
             .then(function (response) {
-             me.arrayEntidad = response.data.entidades
+                me.arrayEntidad = response.data.entidades
             })
             .catch(function (error) {
-              // handle error
-              console.log(error);
+                // handle error
+                console.log(error);
             })
-          },
+        },
   
-          listarGrado(entidad){ //DGAE
-              let me = this;
-              axios
+        listarGrado(entidad){ //DGAE
+                let me = this;
+                axios
             .post("/listarGrado", {
-              id_entidad : entidad,
+                id_entidad : entidad,
             })
             .then(function (response) {
-             me.arrayGrado = response.data.grados
+                me.arrayGrado = response.data.grados
             })
             .catch(function (error) {
-              // handle error
-              console.log(error);
+                // handle error
+                console.log(error);
             })
-          },
+        },
   
-          listarLicencia(entidad,categoria){ //DGAE
-              let me = this;
-              axios
+        listarLicencia(entidad,categoria){ //DGAE
+                let me = this;
+                axios
             .post("/listarLicencia", {
-              id_entidad : entidad,
-              id_categoria : categoria
+                id_entidad : entidad,
+                id_categoria : categoria
             })
             .then(function (response) {
-             me.arrayLicencia = response.data.licencias
+                me.arrayLicencia = response.data.licencias
             })
             .catch(function (error) {
-              // handle error
-              console.log(error);
+                // handle error
+                console.log(error);
             })
-          },
+        },
   
-          listarHabilitacion(licencia){ //DGAE
-              let me = this;
-              axios
+        listarHabilitacion(licencia){ //DGAE
+                let me = this;
+                axios
             .post("/listarHabilitacion", {
-              id_titlicencia : licencia,
+                id_titlicencia : licencia,
             })
             .then(function (response) {
-             me.arrayHabilitacion = response.data.habilitaciones
+                me.arrayHabilitacion = response.data.habilitaciones
             })
             .catch(function (error) {
-              // handle error
-              console.log(error);
+                // handle error
+                console.log(error);
             })
-          },
+        },
   
-          listarCompetenciaLinguistica(){ //DGAE
-              let me = this;
-              axios
+        listarCompetenciaLinguistica(){ //DGAE
+                let me = this;
+                axios
             .post("/listarCompetenciaLinguistica", {
             })
             .then(function (response) {
-             me.arrayCompetenciaLinguistica = response.data.comp_linguisticas
+                me.arrayCompetenciaLinguistica = response.data.comp_linguisticas
             })
             .catch(function (error) {
-              // handle error
-              console.log(error);
+                // handle error
+                console.log(error);
             })
-          },
+        },
   
-          BuscarPersona(){ //DGAE
-              clearTimeout(this.setTiemoutBuscador);
-              this.setTiemoutBuscador = setTimeout(() => {
-                  this.ListarPersonal(1)
-              }, 360)
-          },
-  
-  
-          GenerarCarnet(id_personal){ //DGAE
-              // this.$v.$reset();
-              // if(!this.$v.$invalid){
-              // window.open('http://sipefab.fab.bo/certificadoDestAscenso?id_p='+id_personal);
-              window.open('http://127.0.0.1:8000/carnet?id_p='+id_personal);
-              // }else{
-              //     this.$v.$touch();
-              //     Swal.fire({
-              //         icon: 'warning',
-              //         title: 'Ingrese todos los datos requeridos',
-              //         showConfirmButton: false,
-              //         timer: 2000
-              //     })
-                  
-              // }
-          },
-  
-      EnvioDatos(datos){
-        this.$router.push({
-            name: "Personal_datos",
-            //ENVIO DE DATOS
-            params:{
-                e: datos
-            }
-            
-        });
-      } 
+        GenerarCarnet(id_personal){ //DGAE
+            // this.$v.$reset();
+            // if(!this.$v.$invalid){
+            // window.open('http://sipefab.fab.bo/certificadoDestAscenso?id_p='+id_personal);
+            window.open('http://127.0.0.1:8000/carnet?id_p='+id_personal);
+            // }else{
+            //     this.$v.$touch();
+            //     Swal.fire({
+            //         icon: 'warning',
+            //         title: 'Ingrese todos los datos requeridos',
+            //         showConfirmButton: false,
+            //         timer: 2000
+            //     })
+                
+            // }
+        },
+
     },
   };
   
   </script>
   
   <style>
-  /* Agregar estilos para el formulario */
-  .step {
-      /* display: none; */
-    }
-    .step.active {
-      /* display: block; */
-    }
   </style>

@@ -37,11 +37,6 @@
                     </h3>  
                   </div>                  
                   <div class="col-sm-4" v-if="$auth.can('insert-per')">
-                    <!-- <router-link to='/RegistroPersonal' @click.native="$router.go()">
-                      <button type="button" class="btn btn-primary btn-sm float-right">
-                        <i class="fas fa-plus"></i> Registrar Nuevo Personal
-                      </button>
-                    </router-link>  -->
                     <button class="btn btn-primary btn-sm float-right" type="submit" @click="Registro()">
                       <i class="fas fa-user-plus"></i>&nbsp; REGISTRAR NUEVO PERSONAL
                     </button>
