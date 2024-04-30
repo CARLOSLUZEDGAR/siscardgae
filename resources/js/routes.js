@@ -6,6 +6,84 @@ export default new Router ({
     mode: 'history',
     linkActiveClass: 'active',
     routes: [
+
+        // INICIO RUTAS DGAE
+
+         {//DGAE
+            path: '/DatosPersonal',
+            name: 'DatosPersonal',
+            component: require('./components/DatosPersonal.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-per')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+        
+        {//DGAE
+            path: '/RegistroPersonal',
+            name: 'RegistroPersonal',
+            component: require('./components/RegistroPersonal.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-per')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
+        {//DGAE
+            path: '/RenovarPersonal',
+            name: 'RenovarPersonal',
+            component: require('./components/RenovarPersonal.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-per')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
+        { // DGAE
+            path: '/DocumentacionPersonal',
+            name: 'DocumentacionPersonal',
+            component: require('./components/DocumentacionPersonal.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-per')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
+        {//DGAE
+            path: '/MostrarDocumentacion',
+            name: 'MostrarDocumentacion',
+            component: require('./components/MostrarDocumentacion.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-per')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
+
+
+
+        // FIN RUTAS DGAE
+
         {
             path: '*',
             component: require('./components/Notfound.vue').default
@@ -905,18 +983,7 @@ export default new Router ({
             }
         },
 
-        { // DGAE
-            path: '/DocumentacionPersonal',
-            component: require('./components/DocumentacionPersonal.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-datfam')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+       
 
         {
             path: '/DatosFamiliares/:e',
@@ -1017,47 +1084,7 @@ export default new Router ({
         
 
         
-        {//DGAE
-            path: '/DatosPersonal',
-            name: 'DatosPersonal',
-            component: require('./components/DatosPersonal.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-per')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-        
-        {//DGAE
-            path: '/RegistroPersonal',
-            name: 'RegistroPersonal',
-            component: require('./components/RegistroPersonal.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-per')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-
-        {//DGAE
-            path: '/RenovarPersonal',
-            name: 'RenovarPersonal',
-            component: require('./components/RenovarPersonal.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-per')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+       
 
 
 

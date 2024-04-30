@@ -949,17 +949,16 @@ export default {
                 });
     },
     
-
-Renovar(personalid){
-  this.$router.push({
-                name: "RenovarPersonal",
-                //ENVIO DE DATOS
-                params:{
-                    personalid: personalid
-                }
-                
-            });
-},
+    Renovar(personalid){
+      this.$router.push({
+                    name: "RenovarPersonal",
+                    //ENVIO DE DATOS
+                    params:{
+                        personalid: personalid
+                    }
+                    
+                });
+    },
 
     cambiarPagina(page,buscar,criterio){
         let me = this;
@@ -967,26 +966,6 @@ Renovar(personalid){
         me.pagination.current_page = page;
         me.ListarPersonal(page,buscar,criterio);
     },
-
-    // changeItem1: function changeItem1(rowId, event) {
-    //         this.selected = "rowId: " + rowId + ", target.value: " + event.target.value;
-    //         this.listarEntidad(event.target.value);
-    // },
-
-    // changeItem2: function changeItem2(rowId, event) {
-    //     this.selected = "rowId: " + rowId + ", target.value: " + event.target.value;
-    //     this.listarGrado(event.target.value);
-    // },
-
-    // changeItem3: function changeItem3(rowId, event) {
-    //     this.selected = "rowId: " + rowId + ", target.value: " + event.target.value;
-    //     this.listarLicencia(event.target.value);
-    // },
-
-    // changeItem4: function changeItem4(rowId, event) {
-    //     this.selected = "rowId: " + rowId + ", target.value: " + event.target.value;
-    //     this.listarHabilitacion(event.target.value);
-    // },
     
     obtenerImagen(e){
         try {

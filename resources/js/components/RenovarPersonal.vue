@@ -117,17 +117,26 @@
                                     <input type="text" v-model.trim="per_nombre" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_nombre.$error, 'is-valid':!$v.per_nombre.$invalid }">
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_nombre.required">Este campo es Requerido</span>
+                                        <span v-else-if="!$v.per_nombre.letrasSpanish">Solo letras</span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Ap. Paterno</label>
-                                    <input type="text" v-model.trim="per_appaterno" class="form-control" style="text-transform:uppercase;">
+                                    <input type="text" v-model.trim="per_appaterno" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_appaterno.$error, 'is-valid':!$v.per_appaterno.$invalid }">
+                                    <div class="invalid-feedback">
+                                        <span v-if="!$v.per_appaterno.required && !$v.per_appaterno.letrasSpanish">Solo letras o Vacio</span>
+                                        <span v-else-if="!$v.per_appaterno.letrasSpanish">Solo letras</span>
+                                    </div> 
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Ap. Materno</label>
-                                    <input type="text" v-model.trim="per_apmaterno" class="form-control" style="text-transform:uppercase;">
+                                    <input type="text" v-model.trim="per_apmaterno" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_apmaterno.$error, 'is-valid':!$v.per_apmaterno.$invalid }">
+                                    <div class="invalid-feedback">
+                                        <span v-if="!$v.per_apmaterno.required && !$v.per_apmaterno.letrasSpanish">Solo letras o Vacio</span>
+                                        <span v-else-if="!$v.per_apmaterno.letrasSpanish">Solo letras</span>
+                                    </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fecha Nacimiento</label>
@@ -152,6 +161,8 @@
                                     <input type="text" v-model.number="per_celular" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_celular.$error, 'is-valid':!$v.per_celular.$invalid }">
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_celular.required">Este campo es Requerido</span>
+                                        <span v-else-if="!$v.per_celular.numeric">Solo digitos</span>
+                                        <span v-else-if="!$v.per_celular.length">Debe contener 8 digitos</span>
                                     </div>
                                 </div>                            
                             </div>
@@ -161,6 +172,7 @@
                                     <input type="text" v-model.trim="per_email" class="form-control" :class="{ 'is-invalid' : $v.per_email.$error, 'is-valid':!$v.per_email.$invalid }">
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_email.required">Este campo es Requerido</span>
+                                        <span v-else-if="!$v.per_email.email">Email Incorrecto</span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -255,7 +267,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label class="form-control-label" for="text-input">GRADO Y NOMBRE: {{per_grado}} {{per_nombre}} {{per_appaterno}} {{per_apmaterno}}</label>
+                                    <label class="form-control-label" for="text-input">GRADO Y NOMBRE: {{per_grado_abreviatura}} {{per_nombre}} {{per_appaterno}} {{per_apmaterno}}</label>
                                 </div>
                             </div>
                             <div class="table-wrapper-scroll-y my-custom-scrollbar" id="myTable" style="font-size: 12pt;">
@@ -418,7 +430,7 @@
   </template>
   
   <script>
-  import { required, between, minLength, maxLength, alpha, numeric, email, helpers} from "vuelidate/lib/validators";
+  import { required, between, minLength, maxLength, alpha, numeric, email, helpers, date} from "vuelidate/lib/validators";
   export default {
     data() {
       return {
@@ -430,6 +442,7 @@
         per_categoria : '',
         per_entidad : '',
         per_grado : '',
+        per_grado_abreviatura : '',
         per_ci : '',
         per_cm : '',
         per_nombre : '',
@@ -519,10 +532,12 @@
             per_grado: { required },
             per_ci: { required },
             per_cm : { required },
-            per_nombre : { required },
+            per_nombre : { required, letrasSpanish: value => /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },
+            per_appaterno : { letrasSpanishVacio: value => !value || /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },
+            per_apmaterno : { letrasSpanishVacio: value => !value || /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },  
             per_sexo : { required },
-            per_celular : { required },
-            per_email : { required },
+            per_celular : { required, numeric, hasSpecificLength: value => value && value.toString().length === 8 },
+            per_email : { required, email},
             per_fechnac : { required },
             per_direccion : { required },
             per_titlic : { required },
@@ -549,6 +564,8 @@
             'per_ci',
             'per_cm',
             'per_nombre',
+            'per_appaterno',
+            'per_apmaterno',
             'per_sexo',
             'per_celular',
             'per_email',
@@ -789,6 +806,7 @@
             this.per_nacionalidad = personal.idnacionalidad,
             this.per_entidad = personal.id_entidad,
             this.per_grado = personal.id_grado,
+            this.per_grado_abreviatura = personal.abreviatura,
             this.per_ci = personal.per_ci,
             this.per_cm = personal.per_cm,
             this.per_nombre = personal.per_nombre,
