@@ -38,7 +38,7 @@
       </div>
     </li> --}}
     <a type="button" class="btn btn-outline-danger btn-sm" href="{{ route('logout') }}">
-      <i class="fas fa-power-off"></i> Cerrar Sesion
+      <i class="fas fa-power-off"></i> Cerrar Sesión
     </a>
   </ul>
 </nav>

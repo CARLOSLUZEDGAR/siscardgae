@@ -13,7 +13,7 @@
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                <!-- <li class="breadcrumb-item"><a href="/">Inicio</a></li> -->
                 <!-- <li class="breadcrumb-item active">Datos del Personal</li> -->
               </ol>
             </div>
@@ -364,20 +364,20 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="text-center">
-                                                <label class="form-control-label" for="text-input">7</label>
-                                            </td>
-                                            <td>
-                                                <label class="form-control-label" for="text-input">LIBRETA MILITAR</label>
-                                            </td>
-                                            <td>
-                                                <input type="file" class="form-control" @change="obtenerLibreta" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_libreta.$error, 'is-valid':!$v.doc_libreta.$invalid }">
-                                                <div class="invalid-feedback">
-                                                  <span v-if="!$v.doc_libreta.required">Por favor, carga un archivo.</span>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                          <tr>
+                                              <td class="text-center">
+                                                  <label class="form-control-label" for="text-input">7</label>
+                                              </td>
+                                              <td>
+                                                  <label class="form-control-label" for="text-input">LIBRETA MILITAR</label>
+                                              </td>
+                                              <td>
+                                                  <input type="file" class="form-control" @change="obtenerLibreta" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_libreta.$error, 'is-valid':!$v.doc_libreta.$invalid }">
+                                                  <div class="invalid-feedback">
+                                                    <span v-if="!$v.doc_libreta.required">Por favor, carga un archivo.</span>
+                                                  </div>
+                                              </td>
+                                          </tr>
                                         <tr>
                                             <td class="text-center">
                                                 <label class="form-control-label" for="text-input">8</label>
@@ -583,8 +583,8 @@
         arrayDatPer : [],
         arrayNacionalidadA : [],
         v : 0,
-        vA : 0,
-        vCI : 0,
+        // vA : 0,
+        // vCI : 0,
   
         na_pais : '',
         na_abreviatura : '',
@@ -780,7 +780,7 @@
                     this.doc_ci = e.target.result;
                 }
                 fileReader.readAsDataURL(e.target.files[0])
-                this.vCI = 1;
+                // this.vCI = 1;
             } catch (error) {
                 
             }
@@ -794,7 +794,7 @@
                     this.doc_nacimiento = e.target.result;
                 }
                 fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
+                // this.vNAC = 1;
             } catch (error) {
                 
             }
@@ -808,7 +808,7 @@
                     this.doc_egreso = e.target.result;
                 }
                 fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
+                // this.vNAC = 1;
             } catch (error) {
                 
             }
@@ -822,7 +822,7 @@
                     this.doc_especializacion = e.target.result;
                 }
                 fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
+                // this.vNAC = 1;
             } catch (error) {
                 
             }
@@ -836,7 +836,7 @@
                     this.doc_medico = e.target.result;
                 }
                 fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
+                // this.vNAC = 1;
             } catch (error) {
                 
             }
@@ -850,7 +850,7 @@
                     this.doc_titulo = e.target.result;
                 }
                 fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
+                // this.vNAC = 1;
             } catch (error) {
                 
             }
@@ -864,7 +864,7 @@
                     this.doc_libreta = e.target.result;
                 }
                 fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
+                // this.vNAC = 1;
             } catch (error) {
                 
             }
@@ -878,7 +878,7 @@
                     this.doc_aprobacion = e.target.result;
                 }
                 fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
+                // this.vNAC = 1;
             } catch (error) {
                 
             }
@@ -1002,7 +1002,16 @@
                     linguistica : me.per_comlinguistica,
                     observacion : me.per_observaciones,
                     fech_emision : me.per_fechaemision,
-                    fech_expiracion : me.per_fechaexpiracion
+                    fech_expiracion : me.per_fechaexpiracion,
+
+                    doc_carnet_identidad :me.doc_ci,
+                    doc_cert_nacimineto : me.doc_nacimiento,
+                    doc_cert_egreso : me.doc_egreso,
+                    doc_cert_espe : me.doc_especializacion,
+                    doc_cert_medico : me.doc_medico,
+                    doc_dip_titulo : me.doc_titulo,
+                    doc_lib_mil : me.doc_libreta,
+                    doc_exa_aprobacion : me.doc_aprobacion,
                   })
                   .then(function (response) {
                       

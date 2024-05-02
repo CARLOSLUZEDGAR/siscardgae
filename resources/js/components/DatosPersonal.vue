@@ -13,7 +13,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+              <!-- <li class="breadcrumb-item"><a href="/">Inicio</a></li> -->
+              
               <!-- <li class="breadcrumb-item active">Datos del Personal</li> -->
             </ol>
           </div>

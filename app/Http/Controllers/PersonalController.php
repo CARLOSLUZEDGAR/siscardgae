@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Personal;
+use App\PersonalDocumento;
 use App\PersonalLicencia;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
@@ -69,6 +70,42 @@ class PersonalController extends Controller
             'estado' => '1',
             'sysuser' => Auth::user()->id
         ]);
+
+        $documentos = array($request->doc_carnet_identidad,
+                            $request->doc_cert_nacimineto,
+                            $request->doc_cert_egreso,
+                            $request->doc_cert_espe,
+                            $request->doc_cert_medico,
+                            $request->doc_dip_titulo,
+                            $request->doc_lib_mil,
+                            $request->doc_exa_aprobacion);
+        $cantDocument = sizeof($documentos);
+        $x = 1;
+        for ($i=0; $i < $cantDocument ; $i++) { 
+            if($documentos[$i] != ""){
+                $exploded = explode(',', $documentos[$i]);
+                $decoded = base64_decode($exploded[1]);
+                if (Str::contains($exploded[0], 'pdf')) {
+                    $extension = 'pdf';
+                } else {
+                    $extension = 'pdf';
+                }
+                $documentName = $x.'_'.($request->ci).'.'.$extension;
+                $path = public_path().'/document/personal/'.$documentName;
+                file_put_contents($path, $decoded);
+                $x++;
+                $personal_documento = PersonalDocumento::create([
+                    'id_personal' => $personal->id,
+                    'id_licencia' => $personal_licencia->id,
+                    'documento' => $documentName,
+                    'estado' => '1',
+                    'sysuser' => Auth::user()->id
+                ]);
+            }
+            else{
+                $x++;
+            }
+        }
 
         return ['personal' => $personal_licencia];
     }
