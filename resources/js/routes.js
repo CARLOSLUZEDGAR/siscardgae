@@ -9,13 +9,27 @@ export default new Router ({
 
         // INICIO RUTAS DGAE
 
+        { //DGAE
+            path: '/usuarios',
+            name: 'Usuarios',
+            component:  require('./components/Usuarios/Index.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-rolper') && per.includes('view-user')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
          {//DGAE
             path: '/DatosPersonal',
             name: 'DatosPersonal',
             component: require('./components/DatosPersonal.vue').default,
             beforeEnter: (to, from, next) => {
                 let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-per')) {
+                if (per.includes('view-dat-carnet')) {
                     next();
                 } else {
                     next(from.path);
@@ -29,7 +43,7 @@ export default new Router ({
             component: require('./components/RegistroPersonal.vue').default,
             beforeEnter: (to, from, next) => {
                 let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-per')) {
+                if (per.includes('view-insert-per')) {
                     next();
                 } else {
                     next(from.path);
@@ -43,7 +57,7 @@ export default new Router ({
             component: require('./components/RenovarPersonal.vue').default,
             beforeEnter: (to, from, next) => {
                 let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-per')) {
+                if (per.includes('view-renew-per')) {
                     next();
                 } else {
                     next(from.path);
@@ -57,7 +71,7 @@ export default new Router ({
             component: require('./components/DocumentacionPersonal.vue').default,
             beforeEnter: (to, from, next) => {
                 let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-per')) {
+                if (per.includes('view-doc-carnet')) {
                     next();
                 } else {
                     next(from.path);
@@ -72,6 +86,34 @@ export default new Router ({
             beforeEnter: (to, from, next) => {
                 let per = window.user.permissions.map(permission=>permission.name);
                 if (per.includes('view-per')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
+        { // DGAE
+            path: '/DatosAeronaves',
+            name: 'DatosAeronaves',
+            component: require('./components/DatosAeronaves.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-dat-aeronave')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
+        { // DGAE
+            path: '/DocumentacionAeronave',
+            name: 'DocumentacionAeronave',
+            component: require('./components/DocumentacionAeronave.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-doc-aeronave')) {
                     next();
                 } else {
                     next(from.path);
@@ -164,18 +206,7 @@ export default new Router ({
         },
         ////// MODULOS DE ARMING QUISPE
         // INICIO MODULO ESCALAFON PERSONAL
-        { // DGAE
-            path: '/DatosAeronaves',
-            component: require('./components/DatosAeronaves.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-peresc')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+       
 
         {
             path: '/EscalafonPersonal/:e',
@@ -191,19 +222,7 @@ export default new Router ({
             }
         },
 
-        { // DGAE
-            path: '/DocumentacionAeronave',
-            name: 'Escalafon',
-            component: require('./components/DocumentacionAeronave.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-listesc')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+        
 
         {
             path: '/listarSubescalafon',
@@ -1325,19 +1344,7 @@ export default new Router ({
         /**
          * Ruta para creacion de usuarios
          */
-         {
-            path: '/usuarios',
-            name: 'Usuarios',
-            component:  require('./components/Usuarios/Index.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-rolper') && per.includes('view-user')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+        
         {
             path: '/datosUser',
             name: 'DatosUser',

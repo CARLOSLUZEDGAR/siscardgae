@@ -172,62 +172,59 @@
                 <div class="form-group row">
                     <div class="col-md-4">
                         <label class="form-control-label" for="text-input">Nombre</label>
-                        <!-- <input type="text" v-model="nom_usu" class="form-control" :class="{ 'is-invalid' : $v.nom_usu.$error, 'is-valid':!$v.nom_usu.$invalid }"> -->
-                        <input type="text" v-model="nom_usu" class="form-control" style="text-transform:uppercase;">
-                        <!-- <div class="invalid-feedback">
+                        <input type="text" v-model="nom_usu" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.nom_usu.$error, 'is-valid':!$v.nom_usu.$invalid }">
+                        <div class="invalid-feedback">
                             <span v-if="!$v.nom_usu.required">Este campo es Requerido</span>
-                        </div> -->
+                            <span v-else-if="!$v.nom_usu.letrasSpanish">Solo letras</span>
+                        </div>
                     </div>
                     <div class="col-md-4">
                         <label class="form-control-label" for="text-input">Ap. Paterno</label>
-                        <!-- <input type="text" v-model="nom_usu" class="form-control" :class="{ 'is-invalid' : $v.nom_usu.$error, 'is-valid':!$v.nom_usu.$invalid }"> -->
-                        <input type="text" v-model="appat_usu" class="form-control" style="text-transform:uppercase;">
-                        <!-- <div class="invalid-feedback">
-                            <span v-if="!$v.nom_usu.required">Este campo es Requerido</span>
-                        </div> -->
+                        <input type="text" v-model="appat_usu" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.appat_usu.$error, 'is-valid':!$v.appat_usu.$invalid }">
+                        <div class="invalid-feedback">
+                            <span v-if="!$v.appat_usu.required && !$v.appat_usu.letrasSpanishVacio">Solo letras o Vacio</span>
+                            <span v-else-if="!$v.appat_usu.letrasSpanishVacio">Solo letras</span>
+                        </div> 
                     </div>
                     <div class="col-md-4">
                         <label class="form-control-label" for="text-input">Ap. Materno</label>
-                        <!-- <input type="text" v-model="nom_usu" class="form-control" :class="{ 'is-invalid' : $v.nom_usu.$error, 'is-valid':!$v.nom_usu.$invalid }"> -->
-                        <input type="text" v-model="apmat_usu" class="form-control" style="text-transform:uppercase;">
-                        <!-- <div class="invalid-feedback">
-                            <span v-if="!$v.nom_usu.required">Este campo es Requerido</span>
-                        </div> -->
+                        <input type="text" v-model="apmat_usu" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.apmat_usu.$error, 'is-valid':!$v.apmat_usu.$invalid }">
+                        <div class="invalid-feedback">
+                            <span v-if="!$v.apmat_usu.required && !$v.apmat_usu.letrasSpanishVacio">Solo letras o Vacio</span>
+                            <span v-else-if="!$v.apmat_usu.letrasSpanishVacio">Solo letras</span>
+                        </div> 
                     </div>
                     <div class="col-md-4">
                         <label class="form-control-label" for="text-input">Email</label>
-                        <!-- <input type="text" v-model="nom_usu" class="form-control" :class="{ 'is-invalid' : $v.nom_usu.$error, 'is-valid':!$v.nom_usu.$invalid }"> -->
-                        <input type="text" v-model="email" class="form-control">
-                        <!-- <div class="invalid-feedback">
-                            <span v-if="!$v.nom_usu.required">Este campo es Requerido</span>
-                        </div> -->
+                        <input type="text" v-model="email" class="form-control" :class="{ 'is-invalid' : $v.email.$error, 'is-valid':!$v.email.$invalid }">
+                        <div class="invalid-feedback">
+                            <span v-if="!$v.email.required">Este campo es Requerido</span>
+                            <span v-else-if="!$v.email.email">Email Incorrecto</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    
-                        <div class="col-sm-12">
-                            <label for="">ROLES:</label>
-                            <v-select
-                                label="name"
-                                :options="Aroles"
-                                v-model="role"
+                    <div class="col-sm-12">
+                        <label for="">ROLES:</label>
+                        <v-select
+                            label="name"
+                            :options="Aroles"
+                            v-model="role"
+                        >
+                            <template v-slot:no-options="{ search, searching }">
+                            <template v-if="searching">
+                                Lo sentimos, no hay opciones de coincidencia.<em>{{
+                                search
+                                }}</em
+                                >.
+                            </template>
+                            <em v-else
+                                >Lo sentimos, no hay opciones de coincidencia.</em
                             >
-                                <template v-slot:no-options="{ search, searching }">
-                                <template v-if="searching">
-                                    Lo sentimos, no hay opciones de coincidencia.<em>{{
-                                    search
-                                    }}</em
-                                    >.
-                                </template>
-                                <em v-else
-                                    >Lo sentimos, no hay opciones de coincidencia.</em
-                                >
-                                </template>
-                            </v-select>
-
-                        </div>
-                    
+                            </template>
+                        </v-select>
+                    </div>
                 </div>
 
                 <!-- <div class="form-group row">
@@ -240,8 +237,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @click="CrearUsuario()">Registrar</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">Cerrar</button>
+                <button type="button" class="btn btn-primary" @click="CrearUsuario()">REGISTRAR</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">CERRAR</button>
 
             </div>
           </div>
@@ -504,22 +501,13 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
-
-
-
-
-
-
-
-
-
-
     </section>
     <!-- /.content -->
   </div>
 </template>
 
 <script>
+import { required, between, minLength, maxLength, alpha, numeric, email, helpers, date} from "vuelidate/lib/validators";
 export default {
     data() {
         return {
@@ -577,6 +565,21 @@ export default {
             eseccion: '',
         }
     },
+
+    validations: {
+        nom_usu : { required, letrasSpanish: value => /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },
+        appat_usu : { letrasSpanishVacio: value => !value || /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },
+        apmat_usu : { letrasSpanishVacio: value => !value || /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },
+        email : { required, email},
+
+        validationsGroupReg: [
+            'nom_usu',
+            'appat_usu',
+            'apmat_usu',
+            'email'
+        ]
+    },
+
     mounted() {
         // this.ListarPersonal();
         this.ListarUsuarios(1);
@@ -608,7 +611,7 @@ export default {
     },
     methods: {
         NuevoUsuario(){ //BASE
-            // this.$v.$reset(),
+            this.$v.validationsGroupReg.$reset(),
             //PONER DE CERO EL MODAL ANTES DE REGISTRAR
             this.nom_usu = '',
             this.appat_usu = '',
@@ -618,7 +621,7 @@ export default {
             $('#ModalUsuario').modal('show');
             $(".modal-header").css("background-color", "#007bff");
             $(".modal-header").css("color", "white" );
-            $(".modal-title-registro").text("Nuevo Usuario");
+            $(".modal-title-registro").text("NUEVO USUARIO");
             this.ListarRoles();
             // this.selectSubespecialidad()
             // this.selectbuscarSubespecialidad(this.perespe_especialidad)
@@ -691,65 +694,75 @@ export default {
             
         },
         CrearUsuario(){ //BASE
-            swal.fire({
-                title: '¿Desea registrar este usuario?', // TITULO 
-                icon: 'question', //ICONO (success, warnning, error, info, question)
-                showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-                confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-                cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
-                confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
-                cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
-                buttonsStyling: true,
-                reverseButtons: true
-                }).then((result) => {
-                if (result.value) {
-                    let me = this;
-                    axios
-                    .post("/crearUsuario", {
-                        // percodigo: me.datos.percodigo,
-                        // email:  me.datos.email,
-                        // nick: me.nick,
-                        // rol: me.rol.name,
-                        // des2: me.datos.des2,
-                        // des3: me.datos.des3,
-                        // nombre: me.datos.nombre,
-                        // paterno: me.datos.paterno,
-                        // materno: me.datos.materno,
-                        // seccion: me.seccion  
-                        nombres : me.nom_usu,
-                        ap_paterno : me.appat_usu,
-                        ap_materno : me.apmat_usu,
-                        email : me.email,
-                        rol: me.role.id,
-                    })
-                    .then(function (response) {
-                       
-                       console.log(response);
+            if(!this.$v.validationsGroupReg.$invalid){
+                swal.fire({
+                    title: '¿Desea registrar este usuario?', // TITULO 
+                    icon: 'question', //ICONO (success, warnning, error, info, question)
+                    showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+                    confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+                    cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
+                    confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
+                    cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
+                    buttonsStyling: true,
+                    reverseButtons: true
+                    }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        axios
+                        .post("/crearUsuario", {
+                            // percodigo: me.datos.percodigo,
+                            // email:  me.datos.email,
+                            // nick: me.nick,
+                            // rol: me.rol.name,
+                            // des2: me.datos.des2,
+                            // des3: me.datos.des3,
+                            // nombre: me.datos.nombre,
+                            // paterno: me.datos.paterno,
+                            // materno: me.datos.materno,
+                            // seccion: me.seccion  
+                            nombres : me.nom_usu,
+                            ap_paterno : me.appat_usu,
+                            ap_materno : me.apmat_usu,
+                            email : me.email,
+                            rol: me.role.id,
+                        })
+                        .then(function (response) {
+                        
+                        console.log(response);
+                            swal.fire(
+                                response.data.titulo, //TITULO
+                                response.data.mensaje, //TEXTO DE MENSAJE
+                                response.data.tipo // TIPO DE MODAL (success, warnning, error, info)
+                            );
+                            if (!response.data.code) {
+                                // $('#NuevoUsuario').modal('hide');
+                                $('#ModalUsuario').modal('hide');
+                                me.nick = '';
+                                me.password = '';
+                                me.ListarUsuarios(1);
+                            } 
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log(error);
+                        })
+                    }else{
                         swal.fire(
-                            response.data.titulo, //TITULO
-                            response.data.mensaje, //TEXTO DE MENSAJE
-                            response.data.tipo // TIPO DE MODAL (success, warnning, error, info)
+                            "Informacion", //TITULO
+                            "Solicitud cancelada.", //TEXTO DE MENSAJE
+                            "info" // TIPO DE MODAL (success, warnning, error, info)
                         );
-                        if (!response.data.code) {
-                            // $('#NuevoUsuario').modal('hide');
-                            $('#ModalUsuario').modal('hide');
-                            me.nick = '';
-                            me.password = '';
-                            me.ListarUsuarios(1);
-                        } 
-                    })
-                    .catch(function (error) {
-                        // handle error
-                        console.log(error);
-                    })
-                }else{
-                     swal.fire(
-                        "Informacion", //TITULO
-                        "Solicitud cancelada.", //TEXTO DE MENSAJE
-                        "info" // TIPO DE MODAL (success, warnning, error, info)
-                    );
-                }
-            })
+                    }
+                })
+            }else{
+                this.$v.validationsGroupReg.$touch();
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Ingrese todos los datos requeridos',
+                    showConfirmButton: false,
+                    timer: 2000
+                }) 
+            }
         },
 
         ModalRoles(id){

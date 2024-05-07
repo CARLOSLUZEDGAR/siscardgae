@@ -37,7 +37,7 @@
                       <!-- Buscar Personal -->
                     </h3>  
                   </div>                  
-                  <div class="col-sm-4" v-if="$auth.can('insert-per')">
+                  <div class="col-sm-4" v-if="$auth.can('view-insert-per')">
                     <button class="btn btn-primary btn-sm float-right" type="submit" @click="Registro()">
                       <i class="fas fa-user-plus"></i>&nbsp; REGISTRAR NUEVO PERSONAL
                     </button>
@@ -76,12 +76,11 @@
                                     <td v-text="personal.per_nombre"></td>
                                     <td v-text="personal.per_ci"></td>
                                     <td style="width:100px; text-align:center">
+                                      <div v-if="$auth.can('view-renew-per')">
                                         <button type="button" @click="Renovar(personal.id)" class="btn btn-success btn-sm">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </button>
-                                        <!-- <button type="button" @click="ReportePersona(personal.per_codigo)" class="btn btn-warning btn-sm">
-                                            <i class="far fa-file-pdf"></i>
-                                        </button> -->
+                                      </div>
                                     </td>
                                 </tr>
                             </tbody>

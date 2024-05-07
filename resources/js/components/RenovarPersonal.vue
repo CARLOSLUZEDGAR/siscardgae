@@ -36,7 +36,7 @@
                         <!-- Buscar Personal -->
                       </h3>  
                     </div>                  
-                    <div class="col-sm-4" v-if="$auth.can('insert-per')">
+                    <div class="col-sm-4">
                       <button class="btn btn-danger btn-sm float-right" type="submit" @click="Atras()">
                         <i class="fas fa-arrow-left"></i>&nbsp; ATRAS
                       </button>
