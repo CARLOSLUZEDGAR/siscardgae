@@ -207,23 +207,14 @@
                 <div class="form-group row">
                     <div class="col-sm-12">
                         <label for="">ROLES:</label>
-                        <v-select
-                            label="name"
-                            :options="Aroles"
-                            v-model="role"
-                        >
-                            <template v-slot:no-options="{ search, searching }">
-                            <template v-if="searching">
-                                Lo sentimos, no hay opciones de coincidencia.<em>{{
-                                search
-                                }}</em
-                                >.
-                            </template>
-                            <em v-else
-                                >Lo sentimos, no hay opciones de coincidencia.</em
-                            >
-                            </template>
-                        </v-select>
+                        
+                        <select class="form-control" v-model="rol" :class="{ 'is-invalid' : $v.rol.$error, 'is-valid':!$v.rol.$invalid }">
+                            <option value="" disabled>SELECCIONE</option>
+                            <option v-for="rol in Aroles" :key="rol.id" :value="rol.id"  v-text="rol.name"></option>
+                        </select>
+                        <div class="invalid-feedback">
+                            <span v-if="!$v.rol.required">Este campo es Requerido</span>
+                        </div>
                     </div>
                 </div>
 
@@ -353,7 +344,7 @@
             <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                <h4 class="modal-title">{{Edatos.grado}} {{Edatos.complemento}} {{Edatos.nombre}} {{Edatos.paterno}} {{Edatos.materno}}</h4>
+                <h4 class="modal-title">{{Edatos.nombres}} {{Edatos.ap_paterno}} {{Edatos.ap_materno}}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -362,28 +353,46 @@
                     <!-- llenado de informacion de Datos -->
                         <div class="row">
                             <!-- Foto del Personal -->
-                            <div  class="col-md-2" style="vertical-align:middle;">
+                            <!-- <div  class="col-md-2" style="vertical-align:middle;">
                                 <img v-bind:src="'https://sipefab.fab.bo/img/personal/'+Edatos.foto" width="100%" height="100%">
-                            </div>
+                            </div> -->
                             <!-- Edatos personales -->
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <dl>
-                                            <dt class="st">CARNET MILITAR</dt>
-                                            <dd class="st">{{ Edatos.cm }}</dd>
+                                            <dt class="st">NOMBRE</dt>
+                                            <dd class="st">
+                                                <input type="text" v-model.trim="nom_usuA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.nom_usuA.$error, 'is-valid':!$v.nom_usuA.$invalid }">
+                                                <div class="invalid-feedback">
+                                                    <span v-if="!$v.nom_usuA.required">Este campo es Requerido</span>
+                                                    <span v-else-if="!$v.nom_usuA.letrasSpanish">Solo letras</span>
+                                                </div>
+                                            </dd>
                                         </dl>
                                     </div>
                                     <div class="col-md-4">
                                         <dl>
-                                            <dt class="st">CARNET DE IDENTIDAD</dt>
-                                            <dd class="st">{{ Edatos.ci }} {{ Edatos.expedido }}</dd>
+                                            <dt class="st">AP. PATERNO</dt>
+                                            <dd class="st">
+                                                <input type="text" v-model.trim="appat_usuA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.appat_usuA.$error, 'is-valid':!$v.appat_usuA.$invalid }">
+                                                <div class="invalid-feedback">
+                                                    <span v-if="!$v.appat_usuA.required && !$v.appat_usuA.letrasSpanish">Solo letras o Vacio</span>
+                                                    <span v-else-if="!$v.appat_usuA.letrasSpanish">Solo letras</span>
+                                                </div>
+                                            </dd>
                                         </dl>
                                     </div>
                                     <div class="col-md-4">
                                         <dl>
-                                            <dt class="st">SITUACION</dt>
-                                            <dd class="st">{{ Edatos.situacion }}</dd>
+                                            <dt class="st">AP. MATERNO</dt>
+                                            <dd class="st">
+                                                <input type="text" v-model.trim="apmat_usuA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.apmat_usuA.$error, 'is-valid':!$v.apmat_usuA.$invalid }">
+                                                <div class="invalid-feedback">
+                                                    <span v-if="!$v.apmat_usuA.required && !$v.apmat_usuA.letrasSpanish">Solo letras o Vacio</span>
+                                                    <span v-else-if="!$v.apmat_usuA.letrasSpanish">Solo letras</span>
+                                                </div>
+                                            </dd>
                                         </dl>
                                     </div>
                                     
@@ -391,8 +400,14 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <dl>
-                                            <dt class="st">DESTINO:</dt>
-                                            <dd class="st">{{ Edatos.des2 }} {{ Edatos.des3 }}</dd>
+                                            <dt class="st">EMAIL:</dt>
+                                            <dd class="st"> 
+                                                <input type="text" v-model.trim="emailA" class="form-control" :class="{ 'is-invalid' : $v.emailA.$error, 'is-valid':!$v.emailA.$invalid }">
+                                                <div class="invalid-feedback">
+                                                    <span v-if="!$v.emailA.required">Este campo es Requerido</span>
+                                                    <span v-else-if="!$v.emailA.email">Email Incorrecto</span>
+                                                </div>
+                                            </dd>
                                         </dl>
                                     </div>
                                 </div>
@@ -401,7 +416,7 @@
                                         <label for="">NICK:</label>
                                         <input type="text" style=" background-color: rgba(182, 171, 171, 0.849); text-align: center;" class="form-control" disabled v-model="Edatos.nick">
                                     </div>
-                                   <div class="col-md-4">
+                                   <!-- <div class="col-md-4">
                                         <label class="col-md-12" for="">SECCION:</label>
                                         <select class="form-control col-md-12" v-model="eseccion">
                                             <option value="1">OFICIALES</option>
@@ -409,15 +424,22 @@
                                             <option value="3">PERSONAL CIVIL</option>
                                             <option value="4">TODOS</option>
                                         </select>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                 </div>
-                <div class="modal-footer justify-content-between">
+                <!-- <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary" @click="EditarUsuario()">Editar Usuario</button>
-                </div>
+                </div> -->
+
+                <div class="modal-footer">
+                <button type="button" class="btn btn-primary" @click="EditarUsuario()">EDITAR</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">CERRAR</button>
+
+            </div>
+
             </div>
             <!-- /.modal-content -->
             </div>
@@ -520,6 +542,13 @@ export default {
             apmat_usu : '',
             email : '',
             // FIN VARIBLES NEW USER
+            // VARIABLES MODIFICAR USER
+            nom_usuA : '',
+            appat_usuA : '',
+            apmat_usuA : '',
+            emailA : '',
+            // FIN VARIBLES MODIFICAR USER
+
             per: [],
             nick: '',
             password: null,
@@ -571,13 +600,28 @@ export default {
         appat_usu : { letrasSpanishVacio: value => !value || /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },
         apmat_usu : { letrasSpanishVacio: value => !value || /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },
         email : { required, email},
+        rol : { required },
+
+        nom_usuA : { required, letrasSpanish: value => /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },
+        appat_usuA : { letrasSpanishVacio: value => !value || /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },
+        apmat_usuA : { letrasSpanishVacio: value => !value || /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },
+        emailA : { required, email},
 
         validationsGroupReg: [
             'nom_usu',
             'appat_usu',
             'apmat_usu',
-            'email'
-        ]
+            'email',
+            'rol'
+        ],
+
+        validationsGroupMod: [
+            'nom_usuA',
+            'appat_usuA',
+            'apmat_usuA',
+            'emailA',
+            // 'rol'
+        ],
     },
 
     mounted() {
@@ -617,6 +661,7 @@ export default {
             this.appat_usu = '',
             this.apmat_usu = '',
             this.email = '',
+            this.rol = '',
             //FIN PONER A CERO MODAL
             $('#ModalUsuario').modal('show');
             $(".modal-header").css("background-color", "#007bff");
@@ -906,7 +951,13 @@ export default {
                 me.eseccion = response.data.usuarios.seccion;
                 me.Erol = response.data.role.name
                 me.namErol = response.data.role.name;
+                me.nom_usuA = me.Edatos.nombres;
+                me.appat_usuA = me.Edatos.ap_paterno;
+                me.apmat_usuA = me.Edatos.ap_materno;
+                me.emailA = me.Edatos.email;
                 $('#EditarUsuario').modal('show');
+                $(".modal-header").css("background-color", "#007bff");
+                $(".modal-header").css("color", "white" );
             })
             .catch(function (error) {
                 // handle error
@@ -914,49 +965,64 @@ export default {
             })
         },
         EditarUsuario(){
-            if (this.Erol.name) {
-                var role = this.Erol.name;
-            } else {
-                var role = this.namErol;
+            if(!this.$v.validationsGroupMod.$invalid){
+            // if (this.Erol.name) {
+            //     var role = this.Erol.name;
+            // } else {
+            //     var role = this.namErol;
+            // }
+                swal.fire({
+                    title: '¿Desea editar este usuario?', // TITULO 
+                    icon: 'question', //ICONO (success, warnning, error, info, question)
+                    showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+                    confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+                    cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
+                    confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
+                    cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
+                    buttonsStyling: true,
+                    reverseButtons: true
+                    }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        axios
+                        .put("/editarUsuarios", {
+                            id: me.Eid,
+                            // seccion: me.eseccion
+                            nombre: me.nom_usuA,
+                            ap_paterno: me.appat_usuA,
+                            ap_materno: me.apmat_usuA,
+                            email: me.emailA,
+                        })
+                        .then(function (response) {
+                            
+                            $('#EditarUsuario').modal('hide');
+                            me.ListarUsuarios(1);
+                            me.Eid = '';
+                            me.Epassword = '';
+                            me.eseccion = '';
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log(error);
+                        })                    
+                    }else{
+                            swal.fire(
+                            "Informacion", //TITULO
+                            "Solicitud cancelada.", //TEXTO DE MENSAJE
+                            "info" // TIPO DE MODAL (success, warnning, error, info)
+                        );
+                    }
+                })
+            }else{
+                this.$v.validationsGroupMod.$touch();
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Ingrese todos los datos requeridos',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                
             }
-            swal.fire({
-                title: '¿Desea editar este usuario?', // TITULO 
-                icon: 'question', //ICONO (success, warnning, error, info, question)
-                showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-                confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-                cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
-                confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
-                cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
-                buttonsStyling: true,
-                reverseButtons: true
-                }).then((result) => {
-                if (result.value) {
-                    let me = this;
-                    axios
-                    .put("/editarUsuarios", {
-                        id: me.Eid,
-                        seccion: me.eseccion
-                    })
-                    .then(function (response) {
-                        
-                        $('#EditarUsuario').modal('hide');
-                        me.ListarUsuarios(1);
-                        me.Eid = '';
-                        me.Epassword = '';
-                        me.eseccion = '';
-                    })
-                    .catch(function (error) {
-                        // handle error
-                        console.log(error);
-                    })                    
-                }else{
-                     swal.fire(
-                        "Informacion", //TITULO
-                        "Solicitud cancelada.", //TEXTO DE MENSAJE
-                        "info" // TIPO DE MODAL (success, warnning, error, info)
-                    );
-                }
-            })
         },
         CambioEstado(estado, id){
             if (estado == 1) {
