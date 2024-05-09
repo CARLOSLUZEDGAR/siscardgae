@@ -68,15 +68,13 @@ class UsuarioController extends Controller
 
         $user = User::create([
             'id_usuario' => $usuario->id,
-            'nick' => mb_strtoupper($request->nombres)+$usuario->id,
+            'nick' => mb_strtoupper($request->nombres).$usuario->id,
             'email' => $request->email,
             'password' => Hash::make($randomString),
             'estado' => '1',
             'seccion' => '4',
             'session' => '1'
         ]);
-
-        $user = 
 
         $user->assignRole($request->rol);
 

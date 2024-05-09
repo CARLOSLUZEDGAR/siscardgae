@@ -10,12 +10,12 @@
               USUARIOS
             </h1>
           </div>
-          <div class="col-sm-6">
+          <!-- <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Modals & Alerts</li>
             </ol>
-          </div>
+          </div> -->
         </div>
       </div>
       <!-- /.container-fluid -->
@@ -416,7 +416,7 @@
                                         <label for="">NICK:</label>
                                         <input type="text" style=" background-color: rgba(182, 171, 171, 0.849); text-align: center;" class="form-control" disabled v-model="Edatos.nick">
                                     </div>
-                                   <!-- <div class="col-md-4">
+                                    <!-- <div class="col-md-4">
                                         <label class="col-md-12" for="">SECCION:</label>
                                         <select class="form-control col-md-12" v-model="eseccion">
                                             <option value="1">OFICIALES</option>
@@ -429,17 +429,10 @@
                             </div>
                         </div>
                 </div>
-                <!-- <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" @click="EditarUsuario()">Editar Usuario</button>
-                </div> -->
-
                 <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @click="EditarUsuario()">EDITAR</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">CERRAR</button>
-
-            </div>
-
+                    <button type="button" class="btn btn-primary" @click="EditarUsuario()">EDITAR</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">CERRAR</button>
+                </div>
             </div>
             <!-- /.modal-content -->
             </div>
@@ -769,7 +762,7 @@ export default {
                             ap_paterno : me.appat_usu,
                             ap_materno : me.apmat_usu,
                             email : me.email,
-                            rol: me.role.id,
+                            rol: me.rol,
                         })
                         .then(function (response) {
                         

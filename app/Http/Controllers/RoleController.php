@@ -77,6 +77,7 @@ class RoleController extends Controller
         $permisos = DB::table('permissions as p')
         ->join('modulos as m', 'p.mod_cod','m.id')
         ->select('p.id','p.name','p.detalle','m.nombre as modulo')
+        ->orderBy('m.id','asc')
         ->get();
 
         return response()->json($permisos);
@@ -95,6 +96,7 @@ class RoleController extends Controller
                 ->where('rp.role_id',$id);
         })
         ->join('modulos as m', 'p.mod_cod','m.id')
+        ->orderBy('m.id','asc')
         ->get();
 
         return response()->json([

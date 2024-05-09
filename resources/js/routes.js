@@ -722,19 +722,7 @@ export default new Router ({
             }
         },
         // INICIO MODULO TRIBUNALES PERSONAL - PABLO
-        {
-            path: '/miemborstrib',
-            name: 'Tribunales',
-            component: require('./components/Tribunales.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('viwe-trib')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+        
         {
             path: '/tribunales',
             name: 'PersonalTribunales',
@@ -847,19 +835,7 @@ export default new Router ({
        /*
         * Rutas para Situacion Militar MATTOS
         */
-        {
-            path: '/SituacionMilitarIndex/:codigo',
-            name: 'SituacionMilitarIndex',
-            component:  require('./components/SituacionMilitar/Index.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-persitmil')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+        
         {
             path: '/personal',
             name: 'Personal',
@@ -878,101 +854,22 @@ export default new Router ({
         //     path: '/listarPersonalSituacion',
         //     component: require('./components/PersonalSituacion.vue').default
         // },
-        // {
-        //     path: '/SituacionPersonal/:a',
-        //     name: 'SituacionPersonalMilitar',
-        //     component: require('./components/SituacionMilitar/Index.vue').default
-        // },
+        
         // FIN MATTOS
         /* Rutas para Designaciones MATTOS
 
         */
-         {
-            path: '/personaldesignaciones',
-            name: 'PersonalDesignaciones',
-            component:  require('./components/Designaciones/PersonalDesignaciones.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-datperdesig')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-        {
-            path: '/Designaciones/:codigo',
-            name: 'Designaciones',
-            component:  require('./components/Designaciones/Designaciones.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-datperdesig')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+        
 
        /* Rutas para Representaciones MATTOS
 
         */
-       {
-            path: '/personalrepresentaciones',
-            name: 'PersonalRepresentaciones',
-            component:  require('./components/Representaciones/PersonalRepresentaciones.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perrep')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-        {
-            path: '/Representaciones/:codigo',
-            name: 'Representaciones',
-            component:  require('./components/Representaciones/Representaciones.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perrep')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+       
 
          /* Rutas para Publicaciones MATTOS
 
         */
-         {
-            path: '/personalpublicaciones',
-            name: 'PersonalPublicaciones',
-            component:  require('./components/Publicaciones/PersonalPublicaciones.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perpub')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-         {
-            path: '/Publicaciones/:codigo',
-            name: 'Publicaciones',
-            component:  require('./components/Publicaciones/Publicaciones.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perpub')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+       
 
         // FIN MATTOS
         //Sgto. Quisber DAtos Familiares, Datos fisicos
@@ -1157,186 +1054,16 @@ export default new Router ({
          * RUTAS MODULO FALTAS O DEMERITOS
          */
         //DEP-I
-        {
-            path: '/listaPersonalFaltas',
-            name: 'ListaPersonalFaltas',
-            component:  require('./components/FALTAS/Personal.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perfald1')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-        {
-            path: '/listaFaltas/:codigo/:c/:u/:e/:fu',
-            name: 'ListaFaltas',
-            component:  require('./components/FALTAS/FaltasPersonal.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perfald1')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-        {
-            path: '/nuevaFalta/:codigo/:nivFalta/:division/:externo/:divGra',
-            name: 'NuevaFalta',
-            component:  require('./components/FALTAS/NuevaFalta.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('insert-fald1')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-        {
-            path: '/nuevaFalta2/:codigo/:nivFalta/:division/:divGra',
-            name: 'NuevaFalta2',
-            component:  require('./components/FALTAS/NuevaFalta2.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('insert-falextd1')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-            //VALIDACION DE FALTAS
-        {
-            path: '/validacionesFalta',
-            name: 'ValidacionesFalta',
-            component:  require('./components/FALTAS/ValidacionesFalta.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perfalval')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-        //UNIDADES
-        {
-            path: '/personalUnidad',
-            name: 'PersonalUnidad',
-            component:  require('./components/FALTAS/PersonalUnidad.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perfaluni')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-        {
-            path: '/listaPersonalFaltasExterno',
-            name: 'ListaPersonalFaltasExterno',
-            component:  require('./components/FALTAS/PersonalExtUni.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perfaluniext')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-        {
-            path: '/faltaPerExt/:codigo/:c/:u',
-            name: 'FaltaPerExt',
-            component:  require('./components/FALTAS/FaltaPerExt.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perfaluniext')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-        //SCRIPTS GENERAL DEL MODULO
-        //EDITAR FALTA
-        {
-            path: '/editarFalta/:falta/:codigo/:nivFalta/:division/:externo/:divGra/:r',
-            name: 'EditarFalta',
-            component:  require('./components/FALTAS/EditarFalta.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('edit-falta')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+       
 
         /**
          * Vistas de Proyectos de Ingenieria
          */
-         {
-            path: '/proyectIng',
-            name: 'ProyectIng',
-            component:  require('./components/ProyectosIngenieria/Index.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perproy')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
-        {
-            path: '/createproyectIng/:per',
-            name: 'CreateProyectIng',
-            component:  require('./components/ProyectosIngenieria/create.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perproy')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+        
         /**
          * NIVEL DE PERICIA
          */
-         {
-            path: '/indexPericia',
-            name: 'IndexPericia',
-            component:  require('./components/Pericias/Index.vue').default,
-            // beforeEnter: (to, from, next) => {
-            //     let per = window.user.permissions.map(permission=>permission.name);
-            //     if (per.includes('view-perproy')) {
-            //         next();
-            //     } else {
-            //         next(from.path);
-            //     }
-            // }
-        },
-        {
-            path: '/createPericia/:per',
-            name: 'CreatePericia',
-            component:  require('./components/Pericias/PersonalPericia.vue').default,
-            beforeEnter: (to, from, next) => {
-                let per = window.user.permissions.map(permission=>permission.name);
-                if (per.includes('view-perproy')) {
-                    next();
-                } else {
-                    next(from.path);
-                }
-            }
-        },
+        
         /**
          * ACCESO AL SISTEMA
          */

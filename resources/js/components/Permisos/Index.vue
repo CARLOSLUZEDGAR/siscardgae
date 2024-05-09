@@ -10,12 +10,12 @@
               PERMISOS
             </h1>
           </div>
-          <div class="col-sm-6">
+          <!-- <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Modals & Alerts</li>
             </ol>
-          </div>
+          </div> -->
         </div>
       </div>
       <!-- /.container-fluid -->
@@ -30,7 +30,7 @@
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="fas fa-list-ol"></i> &nbsp;
-                  BUSCAR ROL
+                  BUSCAR PERMISO
                 </h3>
               </div>
               <div class="card-body">                  
@@ -63,7 +63,7 @@
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="fas fa-list-ol"></i> &nbsp;
-                  LISTA DE ROLES &nbsp;&nbsp;                  
+                  LISTA DE PERMISOS &nbsp;&nbsp;                  
                       <button type="button" class="btn btn-success btn-sm" @click="NuevoPermiso()">
                       <i class="fas fa-plus"></i> NUEVO
                       </button>                      

@@ -40,15 +40,15 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-2">
+                                <!-- <div class="col-2">
                                     
                                     <img :src="'/img/personal/'+datos.foto" width="100%" height="100%" class="rounded float-left img-fluid">
-                                </div>
+                                </div> -->
                                 
                                 <div class="col-md-10 d-flex align-items-center">
                                     <div style="" class="col-md-12 d-flex flex-column bd-highlight mb-3">
                                         <!-- FILA 1 -->
-                                        <div class="row p-2 bd-highlight">
+                                        <!-- <div class="row p-2 bd-highlight">
                                             <div class="col-md-4">
                                                 <dl>
                                                     <dt class="st">Carnet de Identidad</dt>
@@ -67,9 +67,9 @@
                                                     <dd class="st">{{datos.situacion}}</dd>
                                                 </dl>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!-- FILA 2 -->
-                                        <div class="row p-2 bd-highlight">  
+                                        <!-- <div class="row p-2 bd-highlight">  
                                             <div class="col-md-12">
                                                 <dl>
                                                     <dt class="st">Destino Actual</dt>
@@ -77,7 +77,7 @@
                                                 </dl>
                                             </div>
 
-                                        </div>
+                                        </div> -->
                                         <!-- FILA 3 -->
                                         <div class="row p-2 bd-highlight">  
                                             <div class="col-md-6">
@@ -98,13 +98,13 @@
                                         <!-- FILA 4 -->
                                         <div class="row p-2 bd-highlight justify-content-center">
                                             <div class="col-md-4">                                            
-                                                    <input type="text" :class="{ 'is-invalid' : $v.contrasenaA.$error, 'is-valid':!$v.contrasenaA.$invalid }"  v-model="contrasenaA" placeholder="Ingrese antigua contraseña" class="form-control">
+                                                    <input type="text" v-model="contrasenaA" placeholder="Ingrese antigua contraseña" class="form-control" :class="{ 'is-invalid' : $v.contrasenaA.$error, 'is-valid':!$v.contrasenaA.$invalid }">
                                                     <div class="invalid-feedback">
                                                         <span v-if="!$v.contrasenaA.required">Este campo es Requerido</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">                                            
-                                                    <input type="text" :class="{ 'is-invalid' : $v.contrasena.$error, 'is-valid':!$v.contrasena.$invalid }"  v-model="contrasena" placeholder="Ingrese nueva contraseña" class="form-control">
+                                                    <input type="text" v-model="contrasena" placeholder="Ingrese nueva contraseña" class="form-control" :class="{ 'is-invalid' : $v.contrasena.$error, 'is-valid':!$v.contrasena.$invalid }">
                                                     <div class="invalid-feedback">
                                                         <span v-if="!$v.contrasena.required">Este campo es Requerido</span>
                                                     </div>
