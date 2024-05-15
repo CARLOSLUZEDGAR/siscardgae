@@ -25,6 +25,7 @@
                 <!-- <li class="nav-header" style="padding-left: 1px;">DATOS</li> -->
                   {{-- PERMISO SIDEBAR 2 --}}
                 @can('side-carnetizacion', Model::class)
+                  <li class="nav-header" style="padding-left: 1px;">PERSONAL</li>
                   <li class="nav-item">{{-- CARNETIZACION --}}
                     <a href="#" class="nav-link">
                       <i class="nav-icon fas fa-id-card"></i>
@@ -55,6 +56,7 @@
                 @endcan
                   {{-- PERMISO SIDEBAR 2 --}}
                 @can('side-aeronave', Model::class)
+                  <li class="nav-header" style="padding-left: 1px;">AERONAVE</li>
                   <li class="nav-item">{{-- AERONAVE --}}
                     <a href="#" class="nav-link">
                       <i class="nav-icon fas fa-plane"></i>
