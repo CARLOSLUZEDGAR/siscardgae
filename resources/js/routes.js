@@ -125,7 +125,8 @@ export default new Router ({
         // FIN RUTAS DGAE
 
         {
-            path: '*',
+            path: '/notFound',
+            name: 'Notfound',
             component: require('./components/Notfound.vue').default
         },
         
@@ -133,6 +134,12 @@ export default new Router ({
             path: '/',
             name: 'Inicio',
             component: require('./components/Bienvenida.vue').default
+        },
+
+        {
+            path: '/passwordChange',
+            name: 'PasswordChange',
+            component: require('./components/PasswordChange.vue').default
         },
         
         {

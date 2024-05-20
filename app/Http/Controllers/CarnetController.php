@@ -13,8 +13,6 @@ class CarnetController extends Controller
 {
     public function GenerarCarnet(Request $request)
     {
-        $id = $request->id_p;
-
         $personal = DB::table('personals as p')
                     ->join('personal_licencias as pl','p.id','pl.id_personal')
                     ->join('nacionalidads as n','p.id_nacionalidad','n.id')

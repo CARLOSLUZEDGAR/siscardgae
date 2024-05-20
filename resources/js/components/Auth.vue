@@ -24,7 +24,7 @@
                 />
             </div>
             <div class="form-group">
-                <button class="btn btn-primary btn-block" type="submit" @click.prevent="login()" >Ingresar</button>
+                <button class="btn btn-primary btn-block" type="submit" @click.prevent="login()" >INGRESAR</button>
             </div>
         </form>
     </div>   
@@ -69,10 +69,21 @@ export default {
                     me.fillLogin.cContraseña = ""
                 } 
                 if (response.data.code == 200) {
+                    console.log(response);
                     toastr.success('Las credenciales son correctas.')
                     me.ListarPermisos(response.data.authUser.id)
                     me.$router.push({
-                        name: "Principal",
+                        // name: "Principal",
+                        name: "Inicio",
+                    });
+                    location.reload();
+                }
+                if (response.data.code == 300) {
+                    console.log(response);
+                    toastr.success('Las credenciales son correctas.')
+                    me.ListarPermisos(response.data.authUser.id)
+                    me.$router.push({
+                        name: "PasswordChange",
                     });
                     location.reload();
                 }

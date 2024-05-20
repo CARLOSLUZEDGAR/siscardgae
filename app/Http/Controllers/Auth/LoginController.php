@@ -13,8 +13,8 @@ class LoginController extends Controller
     {   
         $email = $request->email;
         $password = $request->password;
-        $respuesta = Auth::attempt(['email' => $email, 'password' => $password, 'estado'=>1]);
-        if ($respuesta) {
+        // $respuesta = Auth::attempt(['email' => $email, 'password' => $password, 'estado'=>1]);
+        if ($respuesta = Auth::attempt(['email' => $email, 'password' => $password, 'estado'=> 1, 'session' => 1])) {
             // User::where('id',Auth::user()->id)
             //     ->update([
             //         'session' => 0
@@ -23,7 +23,13 @@ class LoginController extends Controller
             return response()->json([
                 'authUser' => Auth::user(),
                 'code' => 200
-            ]);            
+            ]);
+        } elseif ($respuesta = Auth::attempt(['email' => $email, 'password' => $password, 'estado'=> 1, 'session' => 0])) {  
+            Auth::logoutOtherDevices($password);
+            return response()->json([
+                'authUser' => Auth::user(),
+                'code' => 300
+            ]);           
         } else {
             // $session = User::where('email',$email)->select('session')->first();
             // if ($session->session == 0) {
@@ -35,7 +41,6 @@ class LoginController extends Controller
                     'code' => 401
                 ]);
             // }
-            
             
         }
     }
