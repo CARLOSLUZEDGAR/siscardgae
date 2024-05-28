@@ -103,16 +103,16 @@
                             <tbody>
                                 <tr v-for="u in Ausuarios">
                                     <td class="text-center">
-                                        <button  type="button" class="btn btn-success btn-sm" @click="ModalRoles(u.id)">
+                                        <button  type="button" class="btn btn-success btn-sm" @click="ModalRoles(u.usuario_id,u.user_id)">
                                             <i class="fas fa-plus"></i>
                                         </button>
-                                        <button  type="button" class="btn btn-primary btn-sm" @click="EditarModal(u.id)">
+                                        <button  type="button" class="btn btn-primary btn-sm" @click="EditarModal(u.usuario_id,u.user_id)">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button v-if="u.estado === 1" type="button" class="btn btn-danger btn-sm" @click="CambioEstado(u.estado, u.id)">
+                                        <button v-if="u.estado === 1" type="button" class="btn btn-danger btn-sm" @click="CambioEstado(u.estado,u.usuario_id,u.user_id)">
                                             <i class="fas fa-trash"></i>
                                         </button>
-                                        <button v-else type="button" class="btn btn-success btn-sm" @click="CambioEstado(u.estado, u.id)">
+                                        <button v-else type="button" class="btn btn-success btn-sm" @click="CambioEstado(u.estado,u.usuario_id,u.user_id)">
                                             <i class="fas fa-check"></i>
                                         </button>
                                     </td>
@@ -803,19 +803,19 @@ export default {
             }
         },
 
-        ModalRoles(id){
-            this.RolesNoUsuario(id);
-            this.RolesUsuario(id);
-            this.iduser = id;
+        ModalRoles(usuario_id,user_id){
+            this.RolesNoUsuario(user_id);
+            this.RolesUsuario(user_id);
+            this.iduser = user_id;
             $('#AgregarRoles').modal('show');
 
         },
 
-        RolesNoUsuario(id){
+        RolesNoUsuario(user_id){
             let me = this;
             axios
             .post("/listarol2", {
-                per_cod: id
+                user_id: user_id
             })
             .then(function (response) {
                 //Respuesta de la peticion
@@ -828,12 +828,12 @@ export default {
                 console.log(error);
             })
         },
-        RolesUsuario(id){
+        RolesUsuario(user_id){
             let me = this;
             
             axios
             .post("/listarolus", {
-                per_cod: id
+                user_id: user_id
             })
             .then(function (response) {
                 //Respuesta de la peticion
@@ -850,7 +850,7 @@ export default {
             let me = this;
             axios
             .post("/quitarRol", {
-                id: me.iduser,
+                user_id: me.iduser,
                 rol: name
             })
             .then(function (response) {
@@ -879,7 +879,7 @@ export default {
             }else{
                 axios
                 .post("/agregarRol", {
-                    id: me.iduser,
+                    user_id: me.iduser,
                     rol: me.role.name
                 })
                 .then(function (response) {
@@ -930,13 +930,13 @@ export default {
             }, 360)
         },
 
-        EditarModal(id){
+        EditarModal(usuario_id,user_id){
             let me = this;
-            me.Eid = id;
+            me.Eid = usuario_id;
             me.ListarRoles();
             axios
             .post("/datosUsuarios", {
-                id: id
+                user_id: user_id
             })
             .then(function (response) {
                 console.log(response);
@@ -979,7 +979,7 @@ export default {
                         let me = this;
                         axios
                         .put("/editarUsuarios", {
-                            id: me.Eid,
+                            usuario_id: me.Eid,
                             // seccion: me.eseccion
                             nombre: me.nom_usuA,
                             ap_paterno: me.appat_usuA,
@@ -989,6 +989,9 @@ export default {
                         .then(function (response) {
                             
                             $('#EditarUsuario').modal('hide');
+                            setTimeout(function(){                                
+                                      location.reload();
+                                  }, 0);
                             me.ListarUsuarios(1);
                             me.Eid = '';
                             me.Epassword = '';
@@ -1017,7 +1020,7 @@ export default {
                 
             }
         },
-        CambioEstado(estado, id){
+        CambioEstado(estado, usuario_id, user_id){
             if (estado == 1) {
                 var titulo = '¿Desea deshabilitar este usuario?';
                 var titulo2 = 'Usuario deshabilitado correctamente';
@@ -1040,7 +1043,7 @@ export default {
                     let me = this;
                     axios
                     .put("/cambiarEstadoUsuario", {
-                        id: id,
+                        user_id: user_id,
                         estado: estado,
                     })
                     .then(function (response) {

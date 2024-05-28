@@ -131,7 +131,7 @@ class UsuarioController extends Controller
                     ->join('usuarios as us','u.id_usuario','us.id')
                     ->join('model_has_roles as mr', 'u.id','mr.model_id')
                     ->join('roles as r','mr.role_id','r.id')
-                    ->select('u.id','u.nick','u.estado','us.nombres','us.ap_paterno','us.ap_materno','r.name as role')
+                    ->select('us.id as usuario_id','u.id as user_id','u.nick','u.estado','us.nombres','us.ap_paterno','us.ap_materno','r.name as role')
                     ->where('us.estado',1)
                     ->orderBy('u.id','desc')
                     ->paginate(10);
@@ -162,17 +162,15 @@ class UsuarioController extends Controller
                     ->join('usuarios as us','u.id_usuario','us.id')
                     ->join('model_has_roles as mr', 'u.id','mr.model_id')
                     ->join('roles as r','mr.role_id','r.id')
-                    ->select('u.id','u.nick','u.estado','us.nombres','us.ap_paterno','us.ap_materno','r.name as role')
+                    ->select('us.id as usuario_id','u.id as user_id','u.nick','u.estado','us.nombres','us.ap_paterno','us.ap_materno','r.name as role')
                     ->where(function($q) use ($buscar){
                             $q->where('us.ap_paterno','LIKE','%'.$buscar.'%')
                             ->orWhere('us.ap_materno','LIKE','%'.$buscar.'%')
                             ->orWhere('us.nombres','LIKE','%'.$buscar.'%');
-                            // ->orWhere('p.per_materno','LIKE','%'.$buscar.'%');
                         }) 
                     ->where('us.estado',1)
                     ->orderBy('u.id','desc')
                     ->paginate(10);
-
         }
         
         return response()->json([
@@ -191,21 +189,21 @@ class UsuarioController extends Controller
 
     public function DatosUsuarios(Request $request)
     {
-        $id = $request->id;
+        $user_id = $request->user_id;
         
         $usuarios = DB::table('users as u')
             ->join('usuarios as us','u.id_usuario','us.id')
             ->join('model_has_roles as mr', 'u.id','mr.model_id')
             ->join('roles as r','mr.role_id','r.id')
-            ->select('u.id','u.nick','u.estado','us.nombres','us.ap_paterno','us.ap_materno','us.email','r.name as role')
+            ->select('us.id','u.nick','u.estado','us.nombres','us.ap_paterno','us.ap_materno','us.email','r.name as role')
             ->where('us.estado',1)
-            ->where('u.id',$id)
+            ->where('u.id',$user_id)
             ->first();
 
         $rol = DB::table('model_has_roles as mr')
             ->join('roles as r','mr.role_id','r.id')
             ->select('r.id','r.name')
-            ->where('mr.model_id',$id)
+            ->where('mr.model_id',$user_id)
             ->first();
 
         return response()->json(['usuarios'=>$usuarios,'role'=>$rol]);
@@ -213,13 +211,14 @@ class UsuarioController extends Controller
 
     public function EditarUsuario(Request $request)
     {
-        $id = $request->id;
+        //id de user
+        $usuario_id = $request->usuario_id;
         // DB::table('users')
         //     ->where('id',$id)
         //     ->update([
         //         'seccion' => $request->seccion
         //     ]);
-        $usuario = Usuario::where('id',$id)
+        $usuario = Usuario::where('id',$usuario_id)
                 ->first();
                 $usuario->update([
                     'nombres' => mb_strtoupper($request->nombre),
@@ -227,7 +226,7 @@ class UsuarioController extends Controller
                     'ap_materno' => mb_strtoupper($request->ap_materno),
                     'email' => $request->email,
                 ]);
-        $user = User::where('id_usuario',$id)
+        $user = User::where('id_usuario',$usuario_id)
                 ->first();
                 $user->update([
                     'email' => $request->email,
@@ -248,11 +247,12 @@ class UsuarioController extends Controller
             ->select('password')
             ->where('id',Auth::user()->id)
             ->first();
-        if (Hash::check($request->contrasenaA, $u->password)) {
+        if (Hash::check($request->actpassword, $u->password)) {
             DB::table('users')
                 ->where('id',Auth::user()->id)
                 ->update([
-                    'password' => Hash::make($request->contrasena)
+                    'password' => Hash::make($request->newpassword),
+                    'session' => 1
                 ]);
             Auth::logout();
             $code = 200;
@@ -261,14 +261,12 @@ class UsuarioController extends Controller
             $code = 400;
             return response()->json($code);
         }
-        
-        
     }
 
     public function CambiarEstadoUsuario(Request $request)
     {
         $estado = 1 - $request->estado;
-        $usuario = User::find($request->id);
+        $usuario = User::find($request->user_id);
         $usuario->estado = $estado;
         $usuario->save();
 

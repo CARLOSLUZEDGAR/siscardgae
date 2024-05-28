@@ -11,7 +11,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-1 pb-1 mb-1 d-flex">
             <div class="info">
-              <router-link class="nav-link" to='/datosUser'>
+              <router-link class="nav-link" to='/passwordChange'>
                 <a id="nombre" class="d-block"></a>
               </router-link>
                

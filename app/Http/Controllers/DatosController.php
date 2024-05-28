@@ -228,9 +228,12 @@ class DatosController extends Controller
         //     ->where('epe.estado',1)
         //     ->where('pd.estado',1)
         //     ->first();
-        $datos = DB::table('usuarios as u')
-                ->select('nombres','ap_paterno','ap_materno')
-                ->where('u.id',Auth::user()->id_usuario)
+        $datos = DB::table('usuarios as us')
+                ->join('users as u','u.id_usuario','us.id')
+                ->join('model_has_roles as mr', 'u.id','mr.model_id')
+                ->join('roles as r','mr.role_id','r.id')
+                ->select('us.nombres','us.ap_paterno','us.ap_materno','r.id as id_rol','r.name as name_rol')
+                ->where('us.id',Auth::user()->id_usuario)
                 ->where('u.estado',1)
                 ->first();
         

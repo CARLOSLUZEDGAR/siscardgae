@@ -45,7 +45,7 @@
                                       <img :src="'/img/personal/'+datos.foto" width="100%" height="100%" class="rounded float-left img-fluid">
                                   </div> -->
                                   
-                                  <div class="col-md-10 d-flex align-items-center">
+                                  <div class="col-md-12 d-flex align-items-center">
                                       <div style="" class="col-md-12 d-flex flex-column bd-highlight mb-3">
                                           <!-- FILA 1 -->
                                           <!-- <div class="row p-2 bd-highlight">
@@ -98,25 +98,33 @@
                                           <!-- FILA 4 -->
                                           <div class="row p-2 bd-highlight justify-content-center">
                                               <div class="col-md-4">                                            
-                                                      <input type="text" v-model="contrasenaA" placeholder="Ingrese antigua contraseña" class="form-control" :class="{ 'is-invalid' : $v.contrasenaA.$error, 'is-valid':!$v.contrasenaA.$invalid }">
+                                                      <input type="text" v-model="currentPassword" placeholder="CONTRASEÑA ACTUAL" class="form-control" :class="{ 'is-invalid' : $v.currentPassword.$error, 'is-valid':!$v.currentPassword.$invalid }">
                                                       <div class="invalid-feedback">
-                                                          <span v-if="!$v.contrasenaA.required">Este campo es Requerido</span>
+                                                          <span v-if="!$v.currentPassword.required">Este campo es Requerido</span>
                                                       </div>
                                                   </div>
                                                   <div class="col-md-4">                                            
-                                                      <input type="text" v-model="contrasena" placeholder="Ingrese nueva contraseña" class="form-control" :class="{ 'is-invalid' : $v.contrasena.$error, 'is-valid':!$v.contrasena.$invalid }">
+                                                      <input type="text" v-model="newPassword" placeholder="NUEVA CONTRASEÑA" class="form-control" :class="{ 'is-invalid' : $v.newPassword.$error, 'is-valid':!$v.newPassword.$invalid }">
                                                       <div class="invalid-feedback">
-                                                          <span v-if="!$v.contrasena.required">Este campo es Requerido</span>
+                                                            <span v-if="!$v.newPassword.required">Este campo es Requerido</span>
                                                       </div>
                                                   </div>
-                                                  <div class="col-md-4">  
-                                                      <button type="button" @click="EditarContraseña()" class="btn btn-sm btn-warning btn-block">
-                                                      <i class="fas fa-edit"></i>&nbsp;Actualizar Contraseña
-                                                      </button>
+                                                  <div class="col-md-4">                                            
+                                                        <input type="text" v-model="confirmNewPassword" placeholder="REPETIR NUEVA CONTRASEÑA" class="form-control" :class="{ 'is-invalid' : $v.confirmNewPassword.$error, 'is-valid':!$v.confirmNewPassword.$invalid }">
+                                                        <div class="invalid-feedback">
+                                                            <span v-if="!$v.confirmNewPassword.required">Este campo es Requerido</span>
+                                                            <span v-else-if="!$v.confirmNewPassword.sameAsNewPassword">Nueva contraseña no coinciden</span>                                                      
+                                                        </div>
                                                   </div>
-                                              
+                                                   
                                           </div>
-                                          
+                                          <div class="row p-2 bd-highlight justify-content-center">
+                                                <div class="col-md-4">  
+                                                    <button type="button" @click="EditarContraseña()" class="btn btn-warning btn-block">
+                                                    <i class="fas fa-edit"></i>&nbsp;ACTUALIZAR CONTRASEÑA
+                                                    </button>
+                                                </div>
+                                          </div>
   
                                       </div>                        
                                   </div>
@@ -136,19 +144,24 @@
   </template>
   
   <script>
-  import { required } from "vuelidate/lib/validators";
+  import { required, sameAs } from "vuelidate/lib/validators";
   export default {
-      data() {
-          return {
-              datos: [],
-              contrasena: '',
-              contrasenaA: ''
-          }
+        data() {
+            return {
+                datos: [],
+                currentPassword: '',
+                newPassword: '',
+                confirmNewPassword: ''
+            }
+        },
+      validations() {
+        return {
+            currentPassword: { required },
+            newPassword: { required },
+            confirmNewPassword: { required, sameAsNewPassword: sameAs("newPassword") }
+        }
       },
-      validations:{
-          contrasena: {required},
-          contrasenaA : { required }
-      },
+
       mounted() {
           this.DatosUsuario();
       },
@@ -184,8 +197,9 @@
                           let me = this;
                           axios
                           .post("/editContrasena", {
-                              contrasena: me.contrasena,
-                              contrasenaA : me.contrasenaA
+                              actpassword: me.currentPassword,
+                              newpassword : me.newPassword,
+                              confirpassword : me.confirmNewPassword,
                           })
                           .then(function (response) {
                               if (response.data === 200 ) {
@@ -225,7 +239,7 @@
                   this.$v.$touch();
                   Swal.fire({
                       icon: 'warning',
-                      title: 'Ingrese todos los datos requeridos',
+                      title: 'Ingrese los datos requeridos o no coinciden las contraseñas',
                       showConfirmButton: false,
                       timer: 2000
                   })
@@ -233,6 +247,10 @@
               }
           }
       },
+
+      setup() {
+            return { v$: useVuelidate() }
+        }
   };
   </script>
   
@@ -240,5 +258,8 @@
   .dat {
       width: 100%;
     }
+    .error {
+  color: red;
+}
   
   </style>
