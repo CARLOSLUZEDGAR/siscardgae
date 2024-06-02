@@ -51,8 +51,15 @@ class LoginController extends Controller
         //     ->update([
         //         'session' => 1
         //     ]);
-        Auth::logout();
-        return redirect("/");
+
+        // Auth::logout();
+        // return redirect("/");
+        
+        // $this->guard()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
     public function VistaLogin(Request $request)
     {   
