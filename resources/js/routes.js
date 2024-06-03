@@ -107,6 +107,20 @@ export default new Router ({
             }
         },
 
+         {//DGAE
+            path: '/RegistroAeronave',
+            name: 'RegistroAeronave',
+            component: require('./components/RegistroAeronave.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-insert-per')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
         { // DGAE
             path: '/DocumentacionAeronave',
             name: 'DocumentacionAeronave',

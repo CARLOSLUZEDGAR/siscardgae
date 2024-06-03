@@ -84,6 +84,12 @@ Route::post('/listarPersonal','PersonalController@ListarPersonal');
 Route::post('/selectNacionalidad','NacionalidadController@selectNacionalidad');
 Route::post('/renovarPersonal','PersonalController@RenovarPersonal');
 
+Route::post('/listarAeronave','AeronaveController@ListarAeronave');
+Route::post('/crearAeronave','AeronaveController@CrearAeronave');
+Route::post('/datosAeronave','AeronaveController@DatosAeronave');
+
+
+
 Route::get('/carnet','CarnetController@GenerarCarnet');
 Route::post('/crearNacionalidad','NacionalidadController@CrearNacionalidad');
 Route::post('/crearEntidad','EntidadController@CrearEntidad');

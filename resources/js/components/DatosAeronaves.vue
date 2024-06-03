@@ -4,16 +4,17 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">            
+          <div class="col-sm-12">            
             <h1>
               <i class="far fa-bookmark"></i>
-              Datos del Personal
+              DATOS DE LAS AERONAVES
               <!-- <small>Personal</small> -->
             </h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+              <!-- <li class="breadcrumb-item"><a href="/">Inicio</a></li> -->
+              
               <!-- <li class="breadcrumb-item active">Datos del Personal</li> -->
             </ol>
           </div>
@@ -36,14 +37,9 @@
                       <!-- Buscar Personal -->
                     </h3>  
                   </div>                  
-                  <div class="col-sm-4" v-if="$auth.can('insert-per')">
-                    <!-- <router-link to='/nuevoPersonal' @click.native="$router.go()">
-                      <button type="button" class="btn btn-primary btn-sm float-right">
-                        <i class="fas fa-plus"></i> Registrar Nuevo Personal
-                      </button>
-                    </router-link>  -->
-                    <button class="btn btn-primary btn-sm float-right" type="submit" @click="NuevoPersonal()">
-                        <i class="fas fa-plus"></i>&nbsp; REGISTRAR NUEVO PERSONAL
+                  <div class="col-sm-4" v-if="$auth.can('view-insert-per')">
+                    <button class="btn btn-primary btn-sm float-right" type="submit" @click="Registro()">
+                      <i class="fas fa-user-plus"></i>&nbsp; REGISTRAR NUEVA AERONAVE
                     </button>
                   </div>
                 </div>  
@@ -51,8 +47,8 @@
               <div class="card-body">
                 <div class="row d-flex justify-content-center"> 
                     <div class="col-md-4">
-                        <label for="">BUSCAR PERSONAL:</label>
-                        <input type="text" style="text-transform:uppercase;" class="form-control" @keyup="BuscarPersona(1)" v-model="buscar">
+                        <label for="">BUSCAR AERONAVE:</label>
+                        <input type="text" style="text-transform:uppercase;" class="form-control" @keyup="BuscarAeronave(1)" v-model="buscar">
                     </div>
                 </div>
                 <br>
@@ -64,28 +60,27 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center">Ap. Paterno</th>
-                                    <th class="text-center">Ap. Materno</th>
-                                    <th class="text-center">Nombres</th>
-                                    <th class="text-center">C. Identidad</th>
-                                    <th class="text-center">Opciones</th>
+                                    <th class="text-center">MATRICULA</th>
+                                    <th class="text-center">MODELO</th>
+                                    <th class="text-center">NOMBRE</th>
+                                    <!-- <th class="text-center">C. IDENTIDAD</th> -->
+                                    <th class="text-center">OPCIONES</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(personal,index) in listaPersonal"> 
+                                <tr v-for="(aeronave,index) in listaAeronave"> 
                                     <!-- <td v-text="personal.grado+' '+personal.complemento"></td> -->
                                     <td style="text-align:center; font-weight:bold;">{{ index + 1 }}</td>
-                                    <td v-text="personal.per_paterno"></td>
-                                    <td v-text="personal.per_materno"></td>
-                                    <td v-text="personal.per_nombre"></td>
-                                    <td v-text="personal.per_ci"></td>
+                                    <td v-text="aeronave.matricula"></td>
+                                    <td v-text="aeronave.modelo"></td>
+                                    <td v-text="aeronave.nombre"></td>
+                                    <!-- <td v-text="personal.per_ci"></td> -->
                                     <td style="width:100px; text-align:center">
-                                        <button type="button" @click="EditarPersonal(personal)" class="btn btn-success btn-sm">
+                                      <div v-if="$auth.can('view-renew-per')">
+                                        <button type="button" @click="Renovar(aeronave.id)" class="btn btn-success btn-sm">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </button>
-                                        <!-- <button type="button" @click="ReportePersona(personal.per_codigo)" class="btn btn-warning btn-sm">
-                                            <i class="far fa-file-pdf"></i>
-                                        </button> -->
+                                      </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -194,14 +189,12 @@
                   <label class="form-control-label" for="text-input">Grado</label>
                     <select class="form-control" v-model="per_grado" :class="{ 'is-invalid' : $v.per_grado.$error, 'is-valid':!$v.per_grado.$invalid }">
                         <option value="" disabled>SELECCIONE</option>
-                        <option v-for="grado in arrayGrado" :key="grado.id" :value="grado.id"  v-text="grado.nombre"></option>                        
+                        <option v-for="grado in arrayGrado" :key="grado.id" :value="grado.id" v-text="grado.nombre"></option>                        
                     </select>
                     <div class="invalid-feedback">
                         <span v-if="!$v.per_grado.required">Este campo es Requerido</span>
                     </div>
                 </div>
-                
-                
               </div>
               <div class="form-group row">
                 <div class="col-md-6">
@@ -222,7 +215,7 @@
               <div class="form-group row">
                 <div class="col-md-6">
                     <label class="form-control-label" for="text-input">Nombres</label>
-                    <input type="text" v-model="per_nombre" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_nombre.$error, 'is-valid':!$v.per_nombre.$invalid }">
+                    <input type="text" v-model.trim="per_nombre" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_nombre.$error, 'is-valid':!$v.per_nombre.$invalid }">
                     <div class="invalid-feedback">
                         <span v-if="!$v.per_nombre.required">Este campo es Requerido</span>
                     </div>
@@ -230,7 +223,7 @@
                 <div class="col-md-6">
                     <label class="form-control-label" for="text-input">Ap. Paterno</label>
                     <!-- <input type="text" v-model="per_appaterno" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_appaterno.$error, 'is-valid':!$v.per_appaterno.$invalid }"> -->
-                    <input type="text" v-model="per_appaterno" class="form-control" style="text-transform:uppercase;">
+                    <input type="text" v-model.trim="per_appaterno" class="form-control" style="text-transform:uppercase;">
 
                     <!-- <div class="invalid-feedback">
                         <span v-if="!$v.per_appaterno.required">Este campo es Requerido</span>
@@ -241,7 +234,7 @@
                 <div class="col-md-6">
                   <label class="form-control-label" for="text-input">Ap. Materno</label>
                   <!-- <input type="text" v-model="per_apmaterno" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_apmaterno.$error, 'is-valid':!$v.per_apmaterno.$invalid }"> -->
-                    <input type="text" v-model="per_apmaterno" class="form-control" style="text-transform:uppercase;">
+                    <input type="text" v-model.trim="per_apmaterno" class="form-control" style="text-transform:uppercase;">
                   <!-- <div class="invalid-feedback">
                       <span v-if="!$v.per_apmaterno.required">Este campo es Requerido</span>
                   </div> -->
@@ -268,7 +261,7 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-control-label" for="text-input">Celular </label>
-                    <input type="text" v-model="per_celular" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_celular.$error, 'is-valid':!$v.per_celular.$invalid }">
+                    <input type="text" v-model.number="per_celular" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_celular.$error, 'is-valid':!$v.per_celular.$invalid }">
                     <div class="invalid-feedback">
                         <span v-if="!$v.per_celular.required">Este campo es Requerido</span>
                     </div>
@@ -277,7 +270,7 @@
               <div class="form-group row">  
                 <div class="col-md-6">
                     <label class="form-control-label" for="text-input">E-mail </label>
-                    <input type="text" v-model="per_email" class="form-control" :class="{ 'is-invalid' : $v.per_email.$error, 'is-valid':!$v.per_email.$invalid }">
+                    <input type="text" v-model.trim="per_email" class="form-control" :class="{ 'is-invalid' : $v.per_email.$error, 'is-valid':!$v.per_email.$invalid }">
                     <div class="invalid-feedback">
                         <span v-if="!$v.per_email.required">Este campo es Requerido</span>
                     </div>
@@ -318,7 +311,7 @@
               <div class="form-group row">
                 <div class="col-md-12">
                     <label class="form-control-label" for="text-input">Dirección</label>
-                    <input type="text" v-model="per_direccion" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_direccion.$error, 'is-valid':!$v.per_direccion.$invalid }">
+                    <input type="text" v-model.trim="per_direccion" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_direccion.$error, 'is-valid':!$v.per_direccion.$invalid }">
                     <div class="invalid-feedback">
                         <span v-if="!$v.per_direccion.required">Este campo es Requerido</span>
                     </div>
@@ -327,7 +320,7 @@
               <div class="form-group row">
                   <div class="col-md-12">
                       <label class="form-control-label" for="text-input">Observación</label>
-                      <textarea name="textarea" class="form-control" rows="3" v-model="per_observaciones" style="text-transform:uppercase"></textarea>
+                      <textarea name="textarea" class="form-control" rows="3" v-model.trim="per_observaciones" style="text-transform:uppercase"></textarea>
                   </div>
               </div>
               <div class="form-group row">
@@ -339,7 +332,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <label class="form-control-label" for="text-input">Fecha de Expiración</label>
+                  <label class="form-control-label" for="text-input">Fecha de Expiración (Certificado Medico)</label>
                   <input type="date" v-model="per_fechaexpiracion" class="form-control" :class="{ 'is-invalid' : $v.per_fechaexpiracion.$error, 'is-valid':!$v.per_fechaexpiracion.$invalid }">
                   <div class="invalid-feedback">
                       <span v-if="!$v.per_fechaexpiracion.required">Este campo es Requerido</span>
@@ -570,7 +563,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <label class="form-control-label" for="text-input">Fecha de Expiración</label>
+                  <label class="form-control-label" for="text-input">Fecha de Expiración (Certificado Medico)</label>
                   <input type="date" v-model="per_fechaexpiracionA" class="form-control" :class="{ 'is-invalid' : $v.per_fechaexpiracionA.$error, 'is-valid':!$v.per_fechaexpiracionA.$invalid }">
                   <div class="invalid-feedback">
                       <span v-if="!$v.per_fechaexpiracionA.required">Este campo es Requerido</span>
@@ -777,7 +770,7 @@ export default {
       arrayPersonal : [],
       arrayDatosFisicos: [],
       datos_fisicos : [],
-      listaPersonal: [],
+      listaAeronave: [],
       criterio: "p.per_cm",
       buscar:"",
       setTiemoutBuscador: '',
@@ -946,35 +939,33 @@ export default {
         }
     },
   mounted() {
-    this.ListarPersonal(1);
+    this.ListarAeronave(1);
   },
   methods: {
+
+    Registro(){
+      this.$router.push({
+                    name: "RegistroAeronave",  
+                });
+    },
+    
+    Renovar(aeronaveid){
+      this.$router.push({
+                    name: "RenovarAeronave",
+                    //ENVIO DE DATOS
+                    params:{
+                        aeronaveid: aeronaveid
+                    }
+                    
+                });
+    },
+
     cambiarPagina(page,buscar,criterio){
         let me = this;
         //actualizando la pagina actual
         me.pagination.current_page = page;
-        me.ListarPersonal(page,buscar,criterio);
+        me.ListarAeronave(page,buscar,criterio);
     },
-
-    // changeItem1: function changeItem1(rowId, event) {
-    //         this.selected = "rowId: " + rowId + ", target.value: " + event.target.value;
-    //         this.listarEntidad(event.target.value);
-    // },
-
-    // changeItem2: function changeItem2(rowId, event) {
-    //     this.selected = "rowId: " + rowId + ", target.value: " + event.target.value;
-    //     this.listarGrado(event.target.value);
-    // },
-
-    // changeItem3: function changeItem3(rowId, event) {
-    //     this.selected = "rowId: " + rowId + ", target.value: " + event.target.value;
-    //     this.listarLicencia(event.target.value);
-    // },
-
-    // changeItem4: function changeItem4(rowId, event) {
-    //     this.selected = "rowId: " + rowId + ", target.value: " + event.target.value;
-    //     this.listarHabilitacion(event.target.value);
-    // },
     
     obtenerImagen(e){
         try {
@@ -1160,7 +1151,7 @@ export default {
                         // me.password = '';
                         me.arrayDatPer = response.data.personal;
                         me.GenerarCarnet(me.arrayDatPer.id_personal);
-                        me.ListarPersonal(1);
+                        me.ListarAeronave(1);
                         this.$v.$reset();
                     } 
                 })
@@ -1244,7 +1235,7 @@ export default {
                         // me.password = '';
                         me.arrayDatPer = response.data.personal;
                         me.GenerarCarnet(me.arrayDatPer.id_personal);
-                        me.ListarPersonal(1);
+                        me.ListarAeronave(1);
                         this.$v.$reset();
                     } 
                 })
@@ -1400,15 +1391,15 @@ export default {
       }
     },
 
-    ListarPersonal(page){
+    ListarAeronave(page){
             let me = this;
             axios
-            .post("/listarPersonal", {
+            .post("/listarAeronave", {
                 page: page,
                 buscar: me.buscar.toUpperCase(),
             })
             .then(function (response) {
-                me.listaPersonal = response.data.personal.data;
+                me.listaAeronave = response.data.aeronave.data;
                 me.pagination =response.data.pagination
             })
             .catch(function (error) {
@@ -1535,10 +1526,10 @@ export default {
           })
         },
 
-        BuscarPersona(){ //DGAE
+        BuscarAeronave(){ //DGAE
             clearTimeout(this.setTiemoutBuscador);
             this.setTiemoutBuscador = setTimeout(() => {
-                this.ListarPersonal(1)
+                this.ListarAeronave(1)
             }, 360)
         },
 

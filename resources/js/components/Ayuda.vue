@@ -37,15 +37,15 @@
                                     <div class="col-md-8">
                                     <font size=3><br>
                                     
-                                            En caso de existir algún error o necesite ayuda puede comunicarse con la Dirección General de Tecnologias de la Información - DIGETIC<br> <br> 
-                                        <br>&nbsp;&nbsp;<i class="fa fa-phone"></i>&nbsp; Sección Desarrollo de Softwares <br> 
-                                        <br>&nbsp;&nbsp;<i class="fa fa-phone"></i>&nbsp; Sección Servicios <br>
+                                            En caso de existir algún error o necesite ayuda puede comunicarse con la Dirección General de Aeronaves de Estado - DGAE<br> <br> 
+                                        <br>&nbsp;&nbsp;<i class="fa fa-phone"></i>&nbsp; Sección Archivos e Informatica <br> 
+                                        <!-- <br>&nbsp;&nbsp;<i class="fa fa-phone"></i>&nbsp; Sección Servicios <br> -->
 
 
 
                                             <br><br>Atte.<br><br></font>
-                                    <h5>    <center>Dirección General de Tecnologias de Información y Comunicaciones - DIGETIC</center>
-                                    <strong> <center>Departamento VI Ciencia y Tecnología - EMGFAB </center></strong></h5>
+                                    <h5><strong><center>Dirección General de Aeronaves de Estado - DGAE</center></strong></h5>
+                                    <!-- <strong> <center>Departamento VI Ciencia y Tecnología - EMGFAB </center></strong></h5> -->
                                     </div>
 
                                     <div class="col-md-2">
