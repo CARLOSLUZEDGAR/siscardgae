@@ -27,16 +27,6 @@
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Notifications Dropdown Menu -->
-    {{-- <li class="nav-item dropdown">
-      <a class="nav-link" data-toggle="dropdown" href="#">
-        <i class="fa fa-th-large"></i>        
-      </a>
-      <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-        <a class="dropdown-item"  href="{{ route('logout') }}">
-          <i class="fas fa-sign-out-alt"></i> &nbsp; Salir
-        </a>
-      </div>
-    </li> --}}
     <a type="button" class="btn btn-outline-danger btn-sm" href="{{ route('logout') }}">
       <i class="fas fa-power-off"></i> Cerrar Sesión
     </a>
