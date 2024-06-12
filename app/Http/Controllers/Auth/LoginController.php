@@ -52,7 +52,7 @@ class LoginController extends Controller
         //         'session' => 1
         //     ]);
 
-        // Auth::logout();
+        Auth::logout();
         // return redirect("/");
         
         // $this->guard()->logout();

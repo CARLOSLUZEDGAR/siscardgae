@@ -25,6 +25,15 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
     <script>
+        (function() {
+            if (window.history && window.history.pushState) {
+                window.history.pushState('forward', null, document.location.href);
+                window.onpopstate = function() {
+                    window.location.href = '/login';
+                };
+            }
+        })();
+        
         function solonumeros(e){
             key=e.keyCode || e.which;
             teclado=String.fromCharCode(key);

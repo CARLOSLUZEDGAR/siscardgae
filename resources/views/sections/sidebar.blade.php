@@ -85,6 +85,36 @@
                     </ul>
                   </li>  
                 @endcan
+                @can('side-reporte', Model::class)
+                  <li class="nav-header" style="padding-left: 1px;">REPORTE</li>
+                  <li class="nav-item">{{-- AERONAVE --}}
+                    <a href="#" class="nav-link">
+                      <i class="nav-icon fas fa-plane"></i>
+                      <p>
+                        REPORTES
+                        <i class="fa fa-angle-left right"></i>
+                      </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                      @can('view-doc-personal', Model::class)
+                      <li class="nav-item">
+                          <router-link class="nav-link" to='/DatosAeronaves'>
+                            <i class="fas fa-chalkboard-teacher nav-icon"></i>
+                            <p>Documentación Personal</p>
+                          </router-link>
+                      </li>
+                      @endcan
+                      @can('view-lic-otorgadas', Model::class)
+                      <li class="nav-item">
+                          <router-link class="nav-link" to='/DocumentacionAeronave'>
+                            <i class="fas fa-align-left nav-icon"></i>
+                            <p>Licencias Otorgadas</p>
+                          </router-link>
+                      </li>
+                      @endcan
+                    </ul>
+                  </li>  
+                @endcan
                                                                                                                                                               
               {{-- PERMISO SIDEBAR 1 --}}
                 @can('side-administracion', Model::class)
