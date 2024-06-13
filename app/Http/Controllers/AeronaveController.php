@@ -241,7 +241,7 @@ class AeronaveController extends Controller
         ]); 
     }
 
-    public function DatosAeronvave(Request $request)//DGAE
+    public function DatosAeronave(Request $request)//DGAE
     {
         $aeronave = DB::table('aeronaves as a')
                     ->select('a.id',
@@ -326,7 +326,8 @@ class AeronaveController extends Controller
                 // for ($i=0; $i < 10; $i++) {
                 //    $randomString .= $characters[rand(0,$charactersLength - 1)];
                 // }
-                $fileName = $request->fech_emision.'_'.($request->ci).'.'.$extension;
+                
+                $fileName = $request->matricula.'_'.($request->nombre).'.'.$extension;
                 $path = public_path().'/img/aeronave/'.$fileName;
                 file_put_contents($path, $decoded);
     
@@ -339,8 +340,9 @@ class AeronaveController extends Controller
                     ->first();
         $aeronave -> update([
             'fotografia' => $fileName,
-            'matricula' => $request->ci,
-            'modelo' => $request->cm,
+            'matricula' => mb_strtoupper($request->matricula),
+            'modelo' => mb_strtoupper($request->modelo),
+            'nombre' => mb_strtoupper($request->nombre),
             // 'per_nombre' => mb_strtoupper($request->nombre),
             // 'per_paterno' =>  mb_strtoupper($request->ap_paterno),
             // 'per_materno' => mb_strtoupper($request->ap_materno),

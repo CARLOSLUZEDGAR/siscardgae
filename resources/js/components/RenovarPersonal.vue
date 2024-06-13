@@ -435,7 +435,7 @@
     data() {
       return {
         // INICIO VARIABLES DGAE
-        personal_id : this.$route.params.personalid,
+        personal_id : this.$route.params.aeronaveid,
 
         currentStep: 1,
         per_foto : '',

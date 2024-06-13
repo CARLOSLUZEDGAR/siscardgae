@@ -121,6 +121,20 @@ export default new Router ({
             }
         },
 
+         {//DGAE
+            path: '/RenovarAeronave',
+            name: 'RenovarAeronave',
+            component: require('./components/RenovarAeronave.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-renew-per')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
         { // DGAE
             path: '/DocumentacionAeronave',
             name: 'DocumentacionAeronave',

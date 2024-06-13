@@ -96,7 +96,7 @@
                       </p>
                     </a>
                     <ul class="nav nav-treeview">
-                      @can('view-doc-personal', Model::class)
+                      @can('view-datos-personal', Model::class)
                       <li class="nav-item">
                           <router-link class="nav-link" to='/DatosAeronaves'>
                             <i class="fas fa-chalkboard-teacher nav-icon"></i>
