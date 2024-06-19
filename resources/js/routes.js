@@ -149,6 +149,34 @@ export default new Router ({
             }
         },
 
+        {//DGAE
+            path: '/ReporteDatosPersonales',
+            name: 'ReporteDatosPersonales',
+            component: require('./components/ReporteDatosPersonales.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-datos-personal')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
+        {//DGAE
+            path: '/ReporteListaLicencias',
+            name: 'ReporteListaLicencias',
+            component: require('./components/ReporteListaLicencias.vue').default,
+            beforeEnter: (to, from, next) => {
+                let per = window.user.permissions.map(permission=>permission.name);
+                if (per.includes('view-lic-otorgadas')) {
+                    next();
+                } else {
+                    next(from.path);
+                }
+            }
+        },
+
 
         // FIN RUTAS DGAE
 

@@ -46,7 +46,7 @@
                       @can('view-doc-carnet', Model::class)
                       <li class="nav-item">
                         <router-link class="nav-link" to='/DocumentacionPersonal'>
-                          <i class="fas fa-users nav-icon"></i>
+                          <i class="fas fa-file nav-icon"></i>
                           <p>Documentación</p>
                         </router-link>
                       </li>
@@ -69,7 +69,7 @@
                       @can('view-dat-aeronave', Model::class)
                       <li class="nav-item">
                           <router-link class="nav-link" to='/DatosAeronaves'>
-                            <i class="fas fa-chalkboard-teacher nav-icon"></i>
+                            <i class="fas fa-plane-departure nav-icon"></i>
                             <p>Datos</p>
                           </router-link>
                       </li>
@@ -89,7 +89,7 @@
                   <li class="nav-header" style="padding-left: 1px;">REPORTE</li>
                   <li class="nav-item">{{-- AERONAVE --}}
                     <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-plane"></i>
+                      <i class="nav-icon fas fa-file-pdf"></i>
                       <p>
                         REPORTES
                         <i class="fa fa-angle-left right"></i>
@@ -98,16 +98,16 @@
                     <ul class="nav nav-treeview">
                       @can('view-datos-personal', Model::class)
                       <li class="nav-item">
-                          <router-link class="nav-link" to='/DatosAeronaves'>
-                            <i class="fas fa-chalkboard-teacher nav-icon"></i>
+                          <router-link class="nav-link" to='/ReporteDatosPersonales'>
+                            <i class="fas fa-file-invoice nav-icon"></i>
                             <p>Documentación Personal</p>
                           </router-link>
                       </li>
                       @endcan
                       @can('view-lic-otorgadas', Model::class)
                       <li class="nav-item">
-                          <router-link class="nav-link" to='/DocumentacionAeronave'>
-                            <i class="fas fa-align-left nav-icon"></i>
+                          <router-link class="nav-link" to='/ReporteListaLicencias'>
+                            <i class="fas fa-clipboard-list nav-icon"></i>
                             <p>Licencias Otorgadas</p>
                           </router-link>
                       </li>
