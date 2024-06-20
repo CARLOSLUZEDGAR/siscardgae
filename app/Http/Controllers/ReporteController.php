@@ -141,11 +141,14 @@ class ReporteController extends Controller
     public function GenerarReporteLicencias(Request $request)
     {
         
-        // $fechade = date_create($request->de);
-        // $de = date_format($fechade,"d/m/Y");
+        $fechade = date_create($request->de);
+        $de = date_format($fechade,"d/m/Y");
+
+        $fechade = date_create($request->hasta);
+        $hasta = date_format($fechade,"d/m/Y");
                                     
-        $de = $request->de;
-        $hasta = $request->hasta;
+        // $de = $request->de;
+        // $hasta = $request->hasta;
 
         $personal_licencias = DB::table('personal_licencias as pl')
                             ->join('categorias as c','pl.id_categoria','c.id')

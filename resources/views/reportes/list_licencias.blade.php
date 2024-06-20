@@ -17,10 +17,10 @@
         }
         body {
             /*margin: 0px;*/
-            margin-top: 2cm;
+            margin-top: 3cm;
             margin-bottom: 2cm;
             /** margenes de izquierda y derecha es menos un cm*/
-            margin-left: 3cm;
+            margin-left: 2cm;
             margin-right: 2cm;
             /* border: 1px solid #C00; */
         }
@@ -43,7 +43,7 @@
         footer {
             position: fixed;
             bottom: 0cm;
-            left: 3cm;
+            left: 2cm;
             right: 2cm;
             height: 2cm;
             /*background-color: #3498DB;*/
@@ -93,7 +93,7 @@
             margin-bottom: 5px;" class="table table-bordered table-striped">
             <tbody class="table-striped">
                 <tr>
-                    <td style="/*border: 1px solid #000;*/ padding-top: 25px; padding-bottom: 25px; font-size: 10px; text-align: left; font-weight: bold;">
+                    <td style="/*border: 1px solid #000;*/ padding-top: 25px; padding-bottom: 25px; font-size: 10pt; text-align: left; font-weight: bold;">
                         <span>Fecha de Emisión: 
                             <?php
                                 $meses = array("Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic");
@@ -102,7 +102,7 @@
                             ?>
                         </span>
                     </td>
-                    <td style="/*border: 1px solid #000;*/ padding: 0px; font-size: 10px; text-align: right; font-weight: bold;">
+                    <td style="/*border: 1px solid #000;*/ padding: 0px; font-size: 10pt; text-align: right; font-weight: bold;">
                         <span>Desarrollado por la: DGAE - 
                             <?php
                                 $gestion_act = date("Y");
@@ -196,7 +196,7 @@
                     ?>
             </div>
 
-            <div style="padding-top: 0px; padding-bottom: 0px; text-align: center; position: fixed; bottom: 2cm; left: 3cm; right: 2cm; /*font-size: 14px; font-weight: bold;*/ /*border: 1px solid #C00;*/">
+            <div style="padding-top: 3cm; padding-bottom: 0px; text-align: center; /*position: fixed; bottom: 2cm; left: 3cm; right: 2cm;*/ /*font-size: 14px; font-weight: bold;*/ /*border: 1px solid #C00;*/">
                 <p style="margin: 1px; font-size: 12pt;">Cnl. DAEN. Marco Antonio Garnica Bustillos</p>
                 <p style="margin: 1px; font-size: 12pt; font-weight: bold;">DIRECTOR GENERAL DE AERONAVES DE ESTADO</p>
             </div>
@@ -207,7 +207,7 @@
             if(isset($pdf)) {
                 $pdf->page_script('
                     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
-                    $pdf->text(310, 760, "$PAGE_NUM - $PAGE_COUNT", $font, 9);
+                    $pdf->text(385, 580, "$PAGE_NUM - $PAGE_COUNT", $font, 9);
                 ');
             }
     </script>

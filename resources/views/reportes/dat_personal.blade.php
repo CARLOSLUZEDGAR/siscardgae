@@ -253,7 +253,7 @@
                     ?>
             </div>
 
-            <div style="padding-top: 0px; padding-bottom: 0px; text-align: center; position: fixed; bottom: 2cm; left: 3cm; right: 2cm; /*font-size: 14px; font-weight: bold;*/ /*border: 1px solid #C00;*/">
+            <div style="padding-top: 3cm; padding-bottom: 0px; text-align: center; /*position: fixed; bottom: 2cm; left: 3cm; right: 2cm;*/ /*font-size: 14px; font-weight: bold;*/ /*border: 1px solid #C00;*/">
                 <p style="margin: 1px; font-size: 12pt;">Cnl. DAEN. Marco Antonio Garnica Bustillos</p>
                 <p style="margin: 1px; font-size: 12pt; font-weight: bold;">DIRECTOR GENERAL DE AERONAVES DE ESTADO</p>
             </div>
