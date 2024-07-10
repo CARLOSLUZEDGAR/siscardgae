@@ -878,7 +878,16 @@
                         linguistica : me.per_comlinguistica,
                         observacion : me.per_observaciones,
                         fech_emision : me.per_fechaemision,
-                        fech_expiracion : me.per_fechaexpiracion
+                        fech_expiracion : me.per_fechaexpiracion,
+
+                        doc_carnet_identidad :me.doc_ci,
+                        doc_cert_nacimineto : me.doc_nacimiento,
+                        doc_cert_egreso : me.doc_egreso,
+                        doc_cert_espe : me.doc_especializacion,
+                        doc_cert_medico : me.doc_medico,
+                        doc_dip_titulo : me.doc_titulo,
+                        doc_lib_mil : me.doc_libreta,
+                        doc_exa_aprobacion : me.doc_aprobacion,
                     })
                     .then(function (response) {
                         

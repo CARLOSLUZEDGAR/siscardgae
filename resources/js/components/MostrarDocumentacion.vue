@@ -36,7 +36,7 @@
                         <!-- Buscar Personal -->
                       </h3>  
                     </div>                  
-                    <div class="col-sm-4" v-if="$auth.can('insert-per')">
+                    <div class="col-sm-4">
                       <button class="btn btn-danger btn-sm float-right" type="submit" @click="Atras()">
                         <i class="fas fa-arrow-left"></i>&nbsp; ATRAS
                       </button>
@@ -71,6 +71,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <tr v-for="(documento,index) in arrayDocumentosPersonal"> 
+                                            <!-- <td v-text="personal.grado+' '+personal.complemento"></td> -->
+                                            <td style="text-align:center; font-weight:bold;">{{ index + 1 }}</td>
+                                            <td v-text="documento.documento"></td>
+                                            <td>
+                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(documento)">
+                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
+                                                </button>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td class="text-center">
                                                 <label class="form-control-label" for="text-input">1</label>
@@ -79,10 +89,9 @@
                                                 <label class="form-control-label" for="text-input">CARNET DE IDENTIDAD</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerCi" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_ci.$error, 'is-valid':!$v.doc_ci.$invalid }">
-                                                <div class="invalid-feedback">
-                                                  <span v-if="!$v.doc_ci.required">Por favor, carga un archivo.</span>
-                                                </div>  
+                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga()">
+                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -93,10 +102,9 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO DE NACIMIENTO</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerNacimiento" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_nacimiento.$error, 'is-valid':!$v.doc_nacimiento.$invalid }">
-                                                <div class="invalid-feedback">
-                                                  <span v-if="!$v.doc_nacimiento.required">Por favor, carga un archivo.</span>
-                                                </div>
+                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(2)">
+                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -107,10 +115,9 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO DE EGRESO</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerEgreso" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_egreso.$error, 'is-valid':!$v.doc_egreso.$invalid }">
-                                                <div class="invalid-feedback">
-                                                  <span v-if="!$v.doc_egreso.required">Por favor, carga un archivo.</span>
-                                                </div>
+                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(3)">
+                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
+                                                </button>
                                              </td>
                                         </tr>
                                         <tr>
@@ -121,10 +128,9 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO DE ESPECIALIZACIÓN</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerEspecializacion" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_especializacion.$error, 'is-valid':!$v.doc_especializacion.$invalid }">
-                                                <div class="invalid-feedback">
-                                                  <span v-if="!$v.doc_especializacion.required">Por favor, carga un archivo.</span>
-                                                </div>
+                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(4)">
+                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -135,10 +141,9 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO MEDICO</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerMedico" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_medico.$error, 'is-valid':!$v.doc_medico.$invalid }">
-                                                <div class="invalid-feedback">
-                                                  <span v-if="!$v.doc_medico.required">Por favor, carga un archivo.</span>
-                                                </div>
+                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(5)">
+                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -149,10 +154,9 @@
                                                 <label class="form-control-label" for="text-input">TITULO EDUCATIVO</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerTitulo" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_titulo.$error, 'is-valid':!$v.doc_titulo.$invalid }">
-                                                <div class="invalid-feedback">
-                                                  <span v-if="!$v.doc_titulo.required">Por favor, carga un archivo.</span>
-                                                </div>
+                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(6)">
+                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -163,10 +167,9 @@
                                                 <label class="form-control-label" for="text-input">LIBRETA MILITAR</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerLibreta" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_libreta.$error, 'is-valid':!$v.doc_libreta.$invalid }">
-                                                <div class="invalid-feedback">
-                                                  <span v-if="!$v.doc_libreta.required">Por favor, carga un archivo.</span>
-                                                </div>
+                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(7)">
+                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -177,10 +180,9 @@
                                                 <label class="form-control-label" for="text-input">CERTIFICADO DE APROBACIÓN DE EXAMEN</label>
                                             </td>
                                             <td>
-                                                <input type="file" class="form-control" @change="obtenerAprobacion" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_aprobacion.$error, 'is-valid':!$v.doc_aprobacion.$invalid }">
-                                                <div class="invalid-feedback">
-                                                  <span v-if="!$v.doc_aprobacion.required">Por favor, carga un archivo.</span>
-                                                </div>
+                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(8)">
+                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
+                                                </button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -266,6 +268,7 @@
         doc_aprobacion : '',
 
         arrayDatosPersonal : [],
+        arrayDocumentosPersonal : [],
 
         arrayCategoria : [],
         arrayEntidad : [],
@@ -424,6 +427,7 @@
             })
             .then(function (response) {
                 me.arrayDatosPersonal = response.data.personal;
+                me.arrayDocumentosPersonal = response.data.personal_documento;
                 me.EditarPersonal(me.arrayDatosPersonal);
                 // me.obtenerImagen();
             })
@@ -461,6 +465,34 @@
           if (this.currentStep > 1) {
             this.currentStep--;
           }
+        },
+
+        Descarga(documento) {
+            // switch (nro_doc) {
+            //     case 1:
+                    axios({
+                    url: '/document/personal/'.documento, // Reemplaza con la ruta correcta de tu archivo PDF
+                    method: 'GET',
+                    responseType: 'blob' // importante para descargar archivos binarios
+                })
+                .then(response => {
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', documento); // Nombre del archivo a descargar
+                    document.body.appendChild(link);
+                    link.click();
+                })
+                .catch(error => {
+                    console.error("Hubo un error al descargar el archivo PDF", error);
+                });
+                    
+            //         break;
+            
+            //     default:
+            //         break;
+            // }
+
         },
 
         obtenerCi(e){

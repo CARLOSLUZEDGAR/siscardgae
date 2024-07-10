@@ -90,7 +90,7 @@ class PersonalController extends Controller
                 } else {
                     $extension = 'pdf';
                 }
-                $documentName = $x.'_'.($request->ci).'.'.$extension;
+                $documentName = $x.'_'.$request->ci.'_'.$request->fech_emision.'.'.$extension;
                 $path = public_path().'/document/personal/'.$documentName;
                 file_put_contents($path, $decoded);
                 $x++;
@@ -271,7 +271,13 @@ class PersonalController extends Controller
                     ->where('p.id',$request->personal_id)
                     ->where('pl.estado',1)
                     ->first();
-        return ['personal' => $personal];
+        $personal_documento = DB::table('personal_documentos as pd')
+                            ->select('documento')
+                            ->where('id_personal',$request->personal_id)
+                            ->where('estado',1)
+                            ->get();
+
+        return ['personal' => $personal, 'personal_documento' => $personal_documento];
     }
 
     public function RenovarPersonal(Request $request) //DGAE
@@ -346,6 +352,47 @@ class PersonalController extends Controller
             'estado' => '1',
             'sysuser' => Auth::user()->id
         ]);
+
+        $cambiar_estado_doc = PersonalDocumento::where('id_personal',$request->id_personal)
+                            -> update([
+                                'estado' => '0'
+                            ]);
+
+        $documentos = array($request->doc_carnet_identidad,
+                            $request->doc_cert_nacimineto,
+                            $request->doc_cert_egreso,
+                            $request->doc_cert_espe,
+                            $request->doc_cert_medico,
+                            $request->doc_dip_titulo,
+                            $request->doc_lib_mil,
+                            $request->doc_exa_aprobacion);
+        $cantDocument = sizeof($documentos);
+        $x = 1;
+        for ($i=0; $i < $cantDocument ; $i++) { 
+            if($documentos[$i] != ""){
+                $exploded = explode(',', $documentos[$i]);
+                $decoded = base64_decode($exploded[1]);
+                if (Str::contains($exploded[0], 'pdf')) {
+                    $extension = 'pdf';
+                } else {
+                    $extension = 'pdf';
+                }
+                $documentName = $x.'_'.$request->ci.'_'.$request->fech_emision.'.'.$extension;
+                $path = public_path().'/document/personal/'.$documentName;
+                file_put_contents($path, $decoded);
+                $x++;
+                $personal_documento = PersonalDocumento::create([
+                    'id_personal' => $personal->id,
+                    'id_licencia' => $personal_licencia->id,
+                    'documento' => $documentName,
+                    'estado' => '1',
+                    'sysuser' => Auth::user()->id
+                ]);
+            }
+            else{
+                $x++;
+            }
+        }
 
         return ['personal' => $personal_licencia];
     }
