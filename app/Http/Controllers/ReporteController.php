@@ -190,4 +190,13 @@ class ReporteController extends Controller
         return $pdf->stream($de.'-'.$hasta.'pdf');
         // return $pdf->download($personal->id_licencia.'-'.$personal->per_ci.'.pdf');
     }
+
+    public function DownloadPDF(Request $request)
+    {
+        $filePath = storage_path("/document/personal/{$request->documento}");
+        if (!file_exists($filePath)) {
+            return response()->json(['message' => 'File not found.'], 404);
+        }
+        return response()->download($filePath);
+    }
 }

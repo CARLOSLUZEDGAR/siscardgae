@@ -74,117 +74,21 @@
                                         <tr v-for="(documento,index) in arrayDocumentosPersonal"> 
                                             <!-- <td v-text="personal.grado+' '+personal.complemento"></td> -->
                                             <td style="text-align:center; font-weight:bold;">{{ index + 1 }}</td>
-                                            <td v-text="documento.documento"></td>
+                                            <td v-if="index == 0"><label class="form-control-label" for="text-input">CARNET DE IDENTIDAD</label></td>
+                                            <td v-if="index == 1"><label class="form-control-label" for="text-input">CERTIFICADO DE NACIMIENTO</label></td>
+                                            <td v-if="index == 2"><label class="form-control-label" for="text-input">CERTIFICADO DE EGRESO</label></td>
+                                            <td v-if="index == 3"><label class="form-control-label" for="text-input">CERTIFICADO DE ESPECIALIZACIÓN</label></td>
+                                            <td v-if="index == 4"><label class="form-control-label" for="text-input">CERTIFICADO MEDICO</label></td>
+                                            <td v-if="index == 5"><label class="form-control-label" for="text-input">TITULO EDUCATIVO</label></td>
+                                            <td v-if="index == 6"><label class="form-control-label" for="text-input">LIBRETA MILITAR</label></td>
+                                            <td v-if="index == 7"><label class="form-control-label" for="text-input">CERTIFICADO DE APROBACIÓN DE EXAMEN</label></td>
+                                            <!-- <td><a :href="../document/personal/".{{documento.documento}}>{{documento.documento}}</a></td> -->
                                             <td>
                                                 <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(documento)">
                                                     <i class="fas fa-download"></i>&nbsp; DESCARGAR
                                                 </button>
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">
-                                                <label class="form-control-label" for="text-input">1</label>
-                                            </td>
-                                            <td>
-                                                <label class="form-control-label" for="text-input">CARNET DE IDENTIDAD</label>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga()">
-                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">
-                                                <label class="form-control-label" for="text-input">2</label>
-                                            </td>
-                                            <td>
-                                                <label class="form-control-label" for="text-input">CERTIFICADO DE NACIMIENTO</label>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(2)">
-                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">
-                                                <label class="form-control-label" for="text-input">3</label>
-                                            </td>
-                                            <td>
-                                                <label class="form-control-label" for="text-input">CERTIFICADO DE EGRESO</label>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(3)">
-                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
-                                                </button>
-                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">
-                                                <label class="form-control-label" for="text-input">4</label>
-                                            </td>
-                                            <td>
-                                                <label class="form-control-label" for="text-input">CERTIFICADO DE ESPECIALIZACIÓN</label>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(4)">
-                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">
-                                                <label class="form-control-label" for="text-input">5</label>
-                                            </td>
-                                            <td>
-                                                <label class="form-control-label" for="text-input">CERTIFICADO MEDICO</label>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(5)">
-                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">
-                                                <label class="form-control-label" for="text-input">6</label>
-                                            </td>
-                                            <td>
-                                                <label class="form-control-label" for="text-input">TITULO EDUCATIVO</label>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(6)">
-                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">
-                                                <label class="form-control-label" for="text-input">7</label>
-                                            </td>
-                                            <td>
-                                                <label class="form-control-label" for="text-input">LIBRETA MILITAR</label>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(7)">
-                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">
-                                                <label class="form-control-label" for="text-input">8</label>
-                                            </td>
-                                            <td>
-                                                <label class="form-control-label" for="text-input">CERTIFICADO DE APROBACIÓN DE EXAMEN</label>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(8)">
-                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        </tr>                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -468,10 +372,8 @@
         },
 
         Descarga(documento) {
-            // switch (nro_doc) {
-            //     case 1:
                     axios({
-                    url: '/document/personal/'.documento, // Reemplaza con la ruta correcta de tu archivo PDF
+                    url: '/downloadPDF/'+documento, // Reemplaza con la ruta correcta de tu archivo PDF
                     method: 'GET',
                     responseType: 'blob' // importante para descargar archivos binarios
                 })
@@ -486,13 +388,6 @@
                 .catch(error => {
                     console.error("Hubo un error al descargar el archivo PDF", error);
                 });
-                    
-            //         break;
-            
-            //     default:
-            //         break;
-            // }
-
         },
 
         obtenerCi(e){
