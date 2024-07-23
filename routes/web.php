@@ -92,7 +92,7 @@ Route::post('/renovarAeronave','AeronaveController@RenovarAeronave');
 Route::get('/carnet','ReporteController@GenerarCarnet');
 Route::get('/personal','ReporteController@GenerarReportePersonal');
 Route::get('/lista','ReporteController@GenerarReporteLicencias');
-Route::get('/downloadPDF/{documento}', 'ReporteController@DownloadPDF');
+Route::get('/downloadPDF','ReporteController@DownloadPDF');
 
 
 

@@ -193,7 +193,7 @@ class ReporteController extends Controller
 
     public function DownloadPDF(Request $request)
     {
-        $filePath = storage_path("/document/personal/{$request->documento}");
+        $filePath = storage_path("../document/personal/".$request->documento);
         if (!file_exists($filePath)) {
             return response()->json(['message' => 'File not found.'], 404);
         }

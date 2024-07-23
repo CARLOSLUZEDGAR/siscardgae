@@ -82,12 +82,12 @@
                                             <td v-if="index == 5"><label class="form-control-label" for="text-input">TITULO EDUCATIVO</label></td>
                                             <td v-if="index == 6"><label class="form-control-label" for="text-input">LIBRETA MILITAR</label></td>
                                             <td v-if="index == 7"><label class="form-control-label" for="text-input">CERTIFICADO DE APROBACIÓN DE EXAMEN</label></td>
-                                            <!-- <td><a :href="../document/personal/".{{documento.documento}}>{{documento.documento}}</a></td> -->
-                                            <td>
-                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(documento)">
+                                            <td><a :href="`/document/personal/${documento.documento}`" :download='documento.documento'>{{documento.documento}}</a></td>
+                                            <!-- <td>
+                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(documento.documento)">
                                                     <i class="fas fa-download"></i>&nbsp; DESCARGAR
                                                 </button>
-                                            </td>
+                                            </td> -->
                                         </tr>                                        
                                     </tbody>
                                 </table>
@@ -372,22 +372,37 @@
         },
 
         Descarga(documento) {
-                    axios({
-                    url: '/downloadPDF/'+documento, // Reemplaza con la ruta correcta de tu archivo PDF
-                    method: 'GET',
-                    responseType: 'blob' // importante para descargar archivos binarios
-                })
-                .then(response => {
-                    const url = window.URL.createObjectURL(new Blob([response.data]));
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', documento); // Nombre del archivo a descargar
-                    document.body.appendChild(link);
-                    link.click();
-                })
-                .catch(error => {
-                    console.error("Hubo un error al descargar el archivo PDF", error);
-                });
+
+            // window.location.href = `/document/personal/`+documento;
+            // window.location.href = "/document/personal/"+documento;
+            axios
+            .get("/downloadPDF", {
+                documento : documento,
+            })
+            .then(function (response) {
+                // me.arrayEntidad = response.data.entidades
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+
+                //     axios({
+                //     url: '/downloadPDF/'.documento, // Reemplaza con la ruta correcta de tu archivo PDF
+                //     method: 'GET',
+                //     responseType: 'blob' // importante para descargar archivos binarios
+                // })
+                // .then(response => {
+                //     const url = window.URL.createObjectURL(new Blob([response.data]));
+                //     const link = document.createElement('a');
+                //     link.href = url;
+                //     link.setAttribute('download', documento); // Nombre del archivo a descargar
+                //     document.body.appendChild(link);
+                //     link.click();
+                // })
+                // .catch(error => {
+                //     console.error("Hubo un error al descargar el archivo PDF", error);
+                // });
         },
 
         obtenerCi(e){
