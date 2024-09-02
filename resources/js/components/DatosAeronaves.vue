@@ -39,7 +39,7 @@
                   </div>                  
                   <div class="col-sm-4" v-if="$auth.can('view-insert-per')">
                     <button class="btn btn-primary btn-sm float-right" type="submit" @click="Registro()">
-                      <i class="fas fa-user-plus"></i>&nbsp; REGISTRAR NUEVA AERONAVE
+                      <i class="fa fa-plane"></i>&nbsp; REGISTRAR NUEVA AERONAVE
                     </button>
                   </div>
                 </div>  
@@ -78,7 +78,7 @@
                                     <td style="width:100px; text-align:center">
                                       <div v-if="$auth.can('view-renew-per')">
                                         <button type="button" @click="Renovar(aeronave.id)" class="btn btn-success btn-sm">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                            <i class="fa fa-retweet" aria-hidden="true"></i>
                                         </button>
                                       </div>
                                     </td>

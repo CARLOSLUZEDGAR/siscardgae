@@ -52,7 +52,7 @@ export default new Router ({
         },
 
         {//DGAE
-            path: '/RenovarPersonal',
+            path: '/RenovarPersonal/:personalid',
             name: 'RenovarPersonal',
             component: require('./components/RenovarPersonal.vue').default,
             beforeEnter: (to, from, next) => {
@@ -80,9 +80,9 @@ export default new Router ({
         },
 
         {//DGAE
-            path: '/MostrarDocumentacion',
-            name: 'MostrarDocumentacion',
-            component: require('./components/MostrarDocumentacion.vue').default,
+            path: '/MostrarDocumentacionPersonal/:personalid',
+            name: 'MostrarDocumentacionPersonal',
+            component: require('./components/MostrarDocumentacionPersonal.vue').default,
             // beforeEnter: (to, from, next) => {
             //     let per = window.user.permissions.map(permission=>permission.name);
             //     if (per.includes('view-mostrar-doc')) {
@@ -122,7 +122,7 @@ export default new Router ({
         },
 
          {//DGAE
-            path: '/RenovarAeronave',
+            path: '/RenovarAeronave/:aeronaveid',
             name: 'RenovarAeronave',
             component: require('./components/RenovarAeronave.vue').default,
             beforeEnter: (to, from, next) => {
@@ -147,6 +147,20 @@ export default new Router ({
                     next(from.path);
                 }
             }
+        },
+
+        {//DGAE
+            path: '/MostrarDocumentacionAeronave/:aeronaveid',
+            name: 'MostrarDocumentacionAeronave',
+            component: require('./components/MostrarDocumentacionAeronave.vue').default,
+            // beforeEnter: (to, from, next) => {
+            //     let per = window.user.permissions.map(permission=>permission.name);
+            //     if (per.includes('view-mostrar-doc')) {
+            //         next();
+            //     } else {
+            //         next(from.path);
+            //     }
+            // }
         },
 
         {//DGAE

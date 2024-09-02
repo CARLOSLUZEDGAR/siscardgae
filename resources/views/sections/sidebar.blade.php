@@ -77,7 +77,7 @@
                       @can('view-doc-aeronave', Model::class)
                       <li class="nav-item">
                           <router-link class="nav-link" to='/DocumentacionAeronave'>
-                            <i class="fas fa-align-left nav-icon"></i>
+                            <i class="fas fa-file nav-icon"></i>
                             <p>Documentación</p>
                           </router-link>
                       </li>

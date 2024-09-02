@@ -28,7 +28,7 @@
   <ul class="navbar-nav ml-auto">
     <!-- Notifications Dropdown Menu -->
     <a type="button" class="btn btn-outline-danger btn-sm" href="{{ route('logout') }}">
-      <i class="fas fa-power-off"></i> Cerrar Sesión
+      <i class="fas fa-power-off"></i> &nbsp; Cerrar Sesión
     </a>
   </ul>
 </nav>

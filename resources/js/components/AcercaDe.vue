@@ -23,11 +23,11 @@
                                         GESTIÓN DE MANDO 2024
                                     </div>
                                     <div class="col-md-12 text-center">
-                                            Gral. Div. Aé. Marcelo Javier Zegarra Gutierrez
+                                            Gral. Div. Aé. Gerardo Zabala Álvarez
                                         <div class="cargo mb-1">
                                             COMANDANTE GENERAL DE LA FUERZA AÉREA
                                         </div>                       
-                                            Gral. Brig. Aé. Guillermo Max Burgos Zegarra
+                                            Gral. Brig. Aé. Gonzalo Edwin Ruiz Cisneros
                                         <div class="cargo  mb-1">
                                             JEFE DE ESTADO MAYOR GENERAL DE LA FAB
                                         </div>

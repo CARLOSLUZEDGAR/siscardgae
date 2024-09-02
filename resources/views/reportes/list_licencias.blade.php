@@ -144,51 +144,56 @@
                 <p style="margin: 1px">LICENCIAS EMITIDAS DE: {{$de}} HASTA: {{$hasta}}</p>
             </div>
 
-            <table width="100%" style="border-collapse: collapse; border-spacing: 0; border: black 1px; margin-bottom: 5px; padding-top: 2px; padding-bottom: 2px;" class="table table-bordered table-striped">
-                <thead style="background-color: lightgray;">
-                    <tr>
-                        <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">NRO.</th>
-                        <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">FECHA DE EXPEDICIÓN</th>
-                        <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">NRO. LICENCIA</th>
-                        <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">ENTIDAD</th>
-                        <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">GRADO</th>
-                        <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">APELLIDOS Y NOMBRES</th>
-                        <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">CATEGORIA</th>
-                        <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">LICENCIA</th>
-                        <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">HABILITACIÓN</th>
-                        <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">COMPETENCIA LINGUISTICA</th> 
-                    </tr>
-                </thead>
-                <tbody class="table-striped">
-                    <?php
-                        $x = 0;
-                    ?>
-                    @foreach($licencias as $row)
-                    <?php
-                        $x = $x + 1;
-                    ?> 
-                    <tr>  
-                        <td style="border: 1px solid #000; padding: 1px; font-size: 8pt; text-align: center;"><span><?php echo $x; ?></span></td>
+            @if (sizeof($licencias) != 0)
+                <table width="100%" style="border-collapse: collapse; border-spacing: 0; border: black 1px; margin-bottom: 5px; padding-top: 2px; padding-bottom: 2px;" class="table table-bordered table-striped">
+                    <thead style="background-color: lightgray;">
+                        <tr>
+                            <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">NRO.</th>
+                            <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">FECHA DE EXPEDICIÓN</th>
+                            <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">NRO. LICENCIA</th>
+                            <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">ENTIDAD</th>
+                            <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">GRADO</th>
+                            <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">APELLIDOS Y NOMBRES</th>
+                            <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">CATEGORIA</th>
+                            <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">LICENCIA</th>
+                            <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">HABILITACIÓN</th>
+                            <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">COMPETENCIA LINGUISTICA</th> 
+                        </tr>
+                    </thead>
+                    <tbody class="table-striped">
                         <?php
-                            $date = date_create($row->fecha_emision);
-                            $fechaemision = date_format($date,"d/m/Y");
+                            $x = 0;
                         ?>
-                        <td style="border: 1px solid #000; padding: 2px; font-size: 8pt; text-align: center;"><span><?php echo $fechaemision; ?></span></td>
-                        <td style="border: 1px solid #000; padding: 2px; font-size: 8pt; text-align: center;"><span>{{$row->id}}</span></td>
-                        <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->entidad}}</span></td>
-                        <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->abreviatura}}</span></td>
-                        <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->per_paterno}} {{$row->per_materno}} {{$row->per_nombre}}</span></td>
-                        <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->categoria}}</span></td>
-                        <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->licencia}}</span></td>
-                        <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->habilitacion}}</span></td>
-                        <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->nivel}}</span></td>
-                    </tr>
-                    @endforeach
-                    
-                </tbody>
-            </table>
-
-            <div style="padding-top: 1px; padding-bottom: 1px; text-align: right; font-size: 12pt; font-weight: normal; /*border: 1px solid #C00;*/">
+                        @foreach($licencias as $row)
+                        <?php
+                            $x = $x + 1;
+                        ?> 
+                        <tr>  
+                            <td style="border: 1px solid #000; padding: 1px; font-size: 8pt; text-align: center;"><span><?php echo $x; ?></span></td>
+                            <?php
+                                $date = date_create($row->fecha_emision);
+                                $fechaemision = date_format($date,"d/m/Y");
+                            ?>
+                            <td style="border: 1px solid #000; padding: 2px; font-size: 8pt; text-align: center;"><span><?php echo $fechaemision; ?></span></td>
+                            <td style="border: 1px solid #000; padding: 2px; font-size: 8pt; text-align: center;"><span>{{$row->id}}</span></td>
+                            <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->entidad}}</span></td>
+                            <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->abreviatura}}</span></td>
+                            <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->per_paterno}} {{$row->per_materno}} {{$row->per_nombre}}</span></td>
+                            <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->categoria}}</span></td>
+                            <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->licencia}}</span></td>
+                            <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->habilitacion}}</span></td>
+                            <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->nivel}}</span></td>
+                        </tr>
+                        @endforeach
+                        
+                    </tbody>
+                </table>
+            @else
+                <div style="padding-top: 0.5cm; padding-bottom: 0px; text-align: center; /*position: fixed; bottom: 2cm; left: 3cm; right: 2cm;*/ /*font-size: 14px; font-weight: bold;*/ /*border: 1px solid #C00;*/">
+                    <p style="margin: 1px; font-size: 12pt; font-weight: bold;">NO SE TIENE REGISTROS ENTRE LOS RANGOS SELECCIONADOS.</p>
+                </div>
+            @endif
+            <div style="padding-top: 0.5cm; padding-bottom: 1px; text-align: right; font-size: 12pt; font-weight: normal; /*border: 1px solid #C00;*/">
                 La Paz, 
                     <?php
                         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");

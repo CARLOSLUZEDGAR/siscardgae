@@ -252,54 +252,14 @@ class AeronaveController extends Controller
                     ->where('a.id',$request->aeronave_id)
                     ->where('a.estado',1)
                     ->first();
-        // $personal = DB::table('personals as p')
-        //             ->join('personal_licencias as pl','p.id','pl.id_personal')
-        //             ->join('nacionalidads as n','p.id_nacionalidad','n.id')
-        //             ->join('categorias as c','pl.id_categoria','c.id')
-        //             ->join('entidads as e','pl.id_entidad','e.id')
-        //             ->join('grados as g','pl.id_grado','g.id')
-        //             ->join('licencias as l','pl.id_licencia','l.id')
-        //             ->join('habilitacions as h','pl.id_habilitacion','h.id')
-        //             ->join('competencia_linguisticas as cl','pl.id_comp_linguistica','cl.id')
-        //             ->select('p.id as id_personal',
-        //                 'n.id as idnacionalidad',
-        //                 'n.nacionalidad',
-        //                 'n.pais',
-        //                 'p.per_foto',
-        //                 'p.per_nombre',
-        //                 'p.per_paterno',
-        //                 'p.per_materno',
-        //                 'p.per_ci',
-        //                 'p.per_cm',
-        //                 'p.per_sexo',
-        //                 'p.per_fecha_nacimiento',
-        //                 'p.per_celular',
-        //                 'p.per_direccion',
-        //                 'p.per_mail',
-        //                 'pl.id as id_licencia',
-        //                 'pl.id_categoria',
-        //                 'pl.id_entidad',
-        //                 'pl.id_grado',
-        //                 'pl.id_licencia',
-        //                 'pl.id_habilitacion',
-        //                 'pl.id_comp_linguistica',
-        //                 'e.entidad',
-        //                 'g.abreviatura',
-        //                 'l.licencia',
-        //                 'l.traduccion',
-        //                 'h.habilitacion',
-        //                 'h.traduccion as htraduccion',
-        //                 'cl.id as idlinguistica',
-        //                 'cl.nivel',
-        //                 'cl.traduccion as cltraduccion',
-        //                 'pl.observacion',
-        //                 'pl.fecha_emision',
-        //                 'pl.fecha_expiracion'
-        //                 )
-        //             ->where('p.id',$request->personal_id)
-        //             ->where('pl.estado',1)
-        //             ->first();
-        return ['aeronave' => $aeronave];
+        
+        $aeronave_documento = DB::table('aeronave_documentos as ad')
+                    ->select('documento')
+                    ->where('id_aeronave',$request->aeronave_id)
+                    ->where('estado',1)
+                    ->get();
+
+        return ['aeronave' => $aeronave, 'aeronave_documento' => $aeronave_documento];           
     }
 
     public function RenovarAeronave(Request $request) //DGAE

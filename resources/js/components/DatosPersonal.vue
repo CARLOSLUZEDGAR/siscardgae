@@ -78,7 +78,7 @@
                                     <td style="width:100px; text-align:center">
                                       <div v-if="$auth.can('view-renew-per')">
                                         <button type="button" @click="Renovar(personal.id)" class="btn btn-success btn-sm">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                            <i class="fa fa-retweet" aria-hidden="true"></i>
                                         </button>
                                       </div>
                                     </td>

@@ -9,6 +9,17 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            // Desactivar la caché para todas las rutas en este controlador
+            $response = $next($request);
+            return $response->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                            ->header('Pragma', 'no-cache')
+                            ->header('Expires', '0');
+        });
+    }
+    
     public function login(Request $request)
     {   
         $email = $request->email;
@@ -59,7 +70,9 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        // return redirect('/');
+        return redirect('/')->with('message', 'Sesión cerrada correctamente.');
+
     }
     public function VistaLogin(Request $request)
     {   

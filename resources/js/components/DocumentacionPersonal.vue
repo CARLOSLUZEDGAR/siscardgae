@@ -952,7 +952,7 @@ export default {
 
     MostrarPDF(personalid){ //DGAE
     this.$router.push({
-                  name: "MostrarDocumentacion",
+                  name: "MostrarDocumentacionPersonal",
                   //ENVIO DE DATOS
                   params:{
                       personalid: personalid

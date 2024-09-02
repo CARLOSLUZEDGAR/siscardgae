@@ -16,28 +16,6 @@ class UsuarioController extends Controller
 {
     public function DatosUsuario()
     {
-        // $usuario = DB::table('users as u')
-        //     ->join('personals as p','u.percod','p.per_codigo')
-        //     ->join('personal_escalafones as pe','u.percod','pe.per_codigo')
-        //     ->join('grados as g','pe.gra_cod','g.id')
-        //     ->join('personal_estudios as epe','u.percod','epe.per_codigo')
-        //     ->join('estudios as e','epe.est_cod','e.id')
-        //     ->join('personal_situaciones as ps','p.per_codigo','ps.per_codigo')
-        //     ->join('subsituaciones as ss','ps.subsit_cod','ss.id')
-        //     ->join('personal_destinos as pd','p.per_codigo','pd.per_codigo')
-        //     ->join('nivel3_destinos as nd3','pd.d3_cod','nd3.id')
-        //     ->join('nivel2_destinos as nd2','pd.d2_cod','nd2.id')
-        //     ->select('u.id','u.nick','u.estado','u.email','p.per_nombre as nombre','p.per_paterno as paterno',
-        //             'p.per_materno as materno','p.per_cm as cm','p.per_foto as foto',
-        //             'g.abreviatura as grado','e.abreviatura as complemento',
-        //             'p.per_cm as cm','p.per_ci as ci','p.per_expedido as expedido',
-        //             'ss.nombre as situacion','nd2.descripcion as des2','nd3.descripcion as des3')
-        //     ->where('pe.estado',1)
-        //     ->where('epe.estado',1)
-        //     ->where('pd.estado',1)
-        //     ->where('ps.estado',1)
-        //     ->where('u.id',Auth::user()->id)
-        //     ->first();
         $usuario = DB::table('users as u')
                 ->join('usuarios as us','u.id_usuario','us.id')
                 ->select('u.id','u.nick','u.estado','u.email','us.nombres','us.ap_paterno','us.ap_materno')
@@ -109,24 +87,7 @@ class UsuarioController extends Controller
     {
         $buscar = $request->buscar;
         if ($buscar == '') {
-            // $usuarios = DB::table('users as u')
-            // ->join('personals as p','u.percod','p.per_codigo')
-            // ->join('personal_escalafones as pe','u.percod','pe.per_codigo')
-            // ->join('grados as g','pe.gra_cod','g.id')
-            // ->join('personal_estudios as epe','u.percod','epe.per_codigo')
-            // ->join('estudios as e','epe.est_cod','e.id')
-            // ->join('model_has_roles as mr', 'u.id','mr.model_id')
-            // ->join('roles as r','mr.role_id','r.id')
-            // ->select('u.id','u.nick','u.estado','p.per_nombre as nombre',
-            //         'p.per_paterno as paterno','p.per_materno as materno',
-            //         'p.per_cm as cm','g.abreviatura as grado',
-            //         'e.abreviatura as complemento',
-            //         'r.name as role'
-            //         )
-            // ->where('pe.estado',1)
-            // ->where('epe.estado',1)
-            // ->orderBy('u.id','desc')
-            // ->paginate(10);
+        
             $usuarios = DB::table('users as u')
                     ->join('usuarios as us','u.id_usuario','us.id')
                     ->join('model_has_roles as mr', 'u.id','mr.model_id')
@@ -136,28 +97,7 @@ class UsuarioController extends Controller
                     ->orderBy('u.id','desc')
                     ->paginate(10);
         } else {
-            // $usuarios = DB::table('users as u')
-            // ->join('personals as p','u.percod','p.per_codigo')
-            // ->join('personal_escalafones as pe','u.percod','pe.per_codigo')
-            // ->join('grados as g','pe.gra_cod','g.id')
-            // ->join('personal_estudios as epe','u.percod','epe.per_codigo')
-            // ->join('estudios as e','epe.est_cod','e.id')
-            // ->join('model_has_roles as mr', 'u.id','mr.model_id')
-            // ->join('roles as r','mr.role_id','r.id')
-            // ->select('u.id','u.nick','u.estado','p.per_nombre as nombre','p.per_paterno as paterno',
-            //         'p.per_materno as materno','p.per_cm as cm','g.abreviatura as grado','e.abreviatura as complemento',
-            //         'r.name as role'
-            //         )
-            // ->where(function($q) use ($buscar){
-            //     $q->where('p.per_paterno','LIKE','%'.$buscar.'%')
-            //     ->orWhere('p.per_cm','LIKE','%'.$buscar.'%')
-            //     ->orWhere('p.per_nombre','LIKE','%'.$buscar.'%')
-            //     ->orWhere('p.per_materno','LIKE','%'.$buscar.'%');
-            // })
-            // ->where('pe.estado',1)
-            // ->where('epe.estado',1)
-            // ->orderBy('u.id','desc')
-            // ->paginate(10); 
+            
             $usuarios = DB::table('users as u')
                     ->join('usuarios as us','u.id_usuario','us.id')
                     ->join('model_has_roles as mr', 'u.id','mr.model_id')
