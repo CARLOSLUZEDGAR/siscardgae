@@ -43,15 +43,4 @@ class EntidadController extends Controller
                 ->get();
                 return ['entidades' => $entidad];
     }
-
-    // public function selectEntidad(Request $request) //BASE
-    // {
-    //     $nacionalidad = DB::table('nacionalidads')
-    //             ->select('id', 'pais', 'nacionalidad', 'abreviatura')
-    //             ->where('estado', 1)
-    //             ->where('id', $request->id_nacionalidadA)
-    //             // ->orderBy('nacionalidad', 'asc')
-    //             ->first();
-    //             return ['nacionalidades' => $nacionalidad];
-    // }
 }

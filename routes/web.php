@@ -83,6 +83,8 @@ Route::post('/listarCompetenciaLinguistica','CompetenciaLinguisticaController@Li
 Route::post('/listarPersonal','PersonalController@ListarPersonal');
 Route::post('/selectNacionalidad','NacionalidadController@selectNacionalidad');
 Route::post('/renovarPersonal','PersonalController@RenovarPersonal');
+Route::post('/listarGranUnidad','GranUnidadController@ListarGranUnidad');
+
 
 Route::post('/listarAeronave','AeronaveController@ListarAeronave');
 Route::post('/crearAeronave','AeronaveController@CrearAeronave');
