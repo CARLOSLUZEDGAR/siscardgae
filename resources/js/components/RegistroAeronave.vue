@@ -48,7 +48,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-3">
                                         <label class="form-control-label" for="text-input">Entidad</label>
-                                        <select class="form-control" v-model="entidad" @click="listarGranUnidad(entidad),g_unidad = ''" :class="{ 'is-invalid' : $v.entidad.$error, 'is-valid':!$v.entidad.$invalid }">
+                                        <select class="form-control" v-model="entidad" @click="listarGranUnidad(entidad), g_unidad = '', unidad = ''" :class="{ 'is-invalid' : $v.entidad.$error, 'is-valid':!$v.entidad.$invalid }">
                                             <option value="" disabled>SELECCIONE</option>
                                             <option v-for="entidad in arrayEntidad" :key="entidad.id" :value="entidad.id"  v-text="entidad.entidad"></option>                        
                                         </select>                                        
@@ -65,7 +65,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label class="form-control-label" for="text-input">Gran Unidad</label>
-                                        <select class="form-control" v-model="g_unidad" :class="{ 'is-invalid' : $v.g_unidad.$error, 'is-valid':!$v.g_unidad.$invalid }">
+                                        <select class="form-control" v-model="g_unidad" @click="listarUnidad(g_unidad), unidad = ''" :class="{ 'is-invalid' : $v.g_unidad.$error, 'is-valid':!$v.g_unidad.$invalid }">
                                             <option value="" disabled>SELECCIONE</option>
                                             <option v-for="gunidad in arrayGranUnidad" :key="gunidad.id" :value="gunidad.id"  v-text="gunidad.gran_unidad"></option>                        
                                         </select>                                        
@@ -75,7 +75,10 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label class="form-control-label" for="text-input">Unidad</label>
-                                        <input type="text" v-model="unidad" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.unidad.$error, 'is-valid':!$v.unidad.$invalid }">
+                                        <select class="form-control" v-model="unidad" :class="{ 'is-invalid' : $v.unidad.$error, 'is-valid':!$v.unidad.$invalid }">
+                                            <option value="" disabled>SELECCIONE</option>
+                                            <option v-for="unidad in arrayUnidad" :key="unidad.id" :value="unidad.id"  v-text="unidad.unidad"></option>                        
+                                        </select>                                        
                                         <div class="invalid-feedback">
                                             <span v-if="!$v.unidad.required">Este campo es Requerido</span>
                                         </div>
@@ -336,6 +339,7 @@
 
         arrayEntidad : [],
         arrayGranUnidad : [],
+        arrayUnidad : [],
 
 
 
@@ -574,6 +578,21 @@
         })
         .then(function (response) {
           me.arrayGranUnidad = response.data.gran_unidades
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      },
+
+      listarUnidad(gran_unidad){
+        let me = this;
+          axios
+        .post("/listarUnidad", {
+          id_gran_unidad : gran_unidad,
+        })
+        .then(function (response) {
+          me.arrayUnidad = response.data.unidades
         })
         .catch(function (error) {
           // handle error
