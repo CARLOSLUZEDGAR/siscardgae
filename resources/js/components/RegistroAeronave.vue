@@ -34,7 +34,7 @@
                     </div>                  
                     <div class="col-sm-4">
                       <button class="btn btn-danger btn-sm float-right" type="submit" @click="Atras()">
-                        <i class="fas fa-arrow-left"></i>&nbsp; ATRAS
+                        <i class="fas fa-arrow-left"></i>&nbsp; VOLVER
                       </button>
                     </div>
                   </div>  
@@ -92,6 +92,11 @@
                             <h3><i class="fas fa-inbox"></i>&nbsp;PASO 2: INFORMACIÓN DE LA AERONAVE</h3>
                             <br>
                             <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">MATRICULA: {{matricula}}</h4></label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fabrica</label>
                                     <input type="text" v-model="fabrica" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.fabrica.$error, 'is-valid':!$v.fabrica.$invalid }">
@@ -113,51 +118,69 @@
                                         <span v-if="!$v.serie.required">Este campo es Requerido</span>
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                  <label class="form-control-label" for="text-input">Tipo</label>
+                                  <select class="form-control" v-model="tipo" :class="{ 'is-invalid' : $v.tipo.$error, 'is-valid':!$v.tipo.$invalid }">
+                                      <option value="" disabled>SELECCIONE</option>
+                                      <option v-for="tipo in arrayTipoAeronave" :key="tipo.id" :value="tipo.id"  v-text="tipo.tipo"></option>                        
+                                  </select>                                   
+                                  <div class="invalid-feedback">
+                                      <span v-if="!$v.tipo.required">Este campo es Requerido</span>
+                                      <span v-else-if="!$v.tipo.letrasSpanish">Solo letras</span>
+                                  </div>
+                                </div>
                             </div>
                             <div class="form-group row">
                               <div class="col-md-3">
-                                  <label class="form-control-label" for="text-input">Estado</label>
-                                  <input type="text" v-model.trim="estado" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.estado.$error, 'is-valid':!$v.estado.$invalid }">
-                                  <div class="invalid-feedback">
-                                      <span v-if="!$v.estado.required">Este campo es Requerido</span>
-                                      <span v-else-if="!$v.estado.letrasSpanish">Solo letras</span>
-                                  </div>
+                                <label class="form-control-label" for="text-input">Condición</label>
+                                <select class="form-control" v-model="condicion" :class="{ 'is-invalid' : $v.condicion.$error, 'is-valid':!$v.condicion.$invalid }">
+                                    <option value="" disabled>SELECCIONE</option>
+                                    <option v-for="condicion in arrayCondicionAeronave" :key="condicion.id" :value="condicion.id"  v-text="condicion.condicion"></option>                        
+                                </select>                                
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.condicion.required">Este campo es Requerido</span>
+                                    <span v-else-if="!$v.condicion.letrasSpanish">Solo letras</span>
+                                </div>
                               </div>
                               <div class="col-md-3">
                                   <label class="form-control-label" for="text-input">Fecha de Fabricación</label>
-                                  <input type="text" v-model="fech_fabricacion" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.fech_fabricacion.$error, 'is-valid':!$v.fech_fabricacion.$invalid }">
-                                  <div class="invalid-feedback">
+                                  <!-- <input type="date" v-model="fech_fabricacion" class="form-control" :class="{ 'is-invalid' : $v.fech_fabricacion.$error, 'is-valid':!$v.fech_fabricacion.$invalid }"> -->
+                                  <input type="date" v-model="fech_fabricacion" class="form-control">
+                                  <!-- <div class="invalid-feedback">
                                       <span v-if="!$v.fech_fabricacion.required">Este campo es Requerido</span>
-                                  </div>
+                                  </div> -->
                               </div>
                               <div class="col-md-3">
-                                  <label class="form-control-label" for="text-input">Fecha de Ingreso</label>
-                                  <input type="text" v-model.trim="fech_ingreso" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.fech_ingreso.$error, 'is-valid':!$v.fech_ingreso.$invalid }">
+                                  <label class="form-control-label" for="text-input">Fecha de Incoporación</label>
+                                  <input type="date" v-model="fech_ingreso" class="form-control" :class="{ 'is-invalid' : $v.fech_ingreso.$error, 'is-valid':!$v.fech_ingreso.$invalid }">
                                   <div class="invalid-feedback">
                                       <span v-if="!$v.fech_ingreso.required">Este campo es Requerido</span>
                                       <span v-else-if="!$v.fech_ingreso.letrasSpanish">Solo letras</span>
                                   </div>
                               </div>
                               <div class="col-md-3">
-                                  <label class="form-control-label" for="text-input">Documento de Ingreso</label>
-                                  <input type="text" v-model="doc_ingreso" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.doc_ingreso.$error, 'is-valid':!$v.doc_ingreso.$invalid }">
+                                  <label class="form-control-label" for="text-input">Documento de Incoporación</label>
+                                  <select class="form-control" v-model="doc_ingreso" :class="{ 'is-invalid' : $v.doc_ingreso.$error, 'is-valid':!$v.doc_ingreso.$invalid }">
+                                      <option value="" disabled>SELECCIONE</option>
+                                      <option value="RESOLUCION">RESOLUCION</option>
+                                      <option value="ORDEN DEL DIA">ORDEN DEL DIA</option>
+                                      <option value="MEMORANDUM">MEMORANDUM</option>
+                                  </select>                                  
                                   <div class="invalid-feedback">
                                       <span v-if="!$v.doc_ingreso.required">Este campo es Requerido</span>
                                   </div>
                               </div>
+                              
+                            </div>
+                            <div class="form-group row">
                               <div class="col-md-3">
-                                  <label class="form-control-label" for="text-input">Nº Documento de Ingreso</label>
+                                  <label class="form-control-label" for="text-input">Nº Documento de Incoporación</label>
                                   <input type="text" v-model.trim="nro_doc_ingreso" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.nro_doc_ingreso.$error, 'is-valid':!$v.nro_doc_ingreso.$invalid }">
                                   <div class="invalid-feedback">
                                       <span v-if="!$v.nro_doc_ingreso.required">Este campo es Requerido</span>
                                       <span v-else-if="!$v.nro_doc_ingreso.letrasSpanish">Solo letras</span>
                                   </div>
-                              </div>
-                            </div>
-                            <div class="form-group row">
-                                
-                                
-                                  
+                              </div>                  
                                 
                             </div>
                             <div class="form-group row">
@@ -196,6 +219,35 @@
                           <h3><i class="fas fa-inbox"></i>&nbsp;PASO 3: INFORMACIÓN DEL (DE LOS) MOTOR (MOTORES)</h3>
                             <br>
                             <div class="form-group row">
+                              <div class="col-md-3">
+                                  <label class="form-control-label" for="text-input">Cant. Motores</label>
+                                  <select class="form-control" v-model="cant_motores" @change="crearInputs" :class="{ 'is-invalid' : $v.cant_motores.$error, 'is-valid':!$v.cant_motores.$invalid }">
+                                      <option value="" disabled>SELECCIONE</option>
+                                      <option value="1">MONOMOTOR</option>
+                                      <option value="2">BIMOTOR</option>
+                                      <option value="3">TRIMOTOR</option>
+                                      <option value="4">CUATRIMOTOR</option>
+                                  </select>                                  
+                                  <div class="invalid-feedback">
+                                      <span v-if="!$v.cant_motores.required">Este campo es Requerido</span>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="form-group row" v-for="(input, index) in inputs" :key="index">
+                              <div class="col-md-3" >
+                                <label class="form-control-label" :for="'input' + index">Fabrica {{ index + 1 }}:</label>
+                                <input type="text" v-model="input.fabrica_motor" class="form-control" :id="'input' + index" style="text-transform:uppercase;">
+                              </div> 
+                              <div class="col-md-3" >
+                                <label class="form-control-label" :for="'input' + index">Modelo {{ index + 1 }}:</label>
+                                <input type="text" v-model="input.modelo_motor" class="form-control" :id="'input' + index" style="text-transform:uppercase;">
+                              </div>
+                              <div class="col-md-3" >
+                                <label class="form-control-label" :for="'input' + index">Serie {{ index + 1 }}:</label>
+                                <input type="text" v-model="input.serie_motor" class="form-control" :id="'input' + index" style="text-transform:uppercase;">
+                              </div> 
+                            </div>
+                            <div class="form-group row">
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fabrica</label>
                                     <input type="text" v-model="fabrica_motor" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.fabrica_motor.$error, 'is-valid':!$v.fabrica_motor.$invalid }">
@@ -226,13 +278,9 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="form-group row">
-                              
-                                
-                                
-                            </div>
-                            <div class="form-group row">
-                                
+
                                 
                                   
                                 
@@ -325,17 +373,22 @@
         fabrica : '',
         modelo : '',
         serie : '',
-        estado : '',
+        tipo : '',
+        condicion : '',
         fech_fabricacion : '',
         fech_ingreso : '',
         doc_ingreso : '',
         nro_doc_ingreso : '',
         fotografia : '',
         // PASO 3
-        fabrica_motor : '',
-        modelo_motor : '',
-        serie_motor : '',
+        cant_motores : '',
+        // fabrica_motor : '',
+        // modelo_motor : '',
+        // serie_motor : '',
         estado_motor : '',
+        cantidad : 0,
+        // input : '',
+        inputs : [], // Aquí se almacenarán los valores de los inputs dinámicos
 
         arrayEntidad : [],
         arrayGranUnidad : [],
@@ -343,7 +396,8 @@
 
 
 
-        
+        arrayTipoAeronave : [],
+        arrayCondicionAeronave : [],
         arrayCategoria : [],
         arrayGrado : [],
         arrayNacionalidad : [],
@@ -391,12 +445,14 @@
             fabrica : { required },
             modelo : { required },
             serie : { required },
-            estado : { required },
-            fech_fabricacion : { required },
+            tipo : { required },
+            condicion : { required },
+            // fech_fabricacion : { required },
             fech_ingreso : { required },
             doc_ingreso : { required },
             nro_doc_ingreso : { required },
             fotografia : { required },
+            cant_motores : { required },
             fabrica_motor : { required },
             modelo_motor : { required },
             serie_motor : { required },
@@ -414,8 +470,9 @@
             'fabrica',
             'modelo',
             'serie',
-            'estado',
-            'fech_fabricacion',
+            'tipo',
+            'condicion',
+            // 'fech_fabricacion',
             'fech_ingreso',
             'doc_ingreso',
             'nro_doc_ingreso',
@@ -423,6 +480,7 @@
             ],
 
             validationGroupPaso3: [
+            'cant_motores',
             'fabrica_motor',
             'modelo_motor',
             'serie_motor',
@@ -484,6 +542,17 @@
         // this.ListarPersonal(1);
     },
     methods: {
+    //   crearInputs() {
+    //   // Resetear los inputs cada vez que cambia la cantidad seleccionada
+    //   this.inputs = Array.from({ length: this.cant_motores }, () => ({ value: '' }));
+    // },
+
+    crearInputs() {
+    this.inputs = [];
+    for (let i = 0; i < this.cant_motores; i++) {
+      this.inputs.push({ fabrica_motor: '', modelo_motor: '', serie_motor: '' });
+    }
+  },
 
       Atras(){ //DGAE
           this.$router.push({
@@ -600,6 +669,36 @@
         })
       },
 
+      listarTipoAeronave(){ //DGAE
+          let me = this;
+          axios
+        .post("/listarTipoAeronave", {
+          // id_nacionalidad : 1,
+        })
+        .then(function (response) {
+          me.arrayTipoAeronave = response.data.tipo_aeronaves
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      },
+
+      listarCondicionAeronave(){ //DGAE
+          let me = this;
+          axios
+        .post("/listarCondicionAeronave", {
+          // id_nacionalidad : 1,
+        })
+        .then(function (response) {
+          me.arrayCondicionAeronave = response.data.condicion_aeronaves
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      },
+
       NuevoAeronave(){ //DGAE
         this.$v.validationGroupPaso1.$reset(),
         this.$v.validationGroupPaso2.$reset(),
@@ -610,7 +709,8 @@
         this.fabrica = '',
         this.modelo = '',
         this.serie = '',
-        this.estado = '',
+        this.tipo = '',
+        this.condicion = '',
         this.fech_fabricacion = '',
         this.fech_ingreso = '',
         this.doc_ingreso = '',
@@ -621,8 +721,10 @@
         this.serie_motor = '',
         this.estado_motor = '',
         this.v = 0,
-        this.listarEntidad(1);
-        this.listarGranUnidad(this.entidad);
+        this.listarEntidad();
+        // this.listarGranUnidad(this.entidad);
+        this.listarTipoAeronave();
+        this.listarCondicionAeronave()
       },
 
 
@@ -648,6 +750,9 @@
                     matricula : me.matricula,
                     modelo : me.modelo,
                     nombre : me.nombre,
+
+                    
+                    motores: this.inputs
                   })
                   .then(function (response) {
                       

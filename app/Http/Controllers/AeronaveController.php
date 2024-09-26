@@ -107,6 +107,18 @@ class AeronaveController extends Controller
         //     }
         // }
 
+        $motores = $request->motores;
+
+        // Procesar los datos de los motores
+        foreach ($motores as $motor) {
+            // Crear un modelo de Motor y asignar los valores
+            $motorModel = new Motor;
+            $motorModel->fabrica = $motor['fabrica'];
+            $motorModel->modelo = $motor['modelo'];
+            $motorModel->serie = $motor['serie'];
+            $motorModel->save();
+        }
+
         return ['aeronave' => $aeronave];
     }
     

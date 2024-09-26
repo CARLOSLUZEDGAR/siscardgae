@@ -85,6 +85,9 @@ Route::post('/selectNacionalidad','NacionalidadController@selectNacionalidad');
 Route::post('/renovarPersonal','PersonalController@RenovarPersonal');
 Route::post('/listarGranUnidad','GranUnidadController@ListarGranUnidad');
 Route::post('/listarUnidad','UnidadController@ListarUnidad');
+Route::post('/listarTipoAeronave','TipoAeronaveController@ListarTipoAeronave');
+Route::post('/listarCondicionAeronave','CondicionAeronaveController@ListarCondicionAeronave');
+
 
 
 Route::post('/listarAeronave','AeronaveController@ListarAeronave');

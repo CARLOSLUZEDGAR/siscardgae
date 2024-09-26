@@ -38,7 +38,7 @@
                     </div>                  
                     <div class="col-sm-4">
                       <button class="btn btn-danger btn-sm float-right" type="submit" @click="Atras()">
-                        <i class="fas fa-arrow-left"></i>&nbsp; ATRAS
+                        <i class="fas fa-arrow-left"></i>&nbsp; VOLVER
                       </button>
                     </div>
                   </div>  
@@ -751,17 +751,17 @@
       nextStep() { //DGAE
         if (this.currentStep < 3) {
           if(this.currentStep == 1){
-              if(!this.$v.validationGroupReg.$invalid){
-                this.currentStep++;
-              }else{
-                  this.$v.validationGroupReg.$touch();
-                  Swal.fire({
-                      icon: 'warning',
-                      title: 'Ingrese todos los datos requeridos',
-                      showConfirmButton: false,
-                      timer: 2000
-                  })   
-              }
+            if(!this.$v.validationGroupReg.$invalid){
+              this.currentStep++;
+            }else{
+              this.$v.validationGroupReg.$touch();
+              Swal.fire({
+                  icon: 'warning',
+                  title: 'Ingrese todos los datos requeridos',
+                  showConfirmButton: false,
+                  timer: 2000
+              })   
+            }
           }
         }
       },

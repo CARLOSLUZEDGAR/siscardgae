@@ -127,7 +127,7 @@
         <br> 
         Todos los derechos reservados. 
         <div class="float-right d-none d-sm-inline-block">
-            Diseñado por la Sección Archivos e Informatica - <a href="http://www.fab.bo/" target="_blank">DGAE-FAB.</a>&nbsp;&nbsp;&nbsp;&nbsp;<b>Versión</b> 2.0
+            Desarrollado por la Sección Archivos e Informatica - <a href="http://www.fab.bo/" target="_blank">DGAE-FAB.</a>&nbsp;&nbsp;&nbsp;&nbsp;<b>Versión</b> 2.0
         </div>
     </footer>
 @else
