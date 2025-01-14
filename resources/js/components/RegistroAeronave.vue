@@ -216,87 +216,141 @@
                         </div>
                         <!-- Paso 2 -->
                         <div class="step" v-if="currentStep === 3">
-                          <h3><i class="fas fa-inbox"></i>&nbsp;PASO 3: INFORMACIÓN DEL (DE LOS) MOTOR (MOTORES)</h3>
-                            <br>
-                            <div class="form-group row">
-                              <div class="col-md-3">
-                                  <label class="form-control-label" for="text-input">Cant. Motores</label>
-                                  <select class="form-control" v-model="cant_motores" @change="crearInputs" :class="{ 'is-invalid' : $v.cant_motores.$error, 'is-valid':!$v.cant_motores.$invalid }">
-                                      <option value="" disabled>SELECCIONE</option>
-                                      <option value="1">MONOMOTOR</option>
-                                      <option value="2">BIMOTOR</option>
-                                      <option value="3">TRIMOTOR</option>
-                                      <option value="4">CUATRIMOTOR</option>
-                                  </select>                                  
-                                  <div class="invalid-feedback">
-                                      <span v-if="!$v.cant_motores.required">Este campo es Requerido</span>
-                                  </div>
+                          <h3>
+                            <i class="fas fa-inbox"></i>&nbsp;PASO 3: INFORMACIÓN DEL (DE LOS) MOTOR (MOTORES)
+                          </h3>
+                          <br />
+                          <div class="form-group row">
+                            <div class="col-md-3">
+                              <label class="form-control-label" for="cant_motores">Cant. Motores</label>
+                              <select
+                                class="form-control"
+                                v-model="cant_motores"
+                                @change="crearInputs"
+                                :class="{ 'is-invalid': $v.cant_motores.$error, 'is-valid': !$v.cant_motores.$invalid }"
+                              >
+                                <option value="" disabled>SELECCIONE</option>
+                                <option value="1">MONOMOTOR</option>
+                                <option value="2">BIMOTOR</option>
+                                <option value="3">TRIMOTOR</option>
+                                <option value="4">CUATRIMOTOR</option>
+                              </select>
+                              <div class="invalid-feedback">
+                                <span v-if="!$v.cant_motores.required">Este campo es Requerido</span>
                               </div>
                             </div>
-                            <div class="form-group row" v-for="(input, index) in inputs" :key="index">
-                              <div class="col-md-3" >
-                                <label class="form-control-label" :for="'input' + index">Fabrica {{ index + 1 }}:</label>
-                                <input type="text" v-model="input.fabrica_motor" class="form-control" :id="'input' + index" style="text-transform:uppercase;">
-                              </div> 
-                              <div class="col-md-3" >
-                                <label class="form-control-label" :for="'input' + index">Modelo {{ index + 1 }}:</label>
-                                <input type="text" v-model="input.modelo_motor" class="form-control" :id="'input' + index" style="text-transform:uppercase;">
-                              </div>
-                              <div class="col-md-3" >
-                                <label class="form-control-label" :for="'input' + index">Serie {{ index + 1 }}:</label>
-                                <input type="text" v-model="input.serie_motor" class="form-control" :id="'input' + index" style="text-transform:uppercase;">
-                              </div> 
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-3">
-                                    <label class="form-control-label" for="text-input">Fabrica</label>
-                                    <input type="text" v-model="fabrica_motor" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.fabrica_motor.$error, 'is-valid':!$v.fabrica_motor.$invalid }">
-                                    <div class="invalid-feedback">
-                                        <span v-if="!$v.fabrica_motor.required">Este campo es Requerido</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-control-label" for="text-input">Modelo</label>
-                                    <input type="text" v-model="modelo_motor" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.modelo_motor.$error, 'is-valid':!$v.modelo_motor.$invalid }">
-                                    <div class="invalid-feedback">
-                                        <span v-if="!$v.modelo_motor.required">Este campo es Requerido</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-control-label" for="text-input">Serie</label>
-                                    <input type="text" v-model="serie_motor" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.serie_motor.$error, 'is-valid':!$v.serie_motor.$invalid }">
-                                    <div class="invalid-feedback">
-                                        <span v-if="!$v.serie_motor.required">Este campo es Requerido</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-control-label" for="text-input">Estado</label>
-                                    <input type="text" v-model.trim="estado_motor" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.estado_motor.$error, 'is-valid':!$v.estado_motor.$invalid }">
-                                    <div class="invalid-feedback">
-                                        <span v-if="!$v.estado_motor.required">Este campo es Requerido</span>
-                                        <span v-else-if="!$v.estado_motor.letrasSpanish">Solo letras</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group row">
+                          </div>
 
-                                
-                                  
-                                
+                          <div
+                            class="form-group row"
+                            v-for="(input, index) in inputs"
+                            :key="index"
+                          >
+                            <div class="col-md-3">
+                              <label class="form-control-label" :for="'fabrica_motor' + index">
+                                Fabrica {{ index + 1 }}:
+                              </label>
+                              <input
+                                type="text"
+                                v-model="input.fabrica_motor"
+                                class="form-control"
+                                :id="'fabrica_motor' + index"
+                                :class="{
+                                  'is-invalid': $v.inputs[index]?.fabrica_motor?.$error,
+                                  'is-valid': !$v.inputs[index]?.fabrica_motor?.$invalid,
+                                }"
+                              />
+                              <div class="invalid-feedback">
+                                <span v-if="!$v.inputs[index]?.fabrica_motor?.required">
+                                  Este campo es Requerido
+                                </span>
+                              </div>
                             </div>
-                            <div class="form-group row">
-                                
-                                
+
+                            <div class="col-md-3">
+                              <label class="form-control-label" :for="'modelo_motor' + index">
+                                Modelo {{ index + 1 }}:
+                              </label>
+                              <input
+                                type="text"
+                                v-model="input.modelo_motor"
+                                class="form-control"
+                                :id="'modelo_motor' + index"
+                                :class="{
+                                  'is-invalid': $v.inputs[index]?.modelo_motor?.$error,
+                                  'is-valid': !$v.inputs[index]?.modelo_motor?.$invalid,
+                                }"
+                              />
+                              <div class="invalid-feedback">
+                                <span v-if="!$v.inputs[index]?.modelo_motor?.required">
+                                  Este campo es Requerido
+                                </span>
+                              </div>
                             </div>
-                            <div class="form-group row">
-                                
+
+                            <div class="col-md-3">
+                              <label class="form-control-label" :for="'serie_motor' + index">
+                                Serie {{ index + 1 }}:
+                              </label>
+                              <input
+                                type="text"
+                                v-model="input.serie_motor"
+                                class="form-control"
+                                :id="'serie_motor' + index"
+                                :class="{
+                                  'is-invalid': $v.inputs[index]?.serie_motor?.$error,
+                                  'is-valid': !$v.inputs[index]?.serie_motor?.$invalid,
+                                }"
+                              />
+                              <div class="invalid-feedback">
+                                <span v-if="!$v.inputs[index]?.serie_motor?.required">
+                                  Este campo es Requerido
+                                </span>
+                              </div>
                             </div>
-                            <div class="form-group row">
-                                <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
-                                &nbsp;
-                                <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button>
+
+                            <div class="col-md-3">
+                              <label class="form-control-label" :for="'estado_motor' + index">
+                                Estado {{ index + 1 }}:
+                              </label>
+                              <select
+                                class="form-control"
+                                v-model="input.estado_motor"
+                                :id="'estado_motor' + index"
+                                :class="{
+                                  'is-invalid': $v.inputs[index]?.estado_motor?.$error,
+                                  'is-valid': !$v.inputs[index]?.estado_motor?.$invalid,
+                                }"
+                              >
+                                <option value="" disabled>SELECCIONE</option>
+                                <option value="W">OPERABLE</option>
+                                <option value="P">NO OPERABLE</option>
+                              </select>
+                              <div class="invalid-feedback">
+                                <span v-if="!$v.inputs[index]?.estado_motor?.required">
+                                  Este campo es Requerido
+                                </span>
+                              </div>
                             </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              @click="previousStep"
+                            >
+                              <i class="fas fa-backward"></i>&nbsp; ANTERIOR
+                            </button>
+                            &nbsp;
+                            <button
+                              type="button"
+                              class="btn btn-danger"
+                              @click="nextStep"
+                            >
+                              <i class="fas fa-forward"></i>&nbsp; SIGUIENTE
+                            </button>
+                          </div>
                         </div>
 
                     <!-- Paso 3 -->
@@ -385,8 +439,8 @@
         // fabrica_motor : '',
         // modelo_motor : '',
         // serie_motor : '',
-        estado_motor : '',
-        cantidad : 0,
+        // estado_motor : '',
+        // cantidad : 0,
         // input : '',
         inputs : [], // Aquí se almacenarán los valores de los inputs dinámicos
 
@@ -453,10 +507,18 @@
             nro_doc_ingreso : { required },
             fotografia : { required },
             cant_motores : { required },
-            fabrica_motor : { required },
-            modelo_motor : { required },
-            serie_motor : { required },
-            estado_motor : { required },
+            inputs: {
+              $each: {
+                fabrica_motor : { required },
+                modelo_motor : { required },
+                serie_motor : { required },
+                estado_motor : { required },
+              },
+            },
+            // fabrica_motor : { required },
+            // modelo_motor : { required },
+            // serie_motor : { required },
+            // estado_motor : { required },
             // nombre : { required, letrasSpanish: value => /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },      
             
             validationGroupPaso1: [
@@ -481,10 +543,11 @@
 
             validationGroupPaso3: [
             'cant_motores',
-            'fabrica_motor',
-            'modelo_motor',
-            'serie_motor',
-            'estado_motor',
+            'inputs',
+            // 'fabrica_motor',
+            // 'modelo_motor',
+            // 'serie_motor',
+            // 'estado_motor',
             ],
   
             validationGroupReg: [
@@ -548,11 +611,17 @@
     // },
 
     crearInputs() {
-    this.inputs = [];
-    for (let i = 0; i < this.cant_motores; i++) {
-      this.inputs.push({ fabrica_motor: '', modelo_motor: '', serie_motor: '' });
-    }
-  },
+      this.inputs = [];
+      for (let i = 0; i < this.cant_motores; i++) {
+        this.inputs.push({
+          fabrica_motor: '',
+          modelo_motor: '',
+          serie_motor: '',
+          estado_motor: ''
+        });
+      }
+      this.$v.validationGroupPaso3.$reset();
+    },
 
       Atras(){ //DGAE
           this.$router.push({
@@ -746,13 +815,24 @@
                   let me = this;
                   axios
                   .post("/crearAeronave", {
-                    foto : me.fotografia,
+                    entidad : me.entidad,
                     matricula : me.matricula,
+                    g_unidad : me.g_unidad,
+                    unidad : me.unidad,
+                    fabrica : me.fabrica,
+                    modelo : me.modelo,
+                    serie : me.serie,
+                    tipo : me.tipo,
+                    condicion : me.condicion,
+                    fech_fabricacion : me.fech_fabricacion,
+                    fech_ingreso : me.fech_ingreso,
+                    doc_ingreso : me.doc_ingreso,
+                    nro_doc_ingreso : me.nro_doc_ingreso,
+                    foto : me.fotografia,
                     modelo : me.modelo,
                     nombre : me.nombre,
-
-                    
-                    motores: this.inputs
+                    cant_motores : me.cant_motores,
+                    motores : me.inputs
                   })
                   .then(function (response) {
                       

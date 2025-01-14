@@ -1004,7 +1004,7 @@
                     fech_emision : me.per_fechaemision,
                     fech_expiracion : me.per_fechaexpiracion,
 
-                    doc_carnet_identidad :me.doc_ci,
+                    doc_carnet_identidad : me.doc_ci,
                     doc_cert_nacimineto : me.doc_nacimiento,
                     doc_cert_egreso : me.doc_egreso,
                     doc_cert_espe : me.doc_especializacion,
