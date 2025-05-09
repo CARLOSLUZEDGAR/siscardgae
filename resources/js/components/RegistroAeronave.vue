@@ -1,6 +1,6 @@
 <template>
     <div>
-      <!-- Content Header (Page header) -->
+      <!-- Content Header Page header -->
       <section class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label class="form-control-label" for="text-input">Matricula</label>
-                                        <input type="text" v-model="matricula" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.matricula.$error, 'is-valid':!$v.matricula.$invalid }">
+                                        <input type="text" v-model="matricula" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.matricula.$error, 'is-valid':!$v.matricula.$invalid }" />
                                         <div class="invalid-feedback">
                                             <span v-if="!$v.matricula.required">Este campo es Requerido</span>
                                         </div>
@@ -99,21 +99,21 @@
                             <div class="form-group row">
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fabrica</label>
-                                    <input type="text" v-model="fabrica" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.fabrica.$error, 'is-valid':!$v.fabrica.$invalid }">
+                                    <input type="text" v-model="fabrica" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.fabrica.$error, 'is-valid':!$v.fabrica.$invalid }" />
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.fabrica.required">Este campo es Requerido</span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Modelo</label>
-                                    <input type="text" v-model="modelo" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.modelo.$error, 'is-valid':!$v.modelo.$invalid }">
+                                    <input type="text" v-model="modelo" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.modelo.$error, 'is-valid':!$v.modelo.$invalid }" />
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.modelo.required">Este campo es Requerido</span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Serie</label>
-                                    <input type="text" v-model="serie" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.serie.$error, 'is-valid':!$v.serie.$invalid }">
+                                    <input type="text" v-model="serie" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.serie.$error, 'is-valid':!$v.serie.$invalid }" />
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.serie.required">Este campo es Requerido</span>
                                     </div>
@@ -145,14 +145,14 @@
                               <div class="col-md-3">
                                   <label class="form-control-label" for="text-input">Fecha de Fabricación</label>
                                   <!-- <input type="date" v-model="fech_fabricacion" class="form-control" :class="{ 'is-invalid' : $v.fech_fabricacion.$error, 'is-valid':!$v.fech_fabricacion.$invalid }"> -->
-                                  <input type="date" v-model="fech_fabricacion" class="form-control">
+                                  <input type="date" v-model="fech_fabricacion" class="form-control" />
                                   <!-- <div class="invalid-feedback">
                                       <span v-if="!$v.fech_fabricacion.required">Este campo es Requerido</span>
                                   </div> -->
                               </div>
                               <div class="col-md-3">
                                   <label class="form-control-label" for="text-input">Fecha de Incoporación</label>
-                                  <input type="date" v-model="fech_ingreso" class="form-control" :class="{ 'is-invalid' : $v.fech_ingreso.$error, 'is-valid':!$v.fech_ingreso.$invalid }">
+                                  <input type="date" v-model="fech_ingreso" class="form-control" :class="{ 'is-invalid' : $v.fech_ingreso.$error, 'is-valid':!$v.fech_ingreso.$invalid }" />
                                   <div class="invalid-feedback">
                                       <span v-if="!$v.fech_ingreso.required">Este campo es Requerido</span>
                                       <span v-else-if="!$v.fech_ingreso.letrasSpanish">Solo letras</span>
@@ -184,18 +184,14 @@
                                 
                             </div>
                             <div class="form-group row">
-                                
-                                
-                            </div>
-                            <div class="form-group row">
                                 <div class="col-md-3">
                                     <div class="row">
-                                        <template v-if="v == 0">
-                                            <img :src="'/img/avatar_aeronave.jpg'" width="150px" height="150px" style="border: 1.5px solid black; text-align: center">
-                                        </template>
-                                        <template v-else>
-                                            <img :src="imagen" width="150px" height="150px" style="border: 1.5px solid black; text-align: center">
-                                        </template> 
+                                      <template>
+                                        <div style="text-align: center;">
+                                          <img v-if="v == 0" src="/img/avatar_aeronave.jpg" width="150px" height="150px" style="border: 1.5px solid black;" />
+                                          <img v-else :src="imagen" width="150px" height="150px" style="border: 1.5px solid black;" />
+                                        </div>
+                                      </template>
                                     </div>                       
                                 </div>
                                 <div class="col-md-3">
@@ -241,11 +237,12 @@
                             </div>
                           </div>
 
-                          <div
-                            class="form-group row"
-                            v-for="(input, index) in inputs"
-                            :key="index"
-                          >
+
+
+
+                          
+
+                          <div class="form-group row" v-for="(input, index) in inputs" :key="index">
                             <div class="col-md-3">
                               <label class="form-control-label" :for="'fabrica_motor' + index">
                                 Fabrica {{ index + 1 }}:
@@ -333,6 +330,13 @@
                               </div>
                             </div>
                           </div>
+
+
+
+
+
+
+                          
 
                           <div class="form-group row">
                             <button
@@ -829,7 +833,7 @@
                     doc_ingreso : me.doc_ingreso,
                     nro_doc_ingreso : me.nro_doc_ingreso,
                     foto : me.fotografia,
-                    modelo : me.modelo,
+                    // modelo : me.modelo,
                     nombre : me.nombre,
                     cant_motores : me.cant_motores,
                     motores : me.inputs
