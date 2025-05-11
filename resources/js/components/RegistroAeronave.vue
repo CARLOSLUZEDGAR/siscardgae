@@ -242,7 +242,7 @@
 
                           
 
-                          <div class="form-group row" v-for="(input, index) in inputs" :key="index">
+                         <div class="form-group row" v-for="(input, index) in inputs" :key="index">
                             <div class="col-md-3">
                               <label class="form-control-label" :for="'fabrica_motor' + index">
                                 Fabrica {{ index + 1 }}:
@@ -253,12 +253,12 @@
                                 class="form-control"
                                 :id="'fabrica_motor' + index"
                                 :class="{
-                                  'is-invalid': $v.inputs[index]?.fabrica_motor?.$error,
-                                  'is-valid': !$v.inputs[index]?.fabrica_motor?.$invalid,
+                                  'is-invalid': $v.inputs[index] && $v.inputs[index].fabrica_motor && $v.inputs[index].fabrica_motor.$error,
+                                  'is-valid': $v.inputs[index] && $v.inputs[index].fabrica_motor && !$v.inputs[index].fabrica_motor.$invalid,
                                 }"
                               />
                               <div class="invalid-feedback">
-                                <span v-if="!$v.inputs[index]?.fabrica_motor?.required">
+                                <span v-if="$v.inputs[index] && $v.inputs[index].fabrica_motor && !$v.inputs[index].fabrica_motor.required">
                                   Este campo es Requerido
                                 </span>
                               </div>
@@ -274,12 +274,12 @@
                                 class="form-control"
                                 :id="'modelo_motor' + index"
                                 :class="{
-                                  'is-invalid': $v.inputs[index]?.modelo_motor?.$error,
-                                  'is-valid': !$v.inputs[index]?.modelo_motor?.$invalid,
+                                  'is-invalid': $v.inputs[index] && $v.inputs[index].modelo_motor && $v.inputs[index].modelo_motor.$error,
+                                  'is-valid': $v.inputs[index] && $v.inputs[index].modelo_motor && !$v.inputs[index].modelo_motor.$invalid,
                                 }"
                               />
                               <div class="invalid-feedback">
-                                <span v-if="!$v.inputs[index]?.modelo_motor?.required">
+                                <span v-if="$v.inputs[index] && $v.inputs[index].modelo_motor && !$v.inputs[index].modelo_motor.required">
                                   Este campo es Requerido
                                 </span>
                               </div>
@@ -295,12 +295,12 @@
                                 class="form-control"
                                 :id="'serie_motor' + index"
                                 :class="{
-                                  'is-invalid': $v.inputs[index]?.serie_motor?.$error,
-                                  'is-valid': !$v.inputs[index]?.serie_motor?.$invalid,
+                                  'is-invalid': $v.inputs[index] && $v.inputs[index].serie_motor && $v.inputs[index].serie_motor.$error,
+                                  'is-valid': $v.inputs[index] && $v.inputs[index].serie_motor && !$v.inputs[index].serie_motor.$invalid,
                                 }"
                               />
                               <div class="invalid-feedback">
-                                <span v-if="!$v.inputs[index]?.serie_motor?.required">
+                                <span v-if="$v.inputs[index] && $v.inputs[index].serie_motor && !$v.inputs[index].serie_motor.required">
                                   Este campo es Requerido
                                 </span>
                               </div>
@@ -315,8 +315,8 @@
                                 v-model="input.estado_motor"
                                 :id="'estado_motor' + index"
                                 :class="{
-                                  'is-invalid': $v.inputs[index]?.estado_motor?.$error,
-                                  'is-valid': !$v.inputs[index]?.estado_motor?.$invalid,
+                                 'is-invalid': $v.inputs[index] && $v.inputs[index].estado_motor && $v.inputs[index].estado_motor.$error,
+                                  'is-valid': $v.inputs[index] && $v.inputs[index].estado_motor && !$v.inputs[index].estado_motor.$invalid,
                                 }"
                               >
                                 <option value="" disabled>SELECCIONE</option>
@@ -324,7 +324,7 @@
                                 <option value="P">NO OPERABLE</option>
                               </select>
                               <div class="invalid-feedback">
-                                <span v-if="!$v.inputs[index]?.estado_motor?.required">
+                                <span v-if="$v.inputs[index] && $v.inputs[index].estado_motor && !$v.inputs[index].estado_motor.required">
                                   Este campo es Requerido
                                 </span>
                               </div>

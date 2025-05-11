@@ -143386,9 +143386,1653 @@ render._withStripped = true
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RegistroAeronave.vue?vue&type=template&id=0509ed41& ***!
   \*******************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):\nSyntaxError: Unexpected token (2:61)\n    at Parser.pp$4.raise (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2757:13)\n    at Parser.pp.unexpected (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:647:8)\n    at Parser.pp$3.parseExprAtom (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2196:10)\n    at Parser.<anonymous> (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:6003:24)\n    at Parser.parseExprAtom (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:6129:31)\n    at Parser.pp$3.parseExprSubscripts (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2047:19)\n    at Parser.pp$3.parseMaybeUnary (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2024:17)\n    at Parser.pp$3.parseExprOps (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:1966:19)\n    at Parser.pp$3.parseMaybeConditional (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:1949:19)\n    at Parser.pp$3.parseMaybeAssign (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:1925:19)\n    at Parser.pp$3.parseMaybeConditional (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:1954:28)\n    at Parser.pp$3.parseMaybeAssign (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:1925:19)\n    at Parser.pp$3.parsePropertyValue (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2443:87)\n    at Parser.pp$3.parseProperty (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2434:8)\n    at Parser.pp$3.parseObj (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2380:23)\n    at Parser.pp$3.parseExprAtom (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2179:17)\n    at Parser.<anonymous> (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:6003:24)\n    at Parser.parseExprAtom (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:6129:31)\n    at Parser.pp$3.parseExprSubscripts (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2047:19)\n    at Parser.pp$3.parseMaybeUnary (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2024:17)\n    at Parser.pp$3.parseExprOps (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:1966:19)\n    at Parser.pp$3.parseMaybeConditional (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:1949:19)\n    at Parser.pp$3.parseMaybeAssign (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:1925:19)\n    at Parser.pp$3.parsePropertyValue (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2443:87)\n    at Parser.pp$3.parseProperty (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2434:8)\n    at Parser.pp$3.parseObj (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2380:23)\n    at Parser.pp$3.parseExprAtom (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2179:17)\n    at Parser.<anonymous> (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:6003:24)\n    at Parser.parseExprAtom (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:6129:31)\n    at Parser.pp$3.parseExprSubscripts (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2047:19)\n    at Parser.pp$3.parseMaybeUnary (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2024:17)\n    at Parser.pp$3.parseExprOps (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:1966:19)\n    at Parser.pp$3.parseMaybeConditional (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:1949:19)\n    at Parser.pp$3.parseMaybeAssign (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:1925:19)\n    at Parser.pp$3.parseExprList (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2663:20)\n    at Parser.pp$3.parseSubscripts (C:\\laragon\\www\\siscardgae\\node_modules\\vue-template-es2015-compiler\\buble.js:2075:29)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("section", { staticClass: "content" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card card-primary card-outline" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-4" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger btn-sm float-right",
+                        attrs: { type: "submit" },
+                        on: {
+                          click: function($event) {
+                            return _vm.Atras()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-arrow-left" }),
+                        _vm._v("  VOLVER\n                  ")
+                      ]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("form", [
+                  _vm.currentStep === 1
+                    ? _c("div", { staticClass: "step" }, [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Entidad")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.entidad,
+                                    expression: "entidad"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.entidad.$error,
+                                  "is-valid": !_vm.$v.entidad.$invalid
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.listarGranUnidad(_vm.entidad),
+                                      (_vm.g_unidad = ""),
+                                      (_vm.unidad = "")
+                                  },
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.entidad = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("SELECCIONE")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arrayEntidad, function(entidad) {
+                                  return _c("option", {
+                                    key: entidad.id,
+                                    domProps: {
+                                      value: entidad.id,
+                                      textContent: _vm._s(entidad.entidad)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.entidad.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Matricula")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.matricula,
+                                  expression: "matricula"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.matricula.$error,
+                                "is-valid": !_vm.$v.matricula.$invalid
+                              },
+                              staticStyle: { "text-transform": "uppercase" },
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.matricula },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.matricula = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.matricula.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Gran Unidad")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.g_unidad,
+                                    expression: "g_unidad"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.g_unidad.$error,
+                                  "is-valid": !_vm.$v.g_unidad.$invalid
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.listarUnidad(_vm.g_unidad),
+                                      (_vm.unidad = "")
+                                  },
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.g_unidad = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("SELECCIONE")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arrayGranUnidad, function(gunidad) {
+                                  return _c("option", {
+                                    key: gunidad.id,
+                                    domProps: {
+                                      value: gunidad.id,
+                                      textContent: _vm._s(gunidad.gran_unidad)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.g_unidad.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Unidad")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.unidad,
+                                    expression: "unidad"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.unidad.$error,
+                                  "is-valid": !_vm.$v.unidad.$invalid
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.unidad = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("SELECCIONE")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arrayUnidad, function(unidad) {
+                                  return _c("option", {
+                                    key: unidad.id,
+                                    domProps: {
+                                      value: unidad.id,
+                                      textContent: _vm._s(unidad.unidad)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.unidad.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger",
+                              attrs: { type: "button" },
+                              on: { click: _vm.nextStep }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-forward" }),
+                              _vm._v("  SIGUIENTE")
+                            ]
+                          )
+                        ])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.currentStep === 2
+                    ? _c("div", { staticClass: "step" }, [
+                        _vm._m(3),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [
+                                _c(
+                                  "h4",
+                                  {
+                                    staticStyle: {
+                                      "text-transform": "uppercase"
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "MATRICULA: " + _vm._s(_vm.matricula)
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Fabrica")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.fabrica,
+                                  expression: "fabrica"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.fabrica.$error,
+                                "is-valid": !_vm.$v.fabrica.$invalid
+                              },
+                              staticStyle: { "text-transform": "uppercase" },
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.fabrica },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.fabrica = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.fabrica.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Modelo")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.modelo,
+                                  expression: "modelo"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.modelo.$error,
+                                "is-valid": !_vm.$v.modelo.$invalid
+                              },
+                              staticStyle: { "text-transform": "uppercase" },
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.modelo },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.modelo = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.modelo.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Serie")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.serie,
+                                  expression: "serie"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.serie.$error,
+                                "is-valid": !_vm.$v.serie.$invalid
+                              },
+                              staticStyle: { "text-transform": "uppercase" },
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.serie },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.serie = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.serie.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Tipo")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.tipo,
+                                    expression: "tipo"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.tipo.$error,
+                                  "is-valid": !_vm.$v.tipo.$invalid
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.tipo = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("SELECCIONE")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arrayTipoAeronave, function(tipo) {
+                                  return _c("option", {
+                                    key: tipo.id,
+                                    domProps: {
+                                      value: tipo.id,
+                                      textContent: _vm._s(tipo.tipo)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.tipo.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : !_vm.$v.tipo.letrasSpanish
+                                ? _c("span", [_vm._v("Solo letras")])
+                                : _vm._e()
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Condición")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.condicion,
+                                    expression: "condicion"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.condicion.$error,
+                                  "is-valid": !_vm.$v.condicion.$invalid
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.condicion = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("SELECCIONE")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arrayCondicionAeronave, function(
+                                  condicion
+                                ) {
+                                  return _c("option", {
+                                    key: condicion.id,
+                                    domProps: {
+                                      value: condicion.id,
+                                      textContent: _vm._s(condicion.condicion)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.condicion.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : !_vm.$v.condicion.letrasSpanish
+                                ? _c("span", [_vm._v("Solo letras")])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Fecha de Fabricación")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.fech_fabricacion,
+                                  expression: "fech_fabricacion"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "date" },
+                              domProps: { value: _vm.fech_fabricacion },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.fech_fabricacion = $event.target.value
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Fecha de Incoporación")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.fech_ingreso,
+                                  expression: "fech_ingreso"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.fech_ingreso.$error,
+                                "is-valid": !_vm.$v.fech_ingreso.$invalid
+                              },
+                              attrs: { type: "date" },
+                              domProps: { value: _vm.fech_ingreso },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.fech_ingreso = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.fech_ingreso.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : !_vm.$v.fech_ingreso.letrasSpanish
+                                ? _c("span", [_vm._v("Solo letras")])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Documento de Incoporación")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.doc_ingreso,
+                                    expression: "doc_ingreso"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.doc_ingreso.$error,
+                                  "is-valid": !_vm.$v.doc_ingreso.$invalid
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.doc_ingreso = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("SELECCIONE")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "RESOLUCION" } },
+                                  [_vm._v("RESOLUCION")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "ORDEN DEL DIA" } },
+                                  [_vm._v("ORDEN DEL DIA")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "MEMORANDUM" } },
+                                  [_vm._v("MEMORANDUM")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.doc_ingreso.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Nº Documento de Incoporación")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model.trim",
+                                  value: _vm.nro_doc_ingreso,
+                                  expression: "nro_doc_ingreso",
+                                  modifiers: { trim: true }
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.nro_doc_ingreso.$error,
+                                "is-valid": !_vm.$v.nro_doc_ingreso.$invalid
+                              },
+                              staticStyle: { "text-transform": "uppercase" },
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.nro_doc_ingreso },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.nro_doc_ingreso = $event.target.value.trim()
+                                },
+                                blur: function($event) {
+                                  return _vm.$forceUpdate()
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.nro_doc_ingreso.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : !_vm.$v.nro_doc_ingreso.letrasSpanish
+                                ? _c("span", [_vm._v("Solo letras")])
+                                : _vm._e()
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "div",
+                              { staticClass: "row" },
+                              [
+                                [
+                                  _c(
+                                    "div",
+                                    { staticStyle: { "text-align": "center" } },
+                                    [
+                                      _vm.v == 0
+                                        ? _c("img", {
+                                            staticStyle: {
+                                              border: "1.5px solid black"
+                                            },
+                                            attrs: {
+                                              src: "/img/avatar_aeronave.jpg",
+                                              width: "150px",
+                                              height: "150px"
+                                            }
+                                          })
+                                        : _c("img", {
+                                            staticStyle: {
+                                              border: "1.5px solid black"
+                                            },
+                                            attrs: {
+                                              src: _vm.imagen,
+                                              width: "150px",
+                                              height: "150px"
+                                            }
+                                          })
+                                    ]
+                                  )
+                                ]
+                              ],
+                              2
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Fotografia")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.fotografia.$error,
+                                "is-valid": !_vm.$v.fotografia.$invalid
+                              },
+                              attrs: { type: "file", accept: "image/*" },
+                              on: { change: _vm.obtenerImagen }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.fotografia.required
+                                ? _c("div", [
+                                    _vm._v("Por favor, carga tu fotografia.")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "button" },
+                              on: { click: _vm.previousStep }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-backward" }),
+                              _vm._v("  ANTERIOR")
+                            ]
+                          ),
+                          _vm._v(
+                            "\n                             \n                            "
+                          ),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger",
+                              attrs: { type: "button" },
+                              on: { click: _vm.nextStep }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-forward" }),
+                              _vm._v("  SIGUIENTE")
+                            ]
+                          )
+                        ])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.currentStep === 3
+                    ? _c(
+                        "div",
+                        { staticClass: "step" },
+                        [
+                          _vm._m(4),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c("div", { staticClass: "col-md-3" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "form-control-label",
+                                  attrs: { for: "cant_motores" }
+                                },
+                                [_vm._v("Cant. Motores")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.cant_motores,
+                                      expression: "cant_motores"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  class: {
+                                    "is-invalid": _vm.$v.cant_motores.$error,
+                                    "is-valid": !_vm.$v.cant_motores.$invalid
+                                  },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.cant_motores = $event.target
+                                          .multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      },
+                                      _vm.crearInputs
+                                    ]
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "", disabled: "" } },
+                                    [_vm._v("SELECCIONE")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "1" } }, [
+                                    _vm._v("MONOMOTOR")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "2" } }, [
+                                    _vm._v("BIMOTOR")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "3" } }, [
+                                    _vm._v("TRIMOTOR")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "4" } }, [
+                                    _vm._v("CUATRIMOTOR")
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "invalid-feedback" }, [
+                                !_vm.$v.cant_motores.required
+                                  ? _c("span", [
+                                      _vm._v("Este campo es Requerido")
+                                    ])
+                                  : _vm._e()
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.inputs, function(input, index) {
+                            return _c(
+                              "div",
+                              { key: index, staticClass: "form-group row" },
+                              [
+                                _c("div", { staticClass: "col-md-3" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-control-label",
+                                      attrs: { for: "fabrica_motor" + index }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                            Fabrica " +
+                                          _vm._s(index + 1) +
+                                          ":\n                          "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: input.fabrica_motor,
+                                        expression: "input.fabrica_motor"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    class: {
+                                      "is-invalid":
+                                        _vm.$v.inputs[index] &&
+                                        _vm.$v.inputs[index].fabrica_motor &&
+                                        _vm.$v.inputs[index].fabrica_motor
+                                          .$error,
+                                      "is-valid":
+                                        _vm.$v.inputs[index] &&
+                                        _vm.$v.inputs[index].fabrica_motor &&
+                                        !_vm.$v.inputs[index].fabrica_motor
+                                          .$invalid
+                                    },
+                                    attrs: {
+                                      type: "text",
+                                      id: "fabrica_motor" + index
+                                    },
+                                    domProps: { value: input.fabrica_motor },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          input,
+                                          "fabrica_motor",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _vm.$v.inputs[index] &&
+                                      _vm.$v.inputs[index].fabrica_motor &&
+                                      !_vm.$v.inputs[index].fabrica_motor
+                                        .required
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                              Este campo es Requerido\n                            "
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-3" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-control-label",
+                                      attrs: { for: "modelo_motor" + index }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                            Modelo " +
+                                          _vm._s(index + 1) +
+                                          ":\n                          "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: input.modelo_motor,
+                                        expression: "input.modelo_motor"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    class: {
+                                      "is-invalid":
+                                        _vm.$v.inputs[index] &&
+                                        _vm.$v.inputs[index].modelo_motor &&
+                                        _vm.$v.inputs[index].modelo_motor
+                                          .$error,
+                                      "is-valid":
+                                        _vm.$v.inputs[index] &&
+                                        _vm.$v.inputs[index].modelo_motor &&
+                                        !_vm.$v.inputs[index].modelo_motor
+                                          .$invalid
+                                    },
+                                    attrs: {
+                                      type: "text",
+                                      id: "modelo_motor" + index
+                                    },
+                                    domProps: { value: input.modelo_motor },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          input,
+                                          "modelo_motor",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _vm.$v.inputs[index] &&
+                                      _vm.$v.inputs[index].modelo_motor &&
+                                      !_vm.$v.inputs[index].modelo_motor
+                                        .required
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                              Este campo es Requerido\n                            "
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-3" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-control-label",
+                                      attrs: { for: "serie_motor" + index }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                            Serie " +
+                                          _vm._s(index + 1) +
+                                          ":\n                          "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: input.serie_motor,
+                                        expression: "input.serie_motor"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    class: {
+                                      "is-invalid":
+                                        _vm.$v.inputs[index] &&
+                                        _vm.$v.inputs[index].serie_motor &&
+                                        _vm.$v.inputs[index].serie_motor.$error,
+                                      "is-valid":
+                                        _vm.$v.inputs[index] &&
+                                        _vm.$v.inputs[index].serie_motor &&
+                                        !_vm.$v.inputs[index].serie_motor
+                                          .$invalid
+                                    },
+                                    attrs: {
+                                      type: "text",
+                                      id: "serie_motor" + index
+                                    },
+                                    domProps: { value: input.serie_motor },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          input,
+                                          "serie_motor",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _vm.$v.inputs[index] &&
+                                      _vm.$v.inputs[index].serie_motor &&
+                                      !_vm.$v.inputs[index].serie_motor.required
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                              Este campo es Requerido\n                            "
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-3" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-control-label",
+                                      attrs: { for: "estado_motor" + index }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                            Estado " +
+                                          _vm._s(index + 1) +
+                                          ":\n                          "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: input.estado_motor,
+                                          expression: "input.estado_motor"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      class: {
+                                        "is-invalid":
+                                          _vm.$v.inputs[index] &&
+                                          _vm.$v.inputs[index].estado_motor &&
+                                          _vm.$v.inputs[index].estado_motor
+                                            .$error,
+                                        "is-valid":
+                                          _vm.$v.inputs[index] &&
+                                          _vm.$v.inputs[index].estado_motor &&
+                                          !_vm.$v.inputs[index].estado_motor
+                                            .$invalid
+                                      },
+                                      attrs: { id: "estado_motor" + index },
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            input,
+                                            "estado_motor",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "option",
+                                        { attrs: { value: "", disabled: "" } },
+                                        [_vm._v("SELECCIONE")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("option", { attrs: { value: "W" } }, [
+                                        _vm._v("OPERABLE")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("option", { attrs: { value: "P" } }, [
+                                        _vm._v("NO OPERABLE")
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _vm.$v.inputs[index] &&
+                                      _vm.$v.inputs[index].estado_motor &&
+                                      !_vm.$v.inputs[index].estado_motor
+                                        .required
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                              Este campo es Requerido\n                            "
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ]
+                                  )
+                                ])
+                              ]
+                            )
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary",
+                                attrs: { type: "button" },
+                                on: { click: _vm.previousStep }
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-backward" }),
+                                _vm._v("  ANTERIOR\n                        ")
+                              ]
+                            ),
+                            _vm._v(
+                              "\n                         \n                        "
+                            ),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                attrs: { type: "button" },
+                                on: { click: _vm.nextStep }
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-forward" }),
+                                _vm._v("  SIGUIENTE\n                        ")
+                              ]
+                            )
+                          ])
+                        ],
+                        2
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.currentStep === 4
+                    ? _c("div", { staticClass: "step" }, [
+                        _vm._m(5),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _vm._m(6),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [
+                                _vm._v(
+                                  "GRADO Y NOMBRE: " +
+                                    _vm._s(_vm.matricula) +
+                                    " " +
+                                    _vm._s(_vm.modelo) +
+                                    " " +
+                                    _vm._s(_vm.nombre)
+                                )
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(7),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "button" },
+                              on: { click: _vm.previousStep }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-backward" }),
+                              _vm._v("  ANTERIOR")
+                            ]
+                          ),
+                          _vm._v(
+                            "\n                             \n                            "
+                          ),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.CrearAeronave()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-save" }),
+                              _vm._v("  GUARDAR")
+                            ]
+                          )
+                        ])
+                      ])
+                    : _vm._e()
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "content-header" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("h1", [
+              _c("i", { staticClass: "far fa-registered" }),
+              _vm._v(" \n            REGISTRAR AERONAVE\n          ")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("ol", { staticClass: "breadcrumb float-sm-right" })
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-8" }, [
+      _c("h3", { staticClass: "card-title" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", [
+      _c("i", { staticClass: "far fa-folder" }),
+      _vm._v(" PASO 1: ASIGNACIÓN DE UNIDAD")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", [
+      _c("i", { staticClass: "fas fa-inbox" }),
+      _vm._v(" PASO 2: INFORMACIÓN DE LA AERONAVE")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", [
+      _c("i", { staticClass: "fas fa-inbox" }),
+      _vm._v(
+        " PASO 3: INFORMACIÓN DEL (DE LOS) MOTOR (MOTORES)\n                      "
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", [
+      _c("i", { staticClass: "far fa-folder" }),
+      _vm._v(" PASO 4: DOCUMENTACIÓN DE LA AERONAVE")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "div",
+        {
+          staticClass: "col-md-12",
+          staticStyle: { "background-color": "gold" }
+        },
+        [
+          _c(
+            "label",
+            { staticClass: "form-control-label", attrs: { for: "text-input" } },
+            [
+              _vm._v("LOS DOCUMENTOS DEBEN ESTAR EN FORMATO PDF "),
+              _c("i", { staticClass: "fa fa-file-pdf" }),
+              _vm._v(".")
+            ]
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "table-wrapper-scroll-y my-custom-scrollbar",
+        staticStyle: { "font-size": "12pt" },
+        attrs: { id: "myTable" }
+      },
+      [
+        _c(
+          "table",
+          { staticClass: "table table-bordered table-striped table-sm" },
+          [
+            _c("thead", [
+              _c("tr", [
+                _c("th", { staticClass: "text-center" }, [_vm._v("#")]),
+                _vm._v(" "),
+                _c("th", { staticClass: "text-center" }, [_vm._v("DOCUMENTO")]),
+                _vm._v(" "),
+                _c("th", { staticClass: "text-center" }, [_vm._v("ARCHIVO")])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tbody")
+          ]
+        )
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
 
 /***/ }),
 
@@ -181698,15 +183342,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************!*\
   !*** ./resources/js/components/RegistroAeronave.vue ***!
   \******************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _RegistroAeronave_vue_vue_type_template_id_0509ed41___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RegistroAeronave.vue?vue&type=template&id=0509ed41& */ "./resources/js/components/RegistroAeronave.vue?vue&type=template&id=0509ed41&");
 /* harmony import */ var _RegistroAeronave_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RegistroAeronave.vue?vue&type=script&lang=js& */ "./resources/js/components/RegistroAeronave.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _RegistroAeronave_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _RegistroAeronave_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -181736,7 +183379,7 @@ component.options.__file = "resources/js/components/RegistroAeronave.vue"
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/RegistroAeronave.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -181750,7 +183393,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************************************************!*\
   !*** ./resources/js/components/RegistroAeronave.vue?vue&type=template&id=0509ed41& ***!
   \*************************************************************************************/
-/*! no static exports found */
+/*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
