@@ -220,15 +220,10 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-md-3">
-                                    <div class="row">
-                                        <template v-if="v == 0">
-                                            <img :src="'/img/avatar.jpg'" width="150px" height="150px" style="border: 1.5px solid black; text-align: center">
-                                        </template>
-                                        <template v-else>
-                                            <img :src="imagen" width="150px" height="150px" style="border: 1.5px solid black; text-align: center">
-                                        </template> 
-                                    </div>                       
+                                <div class="col-md-3" style="text-align: center;">
+                                  <template>
+                                    <img :src="v === 0 ? '/img/avatar.jpg' : imagen" width="150" height="150" style="border: 1.5px solid black;">
+                                  </template> 
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fotografia</label>
@@ -252,8 +247,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button>
+                            <div class="form-group row justify-content-end">
+                              <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button>
                             </div>
                         </div>
                         <!-- Paso 2 -->
@@ -261,13 +256,13 @@
                             <h3><i class="far fa-folder"></i>&nbsp;PASO 2: DOCUMENTACIÓN PERSONAL</h3>
                             <br>
                             <div class="form-group row">
-                                <div class="col-md-12" style="background-color:gold;">
-                                    <label class="form-control-label" for="text-input">LOS DOCUMENTOS DEBEN ESTAR EN FORMATO PDF <i class="fa fa-file-pdf"></i>.</label>
+                                <div class="col-md-12">
+                                    <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">GRADO, NOMBRES Y APELLIDOS: {{per_grado}} {{per_nombre}} {{per_appaterno}} {{per_apmaterno}}</h4></label>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-md-12">
-                                    <label class="form-control-label" for="text-input">GRADO Y NOMBRE: {{per_grado}} {{per_nombre}} {{per_appaterno}} {{per_apmaterno}}</label>
+                                <div class="col-md-12" style="background-color:gold;">
+                                    <label class="form-control-label" for="text-input">LOS DOCUMENTOS DEBEN ESTAR EN FORMATO PDF <i class="fa fa-file-pdf"></i>.</label>
                                 </div>
                             </div>
                             <div class="table-wrapper-scroll-y my-custom-scrollbar" id="myTable" style="font-size: 12pt;">
@@ -395,8 +390,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="form-group row">
-                                <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
+                            <div class="form-group row justify-content-end">
+                              <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
                                 &nbsp;
                                 <!-- <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button> -->
                                 <button type="button" class="btn btn-danger" @click="CrearPersonal()"><i class="fas fa-address-card"></i>&nbsp; GUARDAR/GENERAR</button>

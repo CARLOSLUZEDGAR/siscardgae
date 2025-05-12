@@ -221,14 +221,9 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-3">
-                                    <div class="row">
-                                        <template v-if="v == 0">
-                                            <img :src="'/img/personal/'+imagen" width="150px" height="150px" style="border: 1.5px solid black; text-align: center">
-                                        </template>
-                                        <template v-else>
-                                            <img :src="imagen" width="150px" height="150px" style="border: 1.5px solid black; text-align: center">
-                                        </template> 
-                                    </div>                       
+                                    <template>
+                                        <img :src="v === 0 ? '/img/personal/'+imagen : imagen" width="150" height="150" style="border: 1.5px solid black;">
+                                    </template>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fotografia</label>

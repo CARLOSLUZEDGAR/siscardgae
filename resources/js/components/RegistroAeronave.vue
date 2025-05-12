@@ -84,16 +84,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button>
+                                <div class="form-group row justify-content-end">
+                                  <button type="button" class="btn btn-danger" @click="nextStep">
+                                      <i class="fas fa-forward"></i>&nbsp; SIGUIENTE
+                                  </button>
                                 </div>
+
                         </div>
+                        <!-- Paso 2 -->
                         <div class="step" v-if="currentStep === 2">
                             <h3><i class="fas fa-inbox"></i>&nbsp;PASO 2: INFORMACIÓN DE LA AERONAVE</h3>
                             <br>
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">MATRICULA: {{matricula}}</h4></label>
+                                    <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">MATRÍCULA: {{matricula}}</h4></label>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -111,14 +115,14 @@
                                         <span v-if="!$v.modelo.required">Este campo es Requerido</span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-control-label" for="text-input">Serie</label>
                                     <input type="text" v-model="serie" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.serie.$error, 'is-valid':!$v.serie.$invalid }" />
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.serie.required">Este campo es Requerido</span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                   <label class="form-control-label" for="text-input">Tipo</label>
                                   <select class="form-control" v-model="tipo" :class="{ 'is-invalid' : $v.tipo.$error, 'is-valid':!$v.tipo.$invalid }">
                                       <option value="" disabled>SELECCIONE</option>
@@ -129,19 +133,19 @@
                                       <span v-else-if="!$v.tipo.letrasSpanish">Solo letras</span>
                                   </div>
                                 </div>
+                                <div class="col-md-2">
+                                  <label class="form-control-label" for="text-input">Condición</label>
+                                  <select class="form-control" v-model="condicion" :class="{ 'is-invalid' : $v.condicion.$error, 'is-valid':!$v.condicion.$invalid }">
+                                      <option value="" disabled>SELECCIONE</option>
+                                      <option v-for="condicion in arrayCondicionAeronave" :key="condicion.id" :value="condicion.id"  v-text="condicion.condicion"></option>                        
+                                  </select>                                
+                                  <div class="invalid-feedback">
+                                      <span v-if="!$v.condicion.required">Este campo es Requerido</span>
+                                      <span v-else-if="!$v.condicion.letrasSpanish">Solo letras</span>
+                                  </div>
+                                </div>
                             </div>
                             <div class="form-group row">
-                              <div class="col-md-3">
-                                <label class="form-control-label" for="text-input">Condición</label>
-                                <select class="form-control" v-model="condicion" :class="{ 'is-invalid' : $v.condicion.$error, 'is-valid':!$v.condicion.$invalid }">
-                                    <option value="" disabled>SELECCIONE</option>
-                                    <option v-for="condicion in arrayCondicionAeronave" :key="condicion.id" :value="condicion.id"  v-text="condicion.condicion"></option>                        
-                                </select>                                
-                                <div class="invalid-feedback">
-                                    <span v-if="!$v.condicion.required">Este campo es Requerido</span>
-                                    <span v-else-if="!$v.condicion.letrasSpanish">Solo letras</span>
-                                </div>
-                              </div>
                               <div class="col-md-3">
                                   <label class="form-control-label" for="text-input">Fecha de Fabricación</label>
                                   <!-- <input type="date" v-model="fech_fabricacion" class="form-control" :class="{ 'is-invalid' : $v.fech_fabricacion.$error, 'is-valid':!$v.fech_fabricacion.$invalid }"> -->
@@ -151,7 +155,7 @@
                                   </div> -->
                               </div>
                               <div class="col-md-3">
-                                  <label class="form-control-label" for="text-input">Fecha de Incoporación</label>
+                                  <label class="form-control-label" for="text-input">Fecha de Incorporación</label>
                                   <input type="date" v-model="fech_ingreso" class="form-control" :class="{ 'is-invalid' : $v.fech_ingreso.$error, 'is-valid':!$v.fech_ingreso.$invalid }" />
                                   <div class="invalid-feedback">
                                       <span v-if="!$v.fech_ingreso.required">Este campo es Requerido</span>
@@ -159,7 +163,7 @@
                                   </div>
                               </div>
                               <div class="col-md-3">
-                                  <label class="form-control-label" for="text-input">Documento de Incoporación</label>
+                                  <label class="form-control-label" for="text-input">Documento de Incorporación</label>
                                   <select class="form-control" v-model="doc_ingreso" :class="{ 'is-invalid' : $v.doc_ingreso.$error, 'is-valid':!$v.doc_ingreso.$invalid }">
                                       <option value="" disabled>SELECCIONE</option>
                                       <option value="RESOLUCION">RESOLUCION</option>
@@ -170,55 +174,52 @@
                                       <span v-if="!$v.doc_ingreso.required">Este campo es Requerido</span>
                                   </div>
                               </div>
-                              
-                            </div>
-                            <div class="form-group row">
                               <div class="col-md-3">
-                                  <label class="form-control-label" for="text-input">Nº Documento de Incoporación</label>
+                                  <label class="form-control-label" for="text-input">Nº Documento de Incorporación</label>
                                   <input type="text" v-model.trim="nro_doc_ingreso" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.nro_doc_ingreso.$error, 'is-valid':!$v.nro_doc_ingreso.$invalid }">
                                   <div class="invalid-feedback">
                                       <span v-if="!$v.nro_doc_ingreso.required">Este campo es Requerido</span>
                                       <span v-else-if="!$v.nro_doc_ingreso.letrasSpanish">Solo letras</span>
                                   </div>
-                              </div>                  
-                                
+                              </div> 
+                              
                             </div>
-                            <div class="form-group row">
-                                <div class="col-md-3">
-                                    <div class="row">
-                                      <template>
-                                        <div style="text-align: center;">
-                                          <img v-if="v == 0" src="/img/avatar_aeronave.jpg" width="150px" height="150px" style="border: 1.5px solid black;" />
-                                          <img v-else :src="imagen" width="150px" height="150px" style="border: 1.5px solid black;" />
-                                        </div>
-                                      </template>
-                                    </div>                       
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-control-label" for="text-input">Fotografia</label>
-                                    <input type="file" class="form-control" @change="obtenerImagen" accept="image/*" v-bind:class="{ 'is-invalid': $v.fotografia.$error, 'is-valid':!$v.fotografia.$invalid }">
-                                    <div class="invalid-feedback">
-                                        <div v-if="!$v.fotografia.required">Por favor, carga tu fotografia.</div>
-                                    </div>
-                                </div>
-                                
-                                
-                            </div>
-                            <div class="form-group row">
+                            <div class="form-group row justify-content-center">                                
+                              <div class="col-md-3" style="text-align: center;">
+                                    <template>
+                                      <div style="text-align: center;">
+                                        <img :src="v === 0 ? '/img/avatar_aeronave.png' : imagen" width="200" height="200" style="border: 1.5px solid black;">
+                                      </div>
+                                    </template>
+                              </div>
+                              <div class="col-md-3">
+                                  <label class="form-control-label" for="text-input">Fotografía</label>
+                                  <input type="file" class="form-control" @change="obtenerImagen" accept="image/*" v-bind:class="{ 'is-invalid': $v.fotografia.$error, 'is-valid':!$v.fotografia.$invalid }">
+                                  <div class="invalid-feedback">
+                                      <div v-if="!$v.fotografia.required">Por favor, carga tu fotografia.</div>
+                                  </div>
+                              </div>
+                          </div>
+                            <div class="form-group row justify-content-end">
                                 <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
                                 &nbsp;
                                 <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button>
                             </div>
                         </div>
-                        <!-- Paso 2 -->
+                        <!-- Paso 3 -->
                         <div class="step" v-if="currentStep === 3">
                           <h3>
                             <i class="fas fa-inbox"></i>&nbsp;PASO 3: INFORMACIÓN DEL (DE LOS) MOTOR (MOTORES)
                           </h3>
-                          <br />
+                          <br>
+                          <div class="form-group row">
+                              <div class="col-md-12">
+                                  <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">MATRÍCULA: {{matricula}}</h4></label>
+                              </div>
+                          </div>
                           <div class="form-group row">
                             <div class="col-md-3">
-                              <label class="form-control-label" for="cant_motores">Cant. Motores</label>
+                              <label class="form-control-label" for="cant_motores">Numero de Motores</label>
                               <select
                                 class="form-control"
                                 v-model="cant_motores"
@@ -237,20 +238,16 @@
                             </div>
                           </div>
 
-
-
-
-                          
-
                          <div class="form-group row" v-for="(input, index) in inputs" :key="index">
                             <div class="col-md-3">
                               <label class="form-control-label" :for="'fabrica_motor' + index">
-                                Fabrica {{ index + 1 }}:
+                                Fabrica Motor # {{ index + 1 }}:
                               </label>
                               <input
                                 type="text"
                                 v-model="input.fabrica_motor"
                                 class="form-control"
+                                style="text-transform: uppercase;"
                                 :id="'fabrica_motor' + index"
                                 :class="{
                                   'is-invalid': $v.inputs[index] && $v.inputs[index].fabrica_motor && $v.inputs[index].fabrica_motor.$error,
@@ -266,12 +263,13 @@
 
                             <div class="col-md-3">
                               <label class="form-control-label" :for="'modelo_motor' + index">
-                                Modelo {{ index + 1 }}:
+                                Modelo Motor # {{ index + 1 }}:
                               </label>
                               <input
                                 type="text"
                                 v-model="input.modelo_motor"
                                 class="form-control"
+                                style="text-transform: uppercase;"
                                 :id="'modelo_motor' + index"
                                 :class="{
                                   'is-invalid': $v.inputs[index] && $v.inputs[index].modelo_motor && $v.inputs[index].modelo_motor.$error,
@@ -287,12 +285,13 @@
 
                             <div class="col-md-3">
                               <label class="form-control-label" :for="'serie_motor' + index">
-                                Serie {{ index + 1 }}:
+                                Serie Motor # {{ index + 1 }}:
                               </label>
                               <input
                                 type="text"
                                 v-model="input.serie_motor"
                                 class="form-control"
+                                style="text-transform: uppercase;"
                                 :id="'serie_motor' + index"
                                 :class="{
                                   'is-invalid': $v.inputs[index] && $v.inputs[index].serie_motor && $v.inputs[index].serie_motor.$error,
@@ -308,7 +307,7 @@
 
                             <div class="col-md-3">
                               <label class="form-control-label" :for="'estado_motor' + index">
-                                Estado {{ index + 1 }}:
+                                Estado Motor # {{ index + 1 }}:
                               </label>
                               <select
                                 class="form-control"
@@ -331,46 +330,32 @@
                             </div>
                           </div>
 
-
-
-
-
-
-                          
-
-                          <div class="form-group row">
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              @click="previousStep"
-                            >
+                          <div class="form-group row justify-content-end">
+                            <button type="button" class="btn btn-primary" @click="previousStep">
                               <i class="fas fa-backward"></i>&nbsp; ANTERIOR
                             </button>
                             &nbsp;
-                            <button
-                              type="button"
-                              class="btn btn-danger"
-                              @click="nextStep"
-                            >
+                            <button type="button" class="btn btn-danger" @click="nextStep">
                               <i class="fas fa-forward"></i>&nbsp; SIGUIENTE
                             </button>
                           </div>
                         </div>
 
-                    <!-- Paso 3 -->
+                    <!-- Paso 4 -->
                     <div class="step" v-if="currentStep === 4">
                       <h3><i class="far fa-folder"></i>&nbsp;PASO 4: DOCUMENTACIÓN DE LA AERONAVE</h3>
-                            <br>
+                      <br>
+                          <div class="form-group row">
+                              <div class="col-md-12">
+                                  <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">MATRÍCULA: {{matricula}}</h4></label>
+                              </div>
+                          </div>
                             <div class="form-group row">
                                 <div class="col-md-12" style="background-color:gold;">
                                     <label class="form-control-label" for="text-input">LOS DOCUMENTOS DEBEN ESTAR EN FORMATO PDF <i class="fa fa-file-pdf"></i>.</label>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <label class="form-control-label" for="text-input">GRADO Y NOMBRE: {{matricula}} {{modelo}} {{nombre}}</label>
-                                </div>
-                            </div>
+                            
                             <div class="table-wrapper-scroll-y my-custom-scrollbar" id="myTable" style="font-size: 12pt;">
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
@@ -381,18 +366,123 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
-                                        
-                                       
-                                        
-                                        
-                                
-                                        
+                                        <tr>
+                                            <td class="text-center">
+                                                <label class="form-control-label" for="text-input">1</label>
+                                            </td>
+                                            <td>
+                                                <label class="form-control-label" for="text-input">CERTIFICADO DE MATRÍCULA</label>
+                                            </td>
+                                            <td>
+                                                <input type="file" class="form-control" @change="obtenerCerMatricula" accept=".pdf" v-bind:class="{ 'is-invalid': $v.cert_matricula.$error, 'is-valid':!$v.cert_matricula.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.cert_matricula.required">Por favor, carga un archivo.</span>
+                                                </div>  
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">
+                                                <label class="form-control-label" for="text-input">2</label>
+                                            </td>
+                                            <td>
+                                                <label class="form-control-label" for="text-input">CERTIFICADO DE AERONAVEGABILIDAD</label>
+                                            </td>
+                                            <td>
+                                                <input type="file" class="form-control" @change="obtenerCerAeronavegabilidad" accept=".pdf" v-bind:class="{ 'is-invalid': $v.cert_aeronavegabilidad.$error, 'is-valid':!$v.cert_aeronavegabilidad.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.cert_aeronavegabilidad.required">Por favor, carga un archivo.</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- <tr>
+                                            <td class="text-center">
+                                                <label class="form-control-label" for="text-input">3</label>
+                                            </td>
+                                            <td>
+                                                <label class="form-control-label" for="text-input">CERTIFICADO DE EGRESO</label>
+                                            </td>
+                                            <td>
+                                                <input type="file" class="form-control" @change="obtenerEgreso" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_egreso.$error, 'is-valid':!$v.doc_egreso.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.doc_egreso.required">Por favor, carga un archivo.</span>
+                                                </div>
+                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">
+                                                <label class="form-control-label" for="text-input">4</label>
+                                            </td>
+                                            <td>
+                                                <label class="form-control-label" for="text-input">CERTIFICADO DE ESPECIALIZACIÓN</label>
+                                            </td>
+                                            <td>
+                                                <input type="file" class="form-control" @change="obtenerEspecializacion" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_especializacion.$error, 'is-valid':!$v.doc_especializacion.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.doc_especializacion.required">Por favor, carga un archivo.</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">
+                                                <label class="form-control-label" for="text-input">5</label>
+                                            </td>
+                                            <td>
+                                                <label class="form-control-label" for="text-input">CERTIFICADO MEDICO</label>
+                                            </td>
+                                            <td>
+                                                <input type="file" class="form-control" @change="obtenerMedico" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_medico.$error, 'is-valid':!$v.doc_medico.$invalid }">
+                                                <div class="invalid-feedback">
+                                                  <span v-if="!$v.doc_medico.required">Por favor, carga un archivo.</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                          <td class="text-center">
+                                            <label class="form-control-label" for="text-input">6</label>
+                                          </td>
+                                          <td>
+                                            <label class="form-control-label" for="text-input">TITULO EDUCATIVO</label>
+                                          </td>
+                                          <td>
+                                            <input type="file" class="form-control" @change="obtenerTitulo" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_titulo.$error, 'is-valid':!$v.doc_titulo.$invalid }">
+                                            <div class="invalid-feedback">
+                                              <span v-if="!$v.doc_titulo.required">Por favor, carga un archivo.</span>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td class="text-center">
+                                            <label class="form-control-label" for="text-input">7</label>
+                                          </td>
+                                          <td>
+                                            <label class="form-control-label" for="text-input">LIBRETA MILITAR</label>
+                                          </td>
+                                          <td>
+                                            <input type="file" class="form-control" @change="obtenerLibreta" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_libreta.$error, 'is-valid':!$v.doc_libreta.$invalid }">
+                                            <div class="invalid-feedback">
+                                              <span v-if="!$v.doc_libreta.required">Por favor, carga un archivo.</span>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td class="text-center">
+                                            <label class="form-control-label" for="text-input">8</label>
+                                          </td>
+                                          <td>
+                                            <label class="form-control-label" for="text-input">CERTIFICADO DE APROBACIÓN DE EXAMEN</label>
+                                          </td>
+                                          <td>
+                                            <input type="file" class="form-control" @change="obtenerAprobacion" accept=".pdf" v-bind:class="{ 'is-invalid': $v.doc_aprobacion.$error, 'is-valid':!$v.doc_aprobacion.$invalid }">
+                                            <div class="invalid-feedback">
+                                              <span v-if="!$v.doc_aprobacion.required">Por favor, carga un archivo.</span>
+                                            </div>
+                                          </td>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="form-group row">
-                                <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
+                            <div class="form-group row justify-content-end">
+                              <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
                                 &nbsp;
                                 <button type="button" class="btn btn-danger" @click="CrearAeronave()"><i class="fas fa-save"></i>&nbsp; GUARDAR</button>
                             </div>
@@ -447,6 +537,8 @@
         // cantidad : 0,
         // input : '',
         inputs : [], // Aquí se almacenarán los valores de los inputs dinámicos
+        cert_matricula : '',
+        cert_aeronavegabilidad : '',
 
         arrayEntidad : [],
         arrayGranUnidad : [],
@@ -519,6 +611,9 @@
                 estado_motor : { required },
               },
             },
+
+            cert_matricula : { required },
+            cert_aeronavegabilidad : { required },
             // fabrica_motor : { required },
             // modelo_motor : { required },
             // serie_motor : { required },
@@ -553,17 +648,24 @@
             // 'serie_motor',
             // 'estado_motor',
             ],
+
+            validationGroupPaso4: [
+              'cert_matricula',
+              'cert_aeronavegabilidad'
+            ],
   
             validationGroupReg: [
-            'entidad',
-            'matricula',
-            'g_unidad',
-            'unidad',
-            'fotografia',
-            'modelo',
-            'serie',
-            'nombre'],
-
+            // 'entidad',
+            // 'matricula',
+            // 'g_unidad',
+            // 'unidad',
+            // 'fotografia',
+            // 'modelo',
+            // 'serie',
+            // 'nombre'
+            'cert_matricula',
+            'cert_aeronavegabilidad'
+            ],
             validationGroupDocument:[
             ]
           },
@@ -674,6 +776,19 @@
                   })   
               }
             break;
+            // case 4:
+            //   if(!this.$v.validationGroupPaso4.$invalid){
+            //     this.currentStep++;
+            //   }else{
+            //       this.$v.validationGroupPaso3.$touch();
+            //       Swal.fire({
+            //           icon: 'warning',
+            //           title: 'Ingrese todos los datos requeridos',
+            //           showConfirmButton: false,
+            //           timer: 2000
+            //       })   
+            //   }
+            // break;
           }
       },
 
@@ -681,6 +796,34 @@
         if (this.currentStep > 1) {
           this.currentStep--;
         }
+      },
+
+      obtenerCerMatricula(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.cert_matricula = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                // this.vNAC = 1;
+            } catch (error) {
+                
+            }
+      },
+
+      obtenerCerAeronavegabilidad(e){
+        try {
+                var fileReader = new FileReader();
+    
+                fileReader.onload = (e) => {
+                    this.cert_aeronavegabilidad = e.target.result;
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                // this.vNAC = 1;
+            } catch (error) {
+                
+            }
       },
 
       obtenerImagen(e){
@@ -803,9 +946,9 @@
 
   
       CrearAeronave(){ //DGAE
-        if(!this.$v.validationGroupDocument.$invalid){
+        if(!this.$v.validationGroupReg.$invalid){
           swal.fire({
-              title: '¿Desea registrar?', // TITULO 
+              title: '¿Desea registrar la Aeronave?', // TITULO 
               icon: 'question', //ICONO (success, warnning, error, info, question)
               showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
               confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
@@ -842,7 +985,7 @@
                       
                       console.log(response);
                       swal.fire({
-                          title: 'Se realizo el registro correctamente', //TITULO
+                          title: 'Se realizo el registro de la Aeronave correctamente', //TITULO
                       });
                       if (!response.data.code) {
                           me.arrayDatAeronave = response.data.aeronave;
@@ -864,7 +1007,7 @@
               }
           })
         }else{
-            this.$v.validationGroupDocument.$touch();
+            this.$v.validationGroupReg.$touch();
             Swal.fire({
                 icon: 'warning',
                 title: 'Ingrese todos los datos requeridos',
