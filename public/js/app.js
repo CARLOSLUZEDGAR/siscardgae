@@ -15157,6 +15157,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -15172,6 +15184,7 @@ __webpack_require__.r(__webpack_exports__);
       fabrica: '',
       modelo: '',
       serie: '',
+      categoria: '',
       tipo: '',
       condicion: '',
       fech_fabricacion: '',
@@ -15194,9 +15207,9 @@ __webpack_require__.r(__webpack_exports__);
       arrayEntidad: [],
       arrayGranUnidad: [],
       arrayUnidad: [],
+      arrayCategoriaAeronave: [],
       arrayTipoAeronave: [],
       arrayCondicionAeronave: [],
-      arrayCategoria: [],
       arrayGrado: [],
       arrayNacionalidad: [],
       arrayLicencia: [],
@@ -15251,6 +15264,9 @@ __webpack_require__.r(__webpack_exports__);
     serie: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
     },
+    categoria: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
     tipo: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
     },
@@ -15300,9 +15316,9 @@ __webpack_require__.r(__webpack_exports__);
     // serie_motor : { required },
     // estado_motor : { required },
     // nombre : { required, letrasSpanish: value => /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },      
-    validationGroupPaso1: ['entidad', 'matricula', 'g_unidad', 'unidad'],
-    validationGroupPaso2: ['fabrica', 'modelo', 'serie', 'tipo', 'condicion', // 'fech_fabricacion',
-    'fech_ingreso', 'doc_ingreso', 'nro_doc_ingreso', 'fotografia'],
+    validationGroupPaso1: ['fabrica', 'modelo', 'serie', 'categoria', 'tipo', 'condicion', // 'fech_fabricacion',
+    'fotografia'],
+    validationGroupPaso2: ['entidad', 'matricula', 'g_unidad', 'unidad', 'fech_ingreso', 'doc_ingreso', 'nro_doc_ingreso'],
     validationGroupPaso3: ['cant_motores', 'inputs' // 'fabrica_motor',
     // 'modelo_motor',
     // 'serie_motor',
@@ -15530,6 +15546,17 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+    listarCategoriaAeronave: function listarCategoriaAeronave() {
+      //DGAE
+      var me = this;
+      axios.post("/listarCategoriaAeronave", {// id_nacionalidad : 1,
+      }).then(function (response) {
+        me.arrayCategoriaAeronave = response.data.categoria_aeronaves;
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
     listarTipoAeronave: function listarTipoAeronave() {
       //DGAE
       var me = this;
@@ -15554,9 +15581,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     NuevoAeronave: function NuevoAeronave() {
       //DGAE
-      this.$v.validationGroupPaso1.$reset(), this.$v.validationGroupPaso2.$reset(), this.entidad = '', this.matricula = '', this.g_unidad = '', this.unidad = '', this.fabrica = '', this.modelo = '', this.serie = '', this.tipo = '', this.condicion = '', this.fech_fabricacion = '', this.fech_ingreso = '', this.doc_ingreso = '', this.nro_doc_ingreso = '', this.fotografia = '', this.fabrica_motor = '', this.modelo_motor = '', this.serie_motor = '', this.estado_motor = '', this.v = 0, this.listarEntidad(); // this.listarGranUnidad(this.entidad);
+      this.$v.validationGroupPaso1.$reset(), this.$v.validationGroupPaso2.$reset(), this.entidad = '', this.matricula = '', this.g_unidad = '', this.unidad = '', this.fabrica = '', this.modelo = '', this.serie = '', this.categoria = '', this.tipo = '', this.condicion = '', this.fech_fabricacion = '', this.fech_ingreso = '', this.doc_ingreso = '', this.nro_doc_ingreso = '', this.fotografia = '', this.fabrica_motor = '', this.modelo_motor = '', this.serie_motor = '', this.estado_motor = '', this.v = 0, this.listarEntidad(); // this.listarGranUnidad(this.entidad);
 
       this.listarTipoAeronave();
+      this.listarCategoriaAeronave();
       this.listarCondicionAeronave();
     },
     CrearAeronave: function CrearAeronave() {
@@ -15592,6 +15620,7 @@ __webpack_require__.r(__webpack_exports__);
               fabrica: me.fabrica,
               modelo: me.modelo,
               serie: me.serie,
+              categoria: me.categoria,
               tipo: me.tipo,
               condicion: me.condicion,
               fech_fabricacion: me.fech_fabricacion,
@@ -140687,6 +140716,493 @@ var render = function() {
                         _c("br"),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group row" }, [
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Fabrica")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.fabrica,
+                                  expression: "fabrica"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.fabrica.$error,
+                                "is-valid": !_vm.$v.fabrica.$invalid
+                              },
+                              staticStyle: { "text-transform": "uppercase" },
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.fabrica },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.fabrica = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.fabrica.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Modelo")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.modelo,
+                                  expression: "modelo"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.modelo.$error,
+                                "is-valid": !_vm.$v.modelo.$invalid
+                              },
+                              staticStyle: { "text-transform": "uppercase" },
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.modelo },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.modelo = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.modelo.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Serie")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.serie,
+                                  expression: "serie"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.serie.$error,
+                                "is-valid": !_vm.$v.serie.$invalid
+                              },
+                              staticStyle: { "text-transform": "uppercase" },
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.serie },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.serie = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.serie.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Tipo de Aeronave")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.categoria,
+                                    expression: "categoria"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.categoria.$error,
+                                  "is-valid": !_vm.$v.categoria.$invalid
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.categoria = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("SELECCIONE")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arrayCategoriaAeronave, function(
+                                  categoria
+                                ) {
+                                  return _c("option", {
+                                    key: categoria.id,
+                                    domProps: {
+                                      value: categoria.id,
+                                      textContent: _vm._s(categoria.categoria)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.categoria.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : !_vm.$v.categoria.letrasSpanish
+                                ? _c("span", [_vm._v("Solo letras")])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Categoria")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.tipo,
+                                    expression: "tipo"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.tipo.$error,
+                                  "is-valid": !_vm.$v.tipo.$invalid
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.tipo = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("SELECCIONE")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arrayTipoAeronave, function(tipo) {
+                                  return _c("option", {
+                                    key: tipo.id,
+                                    domProps: {
+                                      value: tipo.id,
+                                      textContent: _vm._s(tipo.tipo)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.tipo.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : !_vm.$v.tipo.letrasSpanish
+                                ? _c("span", [_vm._v("Solo letras")])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Condición")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.condicion,
+                                    expression: "condicion"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.condicion.$error,
+                                  "is-valid": !_vm.$v.condicion.$invalid
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.condicion = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("SELECCIONE")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arrayCondicionAeronave, function(
+                                  condicion
+                                ) {
+                                  return _c("option", {
+                                    key: condicion.id,
+                                    domProps: {
+                                      value: condicion.id,
+                                      textContent: _vm._s(condicion.condicion)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.condicion.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : !_vm.$v.condicion.letrasSpanish
+                                ? _c("span", [_vm._v("Solo letras")])
+                                : _vm._e()
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "form-group row justify-content-center"
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "col-md-3",
+                                staticStyle: { "text-align": "center" }
+                              },
+                              [
+                                [
+                                  _c(
+                                    "div",
+                                    { staticStyle: { "text-align": "center" } },
+                                    [
+                                      _c("img", {
+                                        staticStyle: {
+                                          border: "1.5px solid black"
+                                        },
+                                        attrs: {
+                                          src:
+                                            _vm.v === 0
+                                              ? "/img/avatar_aeronave.png"
+                                              : _vm.imagen,
+                                          width: "200",
+                                          height: "200"
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-3" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "form-control-label",
+                                  attrs: { for: "text-input" }
+                                },
+                                [_vm._v("Fotografía")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.fotografia.$error,
+                                  "is-valid": !_vm.$v.fotografia.$invalid
+                                },
+                                attrs: { type: "file", accept: "image/*" },
+                                on: { change: _vm.obtenerImagen }
+                              }),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "invalid-feedback" }, [
+                                !_vm.$v.fotografia.required
+                                  ? _c("div", [
+                                      _vm._v("Por favor, carga tu fotografia.")
+                                    ])
+                                  : _vm._e()
+                              ])
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group row justify-content-end" },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                attrs: { type: "button" },
+                                on: { click: _vm.nextStep }
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-forward" }),
+                                _vm._v(
+                                  "  SIGUIENTE\n                            "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.currentStep === 2
+                    ? _c("div", { staticClass: "step" }, [
+                        _vm._m(3),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [
+                                _c(
+                                  "h4",
+                                  {
+                                    staticStyle: {
+                                      "text-transform": "uppercase"
+                                    }
+                                  },
+                                  [_vm._v("AERONAVE: " + _vm._s(_vm.modelo))]
+                                )
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
                           _c("div", { staticClass: "col-md-3" }, [
                             _c(
                               "label",
@@ -140959,386 +141475,7 @@ var render = function() {
                           ])
                         ]),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "form-group row justify-content-end" },
-                          [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-danger",
-                                attrs: { type: "button" },
-                                on: { click: _vm.nextStep }
-                              },
-                              [
-                                _c("i", { staticClass: "fas fa-forward" }),
-                                _vm._v(
-                                  "  SIGUIENTE\n                              "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.currentStep === 2
-                    ? _c("div", { staticClass: "step" }, [
-                        _vm._m(3),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v(" "),
                         _c("div", { staticClass: "form-group row" }, [
-                          _c("div", { staticClass: "col-md-12" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-control-label",
-                                attrs: { for: "text-input" }
-                              },
-                              [
-                                _c(
-                                  "h4",
-                                  {
-                                    staticStyle: {
-                                      "text-transform": "uppercase"
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "MATRÍCULA: " + _vm._s(_vm.matricula)
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c("div", { staticClass: "col-md-3" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-control-label",
-                                attrs: { for: "text-input" }
-                              },
-                              [_vm._v("Fabrica")]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.fabrica,
-                                  expression: "fabrica"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              class: {
-                                "is-invalid": _vm.$v.fabrica.$error,
-                                "is-valid": !_vm.$v.fabrica.$invalid
-                              },
-                              staticStyle: { "text-transform": "uppercase" },
-                              attrs: { type: "text" },
-                              domProps: { value: _vm.fabrica },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.fabrica = $event.target.value
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              !_vm.$v.fabrica.required
-                                ? _c("span", [
-                                    _vm._v("Este campo es Requerido")
-                                  ])
-                                : _vm._e()
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-3" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-control-label",
-                                attrs: { for: "text-input" }
-                              },
-                              [_vm._v("Modelo")]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.modelo,
-                                  expression: "modelo"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              class: {
-                                "is-invalid": _vm.$v.modelo.$error,
-                                "is-valid": !_vm.$v.modelo.$invalid
-                              },
-                              staticStyle: { "text-transform": "uppercase" },
-                              attrs: { type: "text" },
-                              domProps: { value: _vm.modelo },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.modelo = $event.target.value
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              !_vm.$v.modelo.required
-                                ? _c("span", [
-                                    _vm._v("Este campo es Requerido")
-                                  ])
-                                : _vm._e()
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-2" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-control-label",
-                                attrs: { for: "text-input" }
-                              },
-                              [_vm._v("Serie")]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.serie,
-                                  expression: "serie"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              class: {
-                                "is-invalid": _vm.$v.serie.$error,
-                                "is-valid": !_vm.$v.serie.$invalid
-                              },
-                              staticStyle: { "text-transform": "uppercase" },
-                              attrs: { type: "text" },
-                              domProps: { value: _vm.serie },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.serie = $event.target.value
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              !_vm.$v.serie.required
-                                ? _c("span", [
-                                    _vm._v("Este campo es Requerido")
-                                  ])
-                                : _vm._e()
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-2" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-control-label",
-                                attrs: { for: "text-input" }
-                              },
-                              [_vm._v("Tipo")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.tipo,
-                                    expression: "tipo"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                class: {
-                                  "is-invalid": _vm.$v.tipo.$error,
-                                  "is-valid": !_vm.$v.tipo.$invalid
-                                },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.tipo = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "option",
-                                  { attrs: { value: "", disabled: "" } },
-                                  [_vm._v("SELECCIONE")]
-                                ),
-                                _vm._v(" "),
-                                _vm._l(_vm.arrayTipoAeronave, function(tipo) {
-                                  return _c("option", {
-                                    key: tipo.id,
-                                    domProps: {
-                                      value: tipo.id,
-                                      textContent: _vm._s(tipo.tipo)
-                                    }
-                                  })
-                                })
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              !_vm.$v.tipo.required
-                                ? _c("span", [
-                                    _vm._v("Este campo es Requerido")
-                                  ])
-                                : !_vm.$v.tipo.letrasSpanish
-                                ? _c("span", [_vm._v("Solo letras")])
-                                : _vm._e()
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-2" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-control-label",
-                                attrs: { for: "text-input" }
-                              },
-                              [_vm._v("Condición")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.condicion,
-                                    expression: "condicion"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                class: {
-                                  "is-invalid": _vm.$v.condicion.$error,
-                                  "is-valid": !_vm.$v.condicion.$invalid
-                                },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.condicion = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "option",
-                                  { attrs: { value: "", disabled: "" } },
-                                  [_vm._v("SELECCIONE")]
-                                ),
-                                _vm._v(" "),
-                                _vm._l(_vm.arrayCondicionAeronave, function(
-                                  condicion
-                                ) {
-                                  return _c("option", {
-                                    key: condicion.id,
-                                    domProps: {
-                                      value: condicion.id,
-                                      textContent: _vm._s(condicion.condicion)
-                                    }
-                                  })
-                                })
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              !_vm.$v.condicion.required
-                                ? _c("span", [
-                                    _vm._v("Este campo es Requerido")
-                                  ])
-                                : !_vm.$v.condicion.letrasSpanish
-                                ? _c("span", [_vm._v("Solo letras")])
-                                : _vm._e()
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c("div", { staticClass: "col-md-3" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-control-label",
-                                attrs: { for: "text-input" }
-                              },
-                              [_vm._v("Fecha de Fabricación")]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.fech_fabricacion,
-                                  expression: "fech_fabricacion"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { type: "date" },
-                              domProps: { value: _vm.fech_fabricacion },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.fech_fabricacion = $event.target.value
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
                           _c("div", { staticClass: "col-md-3" }, [
                             _c(
                               "label",
@@ -141520,75 +141657,6 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "div",
-                          {
-                            staticClass: "form-group row justify-content-center"
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "col-md-3",
-                                staticStyle: { "text-align": "center" }
-                              },
-                              [
-                                [
-                                  _c(
-                                    "div",
-                                    { staticStyle: { "text-align": "center" } },
-                                    [
-                                      _c("img", {
-                                        staticStyle: {
-                                          border: "1.5px solid black"
-                                        },
-                                        attrs: {
-                                          src:
-                                            _vm.v === 0
-                                              ? "/img/avatar_aeronave.png"
-                                              : _vm.imagen,
-                                          width: "200",
-                                          height: "200"
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ]
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-3" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "form-control-label",
-                                  attrs: { for: "text-input" }
-                                },
-                                [_vm._v("Fotografía")]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                class: {
-                                  "is-invalid": _vm.$v.fotografia.$error,
-                                  "is-valid": !_vm.$v.fotografia.$invalid
-                                },
-                                attrs: { type: "file", accept: "image/*" },
-                                on: { change: _vm.obtenerImagen }
-                              }),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "invalid-feedback" }, [
-                                !_vm.$v.fotografia.required
-                                  ? _c("div", [
-                                      _vm._v("Por favor, carga tu fotografia.")
-                                    ])
-                                  : _vm._e()
-                              ])
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
                           { staticClass: "form-group row justify-content-end" },
                           [
                             _c(
@@ -141604,7 +141672,7 @@ var render = function() {
                               ]
                             ),
                             _vm._v(
-                              "\n                             \n                            "
+                              "\n                         \n                        "
                             ),
                             _c(
                               "button",
@@ -141650,7 +141718,10 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "MATRÍCULA: " + _vm._s(_vm.matricula)
+                                        "MATRÍCULA Y MODELO: " +
+                                          _vm._s(_vm.matricula) +
+                                          " " +
+                                          _vm._s(_vm.modelo)
                                       )
                                     ]
                                   )
@@ -142152,7 +142223,10 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      "MATRÍCULA: " + _vm._s(_vm.matricula)
+                                      "MATRÍCULA Y MODELO: " +
+                                        _vm._s(_vm.matricula) +
+                                        " " +
+                                        _vm._s(_vm.modelo)
                                     )
                                   ]
                                 )
@@ -142343,8 +142417,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h3", [
-      _c("i", { staticClass: "far fa-folder" }),
-      _vm._v(" PASO 1: ASIGNACIÓN DE UNIDAD")
+      _c("i", { staticClass: "fas fa-inbox" }),
+      _vm._v(" PASO 1: INFORMACIÓN DE LA AERONAVE")
     ])
   },
   function() {
@@ -142352,8 +142426,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h3", [
-      _c("i", { staticClass: "fas fa-inbox" }),
-      _vm._v(" PASO 2: INFORMACIÓN DE LA AERONAVE")
+      _c("i", { staticClass: "far fa-folder" }),
+      _vm._v(" PASO 2: ASIGNACIÓN DE UNIDAD")
     ])
   },
   function() {

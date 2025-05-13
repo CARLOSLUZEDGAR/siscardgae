@@ -43,72 +43,17 @@
                     <form>
                         <!-- Paso 1 -->
                         <div class="step" v-if="currentStep === 1">
-                          <h3><i class="far fa-folder"></i>&nbsp;PASO 1: ASIGNACIÓN DE UNIDAD</h3>
-                                <br>
-                                <div class="form-group row">
-                                    <div class="col-md-3">
-                                        <label class="form-control-label" for="text-input">Entidad</label>
-                                        <select class="form-control" v-model="entidad" @click="listarGranUnidad(entidad), g_unidad = '', unidad = ''" :class="{ 'is-invalid' : $v.entidad.$error, 'is-valid':!$v.entidad.$invalid }">
-                                            <option value="" disabled>SELECCIONE</option>
-                                            <option v-for="entidad in arrayEntidad" :key="entidad.id" :value="entidad.id"  v-text="entidad.entidad"></option>                        
-                                        </select>                                        
-                                        <div class="invalid-feedback">
-                                            <span v-if="!$v.entidad.required">Este campo es Requerido</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="form-control-label" for="text-input">Matricula</label>
-                                        <input type="text" v-model="matricula" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.matricula.$error, 'is-valid':!$v.matricula.$invalid }" />
-                                        <div class="invalid-feedback">
-                                            <span v-if="!$v.matricula.required">Este campo es Requerido</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="form-control-label" for="text-input">Gran Unidad</label>
-                                        <select class="form-control" v-model="g_unidad" @click="listarUnidad(g_unidad), unidad = ''" :class="{ 'is-invalid' : $v.g_unidad.$error, 'is-valid':!$v.g_unidad.$invalid }">
-                                            <option value="" disabled>SELECCIONE</option>
-                                            <option v-for="gunidad in arrayGranUnidad" :key="gunidad.id" :value="gunidad.id"  v-text="gunidad.gran_unidad"></option>                        
-                                        </select>                                        
-                                        <div class="invalid-feedback">
-                                            <span v-if="!$v.g_unidad.required">Este campo es Requerido</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="form-control-label" for="text-input">Unidad</label>
-                                        <select class="form-control" v-model="unidad" :class="{ 'is-invalid' : $v.unidad.$error, 'is-valid':!$v.unidad.$invalid }">
-                                            <option value="" disabled>SELECCIONE</option>
-                                            <option v-for="unidad in arrayUnidad" :key="unidad.id" :value="unidad.id"  v-text="unidad.unidad"></option>                        
-                                        </select>                                        
-                                        <div class="invalid-feedback">
-                                            <span v-if="!$v.unidad.required">Este campo es Requerido</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row justify-content-end">
-                                  <button type="button" class="btn btn-danger" @click="nextStep">
-                                      <i class="fas fa-forward"></i>&nbsp; SIGUIENTE
-                                  </button>
-                                </div>
-
-                        </div>
-                        <!-- Paso 2 -->
-                        <div class="step" v-if="currentStep === 2">
-                            <h3><i class="fas fa-inbox"></i>&nbsp;PASO 2: INFORMACIÓN DE LA AERONAVE</h3>
+                            <h3><i class="fas fa-inbox"></i>&nbsp;PASO 1: INFORMACIÓN DE LA AERONAVE</h3>
                             <br>
                             <div class="form-group row">
-                                <div class="col-md-12">
-                                    <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">MATRÍCULA: {{matricula}}</h4></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-control-label" for="text-input">Fabrica</label>
                                     <input type="text" v-model="fabrica" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.fabrica.$error, 'is-valid':!$v.fabrica.$invalid }" />
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.fabrica.required">Este campo es Requerido</span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-control-label" for="text-input">Modelo</label>
                                     <input type="text" v-model="modelo" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.modelo.$error, 'is-valid':!$v.modelo.$invalid }" />
                                     <div class="invalid-feedback">
@@ -123,7 +68,18 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                  <label class="form-control-label" for="text-input">Tipo</label>
+                                  <label class="form-control-label" for="text-input">Tipo de Aeronave</label>
+                                  <select class="form-control" v-model="categoria" :class="{ 'is-invalid' : $v.categoria.$error, 'is-valid':!$v.categoria.$invalid }">
+                                      <option value="" disabled>SELECCIONE</option>
+                                      <option v-for="categoria in arrayCategoriaAeronave" :key="categoria.id" :value="categoria.id"  v-text="categoria.categoria"></option>                        
+                                  </select>                                   
+                                  <div class="invalid-feedback">
+                                      <span v-if="!$v.categoria.required">Este campo es Requerido</span>
+                                      <span v-else-if="!$v.categoria.letrasSpanish">Solo letras</span>
+                                  </div>
+                                </div>
+                                <div class="col-md-2">
+                                  <label class="form-control-label" for="text-input">Categoria</label>
                                   <select class="form-control" v-model="tipo" :class="{ 'is-invalid' : $v.tipo.$error, 'is-valid':!$v.tipo.$invalid }">
                                       <option value="" disabled>SELECCIONE</option>
                                       <option v-for="tipo in arrayTipoAeronave" :key="tipo.id" :value="tipo.id"  v-text="tipo.tipo"></option>                        
@@ -145,45 +101,7 @@
                                   </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                              <div class="col-md-3">
-                                  <label class="form-control-label" for="text-input">Fecha de Fabricación</label>
-                                  <!-- <input type="date" v-model="fech_fabricacion" class="form-control" :class="{ 'is-invalid' : $v.fech_fabricacion.$error, 'is-valid':!$v.fech_fabricacion.$invalid }"> -->
-                                  <input type="date" v-model="fech_fabricacion" class="form-control" />
-                                  <!-- <div class="invalid-feedback">
-                                      <span v-if="!$v.fech_fabricacion.required">Este campo es Requerido</span>
-                                  </div> -->
-                              </div>
-                              <div class="col-md-3">
-                                  <label class="form-control-label" for="text-input">Fecha de Incorporación</label>
-                                  <input type="date" v-model="fech_ingreso" class="form-control" :class="{ 'is-invalid' : $v.fech_ingreso.$error, 'is-valid':!$v.fech_ingreso.$invalid }" />
-                                  <div class="invalid-feedback">
-                                      <span v-if="!$v.fech_ingreso.required">Este campo es Requerido</span>
-                                      <span v-else-if="!$v.fech_ingreso.letrasSpanish">Solo letras</span>
-                                  </div>
-                              </div>
-                              <div class="col-md-3">
-                                  <label class="form-control-label" for="text-input">Documento de Incorporación</label>
-                                  <select class="form-control" v-model="doc_ingreso" :class="{ 'is-invalid' : $v.doc_ingreso.$error, 'is-valid':!$v.doc_ingreso.$invalid }">
-                                      <option value="" disabled>SELECCIONE</option>
-                                      <option value="RESOLUCION">RESOLUCION</option>
-                                      <option value="ORDEN DEL DIA">ORDEN DEL DIA</option>
-                                      <option value="MEMORANDUM">MEMORANDUM</option>
-                                  </select>                                  
-                                  <div class="invalid-feedback">
-                                      <span v-if="!$v.doc_ingreso.required">Este campo es Requerido</span>
-                                  </div>
-                              </div>
-                              <div class="col-md-3">
-                                  <label class="form-control-label" for="text-input">Nº Documento de Incorporación</label>
-                                  <input type="text" v-model.trim="nro_doc_ingreso" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.nro_doc_ingreso.$error, 'is-valid':!$v.nro_doc_ingreso.$invalid }">
-                                  <div class="invalid-feedback">
-                                      <span v-if="!$v.nro_doc_ingreso.required">Este campo es Requerido</span>
-                                      <span v-else-if="!$v.nro_doc_ingreso.letrasSpanish">Solo letras</span>
-                                  </div>
-                              </div> 
-                              
-                            </div>
+                            
                             <div class="form-group row justify-content-center">                                
                               <div class="col-md-3" style="text-align: center;">
                                     <template>
@@ -201,10 +119,104 @@
                               </div>
                           </div>
                             <div class="form-group row justify-content-end">
-                                <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
-                                &nbsp;
-                                <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button>
+                                <button type="button" class="btn btn-danger" @click="nextStep">
+                                    <i class="fas fa-forward"></i>&nbsp; SIGUIENTE
+                                </button>
                             </div>
+                        </div>
+                        
+                        <!-- Paso 2 -->
+                        <div class="step" v-if="currentStep === 2">
+                          <h3><i class="far fa-folder"></i>&nbsp;PASO 2: ASIGNACIÓN DE UNIDAD</h3>
+                          <br>
+                          <div class="form-group row">
+                            <div class="col-md-12">
+                                <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">AERONAVE: {{ modelo }}</h4></label>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="text-input">Entidad</label>
+                                <select class="form-control" v-model="entidad" @click="listarGranUnidad(entidad), g_unidad = '', unidad = ''" :class="{ 'is-invalid' : $v.entidad.$error, 'is-valid':!$v.entidad.$invalid }">
+                                    <option value="" disabled>SELECCIONE</option>
+                                    <option v-for="entidad in arrayEntidad" :key="entidad.id" :value="entidad.id"  v-text="entidad.entidad"></option>                        
+                                </select>                                        
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.entidad.required">Este campo es Requerido</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="text-input">Matricula</label>
+                                <input type="text" v-model="matricula" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.matricula.$error, 'is-valid':!$v.matricula.$invalid }" />
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.matricula.required">Este campo es Requerido</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="text-input">Gran Unidad</label>
+                                <select class="form-control" v-model="g_unidad" @click="listarUnidad(g_unidad), unidad = ''" :class="{ 'is-invalid' : $v.g_unidad.$error, 'is-valid':!$v.g_unidad.$invalid }">
+                                    <option value="" disabled>SELECCIONE</option>
+                                    <option v-for="gunidad in arrayGranUnidad" :key="gunidad.id" :value="gunidad.id"  v-text="gunidad.gran_unidad"></option>                        
+                                </select>                                        
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.g_unidad.required">Este campo es Requerido</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="text-input">Unidad</label>
+                                <select class="form-control" v-model="unidad" :class="{ 'is-invalid' : $v.unidad.$error, 'is-valid':!$v.unidad.$invalid }">
+                                    <option value="" disabled>SELECCIONE</option>
+                                    <option v-for="unidad in arrayUnidad" :key="unidad.id" :value="unidad.id"  v-text="unidad.unidad"></option>                        
+                                </select>                                        
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.unidad.required">Este campo es Requerido</span>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <!-- <div class="col-md-3">
+                                <label class="form-control-label" for="text-input">Fecha de Fabricación</label>
+                                <input type="date" v-model="fech_fabricacion" class="form-control" :class="{ 'is-invalid' : $v.fech_fabricacion.$error, 'is-valid':!$v.fech_fabricacion.$invalid }">
+                                <input type="date" v-model="fech_fabricacion" class="form-control" />
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.fech_fabricacion.required">Este campo es Requerido</span>
+                                </div>
+                            </div> -->
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="text-input">Fecha de Incorporación</label>
+                                <input type="date" v-model="fech_ingreso" class="form-control" :class="{ 'is-invalid' : $v.fech_ingreso.$error, 'is-valid':!$v.fech_ingreso.$invalid }" />
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.fech_ingreso.required">Este campo es Requerido</span>
+                                    <span v-else-if="!$v.fech_ingreso.letrasSpanish">Solo letras</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="text-input">Documento de Incorporación</label>
+                                <select class="form-control" v-model="doc_ingreso" :class="{ 'is-invalid' : $v.doc_ingreso.$error, 'is-valid':!$v.doc_ingreso.$invalid }">
+                                    <option value="" disabled>SELECCIONE</option>
+                                    <option value="RESOLUCION">RESOLUCION</option>
+                                    <option value="ORDEN DEL DIA">ORDEN DEL DIA</option>
+                                    <option value="MEMORANDUM">MEMORANDUM</option>
+                                </select>                                  
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.doc_ingreso.required">Este campo es Requerido</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="text-input">Nº Documento de Incorporación</label>
+                                <input type="text" v-model.trim="nro_doc_ingreso" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.nro_doc_ingreso.$error, 'is-valid':!$v.nro_doc_ingreso.$invalid }">
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.nro_doc_ingreso.required">Este campo es Requerido</span>
+                                    <span v-else-if="!$v.nro_doc_ingreso.letrasSpanish">Solo letras</span>
+                                </div>
+                            </div>   
+                          </div>    
+                          <div class="form-group row justify-content-end">
+                            <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
+                            &nbsp;
+                            <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button>
+                          </div>
+
                         </div>
                         <!-- Paso 3 -->
                         <div class="step" v-if="currentStep === 3">
@@ -214,7 +226,7 @@
                           <br>
                           <div class="form-group row">
                               <div class="col-md-12">
-                                  <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">MATRÍCULA: {{matricula}}</h4></label>
+                                  <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">MATRÍCULA Y MODELO: {{ matricula }} {{ modelo }}</h4></label>
                               </div>
                           </div>
                           <div class="form-group row">
@@ -347,7 +359,7 @@
                       <br>
                           <div class="form-group row">
                               <div class="col-md-12">
-                                  <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">MATRÍCULA: {{matricula}}</h4></label>
+                                  <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">MATRÍCULA Y MODELO: {{ matricula }} {{ modelo }}</h4></label>
                               </div>
                           </div>
                             <div class="form-group row">
@@ -521,6 +533,7 @@
         fabrica : '',
         modelo : '',
         serie : '',
+        categoria : '',
         tipo : '',
         condicion : '',
         fech_fabricacion : '',
@@ -545,10 +558,9 @@
         arrayUnidad : [],
 
 
-
+        arrayCategoriaAeronave : [],
         arrayTipoAeronave : [],
         arrayCondicionAeronave : [],
-        arrayCategoria : [],
         arrayGrado : [],
         arrayNacionalidad : [],
         arrayLicencia : [],
@@ -595,6 +607,7 @@
             fabrica : { required },
             modelo : { required },
             serie : { required },
+            categoria : { required },
             tipo : { required },
             condicion : { required },
             // fech_fabricacion : { required },
@@ -621,23 +634,24 @@
             // nombre : { required, letrasSpanish: value => /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },      
             
             validationGroupPaso1: [
+              'fabrica',
+              'modelo',
+              'serie',
+              'categoria',
+              'tipo',
+              'condicion',
+              // 'fech_fabricacion',
+              'fotografia',
+            ],
+
+            validationGroupPaso2: [
               'entidad',
               'matricula',
               'g_unidad',
               'unidad',
-            ],
-
-            validationGroupPaso2: [
-            'fabrica',
-            'modelo',
-            'serie',
-            'tipo',
-            'condicion',
-            // 'fech_fabricacion',
-            'fech_ingreso',
-            'doc_ingreso',
-            'nro_doc_ingreso',
-            'fotografia',
+              'fech_ingreso',
+              'doc_ingreso',
+              'nro_doc_ingreso',
             ],
 
             validationGroupPaso3: [
@@ -885,6 +899,21 @@
         })
       },
 
+      listarCategoriaAeronave(){ //DGAE
+          let me = this;
+          axios
+        .post("/listarCategoriaAeronave", {
+          // id_nacionalidad : 1,
+        })
+        .then(function (response) {
+          me.arrayCategoriaAeronave = response.data.categoria_aeronaves
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      },
+
       listarTipoAeronave(){ //DGAE
           let me = this;
           axios
@@ -925,6 +954,7 @@
         this.fabrica = '',
         this.modelo = '',
         this.serie = '',
+        this.categoria = '',
         this.tipo = '',
         this.condicion = '',
         this.fech_fabricacion = '',
@@ -940,6 +970,7 @@
         this.listarEntidad();
         // this.listarGranUnidad(this.entidad);
         this.listarTipoAeronave();
+        this.listarCategoriaAeronave();
         this.listarCondicionAeronave()
       },
 
@@ -969,6 +1000,7 @@
                     fabrica : me.fabrica,
                     modelo : me.modelo,
                     serie : me.serie,
+                    categoria : me.categoria,
                     tipo : me.tipo,
                     condicion : me.condicion,
                     fech_fabricacion : me.fech_fabricacion,
