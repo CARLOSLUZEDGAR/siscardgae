@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Aeronave;
+use App\AeronaveDesignacion;
+use App\AeronaveDocumento;
+use App\AeronaveMotor;
 use App\PersonalDocumento;
 use App\PersonalLicencia;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -31,7 +34,7 @@ class AeronaveController extends Controller
             //    $randomString .= $characters[rand(0,$charactersLength - 1)];
             // }
 
-            $fileName = $request->matricula.'_'.($request->nombre).'.'.$extension;
+            $fileName = mb_strtoupper($request->matricula).'_'.mb_strtoupper($request->serie).'.'.$extension;
             $path = public_path().'/img/aeronave/'.$fileName;
             file_put_contents($path, $decoded);
 
@@ -39,87 +42,83 @@ class AeronaveController extends Controller
             $fileName = 'avatar_aeronave.png';
         }
 
-        $aeronave = Aeronave::create([
-            'matricula' => mb_strtoupper($request->matricula),
-            'modelo' => mb_strtoupper($request->modelo),
-            'nombre' => mb_strtoupper($request->nombre),
-            'fotografia' => $fileName,
-            // 'per_nombre' => mb_strtoupper($request->nombre),
-            // 'per_paterno' =>  mb_strtoupper($request->ap_paterno),
-            // 'per_materno' => mb_strtoupper($request->ap_materno),
-            // 'per_sexo' => $request->sexo,
-            // 'per_celular' => $request->celular,
-            // 'per_mail' => $request->email,
-            // 'per_fecha_nacimiento' => $request->fech_nac,
-            // 'per_direccion'=> mb_strtoupper($request->direccion),
-            'estado' => '1',
-            'sysuser' => Auth::user()->id
-        ]);
+        try {
+            DB::beginTransaction();
+            $aeronave = Aeronave::create([
+                'fabrica' => mb_strtoupper($request->fabrica),
+                'modelo' => mb_strtoupper($request->modelo),
+                'serie' => mb_strtoupper($request->serie),
+                'id_tipo_aeronave' => $request->categoria,
+                'id_categoria_aeronave' => $request->tipo,
+                'id_condicion_aeronave' => $request->condicion,
+                'fotografia' => $fileName,
+                'estado' => 1, 
+                'sysuser' => Auth::user()->id
+            ]);
 
-        // $personal_licencia = PersonalLicencia::create([
-        //     'id_personal' => $personal->id,
-        //     'id_categoria' => $request->categoria,
-        //     'id_entidad' => $request->entidad,
-        //     'id_grado' => $request->grado,
-        //     'id_licencia' => $request->tit_licencia,
-        //     'id_habilitacion' => $request->habilitacion,
-        //     'id_comp_linguistica' => $request->linguistica,
-        //     'observacion' => mb_strtoupper($request->observacion),
-        //     'fecha_emision' => $request->fech_emision,
-        //     'fecha_expiracion' => $request->fech_expiracion,
-        //     'estado' => '1',
-        //     'sysuser' => Auth::user()->id
-        // ]);
+            $aeronave_designacion = AeronaveDesignacion::create([
+                'id_aeronave' => $aeronave->id,
+                'matricula' => mb_strtoupper($request->matricula),
+                'id_entidad' => $request->entidad,
+                'id_g_unidad' => $request->g_unidad,
+                'id_unidad' => $request->unidad,
+                'fecha_designacion' => $request->fech_ingreso,
+                'documento' => mb_strtoupper($request->doc_ingreso),
+                'nro_documento' => $request->nro_doc_ingreso,
+                'observacion' => 'SIN OBSERVACION',
+                'estado' => 1,
+                'sysuser' => Auth::user()->id
+            ]);
 
-        // $documentos = array($request->doc_carnet_identidad,
-        //                     $request->doc_cert_nacimineto,
-        //                     $request->doc_cert_egreso,
-        //                     $request->doc_cert_espe,
-        //                     $request->doc_cert_medico,
-        //                     $request->doc_dip_titulo,
-        //                     $request->doc_lib_mil,
-        //                     $request->doc_exa_aprobacion);
-        // $cantDocument = sizeof($documentos);
-        // $x = 1;
-        // for ($i=0; $i < $cantDocument ; $i++) { 
-        //     if($documentos[$i] != ""){
-        //         $exploded = explode(',', $documentos[$i]);
-        //         $decoded = base64_decode($exploded[1]);
-        //         if (Str::contains($exploded[0], 'pdf')) {
-        //             $extension = 'pdf';
-        //         } else {
-        //             $extension = 'pdf';
-        //         }
-        //         $documentName = $x.'_'.($request->ci).'.'.$extension;
-        //         $path = public_path().'/document/personal/'.$documentName;
-        //         file_put_contents($path, $decoded);
-        //         $x++;
-        //         $personal_documento = PersonalDocumento::create([
-        //             'id_personal' => $personal->id,
-        //             'id_licencia' => $personal_licencia->id,
-        //             'documento' => $documentName,
-        //             'estado' => '1',
-        //             'sysuser' => Auth::user()->id
-        //         ]);
-        //     }
-        //     else{
-        //         $x++;
-        //     }
-        // }
+            foreach ($request->motores as $motor) {
+                $aeronave_motor = AeronaveMotor::create([
+                    'id_aeronave' => $aeronave->id,
+                    'posicion' => $motor['posicion_motor'],
+                    'fabrica' => mb_strtoupper($motor['fabrica_motor']),
+                    'modelo' => mb_strtoupper($motor['modelo_motor']),
+                    'serie' => mb_strtoupper($motor['serie_motor']),
+                    'estado_motor' => mb_strtoupper($motor['estado_motor']),
+                    'observacion' => 'SIN OBSERVACION',
+                    'estado' => 1,
+                    'sysuser' => Auth::user()->id
+                ]);
+            }
 
-        $motores = $request->motores;
-
-        // Procesar los datos de los motores
-        foreach ($motores as $motor) {
-            // Crear un modelo de Motor y asignar los valores
-            $motorModel = new Motor;
-            $motorModel->fabrica = $motor['fabrica'];
-            $motorModel->modelo = $motor['modelo'];
-            $motorModel->serie = $motor['serie'];
-            $motorModel->save();
+            $documentos = array($request->cert_matricula,
+                                $request->cert_aeronavegabilidad);
+            $cantDocument = sizeof($documentos);
+            $x = 1;
+            for ($i=0; $i < $cantDocument ; $i++) { 
+                if($documentos[$i] != ""){
+                    $exploded = explode(',', $documentos[$i]);
+                    $decoded = base64_decode($exploded[1]);
+                    if (Str::contains($exploded[0], 'pdf')) {
+                        $extension = 'pdf';
+                    } else {
+                        $extension = 'pdf';
+                    }
+                    $documentName = $x.'_'.mb_strtoupper($request->matricula).'_'.mb_strtoupper($request->serie).'.'.$extension;
+                    $path = public_path().'/document/aeronave/'.$documentName;
+                    file_put_contents($path, $decoded);
+                    $x++;
+                    $aeronave_documento = AeronaveDocumento::create([
+                        'id_aeronave' => $aeronave->id,
+                        'documento' => $documentName,
+                        'observacion' => 'SIN OBSERVACION',
+                        'estado' => 1,
+                        'sysuser' => Auth::user()->id
+                    ]);
+                }
+                else{
+                    $x++;
+                }
+            }
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Aeronave registrada correctamente.']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => 'Error al registrar la Aeronave.', 'error' => $e->getMessage()], 500);
         }
-
-        return ['aeronave' => $aeronave];
     }
     
     public function ListarAeronave(Request $request) //DGAE
@@ -127,14 +126,16 @@ class AeronaveController extends Controller
         $buscar = $request->buscar;
         if ($request->buscar == '') {
             $aeronave = DB::table('aeronaves as a')
-                    ->select('a.id',
-                            'a.matricula',
-                            'a.modelo',
-                            'a.nombre',
-                            'a.fotografia')
-                    ->where('a.estado',1)
-                    ->orderBy('a.id', 'desc')
-                    ->paginate(10);
+                        ->join('aeronave_designacions as ad', 'ad.id_aeronave', 'a.id')
+                        ->select('a.id',
+                                'ad.matricula',
+                                'a.modelo',
+                                'a.serie',
+                                'a.fotografia')
+                        ->where('a.estado',1)
+                        ->where('ad.estado', 1)
+                        ->orderBy('a.id', 'desc')
+                        ->paginate(10);
             // $aeronave = DB::table('personals as p')
             //         ->join('nacionalidads as n','n.id','p.id_nacionalidad')
             //         ->join('personal_licencias as pl','pl.id_personal','p.id')
@@ -177,20 +178,22 @@ class AeronaveController extends Controller
             //         ->paginate(10);
         } else {
             $aeronave = DB::table('aeronaves as a')
-                    ->select('a.id',
-                            'a.matricula',
-                            'a.modelo',
-                            'a.nombre',
-                            'a.fotografia')
-                    ->where(function($q) use ($buscar){
-                        $q->where('a.matricula','LIKE','%'.$buscar.'%')
-                        ->orWhere('a.modelo','LIKE','%'.$buscar.'%')
-                        ->orWhere('a.nombre','LIKE','%'.$buscar.'%');
-                        // ->orWhere('a.per_nombre','LIKE','%'.$buscar.'%');
-                    }) 
-                    ->where('a.estado',1)
-                    ->orderBy('a.id', 'desc')
-                    ->paginate(10);
+                        ->join('aeronave_designacions as ad', 'ad.id_aeronave', 'a.id')
+                        ->select('a.id',
+                                'ad.matricula',
+                                'a.modelo',
+                                'a.serie',
+                                'a.fotografia')
+                        ->where(function($q) use ($buscar){
+                            $q->where('ad.matricula','LIKE','%'.$buscar.'%')
+                            ->orWhere('a.modelo','LIKE','%'.$buscar.'%')
+                            ->orWhere('a.serie','LIKE','%'.$buscar.'%');
+                            // ->orWhere('a.per_nombre','LIKE','%'.$buscar.'%');
+                        }) 
+                        ->where('a.estado',1)
+                        ->where('ad.estado', 1)
+                        ->orderBy('a.id', 'desc')
+                        ->paginate(10);
             // $aeronave = DB::table('personals as p')
             //         ->join('nacionalidads as n','n.id','p.id_nacionalidad')
             //         ->join('personal_licencias as pl','pl.id_personal','p.id')

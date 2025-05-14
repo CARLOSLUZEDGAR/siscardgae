@@ -15291,6 +15291,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     inputs: {
       $each: {
+        posicion_motor: {
+          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+        },
         fabrica_motor: {
           required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
         },
@@ -15324,7 +15327,10 @@ __webpack_require__.r(__webpack_exports__);
     // 'serie_motor',
     // 'estado_motor',
     ],
-    validationGroupPaso4: ['cert_matricula', 'cert_aeronavegabilidad'],
+    // validationGroupPaso4: [
+    //   'cert_matricula',
+    //   'cert_aeronavegabilidad'
+    // ],
     validationGroupReg: [// 'entidad',
     // 'matricula',
     // 'g_unidad',
@@ -15389,6 +15395,7 @@ __webpack_require__.r(__webpack_exports__);
 
       for (var i = 0; i < this.cant_motores; i++) {
         this.inputs.push({
+          posicion_motor: i + 1,
           fabrica_motor: '',
           modelo_motor: '',
           serie_motor: '',
@@ -15581,7 +15588,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     NuevoAeronave: function NuevoAeronave() {
       //DGAE
-      this.$v.validationGroupPaso1.$reset(), this.$v.validationGroupPaso2.$reset(), this.entidad = '', this.matricula = '', this.g_unidad = '', this.unidad = '', this.fabrica = '', this.modelo = '', this.serie = '', this.categoria = '', this.tipo = '', this.condicion = '', this.fech_fabricacion = '', this.fech_ingreso = '', this.doc_ingreso = '', this.nro_doc_ingreso = '', this.fotografia = '', this.fabrica_motor = '', this.modelo_motor = '', this.serie_motor = '', this.estado_motor = '', this.v = 0, this.listarEntidad(); // this.listarGranUnidad(this.entidad);
+      this.$v.validationGroupPaso1.$reset(), this.$v.validationGroupPaso2.$reset(), this.entidad = '', this.matricula = '', this.g_unidad = '', this.unidad = '', this.fabrica = '', this.modelo = '', this.serie = '', this.categoria = '', this.tipo = '', this.condicion = '', this.fech_fabricacion = '', this.fech_ingreso = '', this.doc_ingreso = '', this.nro_doc_ingreso = '', this.fotografia = '', this.cant_motores = '', this.inputs = [], // this.fabrica_motor = '',
+      // this.modelo_motor = '',
+      // this.serie_motor = '',
+      // this.estado_motor = '',
+      this.v = 0, this.listarEntidad(); // this.listarGranUnidad(this.entidad);
 
       this.listarTipoAeronave();
       this.listarCategoriaAeronave();
@@ -15613,25 +15624,27 @@ __webpack_require__.r(__webpack_exports__);
           if (result.value) {
             var me = _this4;
             axios.post("/crearAeronave", {
+              fabrica: me.fabrica,
+              modelo: me.modelo,
+              serie: me.serie,
+              tipo: me.tipo,
+              categoria: me.categoria,
+              condicion: me.condicion,
+              foto: me.fotografia,
               entidad: me.entidad,
               matricula: me.matricula,
               g_unidad: me.g_unidad,
               unidad: me.unidad,
-              fabrica: me.fabrica,
-              modelo: me.modelo,
-              serie: me.serie,
-              categoria: me.categoria,
-              tipo: me.tipo,
-              condicion: me.condicion,
-              fech_fabricacion: me.fech_fabricacion,
+              // fech_fabricacion : me.fech_fabricacion,
               fech_ingreso: me.fech_ingreso,
               doc_ingreso: me.doc_ingreso,
               nro_doc_ingreso: me.nro_doc_ingreso,
-              foto: me.fotografia,
               // modelo : me.modelo,
-              nombre: me.nombre,
+              // nombre : me.nombre,
               cant_motores: me.cant_motores,
-              motores: me.inputs
+              motores: me.inputs,
+              cert_matricula: me.cert_matricula,
+              cert_aeronavegabilidad: me.cert_aeronavegabilidad
             }).then(function (response) {
               console.log(response);
               swal.fire({
@@ -15640,8 +15653,8 @@ __webpack_require__.r(__webpack_exports__);
               });
 
               if (!response.data.code) {
-                me.arrayDatAeronave = response.data.aeronave; // me.GenerarCarnet(me.arrayDatAeronave.id_personal);
-
+                // me.arrayDatAeronave = response.data.aeronave;
+                // me.GenerarCarnet(me.arrayDatAeronave.id_personal);
                 me.Atras();
                 this.$v.$reset();
               }
@@ -124256,7 +124269,7 @@ var render = function() {
                               _vm._v(" "),
                               _c("td", {
                                 domProps: {
-                                  textContent: _vm._s(aeronave.nombre)
+                                  textContent: _vm._s(aeronave.serie)
                                 }
                               }),
                               _vm._v(" "),
@@ -127294,7 +127307,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("MODELO")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_vm._v("NOMBRE")]),
+        _c("th", { staticClass: "text-center" }, [_vm._v("SERIE")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("OPCIONES")])
       ])
@@ -141731,88 +141744,98 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "form-group row" }, [
-                            _c("div", { staticClass: "col-md-3" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "form-control-label",
-                                  attrs: { for: "cant_motores" }
-                                },
-                                [_vm._v("Numero de Motores")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "select",
-                                {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.cant_motores,
-                                      expression: "cant_motores"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  class: {
-                                    "is-invalid": _vm.$v.cant_motores.$error,
-                                    "is-valid": !_vm.$v.cant_motores.$invalid
+                            _c(
+                              "div",
+                              {
+                                staticClass: "col-md-3",
+                                staticStyle: { "text-align": "center" }
+                              },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "form-control-label",
+                                    attrs: { for: "cant_motores" }
                                   },
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.cant_motores = $event.target
-                                          .multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      },
-                                      _vm.crearInputs
-                                    ]
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "", disabled: "" } },
-                                    [_vm._v("SELECCIONE")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "1" } }, [
-                                    _vm._v("MONOMOTOR")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "2" } }, [
-                                    _vm._v("BIMOTOR")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "3" } }, [
-                                    _vm._v("TRIMOTOR")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "4" } }, [
-                                    _vm._v("CUATRIMOTOR")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "invalid-feedback" }, [
-                                !_vm.$v.cant_motores.required
-                                  ? _c("span", [
-                                      _vm._v("Este campo es Requerido")
+                                  [_vm._v("Numero de Motores")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.cant_motores,
+                                        expression: "cant_motores"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    class: {
+                                      "is-invalid": _vm.$v.cant_motores.$error,
+                                      "is-valid": !_vm.$v.cant_motores.$invalid
+                                    },
+                                    on: {
+                                      change: [
+                                        function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.cant_motores = $event.target
+                                            .multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        },
+                                        _vm.crearInputs
+                                      ]
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "", disabled: "" } },
+                                      [_vm._v("SELECCIONE")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("option", { attrs: { value: "1" } }, [
+                                      _vm._v("MONOMOTOR")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("option", { attrs: { value: "2" } }, [
+                                      _vm._v("BIMOTOR")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("option", { attrs: { value: "3" } }, [
+                                      _vm._v("TRIMOTOR")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("option", { attrs: { value: "4" } }, [
+                                      _vm._v("CUATRIMOTOR")
                                     ])
-                                  : _vm._e()
-                              ])
-                            ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "invalid-feedback" }, [
+                                  !_vm.$v.cant_motores.required
+                                    ? _c("span", [
+                                        _vm._v("Este campo es Requerido")
+                                      ])
+                                    : _vm._e()
+                                ])
+                              ]
+                            )
                           ]),
                           _vm._v(" "),
                           _vm._l(_vm.inputs, function(input, index) {

@@ -230,7 +230,7 @@
                               </div>
                           </div>
                           <div class="form-group row">
-                            <div class="col-md-3">
+                            <div class="col-md-3" style="text-align: center;">
                               <label class="form-control-label" for="cant_motores">Numero de Motores</label>
                               <select
                                 class="form-control"
@@ -618,6 +618,7 @@
             cant_motores : { required },
             inputs: {
               $each: {
+                posicion_motor : { required },
                 fabrica_motor : { required },
                 modelo_motor : { required },
                 serie_motor : { required },
@@ -663,10 +664,10 @@
             // 'estado_motor',
             ],
 
-            validationGroupPaso4: [
-              'cert_matricula',
-              'cert_aeronavegabilidad'
-            ],
+            // validationGroupPaso4: [
+            //   'cert_matricula',
+            //   'cert_aeronavegabilidad'
+            // ],
   
             validationGroupReg: [
             // 'entidad',
@@ -734,6 +735,7 @@
       this.inputs = [];
       for (let i = 0; i < this.cant_motores; i++) {
         this.inputs.push({
+          posicion_motor: (i + 1),
           fabrica_motor: '',
           modelo_motor: '',
           serie_motor: '',
@@ -962,10 +964,12 @@
         this.doc_ingreso = '',
         this.nro_doc_ingreso = '',
         this.fotografia = '',
-        this.fabrica_motor = '',
-        this.modelo_motor = '',
-        this.serie_motor = '',
-        this.estado_motor = '',
+        this.cant_motores = '',
+        this.inputs = [],
+        // this.fabrica_motor = '',
+        // this.modelo_motor = '',
+        // this.serie_motor = '',
+        // this.estado_motor = '',
         this.v = 0,
         this.listarEntidad();
         // this.listarGranUnidad(this.entidad);
@@ -993,25 +997,30 @@
                   let me = this;
                   axios
                   .post("/crearAeronave", {
+                    fabrica : me.fabrica,
+                    modelo : me.modelo,
+                    serie : me.serie,
+                    tipo : me.tipo,
+                    categoria : me.categoria,
+                    condicion : me.condicion,
+                    foto : me.fotografia,
+
                     entidad : me.entidad,
                     matricula : me.matricula,
                     g_unidad : me.g_unidad,
                     unidad : me.unidad,
-                    fabrica : me.fabrica,
-                    modelo : me.modelo,
-                    serie : me.serie,
-                    categoria : me.categoria,
-                    tipo : me.tipo,
-                    condicion : me.condicion,
-                    fech_fabricacion : me.fech_fabricacion,
+                    // fech_fabricacion : me.fech_fabricacion,
                     fech_ingreso : me.fech_ingreso,
                     doc_ingreso : me.doc_ingreso,
                     nro_doc_ingreso : me.nro_doc_ingreso,
-                    foto : me.fotografia,
                     // modelo : me.modelo,
-                    nombre : me.nombre,
+                    // nombre : me.nombre,
+
                     cant_motores : me.cant_motores,
-                    motores : me.inputs
+                    motores : me.inputs,
+
+                    cert_matricula : me.cert_matricula,
+                    cert_aeronavegabilidad : me.cert_aeronavegabilidad
                   })
                   .then(function (response) {
                       
@@ -1020,7 +1029,7 @@
                           title: 'Se realizo el registro de la Aeronave correctamente', //TITULO
                       });
                       if (!response.data.code) {
-                          me.arrayDatAeronave = response.data.aeronave;
+                          // me.arrayDatAeronave = response.data.aeronave;
                           // me.GenerarCarnet(me.arrayDatAeronave.id_personal);
                           me.Atras();
                           this.$v.$reset();

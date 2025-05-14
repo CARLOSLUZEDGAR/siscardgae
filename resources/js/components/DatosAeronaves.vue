@@ -62,7 +62,7 @@
                                     <th class="text-center">#</th>
                                     <th class="text-center">MATRICULA</th>
                                     <th class="text-center">MODELO</th>
-                                    <th class="text-center">NOMBRE</th>
+                                    <th class="text-center">SERIE</th>
                                     <!-- <th class="text-center">C. IDENTIDAD</th> -->
                                     <th class="text-center">OPCIONES</th>
                                 </tr>
@@ -73,7 +73,7 @@
                                     <td style="text-align:center; font-weight:bold;">{{ index + 1 }}</td>
                                     <td v-text="aeronave.matricula"></td>
                                     <td v-text="aeronave.modelo"></td>
-                                    <td v-text="aeronave.nombre"></td>
+                                    <td v-text="aeronave.serie"></td>
                                     <!-- <td v-text="personal.per_ci"></td> -->
                                     <td style="width:100px; text-align:center">
                                       <div v-if="$auth.can('view-renew-per')">
