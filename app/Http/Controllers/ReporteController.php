@@ -31,6 +31,7 @@ class ReporteController extends Controller
                         'p.per_ci',
                         'p.per_sexo',
                         'p.per_fecha_nacimiento',
+                        'p.per_direccion',
                         'pl.id as id_licencia',
                         'pl.id_entidad',
                         'e.entidad',
