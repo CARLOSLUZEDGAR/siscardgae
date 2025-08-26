@@ -52,7 +52,10 @@
                             <div class="form-group row">
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Categoria</label>
-                                    <select class="form-control" v-model="per_categoria" @click="listarLicencia(per_entidad,per_categoria)" :class="{ 'is-invalid' : $v.per_categoria.$error, 'is-valid':!$v.per_categoria.$invalid }">
+                                    <select class="form-control" 
+                                      v-model="per_categoria" 
+                                      @change="listarLicencia(per_entidad,per_categoria)" 
+                                      :class="{ 'is-invalid' : $v.per_categoria.$error, 'is-valid':!$v.per_categoria.$invalid }">
                                         <option value="" disabled>SELECCIONE</option>
                                         <option v-for="categoria in arrayCategoria" :key="categoria.id" :value="categoria.id"  v-text="categoria.categoria"></option>
                                     </select>
@@ -62,30 +65,40 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Nacionalidad</label>
-                                    <select class="form-control" v-model="per_nacionalidad" @click="listarEntidad(per_nacionalidad)" :class="{ 'is-invalid' : $v.per_nacionalidad.$error, 'is-valid':!$v.per_nacionalidad.$invalid }">
+                                    <select class="form-control"
+                                        v-model="per_nacionalidad"
+                                        @change="verificarSeleccion(1), listarEntidad(per_nacionalidad)"
+                                        :class="{ 'is-invalid': $v.per_nacionalidad.$error, 'is-valid': !$v.per_nacionalidad.$invalid }">
                                         <option value="" disabled>SELECCIONE</option>
-                                        <option v-for="nacionalidad in arrayNacionalidad" :key="nacionalidad.id" :value="nacionalidad.id"  v-text="nacionalidad.pais"></option>
+                                        <option v-for="nacionalidad in arrayNacionalidad"
+                                            :key="nacionalidad.id"
+                                            :value="nacionalidad.id"
+                                            v-text="nacionalidad.pais"></option>
+                                        <option value="agregar_nacionalidad">+ Agregar nueva nacionalidad</option>
                                     </select>
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_nacionalidad.required">Este campo es Requerido</span>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-1">
-                                    <button type="button" class="btn btn btn-success" style="border-radius: 50%;" @click="NuevaNacionalidad()">+</button>
-                                </div> -->
+                              
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Entidad</label>
-                                    <select class="form-control" v-model="per_entidad" @click="listarLicencia(per_entidad,per_categoria),listarGrado(per_entidad)" :class="{ 'is-invalid' : $v.per_entidad.$error, 'is-valid':!$v.per_entidad.$invalid }">
-                                        <option value="" disabled>SELECCIONE</option>
-                                        <option v-for="entidad in arrayEntidad" :key="entidad.id" :value="entidad.id"  v-text="entidad.entidad"></option>                        
+                                    <select class="form-control" 
+                                      v-model="per_entidad" 
+                                      @change="verificarSeleccion(2), listarLicencia(per_entidad, per_categoria), listarGrado(per_entidad)" 
+                                      :class="{ 'is-invalid' : $v.per_entidad.$error, 'is-valid':!$v.per_entidad.$invalid }">
+                                      <option value="" disabled>SELECCIONE</option>
+                                      <option v-for="entidad in arrayEntidad" 
+                                        :key="entidad.id" 
+                                        :value="entidad.id"  
+                                        v-text="entidad.entidad"></option>  
+                                      <option value="agregar_entidad">+ Agregar nueva entidad</option>                 
                                     </select>
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_entidad.required">Este campo es Requerido</span>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-1">
-                                    <button type="button" class="btn btn btn-success" style="border-radius: 50%;" @click="NuevaEntidad()">+</button>
-                                </div> -->
+                                
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Grado</label>
                                     <select class="form-control" v-model="per_grado" :class="{ 'is-invalid' : $v.per_grado.$error, 'is-valid':!$v.per_grado.$invalid }">
@@ -177,7 +190,10 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Titulo de la Licencia</label>
-                                    <select class="form-control" v-model="per_titlic" @click="listarHabilitacion(per_titlic)" :class="{ 'is-invalid' : $v.per_titlic.$error, 'is-valid':!$v.per_titlic.$invalid }">
+                                    <select class="form-control" 
+                                      v-model="per_titlic" 
+                                      @change="listarHabilitacion(per_titlic)" 
+                                      :class="{ 'is-invalid' : $v.per_titlic.$error, 'is-valid':!$v.per_titlic.$invalid }">
                                         <option value="" disabled>SELECCIONE</option>
                                         <option v-for="licencia in arrayLicencia" :key="licencia.id" :value="licencia.id"  v-text="licencia.licencia"></option>                        
                                     </select>
@@ -420,12 +436,12 @@
         </div>
         <!-- /.container-fluid -->
         <!-- Modal Nuevo Nacionalidad -->
-        <div class="modal fade" id="ModalNewNacionalidad">
+        <div class="modal fade" id="ModalNewNacionalidad" data-backdrop="static" data-keyboard="false">
           <div class="modal-dialog modal-sm">
             <div class="modal-content">
               <div class="modal-header">
                 <h4 class="modal-title-aumentar"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar(1)">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -458,7 +474,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary" @click="CrearNacionalidad()">Registrar</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">Cerrar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar(1)">Cerrar</button>
               </div>
             </div>
             <!-- /.modal-content -->
@@ -467,12 +483,12 @@
         </div>
         <!-- /.modal -->
         <!-- Modal Nuevo Entidad -->
-        <div class="modal fade" id="ModalNewEntidad">
+        <div class="modal fade" id="ModalNewEntidad" data-backdrop="static" data-keyboard="false">
           <div class="modal-dialog modal-sm">
             <div class="modal-content">
               <div class="modal-header">
                 <h4 class="modal-title-aumentar"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar(2)">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -508,7 +524,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary" @click="CrearEntidad()">Registrar</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">Cerrar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar(2)">Cerrar</button>
               </div>
             </div>
             <!-- /.modal-content -->
@@ -932,6 +948,35 @@
         this.listarHabilitacion(this.per_titlic);
         this.listarCompetenciaLinguistica()
       },
+
+      verificarSeleccion(opcion) {
+        switch (opcion) {
+          case 1:
+            if (this.per_nacionalidad === 'agregar_nacionalidad') {
+              // this.ModalNewNacionalidad = true;
+              this.NuevaNacionalidad();
+              this.per_nacionalidad = ''; // Limpiar selección
+            } else {
+                this.listarEntidad(this.per_nacionalidad);
+            }
+            break;
+
+          case 2:
+            if (this.per_entidad === 'agregar_entidad') {
+              // this.ModalNewEntidad = true;
+              this.NuevaEntidad();
+              this.per_entidad = ''; // Limpiar selección
+            } else {
+                this.listarGrado(this.per_entidad);
+                this.listarLicencia(this.per_entidad, this.per_categoria)
+            }
+            break;
+        
+          default:
+            break;
+        }
+          
+      },
   
       NuevaNacionalidad(){ //DGAE
         this.$v.validationGroupNewNacionalidad.$reset(),
@@ -1179,6 +1224,23 @@
             
         }
       },
+
+      Cerrar(valor){
+        switch (valor) {
+          case 1:
+            this.na_pais = '',
+            this.na_abreviatura = '',
+            this.na_nacionalidad = ''
+            break;
+
+          case 2:
+            this.en_pais = '',
+            this.en_entidad = '',
+            this.en_sigla = ''
+            break;
+        }
+
+      },
   
       listarCategoria(){ //DGAE
           let me = this;
@@ -1208,8 +1270,13 @@
         })
       },
   
-      listarEntidad(nacionalidad){ //DGAE
+      listarEntidad(nacionalidad){
+         //DGAE
           let me = this;
+          me.per_entidad = '';
+          me.per_grado = '';
+          me.arrayEntidad = [];
+          me.arrayGrado = [];
           axios
         .post("/listarEntidad", {
           id_nacionalidad : nacionalidad,
@@ -1225,6 +1292,8 @@
   
       listarGrado(entidad){ //DGAE
           let me = this;
+          me.per_grado = '';
+          me.arrayGrado = '';
           axios
         .post("/listarGrado", {
           id_entidad : entidad,
@@ -1240,6 +1309,10 @@
   
       listarLicencia(entidad,categoria){ //DGAE
           let me = this;
+          me.per_titlic = '';
+          me.per_habilitacion = '';
+          me.arrayLicencia = [];
+          me.arrayHabilitacion = []; 
           axios
         .post("/listarLicencia", {
           id_entidad : entidad,
@@ -1256,6 +1329,8 @@
   
       listarHabilitacion(licencia){ //DGAE
           let me = this;
+          me.per_habilitacion = '';
+          me.arrayHabilitacion = [];
           axios
         .post("/listarHabilitacion", {
           id_titlicencia : licencia,

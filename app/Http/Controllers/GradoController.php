@@ -26,13 +26,24 @@ class GradoController extends Controller
     {
         $entidad = $request->id_entidad;
         // $entidad = 2;
-
-        $grado = DB::table('grados')
+        if ($entidad > 4) {
+            $grado = DB::table('grados')
+                ->select('id', 'id_entidad', 'nombre', 'abreviatura')
+                ->where('estado', 1)
+                ->where('id_entidad', 5)
+                ->orderBy('id', 'asc')
+                ->get();
+                return ['grados' => $grado];
+        }
+        else {
+            $grado = DB::table('grados')
                 ->select('id', 'id_entidad', 'nombre', 'abreviatura')
                 ->where('estado', 1)
                 ->where('id_entidad', $entidad)
                 ->orderBy('id', 'asc')
                 ->get();
                 return ['grados' => $grado];
+        }
+        
     }
 }

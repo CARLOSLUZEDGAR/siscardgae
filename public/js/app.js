@@ -16218,6 +16218,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -16622,6 +16638,35 @@ __webpack_require__.r(__webpack_exports__);
       this.listarHabilitacion(this.per_titlic);
       this.listarCompetenciaLinguistica();
     },
+    verificarSeleccion: function verificarSeleccion(opcion) {
+      switch (opcion) {
+        case 1:
+          if (this.per_nacionalidad === 'agregar_nacionalidad') {
+            // this.ModalNewNacionalidad = true;
+            this.NuevaNacionalidad();
+            this.per_nacionalidad = ''; // Limpiar selección
+          } else {
+            this.listarEntidad(this.per_nacionalidad);
+          }
+
+          break;
+
+        case 2:
+          if (this.per_entidad === 'agregar_entidad') {
+            // this.ModalNewEntidad = true;
+            this.NuevaEntidad();
+            this.per_entidad = ''; // Limpiar selección
+          } else {
+            this.listarGrado(this.per_entidad);
+            this.listarLicencia(this.per_entidad, this.per_categoria);
+          }
+
+          break;
+
+        default:
+          break;
+      }
+    },
     NuevaNacionalidad: function NuevaNacionalidad() {
       //DGAE
       this.$v.validationGroupNewNacionalidad.$reset(), this.na_pais = '', this.na_abreviatura = '', this.na_nacionalidad = '', this.vNN = 0, $('#ModalNewNacionalidad').modal('show');
@@ -16871,6 +16916,17 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    Cerrar: function Cerrar(valor) {
+      switch (valor) {
+        case 1:
+          this.na_pais = '', this.na_abreviatura = '', this.na_nacionalidad = '';
+          break;
+
+        case 2:
+          this.en_pais = '', this.en_entidad = '', this.en_sigla = '';
+          break;
+      }
+    },
     listarCategoria: function listarCategoria() {
       //DGAE
       var me = this;
@@ -16894,6 +16950,10 @@ __webpack_require__.r(__webpack_exports__);
     listarEntidad: function listarEntidad(nacionalidad) {
       //DGAE
       var me = this;
+      me.per_entidad = '';
+      me.per_grado = '';
+      me.arrayEntidad = [];
+      me.arrayGrado = [];
       axios.post("/listarEntidad", {
         id_nacionalidad: nacionalidad
       }).then(function (response) {
@@ -16906,6 +16966,8 @@ __webpack_require__.r(__webpack_exports__);
     listarGrado: function listarGrado(entidad) {
       //DGAE
       var me = this;
+      me.per_grado = '';
+      me.arrayGrado = '';
       axios.post("/listarGrado", {
         id_entidad: entidad
       }).then(function (response) {
@@ -16918,6 +16980,10 @@ __webpack_require__.r(__webpack_exports__);
     listarLicencia: function listarLicencia(entidad, categoria) {
       //DGAE
       var me = this;
+      me.per_titlic = '';
+      me.per_habilitacion = '';
+      me.arrayLicencia = [];
+      me.arrayHabilitacion = [];
       axios.post("/listarLicencia", {
         id_entidad: entidad,
         id_categoria: categoria
@@ -16931,6 +16997,8 @@ __webpack_require__.r(__webpack_exports__);
     listarHabilitacion: function listarHabilitacion(licencia) {
       //DGAE
       var me = this;
+      me.per_habilitacion = '';
+      me.arrayHabilitacion = [];
       axios.post("/listarHabilitacion", {
         id_titlicencia: licencia
       }).then(function (response) {
@@ -142651,26 +142719,30 @@ var render = function() {
                                   "is-valid": !_vm.$v.per_categoria.$invalid
                                 },
                                 on: {
-                                  click: function($event) {
-                                    return _vm.listarLicencia(
-                                      _vm.per_entidad,
-                                      _vm.per_categoria
-                                    )
-                                  },
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.per_categoria = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
+                                  change: [
+                                    function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.per_categoria = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    },
+                                    function($event) {
+                                      return _vm.listarLicencia(
+                                        _vm.per_entidad,
+                                        _vm.per_categoria
+                                      )
+                                    }
+                                  ]
                                 }
                               },
                               [
@@ -142729,26 +142801,29 @@ var render = function() {
                                   "is-valid": !_vm.$v.per_nacionalidad.$invalid
                                 },
                                 on: {
-                                  click: function($event) {
-                                    return _vm.listarEntidad(
-                                      _vm.per_nacionalidad
-                                    )
-                                  },
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.per_nacionalidad = $event.target
-                                      .multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
+                                  change: [
+                                    function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.per_nacionalidad = $event.target
+                                        .multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    },
+                                    function($event) {
+                                      _vm.verificarSeleccion(1),
+                                        _vm.listarEntidad(_vm.per_nacionalidad)
+                                    }
+                                  ]
                                 }
                               },
                               [
@@ -142768,7 +142843,13 @@ var render = function() {
                                       textContent: _vm._s(nacionalidad.pais)
                                     }
                                   })
-                                })
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "agregar_nacionalidad" } },
+                                  [_vm._v("+ Agregar nueva nacionalidad")]
+                                )
                               ],
                               2
                             ),
@@ -142809,27 +142890,32 @@ var render = function() {
                                   "is-valid": !_vm.$v.per_entidad.$invalid
                                 },
                                 on: {
-                                  click: function($event) {
-                                    _vm.listarLicencia(
-                                      _vm.per_entidad,
-                                      _vm.per_categoria
-                                    ),
-                                      _vm.listarGrado(_vm.per_entidad)
-                                  },
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.per_entidad = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
+                                  change: [
+                                    function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.per_entidad = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    },
+                                    function($event) {
+                                      _vm.verificarSeleccion(2),
+                                        _vm.listarLicencia(
+                                          _vm.per_entidad,
+                                          _vm.per_categoria
+                                        ),
+                                        _vm.listarGrado(_vm.per_entidad)
+                                    }
+                                  ]
                                 }
                               },
                               [
@@ -142847,7 +142933,13 @@ var render = function() {
                                       textContent: _vm._s(entidad.entidad)
                                     }
                                   })
-                                })
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "agregar_entidad" } },
+                                  [_vm._v("+ Agregar nueva entidad")]
+                                )
                               ],
                               2
                             ),
@@ -143443,25 +143535,29 @@ var render = function() {
                                   "is-valid": !_vm.$v.per_titlic.$invalid
                                 },
                                 on: {
-                                  click: function($event) {
-                                    return _vm.listarHabilitacion(
-                                      _vm.per_titlic
-                                    )
-                                  },
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.per_titlic = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
+                                  change: [
+                                    function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.per_titlic = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    },
+                                    function($event) {
+                                      return _vm.listarHabilitacion(
+                                        _vm.per_titlic
+                                      )
+                                    }
+                                  ]
                                 }
                               },
                               [
@@ -144331,7 +144427,14 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "modal fade", attrs: { id: "ModalNewNacionalidad" } },
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "ModalNewNacionalidad",
+            "data-backdrop": "static",
+            "data-keyboard": "false"
+          }
+        },
         [
           _c("div", { staticClass: "modal-dialog modal-sm" }, [
             _c("div", { staticClass: "modal-content" }, [
@@ -144349,7 +144452,7 @@ var render = function() {
                     },
                     on: {
                       click: function($event) {
-                        return _vm.Cerrar()
+                        return _vm.Cerrar(1)
                       }
                     }
                   },
@@ -144521,7 +144624,7 @@ var render = function() {
                     attrs: { type: "button", "data-dismiss": "modal" },
                     on: {
                       click: function($event) {
-                        return _vm.Cerrar()
+                        return _vm.Cerrar(1)
                       }
                     }
                   },
@@ -144535,7 +144638,14 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "modal fade", attrs: { id: "ModalNewEntidad" } },
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "ModalNewEntidad",
+            "data-backdrop": "static",
+            "data-keyboard": "false"
+          }
+        },
         [
           _c("div", { staticClass: "modal-dialog modal-sm" }, [
             _c("div", { staticClass: "modal-content" }, [
@@ -144553,7 +144663,7 @@ var render = function() {
                     },
                     on: {
                       click: function($event) {
-                        return _vm.Cerrar()
+                        return _vm.Cerrar(2)
                       }
                     }
                   },
@@ -144754,7 +144864,7 @@ var render = function() {
                     attrs: { type: "button", "data-dismiss": "modal" },
                     on: {
                       click: function($event) {
-                        return _vm.Cerrar()
+                        return _vm.Cerrar(2)
                       }
                     }
                   },

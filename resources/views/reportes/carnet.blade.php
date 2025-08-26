@@ -285,33 +285,33 @@
             <div style="page-break-before: always;"></div>
             <!-- REVERSO CARNET -->
             @if($personal->id_entidad < 5)
-                <div style="padding-top: 1px; padding-bottom: 1px; padding-left: 0.1cm; text-align: left; position: fixed; top: 0.2cm; left: 0.1cm; right: 2cm; font-size: 5pt; font-weight: bold; border: 1px solid #C00;">
+                <div style="padding-top: 1px; padding-bottom: 1px; padding-left: 1px; text-align: left; position: fixed; top: 0.2cm; left: 0.1cm; right: 1.5cm; font-size: 5pt; font-weight: bold; border: 1px solid #C00;">
                     <p style="margin: 1px">{{$personal->abreviatura}} {{$personal->per_nombre}} {{$personal->per_paterno}} {{$personal->per_materno}}</p>
                 </div>
             @else
-                <div style="padding-top: 1px; padding-bottom: 1px; padding-left: 0.1cm; text-align: left; position: fixed; top: 0.2cm; left: 0.1cm; right: 2cm; font-size: 5pt; font-weight: bold; border: 1px solid #C00;">
+                <div style="padding-top: 1px; padding-bottom: 1px; padding-left: 1px; text-align: left; position: fixed; top: 0.2cm; left: 0.1cm; right: 1.5cm; font-size: 5pt; font-weight: bold; border: 1px solid #C00;">
                     <p style="margin: 1px">{{$personal->per_nombre}} {{$personal->per_paterno}} {{$personal->per_materno}}</p>
                 </div>
             @endif
-            <div style="padding-top: 1px; padding-bottom: 1px; padding-right: 0.1cm; text-align: right; position: fixed; top: 0.2cm; left: 6.3cm; right: 0.1cm; font-size: 5pt; font-weight: bold; border: 1px solid #C00;">
+            <div style="padding-top: 1px; padding-bottom: 1px; padding-right: 1px; text-align: right; position: fixed; top: 0.2cm; left: 6.8cm; right: 0.1cm; font-size: 5pt; font-weight: bold; border: 1px solid #C00;">
                 <p style="margin: 1px">Folio No.: {{$personal->id_personal}}</p>
             </div>
             <div style="padding-left: 0.1cm; text-align: right; position: fixed; top: 0.8cm; left: 0.1cm; right: 7.8cm; font-size: 4pt; font-weight: normal; border: 1px solid #C00;">
                 <p style="margin: 1px">XII.</p>
             </div>
-            <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 0.8cm; left: 0.5cm; right: 2.5cm; font-size: 4pt; font-weight: normal; border: 1px solid #C00;">
+            <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 0.8cm; left: 0.5cm; right: 0.3cm; font-size: 4pt; font-weight: normal; border: 1px solid #C00;">
                 <p style="margin: 1px">HABILITACIONES - <span style="font-style: italic;">RATINGS</span>:</p>
             </div>
-            <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 1.05cm; left: 0.5cm; right: 2.5cm; font-size: 5pt; font-weight: bold; border: 1px solid #C00;">
-                <p style="margin: 1px">{{$personal->habilitacion}}</p>
+            <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 1.05cm; left: 0.5cm; right: 0.3cm; font-size: 5pt; font-weight: bold; border: 1px solid #C00;">
+                <p style="margin: 1px"> {{$personal->habilitacion}} - <span style="font-style: italic; font-weight: normal; font-size: 4pt;">{{$personal->htraduccion}}</span> </p>
             </div>
-            <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 1.55cm; left: 0.5cm; right: 2.5cm; font-size: 4pt; font-weight: normal; font-style: italic; border: 1px solid #C00;">
+            <!-- <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 1.55cm; left: 0.5cm; right: 0.3cm; font-size: 4pt; font-weight: normal; font-style: italic; border: 1px solid #C00;">
                 <p style="margin: 1px">{{$personal->htraduccion}}</p>
-            </div>
-            <div style="padding-left: 0.1cm; text-align: right; position: fixed; top: 1.8cm; left: 0.1cm; right: 7.8cm; font-size: 4pt; font-weight: normal; /*border: 1px solid #C00;*/">
+            </div> -->
+            <div style="padding-left: 0.1cm; text-align: right; position: fixed; top: 2.45cm; left: 0.1cm; right: 7.8cm; font-size: 4pt; font-weight: normal; border: 1px solid #C00;">
                 <p style="margin: 1px">XIII.</p>
             </div>
-            <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 1.8cm; left: 0.5cm; right: 2.5cm; font-size: 4pt; font-weight: normal; /*border: 1px solid #C00;*/">
+            <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 2.45cm; left: 0.5cm; right: 0.3cm; font-size: 4pt; font-weight: normal; border: 1px solid #C00;">
                 <p style="margin: 1px">OBSERVACIONES - <span style="font-style: italic;">REMARKS</span>:</p>
             </div>
             <!-- <div style="padding-left: 0.1cm; text-align: justify; position: fixed; top: 1.8cm; left: 0.5cm; right: 2.5cm; font-size: 5pt; font-weight: bold; border: 1px solid #C00;">
@@ -321,31 +321,31 @@
                 <p style="margin: 1px">SIN OBSERVACIONES.</p>
                 @endif
             </div> -->
-            <div style="padding-left: 0.1cm; text-align: justify; position: fixed; top: 2.05cm; left: 0.5cm; right: 2.5cm; font-size: 4pt; font-weight: normal; /*border: 1px solid #C00;*/">
-                <p style="margin: 1px">LA PRESENTE LICENCIA NO ES VALIDA SI EL CERTIFICADO MÉDICO AERONÁUTICO NO SE ENCUENTRA VIGENTE EN EL CODIGO QR - <span style="font-style: italic;">THE FOLLOWING LICENSE IS INVALID IF THE MEDICAL CERTIFICATE IS NOT CURRENT IN THE QR CODE.</span></p>
+            <div style="padding-left: 0.1cm; text-align: justify; position: fixed; top: 2.7cm; left: 0.5cm; right: 0.3cm; font-size: 4pt; font-weight: normal; border: 1px solid #C00;">
+                <p style="margin: 1px">LA PRESENTE LICENCIA NO ES VALIDA SI NO VA ACOMPAÑADA DEL CERTIFICADO MÉDICO AERONÁUTICO VIGENTE - <span style="font-style: italic;">THIS LICENSE IS NOT VALID IF IT IS NOT ACCOMPANIED BY A CURRENT AERONAUTICAL MEDICAL CERTIFICATE.</span></p>
             </div>
-            <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 2.65cm; left: 0.1cm; right: 2.5cm; font-size: 4pt; font-weight: normal; /*border: 1px solid #C00;*/">
+            <!-- <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 2.65cm; left: 0.1cm; right: 2.5cm; font-size: 4pt; font-weight: normal; border: 1px solid #C00;">
                 <p style="margin: 1px">COMPETENCIA LINGUISTICA - <span style="font-style: italic;">LANGUAGE PROFICIENCY</span>:</p>
             </div>
-            <div style="padding-left: 0.5cm; text-align: left; position: fixed; top: 2.9cm; left: 0.1cm; right: 2.5cm; font-size: 5pt; font-weight: bold; /*border: 1px solid #C00;*/">
+            <div style="padding-left: 0.5cm; text-align: left; position: fixed; top: 2.9cm; left: 0.1cm; right: 2.5cm; font-size: 5pt; font-weight: bold; border: 1px solid #C00;">
                 <p style="margin: 1px">{{$personal->nivel}}</p>
-            </div>
-            <div style="padding-left: 0.5cm; text-align: left; position: fixed; top: 3.15cm; left: 0.1cm; right: 2.5cm; font-size: 4pt; font-weight: normal; font-style: italic; /*border: 1px solid #C00;*/">
+            </div> 
+            <div style="padding-left: 0.5cm; text-align: left; position: fixed; top: 3.15cm; left: 0.1cm; right: 2.5cm; font-size: 4pt; font-weight: normal; font-style: italic; border: 1px solid #C00;">
                 <p style="margin: 1px">{{$personal->cltraduccion}}</p>
-            </div>
-            <div style="padding: 0.1cm; text-align: center; position: fixed; top: 1.5cm; left: 5.8cm; right: 0.1cm; font-size: 4pt; font-weight: bold; /*border: 1px solid #C00;*/">
+            </div> -->
+            <!-- <div style="padding: 0.1cm; text-align: center; position: fixed; top: 2.6cm; left: 5.9cm; right: 0.1cm; font-size: 4pt; font-weight: bold; /*border: 1px solid #C00;*/">
                 <img style="border: 1px solid black; width: 2cm; height: 2cm" src="data:image/png;base64, {!! base64_encode($qr) !!} ">
-            </div>
+            </div> -->
             <div style="padding: 0.1cm; text-align: center; position: fixed; top: 2.9cm; left: 0.1cm; right: 0.1cm; font-size: 4pt; font-weight: bold; /*border: 1px solid #C00;*/">
                 <img style="width:2.5cm; height:2cm; /*border: 2px solid #142A98;*/" src="../public/img/firma_cnl_garnica.png">
             </div>
             <div style="padding: 0.1cm; text-align: center; position: fixed; top: 3.2cm; left: 0.1cm; right: 4.5cm; font-size: 4pt; font-weight: bold; /*border: 1px solid #C00;*/">
                 <img style="width:1.7cm; height:1.5cm; /*border: 2px solid #142A98;*/" src="../public/img/sello_dgae_2024.png">
             </div>
-            <div style="padding-left: 0.1cm; text-align: right; position: fixed; top: 4.2cm; left: 0.1cm; right: 7.8cm; font-size: 4pt; font-weight: normal; /*border: 1px solid #C00;*/">
+            <div style="padding-left: 0.1cm; text-align: right; position: fixed; top: 4.2cm; left: 0.1cm; right: 7.8cm; font-size: 4pt; font-weight: normal; border: 1px solid #C00;">
                 <p style="margin: 1px">X.</p>
             </div>
-            <div style="padding-left: 0.1cm; text-align: center; position: fixed; top: 4.2cm; left: 0.1cm; right: 0.1cm; font-size: 5pt; /*font-weight: bold;*/ /*border: 1px solid #C00;*/">
+            <div style="padding-left: 0.1cm; text-align: center; position: fixed; top: 4.2cm; left: 0.1cm; right: 0.1cm; font-size: 5pt; /*font-weight: bold;*/ border: 1px solid #C00;">
                 <p style="margin: 1px">Cnl. DAEN. Marco Antonio Garnica Bustillos</p>
                 <p style="margin: 1px; font-weight: bold;">DIRECTOR GENERAL DE AERONAVES DE ESTADO</p>
             </div>
