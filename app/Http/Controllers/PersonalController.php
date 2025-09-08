@@ -124,7 +124,7 @@ class PersonalController extends Controller
                     ->join('entidads as e','e.id','pl.id_entidad')
                     ->join('grados as g','g.id','pl.id_grado')
                     ->join('licencias as l','l.id','pl.id_licencia')
-                    ->join('habilitacions as h','h.id','pl.id_habilitacion')
+                    // ->join('habilitacions as h','h.id','pl.id_habilitacion')
                     ->join('competencia_linguisticas as cl','cl.id','pl.id_comp_linguistica')
                     ->select('p.id',
                             'c.id as id_categoria',
@@ -149,8 +149,9 @@ class PersonalController extends Controller
                             'p.per_direccion',
                             'l.id as id_licencia',
                             'l.licencia',
-                            'h.id as id_habilitacion',
-                            'h.habilitacion',
+                            'pl.id_habilitacion',
+                            // 'h.id as id_habilitacion',
+                            // 'h.habilitacion',
                             'cl.id as id_complinguistica',
                             'cl.nivel',
                             'pl.observacion')
@@ -165,7 +166,7 @@ class PersonalController extends Controller
                     ->join('entidads as e','e.id','pl.id_entidad')
                     ->join('grados as g','g.id','pl.id_grado')
                     ->join('licencias as l','l.id','pl.id_licencia')
-                    ->join('habilitacions as h','h.id','pl.id_habilitacion')
+                    // ->join('habilitacions as h','h.id','pl.id_habilitacion')
                     ->join('competencia_linguisticas as cl','cl.id','pl.id_comp_linguistica')
                     ->select('p.id',
                             'c.id as id_categoria',
@@ -190,8 +191,9 @@ class PersonalController extends Controller
                             'p.per_direccion',
                             'l.id as id_licencia',
                             'l.licencia',
-                            'h.id as id_habilitacion',
-                            'h.habilitacion',
+                            'pl.id_habilitacion',
+                            // 'h.id as id_habilitacion',
+                            // 'h.habilitacion',
                             'cl.id as id_complinguistica',
                             'cl.nivel',
                             'pl.observacion')
@@ -231,7 +233,7 @@ class PersonalController extends Controller
                     ->join('entidads as e','pl.id_entidad','e.id')
                     ->join('grados as g','pl.id_grado','g.id')
                     ->join('licencias as l','pl.id_licencia','l.id')
-                    ->join('habilitacions as h','pl.id_habilitacion','h.id')
+                    // ->join('habilitacions as h','pl.id_habilitacion','h.id')
                     ->join('competencia_linguisticas as cl','pl.id_comp_linguistica','cl.id')
                     ->select('p.id as id_personal',
                         'n.id as idnacionalidad',
@@ -259,8 +261,8 @@ class PersonalController extends Controller
                         'g.abreviatura',
                         'l.licencia',
                         'l.traduccion',
-                        'h.habilitacion',
-                        'h.traduccion as htraduccion',
+                        // 'h.habilitacion',
+                        // 'h.traduccion as htraduccion',
                         'cl.id as idlinguistica',
                         'cl.nivel',
                         'cl.traduccion as cltraduccion',

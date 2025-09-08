@@ -16234,6 +16234,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -16256,7 +16260,7 @@ __webpack_require__.r(__webpack_exports__);
       per_fechnac: '',
       per_direccion: '',
       per_titlic: '',
-      per_habilitacion: '',
+      per_habilitacion: [],
       per_comlinguistica: '',
       per_observaciones: '',
       per_fechaemision: new Intl.DateTimeFormat("az", {
@@ -16630,7 +16634,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     NuevoPersonal: function NuevoPersonal() {
       //DGAE
-      this.$v.validationGroupReg.$reset(), this.per_foto = '', this.per_categoria = '', this.per_nacionalidad = '', this.per_entidad = '', this.per_grado = '', this.per_ci = '', this.per_cm = '', this.per_nombre = '', this.per_appaterno = '', this.per_apmaterno = '', this.per_sexo = '', this.per_celular = '', this.per_email = '', this.per_fechnac = '', this.per_titlic = '', this.per_direccion = '', this.per_habilitacion = '', this.per_comlinguistica = '', this.per_observaciones = '', this.per_fechaexpiracion = '', this.doc_ci = '', this.doc_nacimiento = '', this.doc_titulo = '', this.doc_aprobacion = '', this.doc_egreso = '', this.doc_especializacion = '', this.doc_libreta = '', this.doc_medico = '', this.v = 0, this.listarCategoria();
+      this.$v.validationGroupReg.$reset(), this.per_foto = '', this.per_categoria = '', this.per_nacionalidad = '', this.per_entidad = '', this.per_grado = '', this.per_ci = '', this.per_cm = '', this.per_nombre = '', this.per_appaterno = '', this.per_apmaterno = '', this.per_sexo = '', this.per_celular = '', this.per_email = '', this.per_fechnac = '', this.per_titlic = '', this.per_direccion = '', this.per_habilitacion = [], this.per_comlinguistica = '', this.per_observaciones = '', this.per_fechaexpiracion = '', this.doc_ci = '', this.doc_nacimiento = '', this.doc_titulo = '', this.doc_aprobacion = '', this.doc_egreso = '', this.doc_especializacion = '', this.doc_libreta = '', this.doc_medico = '', this.v = 0, this.listarCategoria();
       this.listarNacionalidad();
       this.listarEntidad(this.per_nacionalidad);
       this.listarGrado(this.per_entidad);
@@ -16647,6 +16651,7 @@ __webpack_require__.r(__webpack_exports__);
             this.per_nacionalidad = ''; // Limpiar selección
           } else {
             this.listarEntidad(this.per_nacionalidad);
+            this.listarLicencia(this.per_entidad, this.per_categoria);
           }
 
           break;
@@ -16981,7 +16986,7 @@ __webpack_require__.r(__webpack_exports__);
       //DGAE
       var me = this;
       me.per_titlic = '';
-      me.per_habilitacion = '';
+      me.per_habilitacion = [];
       me.arrayLicencia = [];
       me.arrayHabilitacion = [];
       axios.post("/listarLicencia", {
@@ -16997,7 +17002,7 @@ __webpack_require__.r(__webpack_exports__);
     listarHabilitacion: function listarHabilitacion(licencia) {
       //DGAE
       var me = this;
-      me.per_habilitacion = '';
+      me.per_habilitacion = [];
       me.arrayHabilitacion = [];
       axios.post("/listarHabilitacion", {
         id_titlicencia: licencia
@@ -18121,6 +18126,119 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -18303,7 +18421,27 @@ __webpack_require__.r(__webpack_exports__);
     doc_medico: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
     },
+    na_pais: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
+    na_abreviatura: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
+    na_nacionalidad: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
+    en_pais: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
+    en_entidad: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
+    en_sigla: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
     validationGroupReg: ['per_foto', 'per_categoria', 'per_nacionalidad', 'per_entidad', 'per_grado', 'per_ci', 'per_cm', 'per_nombre', 'per_appaterno', 'per_apmaterno', 'per_sexo', 'per_celular', 'per_email', 'per_fechnac', 'per_direccion', 'per_titlic', 'per_habilitacion', 'per_comlinguistica', 'per_fechaemision', 'per_fechaexpiracion'],
+    validationGroupNewNacionalidad: ['na_pais', 'na_abreviatura', 'na_nacionalidad'],
+    validationGroupNewEntidad: ['en_pais', 'en_entidad', 'en_sigla'],
     validationGroupDocument: ['doc_ci', 'doc_nacimiento', 'doc_titulo', 'doc_aprobacion', 'doc_egreso', 'doc_especializacion', 'doc_libreta', 'doc_medico']
   },
   computed: {
@@ -18519,11 +18657,58 @@ __webpack_require__.r(__webpack_exports__);
       //DGAE
       this.$v.validationGroupReg.$reset(), this.per_foto = personal.per_foto, this.per_categoria = personal.id_categoria, this.per_nacionalidad = personal.idnacionalidad, this.per_entidad = personal.id_entidad, this.per_grado = personal.id_grado, this.per_grado_abreviatura = personal.abreviatura, this.per_ci = personal.per_ci, this.per_cm = personal.per_cm, this.per_nombre = personal.per_nombre, this.per_appaterno = personal.per_paterno, this.per_apmaterno = personal.per_materno, this.per_sexo = personal.per_sexo, this.per_celular = personal.per_celular, this.per_email = personal.per_mail, this.per_fechnac = personal.per_fecha_nacimiento, this.per_titlic = personal.id_licencia, this.per_direccion = personal.per_direccion, this.per_habilitacion = personal.id_habilitacion, this.per_comlinguistica = personal.id_comp_linguistica, this.per_observaciones = '', this.per_fechaexpiracion = '', this.doc_ci = '', this.doc_nacimiento = '', this.doc_titulo = '', this.doc_aprobacion = '', this.doc_egreso = '', this.doc_especializacion = '', this.doc_libreta = '', this.doc_medico = '', this.v = 0, this.listarCategoria();
       this.listarNacionalidad();
-      this.listarEntidad(this.per_nacionalidad);
-      this.listarGrado(this.per_entidad);
-      this.listarLicencia(this.per_entidad, this.per_categoria);
-      this.listarHabilitacion(this.per_titlic);
+      this.listarEntidad(this.per_nacionalidad, 1);
+      this.listarGrado(this.per_entidad, 1);
+      this.listarLicencia(this.per_entidad, this.per_categoria, 1);
+      this.listarHabilitacion(this.per_titlic, 1);
       this.listarCompetenciaLinguistica();
+    },
+    verificarSeleccion: function verificarSeleccion(opcion) {
+      switch (opcion) {
+        case 1:
+          if (this.per_nacionalidad === 'agregar_nacionalidad') {
+            // this.ModalNewNacionalidad = true;
+            this.NuevaNacionalidad();
+            this.per_nacionalidad = ''; // Limpiar selección
+          } else {
+            this.listarEntidad(this.per_nacionalidad, 0);
+            this.listarLicencia(this.per_entidad, this.per_categoria, 0);
+          }
+
+          break;
+
+        case 2:
+          if (this.per_entidad === 'agregar_entidad') {
+            // this.ModalNewEntidad = true;
+            this.NuevaEntidad();
+            this.per_entidad = ''; // Limpiar selección
+          } else {
+            this.listarGrado(this.per_entidad, 0);
+            this.listarLicencia(this.per_entidad, this.per_categoria, 0);
+          }
+
+          break;
+
+        default:
+          break;
+      }
+    },
+    NuevaNacionalidad: function NuevaNacionalidad() {
+      //DGAE
+      this.$v.validationGroupNewNacionalidad.$reset(), this.na_pais = '', this.na_abreviatura = '', this.na_nacionalidad = '', this.vNN = 0, $('#ModalNewNacionalidad').modal('show');
+      $(".modal-header").css("background-color", "#007bff");
+      $(".modal-header").css("color", "white");
+      $(".modal-title-aumentar").text("Nueva Nacionalidad");
+      this.listarNacionalidad();
+    },
+    NuevaEntidad: function NuevaEntidad() {
+      //DGAE
+      this.$v.validationGroupNewEntidad.$reset(), this.en_pais = this.per_nacionalidad, this.en_entidad = '', this.en_sigla = '', this.vNE = 0, $('#ModalNewEntidad').modal('show');
+      $(".modal-header").css("background-color", "#007bff");
+      $(".modal-header").css("color", "white");
+      $(".modal-title-aumentar").text("Nueva Entidad");
+      this.listarNacionalidad();
+      this.listarEntidad(this.per_nacionalidad, 0);
     },
     RenovarPersonal: function RenovarPersonal() {
       var _this10 = this;
@@ -18623,6 +18808,153 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    CrearNacionalidad: function CrearNacionalidad() {
+      var _this11 = this;
+
+      //DGAE
+      if (!this.$v.validationGroupNewNacionalidad.$invalid) {
+        swal.fire({
+          title: '¿Desea registrar?',
+          // TITULO 
+          icon: 'question',
+          //ICONO (success, warnning, error, info, question)
+          showCancelButton: true,
+          //HABILITACION DEL BOTON CANCELAR
+          confirmButtonColor: 'info',
+          // COLOR DEL BOTON PARA CONFIRMAR
+          cancelButtonColor: '#868077',
+          // COLOR DEL BOTON CANCELAR
+          confirmButtonText: 'Confirmar',
+          //TITULO DEL BOTON CONFIRMAR
+          cancelButtonText: 'Cancelar',
+          //TIUTLO DEL BOTON CANCELAR
+          buttonsStyling: true,
+          reverseButtons: true
+        }).then(function (result) {
+          if (result.value) {
+            var me = _this11;
+            axios.post("/crearNacionalidad", {
+              pais: me.na_pais,
+              nacionalidad: me.na_nacionalidad,
+              abreviatura: me.na_abreviatura
+            }).then(function (response) {
+              console.log(response);
+              swal.fire({
+                title: 'Se realizo el registro correctamente' //TITULO
+                // response.data.mensaje, //TEXTO DE MENSAJE
+                // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
+                // response.personal
+
+              }); // this.listarNacionalidad();
+
+              if (!response.data.code) {
+                // $('#NuevoUsuario').modal('hide');
+                $('#ModalNewNacionalidad').modal('hide');
+                me.listarNacionalidad(); // me.nick = '';
+                // me.password = '';
+
+                this.$v.$reset();
+              }
+            })["catch"](function (error) {
+              // handle error
+              console.log(error);
+            });
+          } else {
+            swal.fire("Informacion", //TITULO
+            "Solicitud cancelada.", //TEXTO DE MENSAJE
+            "info" // TIPO DE MODAL (success, warnning, error, info)
+            );
+          }
+        });
+      } else {
+        this.$v.validationGroupNewNacionalidad.$touch();
+        Swal.fire({
+          icon: 'warning',
+          title: 'Ingrese todos los datos requeridos',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      }
+    },
+    CrearEntidad: function CrearEntidad() {
+      var _this12 = this;
+
+      //DGAE
+      if (!this.$v.validationGroupNewEntidad.$invalid) {
+        swal.fire({
+          title: '¿Desea registrar?',
+          // TITULO 
+          icon: 'question',
+          //ICONO (success, warnning, error, info, question)
+          showCancelButton: true,
+          //HABILITACION DEL BOTON CANCELAR
+          confirmButtonColor: 'info',
+          // COLOR DEL BOTON PARA CONFIRMAR
+          cancelButtonColor: '#868077',
+          // COLOR DEL BOTON CANCELAR
+          confirmButtonText: 'Confirmar',
+          //TITULO DEL BOTON CONFIRMAR
+          cancelButtonText: 'Cancelar',
+          //TIUTLO DEL BOTON CANCELAR
+          buttonsStyling: true,
+          reverseButtons: true
+        }).then(function (result) {
+          if (result.value) {
+            var me = _this12;
+            axios.post("/crearEntidad", {
+              pais: me.en_pais,
+              entidad: me.en_entidad,
+              sigla: me.en_sigla
+            }).then(function (response) {
+              console.log(response);
+              swal.fire({
+                title: 'Se realizo el registro correctamente' //TITULO
+                // response.data.mensaje, //TEXTO DE MENSAJE
+                // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
+                // response.personal
+
+              }); // this.listarNacionalidad();
+
+              if (!response.data.code) {
+                // $('#NuevoUsuario').modal('hide');
+                $('#ModalNewEntidad').modal('hide');
+                me.listarEntidad(me.per_nacionalidad, 0); // me.nick = '';
+                // me.password = '';
+
+                this.$v.$reset();
+              }
+            })["catch"](function (error) {
+              // handle error
+              console.log(error);
+            });
+          } else {
+            swal.fire("Informacion", //TITULO
+            "Solicitud cancelada.", //TEXTO DE MENSAJE
+            "info" // TIPO DE MODAL (success, warnning, error, info)
+            );
+          }
+        });
+      } else {
+        this.$v.validationGroupNewEntidad.$touch();
+        Swal.fire({
+          icon: 'warning',
+          title: 'Ingrese todos los datos requeridos',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      }
+    },
+    Cerrar: function Cerrar(valor) {
+      switch (valor) {
+        case 1:
+          this.na_pais = '', this.na_abreviatura = '', this.na_nacionalidad = '';
+          break;
+
+        case 2:
+          this.en_pais = '', this.en_entidad = '', this.en_sigla = '';
+          break;
+      }
+    },
     listarCategoria: function listarCategoria() {
       //DGAE
       var me = this;
@@ -18643,9 +18975,17 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    listarEntidad: function listarEntidad(nacionalidad) {
+    listarEntidad: function listarEntidad(nacionalidad, estado) {
       //DGAE
       var me = this;
+
+      if (estado == 0) {
+        me.per_entidad = '';
+        me.per_grado = '';
+        me.arrayEntidad = [];
+        me.arrayGrado = [];
+      }
+
       axios.post("/listarEntidad", {
         id_nacionalidad: nacionalidad
       }).then(function (response) {
@@ -18655,9 +18995,15 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    listarGrado: function listarGrado(entidad) {
+    listarGrado: function listarGrado(entidad, estado) {
       //DGAE
       var me = this;
+
+      if (estado == 0) {
+        me.per_grado = '';
+        me.arrayGrado = '';
+      }
+
       axios.post("/listarGrado", {
         id_entidad: entidad
       }).then(function (response) {
@@ -18667,9 +19013,17 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    listarLicencia: function listarLicencia(entidad, categoria) {
+    listarLicencia: function listarLicencia(entidad, categoria, estado) {
       //DGAE
       var me = this;
+
+      if (estado == 0) {
+        me.per_titlic = '';
+        me.per_habilitacion = [];
+        me.arrayLicencia = [];
+        me.arrayHabilitacion = [];
+      }
+
       axios.post("/listarLicencia", {
         id_entidad: entidad,
         id_categoria: categoria
@@ -18680,9 +19034,15 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    listarHabilitacion: function listarHabilitacion(licencia) {
+    listarHabilitacion: function listarHabilitacion(licencia, estado) {
       //DGAE
       var me = this;
+
+      if (estado == 0) {
+        me.per_habilitacion = [];
+        me.arrayHabilitacion = [];
+      }
+
       axios.post("/listarHabilitacion", {
         id_titlicencia: licencia
       }).then(function (response) {
@@ -142821,7 +143181,11 @@ var render = function() {
                                     },
                                     function($event) {
                                       _vm.verificarSeleccion(1),
-                                        _vm.listarEntidad(_vm.per_nacionalidad)
+                                        _vm.listarEntidad(_vm.per_nacionalidad),
+                                        _vm.listarLicencia(
+                                          _vm.per_entidad,
+                                          _vm.per_categoria
+                                        )
                                     }
                                   ]
                                 }
@@ -143589,82 +143953,102 @@ var render = function() {
                             ])
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-md-3" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-control-label",
-                                attrs: { for: "text-input" }
-                              },
-                              [_vm._v("Habilitación")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              {
-                                directives: [
+                          _c(
+                            "div",
+                            { staticClass: "col-md-3" },
+                            [
+                              _c(
+                                "label",
+                                { staticClass: "form-control-label" },
+                                [_vm._v("Habilitación")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.arrayHabilitacion, function(
+                                habilitacion
+                              ) {
+                                return _c(
+                                  "div",
                                   {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.per_habilitacion,
-                                    expression: "per_habilitacion"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                class: {
-                                  "is-invalid": _vm.$v.per_habilitacion.$error,
-                                  "is-valid": !_vm.$v.per_habilitacion.$invalid
-                                },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.per_habilitacion = $event.target
-                                      .multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "option",
-                                  { attrs: { value: "", disabled: "" } },
-                                  [_vm._v("SELECCIONE")]
-                                ),
-                                _vm._v(" "),
-                                _vm._l(_vm.arrayHabilitacion, function(
-                                  habilitacion
-                                ) {
-                                  return _c("option", {
                                     key: habilitacion.id,
-                                    domProps: {
-                                      value: habilitacion.id,
-                                      textContent: _vm._s(
-                                        habilitacion.habilitacion
-                                      )
-                                    }
-                                  })
-                                })
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              !_vm.$v.per_habilitacion.required
-                                ? _c("span", [
-                                    _vm._v("Este campo es Requerido")
-                                  ])
+                                    staticClass: "form-check"
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.per_habilitacion,
+                                          expression: "per_habilitacion"
+                                        }
+                                      ],
+                                      staticClass: "form-check-input",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        value: habilitacion.id,
+                                        checked: Array.isArray(
+                                          _vm.per_habilitacion
+                                        )
+                                          ? _vm._i(
+                                              _vm.per_habilitacion,
+                                              habilitacion.id
+                                            ) > -1
+                                          : _vm.per_habilitacion
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = _vm.per_habilitacion,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = habilitacion.id,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                (_vm.per_habilitacion = $$a.concat(
+                                                  [$$v]
+                                                ))
+                                            } else {
+                                              $$i > -1 &&
+                                                (_vm.per_habilitacion = $$a
+                                                  .slice(0, $$i)
+                                                  .concat($$a.slice($$i + 1)))
+                                            }
+                                          } else {
+                                            _vm.per_habilitacion = $$c
+                                          }
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("label", {
+                                      staticClass: "form-check-label",
+                                      domProps: {
+                                        textContent: _vm._s(
+                                          habilitacion.habilitacion
+                                        )
+                                      }
+                                    })
+                                  ]
+                                )
+                              }),
+                              _vm._v(" "),
+                              _vm.$v.per_habilitacion.$error
+                                ? _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback d-block" },
+                                    [
+                                      !_vm.$v.per_habilitacion.required
+                                        ? _c("span", [
+                                            _vm._v("Este campo es Requerido")
+                                          ])
+                                        : _vm._e()
+                                    ]
+                                  )
                                 : _vm._e()
-                            ])
-                          ]),
+                            ],
+                            2
+                          ),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-md-3" }, [
                             _c(
@@ -145765,26 +146149,31 @@ var render = function() {
                                   "is-valid": !_vm.$v.per_categoria.$invalid
                                 },
                                 on: {
-                                  click: function($event) {
-                                    return _vm.listarLicencia(
-                                      _vm.per_entidad,
-                                      _vm.per_categoria
-                                    )
-                                  },
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.per_categoria = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
+                                  change: [
+                                    function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.per_categoria = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    },
+                                    function($event) {
+                                      return _vm.listarLicencia(
+                                        _vm.per_entidad,
+                                        _vm.per_categoria,
+                                        0
+                                      )
+                                    }
+                                  ]
                                 }
                               },
                               [
@@ -145843,26 +146232,37 @@ var render = function() {
                                   "is-valid": !_vm.$v.per_nacionalidad.$invalid
                                 },
                                 on: {
-                                  click: function($event) {
-                                    return _vm.listarEntidad(
-                                      _vm.per_nacionalidad
-                                    )
-                                  },
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.per_nacionalidad = $event.target
-                                      .multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
+                                  change: [
+                                    function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.per_nacionalidad = $event.target
+                                        .multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    },
+                                    function($event) {
+                                      _vm.verificarSeleccion(1),
+                                        _vm.listarEntidad(
+                                          _vm.per_nacionalidad,
+                                          0
+                                        ),
+                                        _vm.listarLicencia(
+                                          _vm.per_entidad,
+                                          _vm.per_categoria,
+                                          0
+                                        )
+                                    }
+                                  ]
                                 }
                               },
                               [
@@ -145882,7 +146282,13 @@ var render = function() {
                                       textContent: _vm._s(nacionalidad.pais)
                                     }
                                   })
-                                })
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "agregar_nacionalidad" } },
+                                  [_vm._v("+ Agregar nueva nacionalidad")]
+                                )
                               ],
                               2
                             ),
@@ -145923,27 +146329,33 @@ var render = function() {
                                   "is-valid": !_vm.$v.per_entidad.$invalid
                                 },
                                 on: {
-                                  click: function($event) {
-                                    _vm.listarLicencia(
-                                      _vm.per_entidad,
-                                      _vm.per_categoria
-                                    ),
-                                      _vm.listarGrado(_vm.per_entidad)
-                                  },
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.per_entidad = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
+                                  change: [
+                                    function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.per_entidad = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    },
+                                    function($event) {
+                                      _vm.verificarSeleccion(2),
+                                        _vm.listarLicencia(
+                                          _vm.per_entidad,
+                                          _vm.per_categoria,
+                                          0
+                                        ),
+                                        _vm.listarGrado(_vm.per_entidad, 0)
+                                    }
+                                  ]
                                 }
                               },
                               [
@@ -145961,7 +146373,13 @@ var render = function() {
                                       textContent: _vm._s(entidad.entidad)
                                     }
                                   })
-                                })
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "agregar_entidad" } },
+                                  [_vm._v("+ Agregar nueva entidad")]
+                                )
                               ],
                               2
                             ),
@@ -146557,25 +146975,30 @@ var render = function() {
                                   "is-valid": !_vm.$v.per_titlic.$invalid
                                 },
                                 on: {
-                                  click: function($event) {
-                                    return _vm.listarHabilitacion(
-                                      _vm.per_titlic
-                                    )
-                                  },
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.per_titlic = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
+                                  change: [
+                                    function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.per_titlic = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    },
+                                    function($event) {
+                                      return _vm.listarHabilitacion(
+                                        _vm.per_titlic,
+                                        0
+                                      )
+                                    }
+                                  ]
                                 }
                               },
                               [
@@ -147420,7 +147843,458 @@ var render = function() {
             ])
           ])
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "ModalNewNacionalidad",
+            "data-backdrop": "static",
+            "data-keyboard": "false"
+          }
+        },
+        [
+          _c("div", { staticClass: "modal-dialog modal-sm" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h4", { staticClass: "modal-title-aumentar" }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.Cerrar(1)
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-control-label",
+                        attrs: { for: "text-input" }
+                      },
+                      [_vm._v("Pais")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.na_pais,
+                          expression: "na_pais"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: {
+                        "is-invalid": _vm.$v.na_pais.$error,
+                        "is-valid": !_vm.$v.na_pais.$invalid
+                      },
+                      staticStyle: { "text-transform": "uppercase" },
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.na_pais },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.na_pais = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "invalid-feedback" }, [
+                      !_vm.$v.na_pais.required
+                        ? _c("span", [_vm._v("Este campo es Requerido")])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-control-label",
+                        attrs: { for: "text-input" }
+                      },
+                      [_vm._v("Abreviatura")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.na_abreviatura,
+                          expression: "na_abreviatura"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: {
+                        "is-invalid": _vm.$v.na_abreviatura.$error,
+                        "is-valid": !_vm.$v.na_abreviatura.$invalid
+                      },
+                      staticStyle: { "text-transform": "uppercase" },
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.na_abreviatura },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.na_abreviatura = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "invalid-feedback" }, [
+                      !_vm.$v.na_abreviatura.required
+                        ? _c("span", [_vm._v("Este campo es Requerido")])
+                        : _vm._e()
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-control-label",
+                        attrs: { for: "text-input" }
+                      },
+                      [_vm._v("Nacionalidad")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.na_nacionalidad,
+                          expression: "na_nacionalidad"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: {
+                        "is-invalid": _vm.$v.na_nacionalidad.$error,
+                        "is-valid": !_vm.$v.na_nacionalidad.$invalid
+                      },
+                      staticStyle: { "text-transform": "uppercase" },
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.na_nacionalidad },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.na_nacionalidad = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "invalid-feedback" }, [
+                      !_vm.$v.na_nacionalidad.required
+                        ? _c("span", [_vm._v("Este campo es Requerido")])
+                        : _vm._e()
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.CrearNacionalidad()
+                      }
+                    }
+                  },
+                  [_vm._v("Registrar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: {
+                      click: function($event) {
+                        return _vm.Cerrar(1)
+                      }
+                    }
+                  },
+                  [_vm._v("Cerrar")]
+                )
+              ])
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "ModalNewEntidad",
+            "data-backdrop": "static",
+            "data-keyboard": "false"
+          }
+        },
+        [
+          _c("div", { staticClass: "modal-dialog modal-sm" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h4", { staticClass: "modal-title-aumentar" }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.Cerrar(2)
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-control-label",
+                        attrs: { for: "text-input" }
+                      },
+                      [_vm._v("Pais")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.en_pais,
+                            expression: "en_pais"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.$v.en_pais.$error,
+                          "is-valid": !_vm.$v.en_pais.$invalid
+                        },
+                        attrs: { disabled: "" },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.en_pais = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            function($event) {
+                              return _vm.changeItem1(_vm.rowId, $event)
+                            }
+                          ]
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "", disabled: "" } }, [
+                          _vm._v("SELECCIONE")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.arrayNacionalidad, function(nacionalidad) {
+                          return _c("option", {
+                            key: nacionalidad.id,
+                            domProps: {
+                              value: nacionalidad.id,
+                              textContent: _vm._s(nacionalidad.pais)
+                            }
+                          })
+                        })
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "invalid-feedback" }, [
+                      !_vm.$v.en_pais.required
+                        ? _c("span", [_vm._v("Este campo es Requerido")])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-control-label",
+                        attrs: { for: "text-input" }
+                      },
+                      [_vm._v("Entidad")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.en_entidad,
+                          expression: "en_entidad"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: {
+                        "is-invalid": _vm.$v.en_entidad.$error,
+                        "is-valid": !_vm.$v.en_entidad.$invalid
+                      },
+                      staticStyle: { "text-transform": "uppercase" },
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.en_entidad },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.en_entidad = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "invalid-feedback" }, [
+                      !_vm.$v.en_entidad.required
+                        ? _c("span", [_vm._v("Este campo es Requerido")])
+                        : _vm._e()
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-control-label",
+                        attrs: { for: "text-input" }
+                      },
+                      [_vm._v("Sigla")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.en_sigla,
+                          expression: "en_sigla"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: {
+                        "is-invalid": _vm.$v.en_sigla.$error,
+                        "is-valid": !_vm.$v.en_sigla.$invalid
+                      },
+                      staticStyle: { "text-transform": "uppercase" },
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.en_sigla },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.en_sigla = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "invalid-feedback" }, [
+                      !_vm.$v.en_sigla.required
+                        ? _c("span", [_vm._v("Este campo es Requerido")])
+                        : _vm._e()
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.CrearEntidad()
+                      }
+                    }
+                  },
+                  [_vm._v("Registrar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: {
+                      click: function($event) {
+                        return _vm.Cerrar(2)
+                      }
+                    }
+                  },
+                  [_vm._v("Cerrar")]
+                )
+              ])
+            ])
+          ])
+        ]
+      )
     ])
   ])
 }

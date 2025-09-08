@@ -13,4 +13,7 @@ class PersonalLicencia extends Model
         'id_licencia', 'id_habilitacion', 'id_comp_linguistica', 
         'observacion', 'fecha_emision', 'fecha_expiracion', 'estado', 'sysuser'
     ];
+    protected $casts = [
+        'id_habilitacion' => 'array',
+    ];
 }

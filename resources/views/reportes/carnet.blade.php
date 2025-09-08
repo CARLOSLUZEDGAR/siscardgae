@@ -303,11 +303,32 @@
                 <p style="margin: 1px">HABILITACIONES - <span style="font-style: italic;">RATINGS</span>:</p>
             </div>
             <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 1.05cm; left: 0.5cm; right: 0.3cm; font-size: 5pt; font-weight: bold; border: 1px solid #C00;">
-                <p style="margin: 1px"> {{$personal->habilitacion}} - <span style="font-style: italic; font-weight: normal; font-size: 4pt;">{{$personal->htraduccion}}</span> </p>
+                <?php
+                // $habs = is_string($personal->habilitaciones)
+                //     ? json_decode($personal->habilitaciones)   // -> objetos stdClass
+                //     : $personal->habilitaciones;
+                    $arrayHabilitacion = json_decode($arrayHabilitaciones, true);
+                    $cantidad = count($arrayHabilitacion);
+                ?>
+
+                <!-- @foreach($habs ?? [] as $hab)
+                <p style="margin: 1px">
+                    {{ $hab->nombre ?? $hab['nombre'] ?? '' }}
+                    -
+                    <span style="font-style: italic; font-weight: normal; font-size: 4pt;">
+                    {{ $hab->traduccion ?? $hab['traduccion'] ?? '' }}
+                    </span>
+                </p>
+                @endforeach -->
+                @foreach($arrayHabilitacion as $aH)
+                    <p style="margin: 1px">
+                        {{ $aH['habilitacion'] }}
+                        -
+                    <span style="font-style: italic; font-weight: normal; font-size: 4pt;">
+                        {{ $aH['traduccion'] }}
+                    </span>
+                @endforeach
             </div>
-            <!-- <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 1.55cm; left: 0.5cm; right: 0.3cm; font-size: 4pt; font-weight: normal; font-style: italic; border: 1px solid #C00;">
-                <p style="margin: 1px">{{$personal->htraduccion}}</p>
-            </div> -->
             <div style="padding-left: 0.1cm; text-align: right; position: fixed; top: 2.45cm; left: 0.1cm; right: 7.8cm; font-size: 4pt; font-weight: normal; border: 1px solid #C00;">
                 <p style="margin: 1px">XIII.</p>
             </div>

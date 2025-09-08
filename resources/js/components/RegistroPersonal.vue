@@ -67,7 +67,7 @@
                                     <label class="form-control-label" for="text-input">Nacionalidad</label>
                                     <select class="form-control"
                                         v-model="per_nacionalidad"
-                                        @change="verificarSeleccion(1), listarEntidad(per_nacionalidad)"
+                                        @change="verificarSeleccion(1), listarEntidad(per_nacionalidad), listarLicencia(per_entidad, per_categoria)"
                                         :class="{ 'is-invalid': $v.per_nacionalidad.$error, 'is-valid': !$v.per_nacionalidad.$invalid }">
                                         <option value="" disabled>SELECCIONE</option>
                                         <option v-for="nacionalidad in arrayNacionalidad"
@@ -202,13 +202,17 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-control-label" for="text-input">Habilitación</label>
-                                    <select class="form-control" v-model="per_habilitacion" :class="{ 'is-invalid' : $v.per_habilitacion.$error, 'is-valid':!$v.per_habilitacion.$invalid }">
-                                        <option value="" disabled>SELECCIONE</option>
-                                        <option v-for="habilitacion in arrayHabilitacion" :key="habilitacion.id" :value="habilitacion.id"  v-text="habilitacion.habilitacion"></option>                        
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        <span v-if="!$v.per_habilitacion.required">Este campo es Requerido</span>
+                                    <label class="form-control-label">Habilitación</label>
+                                    <div v-for="habilitacion in arrayHabilitacion" :key="habilitacion.id" class="form-check">
+                                      <input class="form-check-input"
+                                            type="checkbox"
+                                            :value="habilitacion.id"
+                                            v-model="per_habilitacion">
+                                      <label class="form-check-label" v-text="habilitacion.habilitacion"></label>
+                                    </div>
+
+                                    <div class="invalid-feedback d-block" v-if="$v.per_habilitacion.$error">
+                                      <span v-if="!$v.per_habilitacion.required">Este campo es Requerido</span>
                                     </div>
                                 </div>  
                                 <div class="col-md-3">
@@ -561,7 +565,7 @@
         per_fechnac : '',
         per_direccion : '',
         per_titlic : '',
-        per_habilitacion : '',
+        per_habilitacion : [],
         per_comlinguistica : '',
         per_observaciones : '',
         per_fechaemision : new Intl.DateTimeFormat("az", {
@@ -927,7 +931,7 @@
         this.per_fechnac = '',
         this.per_titlic = '',
         this.per_direccion = '',
-        this.per_habilitacion = '',
+        this.per_habilitacion = [],
         this.per_comlinguistica = '',
         this.per_observaciones = '',
         this.per_fechaexpiracion = '',
@@ -957,7 +961,8 @@
               this.NuevaNacionalidad();
               this.per_nacionalidad = ''; // Limpiar selección
             } else {
-                this.listarEntidad(this.per_nacionalidad);
+                this.listarEntidad(this.per_nacionalidad)
+                this.listarLicencia(this.per_entidad,this.per_categoria);
             }
             break;
 
@@ -1310,7 +1315,7 @@
       listarLicencia(entidad,categoria){ //DGAE
           let me = this;
           me.per_titlic = '';
-          me.per_habilitacion = '';
+          me.per_habilitacion = [];
           me.arrayLicencia = [];
           me.arrayHabilitacion = []; 
           axios
@@ -1329,7 +1334,7 @@
   
       listarHabilitacion(licencia){ //DGAE
           let me = this;
-          me.per_habilitacion = '';
+          me.per_habilitacion = [];
           me.arrayHabilitacion = [];
           axios
         .post("/listarHabilitacion", {

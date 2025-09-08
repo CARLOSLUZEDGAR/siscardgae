@@ -52,7 +52,10 @@
                             <div class="form-group row">
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Categoria</label>
-                                    <select class="form-control" v-model="per_categoria" @click="listarLicencia(per_entidad,per_categoria)" :class="{ 'is-invalid' : $v.per_categoria.$error, 'is-valid':!$v.per_categoria.$invalid }">
+                                    <select class="form-control" 
+                                      v-model="per_categoria" 
+                                      @change="listarLicencia(per_entidad, per_categoria, 0)" 
+                                      :class="{ 'is-invalid' : $v.per_categoria.$error, 'is-valid':!$v.per_categoria.$invalid }">
                                         <option value="" disabled>SELECCIONE</option>
                                         <option v-for="categoria in arrayCategoria" :key="categoria.id" :value="categoria.id"  v-text="categoria.categoria"></option>
                                     </select>
@@ -62,30 +65,40 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Nacionalidad</label>
-                                    <select class="form-control" v-model="per_nacionalidad" @click="listarEntidad(per_nacionalidad)" :class="{ 'is-invalid' : $v.per_nacionalidad.$error, 'is-valid':!$v.per_nacionalidad.$invalid }">
+                                    <select class="form-control"
+                                        v-model="per_nacionalidad"
+                                        @change="verificarSeleccion(1), listarEntidad(per_nacionalidad, 0), listarLicencia(per_entidad, per_categoria, 0)"
+                                        :class="{ 'is-invalid': $v.per_nacionalidad.$error, 'is-valid': !$v.per_nacionalidad.$invalid }">
                                         <option value="" disabled>SELECCIONE</option>
-                                        <option v-for="nacionalidad in arrayNacionalidad" :key="nacionalidad.id" :value="nacionalidad.id"  v-text="nacionalidad.pais"></option>
+                                        <option v-for="nacionalidad in arrayNacionalidad"
+                                            :key="nacionalidad.id"
+                                            :value="nacionalidad.id"
+                                            v-text="nacionalidad.pais"></option>
+                                        <option value="agregar_nacionalidad">+ Agregar nueva nacionalidad</option>
                                     </select>
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_nacionalidad.required">Este campo es Requerido</span>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-1">
-                                    <button type="button" class="btn btn btn-success" style="border-radius: 50%;" @click="NuevaNacionalidad()">+</button>
-                                </div> -->
+                                
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Entidad</label>
-                                    <select class="form-control" v-model="per_entidad" @click="listarLicencia(per_entidad,per_categoria),listarGrado(per_entidad)" :class="{ 'is-invalid' : $v.per_entidad.$error, 'is-valid':!$v.per_entidad.$invalid }">
-                                        <option value="" disabled>SELECCIONE</option>
-                                        <option v-for="entidad in arrayEntidad" :key="entidad.id" :value="entidad.id"  v-text="entidad.entidad"></option>                        
+                                    <select class="form-control" 
+                                    v-model="per_entidad" 
+                                    @change="verificarSeleccion(2), listarLicencia(per_entidad, per_categoria, 0), listarGrado(per_entidad, 0)" 
+                                    :class="{ 'is-invalid' : $v.per_entidad.$error, 'is-valid':!$v.per_entidad.$invalid }">
+                                    <option value="" disabled>SELECCIONE</option>
+                                    <option v-for="entidad in arrayEntidad" 
+                                        :key="entidad.id" 
+                                        :value="entidad.id"  
+                                        v-text="entidad.entidad"></option>  
+                                    <option value="agregar_entidad">+ Agregar nueva entidad</option>                 
                                     </select>
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_entidad.required">Este campo es Requerido</span>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-1">
-                                    <button type="button" class="btn btn btn-success" style="border-radius: 50%;" @click="NuevaEntidad()">+</button>
-                                </div> -->
+                                
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Grado</label>
                                     <select class="form-control" v-model="per_grado" :class="{ 'is-invalid' : $v.per_grado.$error, 'is-valid':!$v.per_grado.$invalid }">
@@ -177,7 +190,10 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Titulo de la Licencia</label>
-                                    <select class="form-control" v-model="per_titlic" @click="listarHabilitacion(per_titlic)" :class="{ 'is-invalid' : $v.per_titlic.$error, 'is-valid':!$v.per_titlic.$invalid }">
+                                    <select class="form-control" 
+                                      v-model="per_titlic" 
+                                      @change="listarHabilitacion(per_titlic, 0)" 
+                                      :class="{ 'is-invalid' : $v.per_titlic.$error, 'is-valid':!$v.per_titlic.$invalid }">
                                         <option value="" disabled>SELECCIONE</option>
                                         <option v-for="licencia in arrayLicencia" :key="licencia.id" :value="licencia.id"  v-text="licencia.licencia"></option>                        
                                     </select>
@@ -419,6 +435,103 @@
           <!-- ./row -->
         </div>
         <!-- /.container-fluid -->
+          <!-- Modal Nuevo Nacionalidad -->
+        <div class="modal fade" id="ModalNewNacionalidad" data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title-aumentar"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar(1)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <div class="col-md-12">
+                      <label class="form-control-label" for="text-input">Pais</label>
+                      <input type="text" v-model="na_pais" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.na_pais.$error, 'is-valid':!$v.na_pais.$invalid }">
+                      <div class="invalid-feedback">
+                          <span v-if="!$v.na_pais.required">Este campo es Requerido</span>
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <label class="form-control-label" for="text-input">Abreviatura</label>
+                      <input type="text" v-model="na_abreviatura" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.na_abreviatura.$error, 'is-valid':!$v.na_abreviatura.$invalid }">
+                      <div class="invalid-feedback">
+                          <span v-if="!$v.na_abreviatura.required">Este campo es Requerido</span>
+                      </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                      <label class="form-control-label" for="text-input">Nacionalidad</label>
+                      <input type="text" v-model="na_nacionalidad" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.na_nacionalidad.$error, 'is-valid':!$v.na_nacionalidad.$invalid }">
+                      <div class="invalid-feedback">
+                          <span v-if="!$v.na_nacionalidad.required">Este campo es Requerido</span>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" @click="CrearNacionalidad()">Registrar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar(1)">Cerrar</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+        <!-- Modal Nuevo Entidad -->
+        <div class="modal fade" id="ModalNewEntidad" data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title-aumentar"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar(2)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <div class="col-md-12">
+                      <label class="form-control-label" for="text-input">Pais</label>
+                      <select class="form-control" v-model="en_pais" v-on:change="changeItem1(rowId, $event)" :class="{ 'is-invalid' : $v.en_pais.$error, 'is-valid':!$v.en_pais.$invalid }" disabled>
+                          <option value="" disabled>SELECCIONE</option>
+                          <option v-for="nacionalidad in arrayNacionalidad" :key="nacionalidad.id" :value="nacionalidad.id"  v-text="nacionalidad.pais"></option>
+                      </select>
+                      <div class="invalid-feedback">
+                          <span v-if="!$v.en_pais.required">Este campo es Requerido</span>
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <label class="form-control-label" for="text-input">Entidad</label>
+                      <input type="text" v-model="en_entidad" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.en_entidad.$error, 'is-valid':!$v.en_entidad.$invalid }">
+                      <div class="invalid-feedback">
+                          <span v-if="!$v.en_entidad.required">Este campo es Requerido</span>
+                      </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                      <label class="form-control-label" for="text-input">Sigla</label>
+                      <input type="text" v-model="en_sigla" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.en_sigla.$error, 'is-valid':!$v.en_sigla.$invalid }">
+                      <div class="invalid-feedback">
+                          <span v-if="!$v.en_sigla.required">Este campo es Requerido</span>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" @click="CrearEntidad()">Registrar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar(2)">Cerrar</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
       </section>
       <!-- /.content -->
     </div>
@@ -549,6 +662,14 @@
             doc_especializacion : { required },
             doc_libreta : { required },
             doc_medico : { required },
+
+            na_pais: { required },
+            na_abreviatura: { required },
+            na_nacionalidad: { required },
+  
+            en_pais: { required },
+            en_entidad: { required },
+            en_sigla: { required },
   
             validationGroupReg: [
             'per_foto',
@@ -571,6 +692,16 @@
             'per_comlinguistica',
             'per_fechaemision',
             'per_fechaexpiracion'],
+
+            validationGroupNewNacionalidad: [
+            'na_pais',
+            'na_abreviatura',
+            'na_nacionalidad'],
+  
+            validationGroupNewEntidad: [
+            'en_pais',
+            'en_entidad',
+            'en_sigla'],
             
             validationGroupDocument:[
             'doc_ci',
@@ -828,11 +959,67 @@
             this.v = 0,
             this.listarCategoria();
             this.listarNacionalidad();
-            this.listarEntidad(this.per_nacionalidad);
-            this.listarGrado(this.per_entidad);
-            this.listarLicencia(this.per_entidad,this.per_categoria);
-            this.listarHabilitacion(this.per_titlic);
+            this.listarEntidad(this.per_nacionalidad, 1);
+            this.listarGrado(this.per_entidad, 1);
+            this.listarLicencia(this.per_entidad,this.per_categoria, 1);
+            this.listarHabilitacion(this.per_titlic, 1);
             this.listarCompetenciaLinguistica()
+        },
+
+        verificarSeleccion(opcion) {
+        switch (opcion) {
+            case 1:
+                if (this.per_nacionalidad === 'agregar_nacionalidad') {
+                // this.ModalNewNacionalidad = true;
+                this.NuevaNacionalidad();
+                this.per_nacionalidad = ''; // Limpiar selección
+                } else {
+                    this.listarEntidad(this.per_nacionalidad, 0)
+                    this.listarLicencia(this.per_entidad,this.per_categoria, 0);
+                }
+                break;
+
+            case 2:
+                if (this.per_entidad === 'agregar_entidad') {
+                // this.ModalNewEntidad = true;
+                this.NuevaEntidad();
+                this.per_entidad = ''; // Limpiar selección
+                } else {
+                    this.listarGrado(this.per_entidad, 0);
+                    this.listarLicencia(this.per_entidad, this.per_categoria, 0)
+                }
+                break;
+            
+            default:
+                break;
+            }  
+        },
+    
+        NuevaNacionalidad(){ //DGAE
+            this.$v.validationGroupNewNacionalidad.$reset(),
+            this.na_pais = '',
+            this.na_abreviatura = '',
+            this.na_nacionalidad = '',
+            this.vNN = 0,
+            $('#ModalNewNacionalidad').modal('show');
+            $(".modal-header").css("background-color", "#007bff");
+            $(".modal-header").css("color", "white" );
+            $(".modal-title-aumentar").text("Nueva Nacionalidad");
+            this.listarNacionalidad();
+        },
+    
+        NuevaEntidad(){ //DGAE
+            this.$v.validationGroupNewEntidad.$reset(),
+            this.en_pais = this.per_nacionalidad,
+            this.en_entidad = '',
+            this.en_sigla = '',
+            this.vNE = 0,
+            $('#ModalNewEntidad').modal('show');
+            $(".modal-header").css("background-color", "#007bff");
+            $(".modal-header").css("color", "white" );
+            $(".modal-title-aumentar").text("Nueva Entidad");
+            this.listarNacionalidad();
+            this.listarEntidad(this.per_nacionalidad, 0);
         },
   
         RenovarPersonal(){ //DGAE
@@ -928,6 +1115,151 @@
                 
             }
         },
+
+        CrearNacionalidad(){ //DGAE
+            if(!this.$v.validationGroupNewNacionalidad.$invalid){
+            swal.fire({
+                title: '¿Desea registrar?', // TITULO 
+                icon: 'question', //ICONO (success, warnning, error, info, question)
+                showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+                confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+                cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
+                confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
+                cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
+                buttonsStyling: true,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+                    axios
+                    .post("/crearNacionalidad", {
+                        pais : me.na_pais,
+                        nacionalidad: me.na_nacionalidad,
+                        abreviatura : me.na_abreviatura,
+                    })
+                    .then(function (response) {
+                        
+                        console.log(response);
+                        swal.fire({
+                            title: 'Se realizo el registro correctamente', //TITULO
+                            // response.data.mensaje, //TEXTO DE MENSAJE
+                            // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
+                            // response.personal
+                        });
+                        // this.listarNacionalidad();
+                        if (!response.data.code) {
+                            // $('#NuevoUsuario').modal('hide');
+                            $('#ModalNewNacionalidad').modal('hide');
+                            me.listarNacionalidad();
+                            // me.nick = '';
+                            // me.password = '';
+                            this.$v.$reset();
+                        } 
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    })
+                }else{
+                        swal.fire(
+                        "Informacion", //TITULO
+                        "Solicitud cancelada.", //TEXTO DE MENSAJE
+                        "info" // TIPO DE MODAL (success, warnning, error, info)
+                    );
+                }
+            })
+            }else{
+                this.$v.validationGroupNewNacionalidad.$touch();
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Ingrese todos los datos requeridos',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                
+            }
+        },
+  
+        CrearEntidad(){ //DGAE
+            if(!this.$v.validationGroupNewEntidad.$invalid){
+            swal.fire({
+                title: '¿Desea registrar?', // TITULO 
+                icon: 'question', //ICONO (success, warnning, error, info, question)
+                showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+                confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+                cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
+                confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
+                cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
+                buttonsStyling: true,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+                    axios
+                    .post("/crearEntidad", {
+                        pais : me.en_pais,
+                        entidad: me.en_entidad,
+                        sigla : me.en_sigla,
+                    })
+                    .then(function (response) {
+                        
+                        console.log(response);
+                        swal.fire({
+                            title: 'Se realizo el registro correctamente', //TITULO
+                            // response.data.mensaje, //TEXTO DE MENSAJE
+                            // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
+                            // response.personal
+                        });
+                        // this.listarNacionalidad();
+                        if (!response.data.code) {
+                            // $('#NuevoUsuario').modal('hide');
+                            $('#ModalNewEntidad').modal('hide');
+                            me.listarEntidad(me.per_nacionalidad, 0);
+                            // me.nick = '';
+                            // me.password = '';
+                            this.$v.$reset();
+                        } 
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    })
+                }else{
+                        swal.fire(
+                        "Informacion", //TITULO
+                        "Solicitud cancelada.", //TEXTO DE MENSAJE
+                        "info" // TIPO DE MODAL (success, warnning, error, info)
+                    );
+                }
+            })
+            }else{
+                this.$v.validationGroupNewEntidad.$touch();
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Ingrese todos los datos requeridos',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                
+            }
+        },
+
+        Cerrar(valor){
+            switch (valor) {
+            case 1:
+                this.na_pais = '',
+                this.na_abreviatura = '',
+                this.na_nacionalidad = ''
+                break;
+
+            case 2:
+                this.en_pais = '',
+                this.en_entidad = '',
+                this.en_sigla = ''
+                break;
+            }
+
+        },
   
         listarCategoria(){ //DGAE
                 let me = this;
@@ -957,64 +1289,85 @@
             })
         },
   
-        listarEntidad(nacionalidad){ //DGAE
-                let me = this;
-                axios
+        listarEntidad(nacionalidad, estado){
+            //DGAE
+            let me = this;
+            if (estado == 0){
+                me.per_entidad = '';
+                me.per_grado = '';
+                me.arrayEntidad = [];
+                me.arrayGrado = [];
+            }
+            axios
             .post("/listarEntidad", {
-                id_nacionalidad : nacionalidad,
+            id_nacionalidad : nacionalidad,
             })
             .then(function (response) {
-                me.arrayEntidad = response.data.entidades
+            me.arrayEntidad = response.data.entidades
             })
             .catch(function (error) {
-                // handle error
-                console.log(error);
+            // handle error
+            console.log(error);
             })
         },
   
-        listarGrado(entidad){ //DGAE
-                let me = this;
-                axios
+        listarGrado(entidad, estado){ //DGAE
+            let me = this;
+            if (estado == 0) {
+                me.per_grado = '';
+                me.arrayGrado = '';
+            }
+            axios
             .post("/listarGrado", {
-                id_entidad : entidad,
+            id_entidad : entidad,
             })
             .then(function (response) {
-                me.arrayGrado = response.data.grados
+            me.arrayGrado = response.data.grados
             })
             .catch(function (error) {
-                // handle error
-                console.log(error);
+            // handle error
+            console.log(error);
             })
         },
   
-        listarLicencia(entidad,categoria){ //DGAE
-                let me = this;
-                axios
+        listarLicencia(entidad, categoria, estado){ //DGAE
+            let me = this;
+            if (estado == 0) {
+                me.per_titlic = '';
+                me.per_habilitacion = [];
+                me.arrayLicencia = [];
+                me.arrayHabilitacion = []; 
+            }
+            axios
             .post("/listarLicencia", {
-                id_entidad : entidad,
-                id_categoria : categoria
+            id_entidad : entidad,
+            id_categoria : categoria
             })
             .then(function (response) {
-                me.arrayLicencia = response.data.licencias
+            me.arrayLicencia = response.data.licencias
             })
             .catch(function (error) {
-                // handle error
-                console.log(error);
+            // handle error
+            console.log(error);
             })
         },
   
-        listarHabilitacion(licencia){ //DGAE
-                let me = this;
-                axios
+        listarHabilitacion(licencia, estado){ //DGAE
+            let me = this;
+            if (estado == 0) {
+                me.per_habilitacion = [];
+                me.arrayHabilitacion = [];
+            }
+            axios
             .post("/listarHabilitacion", {
-                id_titlicencia : licencia,
+            id_titlicencia : licencia,
             })
             .then(function (response) {
-                me.arrayHabilitacion = response.data.habilitaciones
+            me.arrayHabilitacion = response.data.habilitaciones
             })
             .catch(function (error) {
-                // handle error
-                console.log(error);
+            // handle error
+            console.log(error);
             })
         },
   
