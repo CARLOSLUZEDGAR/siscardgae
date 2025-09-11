@@ -202,13 +202,24 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-control-label" for="text-input">Habilitación</label>
-                                    <select class="form-control" v-model="per_habilitacion" :class="{ 'is-invalid' : $v.per_habilitacion.$error, 'is-valid':!$v.per_habilitacion.$invalid }">
-                                        <option value="" disabled>SELECCIONE</option>
-                                        <option v-for="habilitacion in arrayHabilitacion" :key="habilitacion.id" :value="habilitacion.id"  v-text="habilitacion.habilitacion"></option>                        
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        <span v-if="!$v.per_habilitacion.required">Este campo es Requerido</span>
+                                    <label class="form-control-label">Habilitación</label>
+                                    
+                                    <div v-for="habilitacion in arrayHabilitacion" 
+                                        :key="habilitacion.id" 
+                                        class="form-check">
+                                    
+                                    <input class="form-check-input"
+                                            type="checkbox"
+                                            :value="habilitacion.id"
+                                            v-model="per_habilitacion">
+                                    
+                                    <label class="form-check-label">
+                                        {{ habilitacion.habilitacion }}
+                                    </label>
+                                    </div>
+
+                                    <div class="invalid-feedback d-block" v-if="$v.per_habilitacion.$error">
+                                    <span v-if="!$v.per_habilitacion.required">Este campo es Requerido</span>
                                     </div>
                                 </div>  
                                 <div class="col-md-3">
@@ -563,7 +574,7 @@
         per_fechnac : '',
         per_direccion : '',
         per_titlic : '',
-        per_habilitacion : '',
+        per_habilitacion : [],
         per_comlinguistica : '',
         per_observaciones : '',
         // fechaemision : new Date(),

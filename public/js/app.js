@@ -18239,6 +18239,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -18263,7 +18274,7 @@ __webpack_require__.r(__webpack_exports__);
       per_fechnac: '',
       per_direccion: '',
       per_titlic: '',
-      per_habilitacion: '',
+      per_habilitacion: [],
       per_comlinguistica: '',
       per_observaciones: '',
       // fechaemision : new Date(),
@@ -147030,82 +147041,105 @@ var render = function() {
                             ])
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-md-3" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-control-label",
-                                attrs: { for: "text-input" }
-                              },
-                              [_vm._v("Habilitación")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              {
-                                directives: [
+                          _c(
+                            "div",
+                            { staticClass: "col-md-3" },
+                            [
+                              _c(
+                                "label",
+                                { staticClass: "form-control-label" },
+                                [_vm._v("Habilitación")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.arrayHabilitacion, function(
+                                habilitacion
+                              ) {
+                                return _c(
+                                  "div",
                                   {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.per_habilitacion,
-                                    expression: "per_habilitacion"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                class: {
-                                  "is-invalid": _vm.$v.per_habilitacion.$error,
-                                  "is-valid": !_vm.$v.per_habilitacion.$invalid
-                                },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.per_habilitacion = $event.target
-                                      .multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "option",
-                                  { attrs: { value: "", disabled: "" } },
-                                  [_vm._v("SELECCIONE")]
-                                ),
-                                _vm._v(" "),
-                                _vm._l(_vm.arrayHabilitacion, function(
-                                  habilitacion
-                                ) {
-                                  return _c("option", {
                                     key: habilitacion.id,
-                                    domProps: {
-                                      value: habilitacion.id,
-                                      textContent: _vm._s(
-                                        habilitacion.habilitacion
-                                      )
-                                    }
-                                  })
-                                })
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              !_vm.$v.per_habilitacion.required
-                                ? _c("span", [
-                                    _vm._v("Este campo es Requerido")
-                                  ])
+                                    staticClass: "form-check"
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.per_habilitacion,
+                                          expression: "per_habilitacion"
+                                        }
+                                      ],
+                                      staticClass: "form-check-input",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        value: habilitacion.id,
+                                        checked: Array.isArray(
+                                          _vm.per_habilitacion
+                                        )
+                                          ? _vm._i(
+                                              _vm.per_habilitacion,
+                                              habilitacion.id
+                                            ) > -1
+                                          : _vm.per_habilitacion
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = _vm.per_habilitacion,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = habilitacion.id,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                (_vm.per_habilitacion = $$a.concat(
+                                                  [$$v]
+                                                ))
+                                            } else {
+                                              $$i > -1 &&
+                                                (_vm.per_habilitacion = $$a
+                                                  .slice(0, $$i)
+                                                  .concat($$a.slice($$i + 1)))
+                                            }
+                                          } else {
+                                            _vm.per_habilitacion = $$c
+                                          }
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      { staticClass: "form-check-label" },
+                                      [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(habilitacion.habilitacion) +
+                                            "\n                                "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              }),
+                              _vm._v(" "),
+                              _vm.$v.per_habilitacion.$error
+                                ? _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback d-block" },
+                                    [
+                                      !_vm.$v.per_habilitacion.required
+                                        ? _c("span", [
+                                            _vm._v("Este campo es Requerido")
+                                          ])
+                                        : _vm._e()
+                                    ]
+                                  )
                                 : _vm._e()
-                            ])
-                          ]),
+                            ],
+                            2
+                          ),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-md-3" }, [
                             _c(
