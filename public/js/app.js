@@ -147456,20 +147456,24 @@ var render = function() {
                           ])
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger",
-                              attrs: { type: "button" },
-                              on: { click: _vm.nextStep }
-                            },
-                            [
-                              _c("i", { staticClass: "fas fa-forward" }),
-                              _vm._v("  SIGUIENTE")
-                            ]
-                          )
-                        ])
+                        _c(
+                          "div",
+                          { staticClass: "form-group row justify-content-end" },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                attrs: { type: "button" },
+                                on: { click: _vm.nextStep }
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-forward" }),
+                                _vm._v("  SIGUIENTE")
+                              ]
+                            )
+                          ]
+                        )
                       ])
                     : _vm._e(),
                   _vm._v(" "),

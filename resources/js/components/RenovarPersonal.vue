@@ -274,7 +274,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row justify-content-end">
                                 <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button>
                             </div>
                         </div>
@@ -417,7 +417,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row justify-content-end">
                                 <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
                                 &nbsp;
                                 <!-- <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button> -->
