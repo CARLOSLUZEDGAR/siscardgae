@@ -20030,7 +20030,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       // this.$v.$reset();
       // if(!this.$v.$invalid){
       // window.open('http://sipefab.fab.bo/certificadoDestAscenso?id_p='+id_personal);
-      window.open('http://127.0.0.1:8000/personal?id_p=' + id_personal); // }else{
+      window.open('/personal?id_p=' + id_personal); // }else{
       //     this.$v.$touch();
       //     Swal.fire({
       //         icon: 'warning',
@@ -20181,7 +20181,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.$v.$invalid) {
         // window.open('http://sipefab.fab.bo/certificadoDestAscenso?id_p='+id_personal);
-        window.open('http://127.0.0.1:8000/lista?de=' + de + '&hasta=' + hasta);
+        window.open('/lista?de=' + de + '&hasta=' + hasta);
       } else {
         this.$v.$touch();
         Swal.fire({
@@ -147805,40 +147805,44 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary",
-                              attrs: { type: "button" },
-                              on: { click: _vm.previousStep }
-                            },
-                            [
-                              _c("i", { staticClass: "fas fa-backward" }),
-                              _vm._v("  ANTERIOR")
-                            ]
-                          ),
-                          _vm._v(
-                            "\n                             \n                            "
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.RenovarPersonal()
+                        _c(
+                          "div",
+                          { staticClass: "form-group row justify-content-end" },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary",
+                                attrs: { type: "button" },
+                                on: { click: _vm.previousStep }
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-backward" }),
+                                _vm._v("  ANTERIOR")
+                              ]
+                            ),
+                            _vm._v(
+                              "\n                             \n                            "
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.RenovarPersonal()
+                                  }
                                 }
-                              }
-                            },
-                            [
-                              _c("i", { staticClass: "fas fa-address-card" }),
-                              _vm._v("  GUARDAR/GENERAR")
-                            ]
-                          )
-                        ])
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-address-card" }),
+                                _vm._v("  GUARDAR/GENERAR")
+                              ]
+                            )
+                          ]
+                        )
                       ])
                     : _vm._e(),
                   _vm._v(" "),

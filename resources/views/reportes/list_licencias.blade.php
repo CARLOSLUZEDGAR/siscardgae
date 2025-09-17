@@ -145,7 +145,7 @@
             </div>
 
             @if (sizeof($licencias) != 0)
-                <table width="100%" style="border-collapse: collapse; border-spacing: 0; border: black 1px; margin-bottom: 5px; padding-top: 2px; padding-bottom: 2px;" class="table table-bordered table-striped">
+                <table width="100%" style="border-collapse: collapse; border-spacing: 0; border: black 1px; margin-bottom: 5px; padding-top: 2px; padding-bottom: 1px;" class="table table-bordered table-striped">
                     <thead style="background-color: lightgray;">
                         <tr>
                             <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">NRO.</th>
@@ -156,7 +156,7 @@
                             <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">APELLIDOS Y NOMBRES</th>
                             <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">CATEGORIA</th>
                             <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">LICENCIA</th>
-                            <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">HABILITACIÓN</th>
+                            <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">HABILITACIÓN(ES)</th>
                             <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">COMPETENCIA LINGUISTICA</th> 
                         </tr>
                     </thead>
@@ -181,7 +181,13 @@
                             <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->per_paterno}} {{$row->per_materno}} {{$row->per_nombre}}</span></td>
                             <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->categoria}}</span></td>
                             <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->licencia}}</span></td>
-                            <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->habilitacion}}</span></td>
+                            <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;">
+                                @foreach($row->habilitaciones as $aH)
+                                    <p style="margin: 1px">
+                                        - {{ $aH->habilitacion }} 
+                                    </p>
+                                @endforeach
+                            </td>
                             <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->nivel}}</span></td>
                         </tr>
                         @endforeach
@@ -193,7 +199,7 @@
                     <p style="margin: 1px; font-size: 12pt; font-weight: bold;">NO SE TIENE REGISTROS ENTRE LOS RANGOS SELECCIONADOS.</p>
                 </div>
             @endif
-            <div style="padding-top: 0.5cm; padding-bottom: 1px; text-align: right; font-size: 12pt; font-weight: normal; /*border: 1px solid #C00;*/">
+            <div style="padding-top: 0cm; padding-bottom: 1px; text-align: right; font-size: 12pt; font-weight: normal; /*border: 1px solid #C00;*/">
                 La Paz, 
                     <?php
                         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");

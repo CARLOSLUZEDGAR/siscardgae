@@ -974,7 +974,7 @@
               // this.$v.$reset();
               // if(!this.$v.$invalid){
               // window.open('http://sipefab.fab.bo/certificadoDestAscenso?id_p='+id_personal);
-              window.open('http://127.0.0.1:8000/personal?id_p='+id_personal);
+              window.open('/personal?id_p='+id_personal);
               // }else{
               //     this.$v.$touch();
               //     Swal.fire({

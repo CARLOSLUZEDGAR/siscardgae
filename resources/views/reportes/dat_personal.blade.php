@@ -159,34 +159,61 @@
             </div>
                 
             <div>
-                <table width="100%" style="border-collapse: collapse;border-spacing: 0; /*border: black 1px;*/ margin-bottom: 5px;" class="table table-bordered table-striped">
+                <table width="100%" style="border-collapse: collapse; border-spacing: 0; /*border: black 1px;*/ margin-bottom: 5px;" class="table table-bordered table-striped">
                     <tbody class="table-striped">
                         <tr>
-                            <td width="30%" style="/*border: 1px solid #000;*/ padding: 7px; font-size: 10px; text-align: center;"><span><img style="width:90; height:90; border: 2px solid #142A98;" src="../public/img/personal/{{$personal->per_foto}}"></span></td>
+                            <td rowspan="6" width="30%" style="/*border: 1px solid #000;*/ padding: 1px; text-align: center; vertical-align: middle;">
+                                <img style="width: 3cm; height: 3cm; border: 2px solid #142A98;" src="../public/img/personal/{{$personal->per_foto}}">
+                            </td>
                             <td width="25%" style="/*border: 1px solid #000;*/ padding: 1px; font-size: 12pt; text-align: left;">
-                                <span>
-                                    <p style="margin: 1px; font-weight: bold; /*border: 1px solid #000;*/">GRADO:</p>
-                                    <p style="margin: 1px; font-weight: bold; /*border: 1px solid #000;*/">APELLIDO(S):</p>
-                                    <p style="margin: 1px; font-weight: bold; /*border: 1px solid #000;*/">NOMBRE(S):</p>
-                                    <p style="margin: 1px; font-weight: bold; /*border: 1px solid #000;*/">NRO. LICENCIA:</p>
-                                    <p style="margin: 1px; font-weight: bold; /*border: 1px solid #000;*/">NACIONALIDAD:</p>
-                                    <p style="margin: 1px; font-weight: bold; /*border: 1px solid #000;*/">FECHA DE NAC.:</p>
-
-                                </span>
+                                <span style="margin: 1px; font-weight: bold;">GRADO:</span>
                             </td>
                             <td width="45%" style="/*border: 1px solid #000;*/ padding: 1px; font-size: 12pt; text-align: left;">
-                                <span>
-                                    <p style="margin: 1px; /*font-weight: bold;*/ /*border: 1px solid #000;*/"> {{$personal->abreviatura}}</p>
-                                    <p style="margin: 1px; /*font-weight: bold;*/ /*border: 1px solid #000;*/"> {{$personal->per_paterno}} {{$personal->per_materno}}</p>
-                                    <p style="margin: 1px; /*font-weight: bold;*/ /*border: 1px solid #000;*/"> {{$personal->per_nombre}}</p>
-                                    <p style="margin: 1px; /*font-weight: bold;*/ /*border: 1px solid #000;*/"> {{$personal->per_ci}}</p>
-                                    <p style="margin: 1px; /*font-weight: bold;*/ /*border: 1px solid #000;*/"> {{$personal->nacionalidad}}</p>
-                                    <?php
-                                        $date = date_create($personal->per_fecha_nacimiento);
-                                        $fechanacimiento = date_format($date,"d/m/Y");
-                                    ?>
-                                    <p style="margin: 1px; /*font-weight: bold;*/ /*border: 1px solid #000;*/"><span><?php echo $fechanacimiento; ?></span></p>
-                                </span>
+                                <span style="margin: 1px;">{{$personal->abreviatura}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="/*border: 1px solid #000;*/ padding: 1px; font-size: 12pt; text-align: left; vertical-align: top;">
+                                <span style="margin: 1px; font-weight: bold;">APELLIDO(S):</span>
+                            </td>
+                            <td width="45%" style="/*border: 1px solid #000;*/ padding: 1px; font-size: 12pt; text-align: left;">
+                                <span style="margin: 1px;">{{$personal->per_paterno}} {{$personal->per_materno}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="/*border: 1px solid #000;*/ padding: 1px; font-size: 12pt; text-align: left;">
+                                <span style="margin: 1px; font-weight: bold;">NOMBRE(S):</span>
+                            </td>
+                            <td width="45%" style="/*border: 1px solid #000;*/ padding: 1px; font-size: 12pt; text-align: left;">
+                                <span style="margin: 1px;">{{$personal->per_nombre}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="/*border: 1px solid #000;*/ padding: 1px; font-size: 12pt; text-align: left;">
+                                <span style="margin: 1px; font-weight: bold;">NRO. LICENCIA:</span>
+                            </td>
+                            <td width="45%" style="/*border: 1px solid #000;*/ padding: 1px; font-size: 12pt; text-align: left;">
+                                <span style="margin: 1px;">{{$personal->per_ci}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="/*border: 1px solid #000;*/ padding: 1px; font-size: 12pt; text-align: left;">
+                                <span style="margin: 1px; font-weight: bold;">NACIONALIDAD:</span>
+                            </td>
+                            <td width="45%" style="/*border: 1px solid #000;*/ padding: 1px; font-size: 12pt; text-align: left;">
+                                <span style="margin: 1px;">{{$personal->nacionalidad}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="/*border: 1px solid #000;*/ padding: 1px; font-size: 12pt; text-align: left;">
+                                <span style="margin: 1px; font-weight: bold;">FECHA DE NAC.:</span>
+                            </td>
+                            <td width="45%" style="/*border: 1px solid #000;*/ padding: 1px; font-size: 12pt; text-align: left;">
+                                <?php
+                                    $date = date_create($personal->per_fecha_nacimiento);
+                                    $fechanacimiento = date_format($date,"d/m/Y");
+                                ?>
+                                <span style="margin: 1px;"><?php echo $fechanacimiento; ?></span>
                             </td>
                         </tr> 
                     </tbody>
@@ -210,7 +237,7 @@
                         <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">GRADO</th>
                         <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">CATEGORIA</th>
                         <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">LICENCIA</th>
-                        <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">HABILITACIÓN</th>
+                        <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">HABILITACIÓN(ES)</th>
                         <th style="text-align: center; border: 1px solid #000; height:30px; font-size: 8pt;">COMPETENCIA LINGUISTICA</th> 
                     </tr>
                 </thead>
@@ -234,7 +261,13 @@
                         <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->abreviatura}}</span></td>
                         <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->categoria}}</span></td>
                         <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->licencia}}</span></td>
-                        <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->habilitacion}}</span></td>
+                        <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;">
+                            @foreach($row->habilitaciones as $aH)
+                                <p style="margin: 1px">
+                                    - {{ $aH->habilitacion }} 
+                                </p>
+                            @endforeach
+                        </td>
                         <td style="border: 1px solid #000; padding: 2px; font-size: 8pt;"><span>{{$row->nivel}}</span></td>
                     </tr>
                     @endforeach

@@ -13,56 +13,6 @@ class ReporteController extends Controller
 {
     public function GenerarCarnet(Request $request)
     {
-        // $personal = DB::table('personals as p')
-        //             ->join('personal_licencias as pl','p.id','pl.id_personal')
-        //             ->join('nacionalidads as n','p.id_nacionalidad','n.id')
-        //             ->join('entidads as e','pl.id_entidad','e.id')
-        //             ->join('grados as g','pl.id_grado','g.id')
-        //             ->join('licencias as l','pl.id_licencia','l.id')
-        //             ->crossJoin(DB::raw('LATERAL jsonb_array_elements(pl.id_habilitacion) as hab_id(id)'))
-        //             ->join('habilitacions as h', DB::raw('(hab_id.id)::int'), '=', 'h.id')
-        //             ->join('competencia_linguisticas as cl','pl.id_comp_linguistica','cl.id')
-        //             ->select(
-        //                 'p.id as id_personal',
-        //                 'n.nacionalidad',
-        //                 'n.pais',
-        //                 'p.per_foto',
-        //                 'p.per_nombre',
-        //                 'p.per_paterno',
-        //                 'p.per_materno',
-        //                 'p.per_ci',
-        //                 'p.per_sexo',
-        //                 'p.per_fecha_nacimiento',
-        //                 'p.per_direccion',
-        //                 'pl.id as id_licencia',
-        //                 'pl.id_entidad',
-        //                 'e.entidad',
-        //                 'g.abreviatura',
-        //                 'l.licencia',
-        //                 'l.traduccion',
-        //                 'cl.nivel',
-        //                 'cl.traduccion as cltraduccion',
-        //                 'pl.observacion',
-        //                 'pl.fecha_emision',
-        //                 'pl.fecha_expiracion',
-        //                 DB::raw("jsonb_agg(
-        //                     jsonb_build_object(
-        //                         'id', h.id,
-        //                         'nombre', h.habilitacion,
-        //                         'traduccion', h.traduccion
-        //                     )
-        //                 ) as habilitaciones")
-        //             )
-        //             ->where('p.id',$request->id_p)
-        //             ->where('pl.estado',1)
-        //             ->groupBy(
-        //                 'p.id','n.nacionalidad','n.pais','p.per_foto','p.per_nombre','p.per_paterno',
-        //                 'p.per_materno','p.per_ci','p.per_sexo','p.per_fecha_nacimiento','p.per_direccion',
-        //                 'pl.id','pl.id_entidad','e.entidad','g.abreviatura','l.licencia','l.traduccion',
-        //                 'cl.nivel','cl.traduccion','pl.observacion','pl.fecha_emision','pl.fecha_expiracion'
-        //             )
-        //             ->first();
-
         $personal = DB::table('personals as p')
                     ->join('personal_licencias as pl','p.id','pl.id_personal')
                     ->join('nacionalidads as n','p.id_nacionalidad','n.id')
@@ -111,9 +61,7 @@ class ReporteController extends Controller
 
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $fecha_emision = date('d')."/".date('n')."/".date('Y');
-    //     $habilitaciones = collect($personal->habilitaciones)
-    // ->pluck('nombre') // solo tomamos los nombres
-    // ->implode(', ');  // los unimos con comas
+        
         $qr = QrCode::encoding('UTF-8')->size(100)->generate( "No. LICENCIA: $personal->per_ci\nGRADO: $personal->abreviatura\nAPELLIDO(S): $personal->per_paterno $personal->per_materno\nNOMBRE(S): $personal->per_nombre\nTITULO: $personal->licencia\nHABILITACION(ES): $arrayHabilitaciones\nFECHA: $fecha_emision");
         $codigo = $qr;
 
@@ -137,7 +85,7 @@ class ReporteController extends Controller
                     ->join('entidads as e','pl.id_entidad','e.id')
                     ->join('grados as g','pl.id_grado','g.id')
                     ->join('licencias as l','pl.id_licencia','l.id')
-                    ->join('habilitacions as h','pl.id_habilitacion','h.id')
+                    // ->join('habilitacions as h','pl.id_habilitacion','h.id')
                     ->join('competencia_linguisticas as cl','pl.id_comp_linguistica','cl.id')
                     ->select('p.id as id_personal',
                         'n.nacionalidad',
@@ -155,8 +103,9 @@ class ReporteController extends Controller
                         'g.abreviatura',
                         'l.licencia',
                         'l.traduccion',
-                        'h.habilitacion',
-                        'h.traduccion as htraduccion',
+                        'pl.id_habilitacion',
+                        // 'h.habilitacion',
+                        // 'h.traduccion as htraduccion',
                         'cl.nivel',
                         'cl.traduccion as cltraduccion',
                         'pl.observacion',
@@ -167,34 +116,64 @@ class ReporteController extends Controller
                     ->where('pl.estado',1)
                     ->first();
 
+        $arrayIdHabilitacionAct = json_decode($personal->id_habilitacion, true);
+        $cantidad = count($arrayIdHabilitacionAct);
+
+        $arrayHabilitacionesAct = DB::table('habilitacions')
+                            ->select('id', 'habilitacion', 'traduccion')
+                            ->whereIn('id', $arrayIdHabilitacionAct)
+                            ->get();
+
         $personal_licencias = DB::table('personal_licencias as pl')
                             ->join('categorias as c','pl.id_categoria','c.id')
                             ->join('entidads as e','pl.id_entidad','e.id')
                             ->join('grados as g','pl.id_grado','g.id')
                             ->join('licencias as l','pl.id_licencia','l.id')
-                            ->join('habilitacions as h','pl.id_habilitacion','h.id')
+                            // ->join('habilitacions as h','pl.id_habilitacion','h.id')
                             ->join('competencia_linguisticas as cl','pl.id_comp_linguistica','cl.id')
                             ->select('pl.id',
                                     'c.categoria',
                                     'e.entidad',
                                     'g.abreviatura',
                                     'l.licencia',
-                                    'h.habilitacion',
+                                    'pl.id_habilitacion',
+                                    // 'h.habilitacion',
                                     'cl.nivel',
                                     'pl.fecha_emision')
                             ->where('pl.id_personal',$request->id_p)
                             ->orderBy('pl.fecha_emision','asc')
                             ->get();
+        
+        // Recorremos los resultados
+        foreach ($personal_licencias as $pl) {
+            // Decodificamos el JSON a array
+            $arrayIdHabilitaciones = json_decode($pl->id_habilitacion, true);
+
+            if (is_array($arrayIdHabilitaciones) && count($arrayIdHabilitaciones) > 0) {
+                // Obtenemos las habilitaciones de esos IDs
+                $arrayHabilitaciones = DB::table('habilitacions')
+                    ->select('id', 'habilitacion', 'traduccion')
+                    ->whereIn('id', $arrayIdHabilitaciones)
+                    ->get();
+
+                // Le agregamos la lista al objeto actual
+                $pl->habilitaciones = $arrayHabilitaciones;
+            } else {
+                $pl->habilitaciones = collect(); // colección vacía
+            }
+        }
 
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $fecha_emision = date('d')."/".date('n')."/".date('Y');
-        $qr = QrCode::encoding('UTF-8')->size(100)->generate("No. LICENCIA: $personal->per_ci\nGRADO: $personal->abreviatura\nAPELLIDO(S): $personal->per_paterno $personal->per_materno\nNOMBRE(S): $personal->per_nombre\nTITULO: $personal->licencia\nHABILITACION: $personal->habilitacion\nFECHA: $fecha_emision");
+        // $qr = QrCode::encoding('UTF-8')->size(100)->generate("No. LICENCIA: $personal->per_ci\nGRADO: $personal->abreviatura\nAPELLIDO(S): $personal->per_paterno $personal->per_materno\nNOMBRE(S): $personal->per_nombre\nTITULO: $personal->licencia\nHABILITACION: $personal->habilitacion\nFECHA: $fecha_emision");
+        $qr = QrCode::encoding('UTF-8')->size(100)->generate("No. LICENCIA: $personal->per_ci\nGRADO: $personal->abreviatura\nAPELLIDO(S): $personal->per_paterno $personal->per_materno\nNOMBRE(S): $personal->per_nombre\nTITULO: $personal->licencia\nFECHA: $fecha_emision");
         $codigo = $qr;
 
         $pdf = PDF::loadView('reportes.dat_personal',['personal'=>$personal,
-                                                'qr'=>$codigo,
-                                                'licencias'=>$personal_licencias
-                                                ])
+                                                    'arrayHabilitaciones' => $arrayHabilitaciones,
+                                                    'qr'=>$codigo,
+                                                    'licencias'=>$personal_licencias
+                                                    ])
         //8.3cm 5cm
         ->setPaper('letter', 'portrait');                                               
         
@@ -219,7 +198,7 @@ class ReporteController extends Controller
                             ->join('entidads as e','pl.id_entidad','e.id')
                             ->join('grados as g','pl.id_grado','g.id')
                             ->join('licencias as l','pl.id_licencia','l.id')
-                            ->join('habilitacions as h','pl.id_habilitacion','h.id')
+                            // ->join('habilitacions as h','pl.id_habilitacion','h.id')
                             ->join('competencia_linguisticas as cl','pl.id_comp_linguistica','cl.id')
                             ->join('personals as p','pl.id_personal','p.id')
                             ->select('pl.id',
@@ -227,7 +206,8 @@ class ReporteController extends Controller
                                     'e.entidad',
                                     'g.abreviatura',
                                     'l.licencia',
-                                    'h.habilitacion',
+                                    'pl.id_habilitacion',
+                                    // 'h.habilitacion',
                                     'cl.nivel',
                                     'pl.fecha_emision',
                                     'p.per_nombre',
@@ -237,6 +217,25 @@ class ReporteController extends Controller
                             ->whereBetween('pl.fecha_emision',[$de,$hasta])
                             ->orderBy('pl.fecha_emision','asc')
                             ->get();
+
+        // Recorremos los resultados
+        foreach ($personal_licencias as $pl) {
+            // Decodificamos el JSON a array
+            $arrayIdHabilitaciones = json_decode($pl->id_habilitacion, true);
+
+            if (is_array($arrayIdHabilitaciones) && count($arrayIdHabilitaciones) > 0) {
+                // Obtenemos las habilitaciones de esos IDs
+                $arrayHabilitaciones = DB::table('habilitacions')
+                    ->select('id', 'habilitacion', 'traduccion')
+                    ->whereIn('id', $arrayIdHabilitaciones)
+                    ->get();
+
+                // Le agregamos la lista al objeto actual
+                $pl->habilitaciones = $arrayHabilitaciones;
+            } else {
+                $pl->habilitaciones = collect(); // colección vacía
+            }
+        }
 
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $fecha_emision = date('d')."/".date('n')."/".date('Y');
