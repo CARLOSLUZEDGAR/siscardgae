@@ -390,13 +390,6 @@
                         // echo date('d')." de ".$meses[date('n')-1]." del ".date('Y');
                     ?>
             </div> -->
-
-            
-                                                                                        
-            <!-- <div style="padding-top: 5px; padding-bottom: 5px; text-align: left; font-size: 11px; font-weight: normal; /*border: 1px solid #C00;*/">
-                <p style="margin: 1px">AAA/aaa</p>
-            </div> -->
-
         </div>
 
     </main>
