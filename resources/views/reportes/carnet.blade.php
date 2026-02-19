@@ -368,7 +368,7 @@
                 <p style="margin: 1px">XII.</p>
             </div>
             <div style="padding: 0.1cm; text-align: center; position: fixed; top: 3.2cm; left: 0.1cm; right: 0.6cm; font-size: 4pt; font-weight: bold; /*border: 1px solid #C00;*/">
-                <img style="width:1.7cm; height:1.5cm; /*border: 2px solid #142A98;*/" src="../public/img/sello_dgae_2025.png">
+                <img style="width:1.7cm; height:1.5cm; /*border: 2px solid #142A98;*/" src="../public/img/sello_dgae_2026.png">
             </div>
             <div style="padding-left: 0.1cm; text-align: right; position: fixed; top: 4.1cm; left: 4.6cm; right: 3.2cm; font-size: 4pt; font-weight: normal; /*border: 1px solid #C00;*/">
                 <p style="margin: 1px">XI.</p>
