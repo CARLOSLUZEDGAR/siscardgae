@@ -123,7 +123,7 @@
         <App ruta="{{route('basepath')}}"></App>
     </div>
     <footer class="main-footer">
-        <strong>Copyright &copy; 2024 "Dirección General de Aeronaves de Estado"</strong> 
+        <strong>Copyright &copy; {{ date('Y') }} "Dirección General de Aeronaves de Estado"</strong> 
         <br> 
         Todos los derechos reservados. 
         <div class="float-right d-none d-sm-inline-block">

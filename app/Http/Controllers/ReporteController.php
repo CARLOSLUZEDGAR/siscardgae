@@ -59,11 +59,17 @@ class ReporteController extends Controller
                             ->whereIn('id', $arrayIdHabilitaciones)
                             ->get();
 
+        // $url_verificacion = '127.0.0.1:8000/licencia/verificacion/'.$personal->id_licencia;
+        $url_verificacion = '192.168.1.33:8000/verificarPersonal/'.$personal->id_licencia;
+
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $fecha_emision = date('d')."/".date('n')."/".date('Y');
-        
-        $qr = QrCode::encoding('UTF-8')->size(100)->generate( "No. LICENCIA: $personal->per_ci\nGRADO: $personal->abreviatura\nAPELLIDO(S): $personal->per_paterno $personal->per_materno\nNOMBRE(S): $personal->per_nombre\nTITULO: $personal->licencia\nHABILITACION(ES): $arrayHabilitaciones\nFECHA: $fecha_emision");
+
+        $qr = QrCode::encoding('UTF-8')->size(100)->generate($url_verificacion);
         $codigo = $qr;
+        
+        // $qr = QrCode::encoding('UTF-8')->size(100)->generate( "No. LICENCIA: $personal->per_ci\nGRADO: $personal->abreviatura\nAPELLIDO(S): $personal->per_paterno $personal->per_materno\nNOMBRE(S): $personal->per_nombre\nTITULO: $personal->licencia\nHABILITACION(ES): $arrayHabilitaciones\nFECHA: $fecha_emision");
+        // $codigo = $qr;
 
         $pdf = PDF::loadView('reportes.carnet',['personal'=>$personal,
                                                 'arrayHabilitaciones' => $arrayHabilitaciones,

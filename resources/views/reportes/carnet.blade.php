@@ -272,6 +272,8 @@
             <div style="padding: 0cm; text-align: center; position: fixed; top: 4.5cm; left: 3cm; right: 2cm; font-size: 4pt; font-weight: normal; /*border: 1px solid #C00;*/">
                 <p style="margin: 1px">{{$fechaexpiracion}}</p>
             </div> -->
+            
+
             <div style="padding: 0.1cm; text-align: center; position: fixed; top: 0.75cm; left: 5.5cm; right: 0.2cm; font-size: 4pt; font-weight: bold; /*border: 1px solid #C00;*/">
                 <img style="width:2cm; height:2cm; /*border: 1px solid #142A98;*/" src="../public/img/personal/{{$personal->per_foto}}">
             </div>
@@ -296,13 +298,16 @@
             <div style="padding-top: 1px; padding-bottom: 1px; padding-right: 1px; text-align: right; position: fixed; top: 0.2cm; left: 6.8cm; right: 0.1cm; font-size: 5pt; font-weight: bold; /*border: 1px solid #C00;*/">
                 <p style="margin: 1px">Folio No.: {{$personal->id_personal}}</p>
             </div>
+            <div style="padding: 0.1cm; text-align: center; position: fixed; top: 0.7cm; left: 6.3cm; right: 0.1cm; font-size: 4pt; font-weight: bold; /*border: 1px solid #C00;*/">
+                <img style="/*border: 1px solid black;*/ width: 1.5cm; height: 1.5cm" src="data:image/png;base64, {!! base64_encode($qr) !!} ">
+            </div>
             <div style="padding-left: 0.1cm; text-align: right; position: fixed; top: 0.8cm; left: 0.1cm; right: 7.8cm; font-size: 4pt; font-weight: normal; /*border: 1px solid #C00;*/">
                 <p style="margin: 1px">XIII.</p>
             </div>
             <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 0.8cm; left: 0.5cm; right: 0.3cm; font-size: 4pt; font-weight: normal; /*border: 1px solid #C00;*/">
                 <p style="margin: 1px">HABILITACIONES - <span style="font-style: italic;">RATINGS</span>:</p>
             </div>
-            <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 1.05cm; left: 0.5cm; right: 0.3cm; font-size: 5pt; font-weight: bold; /*border: 1px solid #C00;*/">
+            <div style="padding-left: 0.1cm; text-align: left; position: fixed; top: 1.05cm; left: 0.5cm; right: 1.8cm; font-size: 5pt; font-weight: bold; /*border: 1px solid #C00;*/">
                 <?php
                 // $habs = is_string($personal->habilitaciones)
                 //     ? json_decode($personal->habilitaciones)   // -> objetos stdClass
@@ -354,9 +359,7 @@
             <div style="padding-left: 0.5cm; text-align: left; position: fixed; top: 3.15cm; left: 0.1cm; right: 2.5cm; font-size: 4pt; font-weight: normal; font-style: italic; border: 1px solid #C00;">
                 <p style="margin: 1px">{{$personal->cltraduccion}}</p>
             </div> -->
-            <!-- <div style="padding: 0.1cm; text-align: center; position: fixed; top: 2.6cm; left: 5.9cm; right: 0.1cm; font-size: 4pt; font-weight: bold; /*border: 1px solid #C00;*/">
-                <img style="border: 1px solid black; width: 2cm; height: 2cm" src="data:image/png;base64, {!! base64_encode($qr) !!} ">
-            </div> -->
+            
             
             <div style="padding-left: 0.1cm; text-align: right; position: fixed; top: 4.5cm; left: 0.1cm; right: 7.8cm; font-size: 4pt; font-weight: normal; /*border: 1px solid #C00;*/">
                 <p style="margin: 1px">VIII.</p>
