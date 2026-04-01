@@ -60,7 +60,7 @@ class ReporteController extends Controller
                             ->get();
 
         // $url_verificacion = '127.0.0.1:8000/licencia/verificacion/'.$personal->id_licencia;
-        $url_verificacion = '192.168.1.33:8000/verificarPersonal/'.$personal->id_licencia;
+        $url_verificacion = '192.168.1.17:8000/verificarPersonal/'.$personal->id_licencia;
 
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $fecha_emision = date('d')."/".date('n')."/".date('Y');

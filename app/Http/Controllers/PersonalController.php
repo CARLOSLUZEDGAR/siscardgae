@@ -491,6 +491,8 @@ class PersonalController extends Controller
     }
 
     public function VerificarPersonal($id_per_lic) {
+        $id_per_licen = $id_per_lic;
+
         $personal = DB::table('personals as p')
                     ->join('personal_licencias as pl','p.id','pl.id_personal')
                     ->join('nacionalidads as n','p.id_nacionalidad','n.id')
@@ -525,8 +527,21 @@ class PersonalController extends Controller
                         'pl.fecha_emision',
                         'pl.fecha_expiracion'
                         )
-                    ->where('p.id',$id_per_lic)
+                    ->where('pl.id',$id_per_licen)
                     ->where('pl.estado',1)
                     ->first();
+
+        $fecha_actual = Carbon::now();
+
+        $fecha_expiracion = Carbon::parse($personal->fecha_expiracion);
+
+        $estado = $fecha_actual->gt($fecha_expiracion) ? 'NO VIGENTE' : 'VIGENTE';   
+
+        // return [
+        //     'personal' => $personal,
+        //     'fecha_actual' => $fecha_actual
+        // ]; 
+
+        return view('verificacion.verificar', compact('personal', 'estado'));
     }
 }
