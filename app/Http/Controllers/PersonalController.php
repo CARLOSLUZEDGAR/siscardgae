@@ -14,6 +14,11 @@ use Illuminate\Support\Str;
 
 class PersonalController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['VerificarPersonal']);
+    }
+
     public function CrearPersonal(Request $request) //DGAE
     {
         if ($request->foto != "") {
