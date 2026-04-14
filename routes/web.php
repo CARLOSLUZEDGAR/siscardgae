@@ -84,7 +84,7 @@ Route::post('/listarPersonal','PersonalController@ListarPersonal');
 Route::post('/selectNacionalidad','NacionalidadController@selectNacionalidad');
 Route::post('/renovarPersonal','PersonalController@RenovarPersonal');
 // Route::post('/datosLicencia','PersonalController@VerificarPersonal');
-Route::post('/verificarPersonal/{id_per_lic}','PersonalController@VerificarPersonal');
+Route::get('/verificarPersonal/{id_per_lic}','PersonalController@VerificarPersonal');
 Route::post('/listarGranUnidad','GranUnidadController@ListarGranUnidad');
 Route::post('/listarUnidad','UnidadController@ListarUnidad');
 Route::post('/listarTipoAeronave','TipoAeronaveController@ListarTipoAeronave');
