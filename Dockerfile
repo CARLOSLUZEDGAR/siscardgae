@@ -1,47 +1,79 @@
-# Imagen base con PHP 7.4 + Apache
-FROM php:7.4-apache
+# =========================
+# 1. Imagen base (Laravel 7 compatible)
+# =========================
+FROM php:7.4-fpm
 
-# Instalar dependencias del sistema
+# Evita prompts interactivos
+ENV DEBIAN_FRONTEND=noninteractive
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+# =========================
+# 2. Dependencias del sistema
+# =========================
 RUN apt-get update && apt-get install -y \
     git \
     curl \
-    zip \
     unzip \
-    libpq-dev \
-    libonig-dev \
+    zip \
     libzip-dev \
-    nodejs \
-    npm \
-    && docker-php-ext-install pdo pdo_pgsql mbstring zip
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    libxml2-dev \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Habilitar mod_rewrite de Apache
-RUN a2enmod rewrite
+# =========================
+# 3. Extensiones PHP necesarias
+# =========================
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install \
+        pdo \
+        pdo_mysql \
+        mbstring \
+        zip \
+        gd \
+        exif \
+        bcmath
 
-# Instalar Composer
+# =========================
+# 4. Instalar Composer
+# =========================
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Definir directorio de trabajo
-WORKDIR /var/www/html
+# =========================
+# 5. Directorio de trabajo
+# =========================
+WORKDIR /var/www
 
-# Copiar archivos del proyecto
+# =========================
+# 6. Copiar proyecto
+# =========================
 COPY . .
 
-# Instalar dependencias PHP (Laravel)
+# =========================
+# 7. Instalar dependencias PHP
+# =========================
 RUN composer install --no-dev --optimize-autoloader
 
-# Instalar dependencias Node (Vue)
-RUN npm install && npm run prod
+# =========================
+# 8. Permisos Laravel
+# =========================
+RUN chmod -R 775 storage bootstrap/cache
 
-# Configurar permisos
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 /var/www/html/storage \
-    && chmod -R 775 /var/www/html/bootstrap/cache
+# =========================
+# 9. Cache optimización (opcional pero recomendado)
+# =========================
+RUN php artisan config:clear || true
+RUN php artisan cache:clear || true
 
-# Configurar Apache para usar carpeta public
-RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+# =========================
+# 10. Puerto (Render lo usa dinámicamente, pero no afecta)
+# =========================
+EXPOSE 8000
 
-# Exponer puerto
-EXPOSE 80
-
-# Comando de inicio
-CMD ["apache2-foreground"]
+# =========================
+# 11. Iniciar Laravel
+# =========================
+CMD php artisan serve --host=0.0.0.0 --port=8000
