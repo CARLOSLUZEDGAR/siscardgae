@@ -59,7 +59,7 @@ class ReporteController extends Controller
                             ->whereIn('id', $arrayIdHabilitaciones)
                             ->get();
 
-        // $url_verificacion = '127.0.0.1:8000/licencia/verificacion/'.$personal->id_licencia;
+        // $url_verificacion = '127.0.0.1:8000/verificarPersonal/'.$personal->id_licencia;
         // $url_verificacion = '192.168.0.15:8000/verificarPersonal/'.$personal->id_licencia;
         $url_verificacion = 'siscardgae2.onrender.com/verificarPersonal/'.$personal->id_licencia;
 
