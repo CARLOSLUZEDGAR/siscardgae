@@ -76,4 +76,4 @@ EXPOSE 8000
 # =========================
 # 11. Iniciar Laravel
 # =========================
-CMD php artisan serve --host=0.0.0.0 --port=8000
+CMD php artisan optimize:clear && php artisan serve --host=0.0.0.0 --port=8000
