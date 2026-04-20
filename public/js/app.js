@@ -16263,11 +16263,7 @@ __webpack_require__.r(__webpack_exports__);
       per_habilitacion: [],
       per_comlinguistica: '',
       per_observaciones: '',
-      per_fechaemision: new Intl.DateTimeFormat("az", {
-        year: "numeric",
-        day: "2-digit",
-        month: "2-digit"
-      }).format(new Date()),
+      // per_fechaemision : this.getFechaHoy(),
       per_fechaexpiracion: '',
       doc_ci: '',
       doc_nacimiento: '',
@@ -16388,9 +16384,7 @@ __webpack_require__.r(__webpack_exports__);
     per_comlinguistica: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
     },
-    per_fechaemision: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-    },
+    // per_fechaemision: { required },
     per_fechaexpiracion: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
     },
@@ -16436,7 +16430,8 @@ __webpack_require__.r(__webpack_exports__);
     en_sigla: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
     },
-    validationGroupReg: ['per_foto', 'per_categoria', 'per_nacionalidad', 'per_entidad', 'per_grado', 'per_ci', 'per_cm', 'per_nombre', 'per_appaterno', 'per_apmaterno', 'per_sexo', 'per_celular', 'per_email', 'per_fechnac', 'per_direccion', 'per_titlic', 'per_habilitacion', 'per_comlinguistica', 'per_fechaemision', 'per_fechaexpiracion'],
+    validationGroupReg: ['per_foto', 'per_categoria', 'per_nacionalidad', 'per_entidad', 'per_grado', 'per_ci', 'per_cm', 'per_nombre', 'per_appaterno', 'per_apmaterno', 'per_sexo', 'per_celular', 'per_email', 'per_fechnac', 'per_direccion', 'per_titlic', 'per_habilitacion', 'per_comlinguistica', // 'per_fechaemision',
+    'per_fechaexpiracion'],
     validationGroupNewNacionalidad: ['na_pais', 'na_abreviatura', 'na_nacionalidad'],
     validationGroupNewEntidad: ['en_pais', 'en_entidad', 'en_sigla'],
     validationGroupDocument: ['doc_ci', 'doc_nacimiento', 'doc_titulo', 'doc_aprobacion', 'doc_egreso', 'doc_especializacion', 'doc_libreta', 'doc_medico']
@@ -16482,8 +16477,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.NuevoPersonal(); // this.ListarPersonal(1);
+    // this.getFechaHoy()
   },
   methods: {
+    // getFechaHoy() {
+    //   const d = new Date();
+    //   const day = String(d.getDate()).padStart(2, '0');
+    //   const month = String(d.getMonth() + 1).padStart(2, '0');
+    //   const year = d.getFullYear();
+    //   return `${day}/${month}/${year}`;
+    // },
     Atras: function Atras() {
       //DGAE
       this.$router.push({
@@ -16734,7 +16737,7 @@ __webpack_require__.r(__webpack_exports__);
               habilitacion: me.per_habilitacion,
               linguistica: me.per_comlinguistica,
               observacion: me.per_observaciones,
-              fech_emision: me.per_fechaemision,
+              // fech_emision : me.per_fechaemision,
               fech_expiracion: me.per_fechaexpiracion,
               doc_carnet_identidad: me.doc_ci,
               doc_cert_nacimineto: me.doc_nacimiento,
@@ -17027,8 +17030,8 @@ __webpack_require__.r(__webpack_exports__);
       //DGAE
       // this.$v.$reset();
       // if(!this.$v.$invalid){
-      // window.open('http://sipefab.fab.bo/certificadoDestAscenso?id_p='+id_personal);
-      window.open('http://127.0.0.1:8000/carnet?id_p=' + id_personal); // }else{
+      window.open('/carnet?id_p=' + id_personal); // window.open('http://127.0.0.1:8000/carnet?id_p='+id_personal);
+      // }else{
       //     this.$v.$touch();
       //     Swal.fire({
       //         icon: 'warning',
@@ -18278,11 +18281,11 @@ __webpack_require__.r(__webpack_exports__);
       per_comlinguistica: '',
       per_observaciones: '',
       // fechaemision : new Date(),
-      per_fechaemision: new Intl.DateTimeFormat("az", {
-        year: "numeric",
-        day: "2-digit",
-        month: "2-digit"
-      }).format(new Date()),
+      // per_fechaemision : new Intl.DateTimeFormat("az", {
+      //   year: "numeric",
+      //   day: "2-digit",
+      //   month: "2-digit"
+      // }).format(new Date()),
       per_fechaexpiracion: '',
       doc_ci: '',
       doc_nacimiento: '',
@@ -18402,9 +18405,7 @@ __webpack_require__.r(__webpack_exports__);
     per_comlinguistica: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
     },
-    per_fechaemision: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-    },
+    // per_fechaemision: { required },
     per_fechaexpiracion: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
     },
@@ -18450,7 +18451,8 @@ __webpack_require__.r(__webpack_exports__);
     en_sigla: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
     },
-    validationGroupReg: ['per_foto', 'per_categoria', 'per_nacionalidad', 'per_entidad', 'per_grado', 'per_ci', 'per_cm', 'per_nombre', 'per_appaterno', 'per_apmaterno', 'per_sexo', 'per_celular', 'per_email', 'per_fechnac', 'per_direccion', 'per_titlic', 'per_habilitacion', 'per_comlinguistica', 'per_fechaemision', 'per_fechaexpiracion'],
+    validationGroupReg: ['per_foto', 'per_categoria', 'per_nacionalidad', 'per_entidad', 'per_grado', 'per_ci', 'per_cm', 'per_nombre', 'per_appaterno', 'per_apmaterno', 'per_sexo', 'per_celular', 'per_email', 'per_fechnac', 'per_direccion', 'per_titlic', 'per_habilitacion', 'per_comlinguistica', // 'per_fechaemision',
+    'per_fechaexpiracion'],
     validationGroupNewNacionalidad: ['na_pais', 'na_abreviatura', 'na_nacionalidad'],
     validationGroupNewEntidad: ['en_pais', 'en_entidad', 'en_sigla'],
     validationGroupDocument: ['doc_ci', 'doc_nacimiento', 'doc_titulo', 'doc_aprobacion', 'doc_egreso', 'doc_especializacion', 'doc_libreta', 'doc_medico']
@@ -18767,7 +18769,7 @@ __webpack_require__.r(__webpack_exports__);
               habilitacion: me.per_habilitacion,
               linguistica: me.per_comlinguistica,
               observacion: me.per_observaciones,
-              fech_emision: me.per_fechaemision,
+              // fech_emision : me.per_fechaemision,
               fech_expiracion: me.per_fechaexpiracion,
               doc_carnet_identidad: me.doc_ci,
               doc_cert_nacimineto: me.doc_nacimiento,
@@ -144291,51 +144293,6 @@ var render = function() {
                                 staticClass: "form-control-label",
                                 attrs: { for: "text-input" }
                               },
-                              [_vm._v("Fecha de Emisión")]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.per_fechaemision,
-                                  expression: "per_fechaemision"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              class: {
-                                "is-invalid": _vm.$v.per_fechaemision.$error,
-                                "is-valid": !_vm.$v.per_fechaemision.$invalid
-                              },
-                              attrs: { type: "date", disabled: "" },
-                              domProps: { value: _vm.per_fechaemision },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.per_fechaemision = $event.target.value
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              !_vm.$v.per_fechaemision.required
-                                ? _c("span", [
-                                    _vm._v("Este campo es Requerido")
-                                  ])
-                                : _vm._e()
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-3" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-control-label",
-                                attrs: { for: "text-input" }
-                              },
                               [
                                 _vm._v(
                                   "Fecha de Expiración (Certificado Medico)"
@@ -147356,51 +147313,6 @@ var render = function() {
                               !_vm.$v.per_foto.required
                                 ? _c("div", [
                                     _vm._v("Por favor, carga un archivo.")
-                                  ])
-                                : _vm._e()
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-3" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-control-label",
-                                attrs: { for: "text-input" }
-                              },
-                              [_vm._v("Fecha de Emisión")]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.per_fechaemision,
-                                  expression: "per_fechaemision"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              class: {
-                                "is-invalid": _vm.$v.per_fechaemision.$error,
-                                "is-valid": !_vm.$v.per_fechaemision.$invalid
-                              },
-                              attrs: { type: "date", disabled: "" },
-                              domProps: { value: _vm.per_fechaemision },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.per_fechaemision = $event.target.value
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              !_vm.$v.per_fechaemision.required
-                                ? _c("span", [
-                                    _vm._v("Este campo es Requerido")
                                   ])
                                 : _vm._e()
                             ])

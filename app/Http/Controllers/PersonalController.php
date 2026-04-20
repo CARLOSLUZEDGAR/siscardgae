@@ -21,6 +21,7 @@ class PersonalController extends Controller
 
     public function CrearPersonal(Request $request) //DGAE
     {
+
         if ($request->foto != "") {
             $exploded = explode(',', $request->foto);
             $decoded = base64_decode($exploded[1]);
@@ -70,7 +71,7 @@ class PersonalController extends Controller
             'id_habilitacion' => $request->habilitacion,
             'id_comp_linguistica' => $request->linguistica,
             'observacion' => mb_strtoupper($request->observacion),
-            'fecha_emision' => $request->fech_emision,
+            'fecha_emision' => now(),
             'fecha_expiracion' => $request->fech_expiracion,
             'estado' => '1',
             'sysuser' => Auth::user()->id
@@ -415,7 +416,7 @@ class PersonalController extends Controller
             'id_habilitacion' => $request->habilitacion,
             'id_comp_linguistica' => $request->linguistica,
             'observacion' => mb_strtoupper($request->observacion),
-            'fecha_emision' => $request->fech_emision,
+            'fecha_emision' => now(),
             'fecha_expiracion' => $request->fech_expiracion,
             'estado' => '1',
             'sysuser' => Auth::user()->id

@@ -252,13 +252,13 @@
                                         <div v-if="!$v.per_foto.required">Por favor, carga tu fotografia.</div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <!-- <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fecha de Emisión</label>
                                     <input type="date" v-model="per_fechaemision" class="form-control" :class="{ 'is-invalid' : $v.per_fechaemision.$error, 'is-valid':!$v.per_fechaemision.$invalid }" disabled>
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_fechaemision.required">Este campo es Requerido</span>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fecha de Expiración (Certificado Medico)</label>
                                     <input type="date" v-model="per_fechaexpiracion" class="form-control" :class="{ 'is-invalid' : $v.per_fechaexpiracion.$error, 'is-valid':!$v.per_fechaexpiracion.$invalid }">
@@ -568,11 +568,7 @@
         per_habilitacion : [],
         per_comlinguistica : '',
         per_observaciones : '',
-        per_fechaemision : new Intl.DateTimeFormat("az", {
-          year: "numeric",
-          day: "2-digit",
-          month: "2-digit"
-        }).format(new Date()),
+        // per_fechaemision : this.getFechaHoy(),
         per_fechaexpiracion : '',
 
         doc_ci : '',
@@ -653,7 +649,7 @@
             per_titlic : { required },
             per_habilitacion : { required },
             per_comlinguistica : { required },
-            per_fechaemision: { required },
+            // per_fechaemision: { required },
             per_fechaexpiracion: { required },
 
             doc_ci : { required },
@@ -692,7 +688,7 @@
             'per_titlic',
             'per_habilitacion',
             'per_comlinguistica',
-            'per_fechaemision',
+            // 'per_fechaemision',
             'per_fechaexpiracion'],
   
             validationGroupNewNacionalidad: [
@@ -754,8 +750,19 @@
     mounted() {
         this.NuevoPersonal();
         // this.ListarPersonal(1);
+        // this.getFechaHoy()
     },
+
     methods: {
+
+      // getFechaHoy() {
+      //   const d = new Date();
+      //   const day = String(d.getDate()).padStart(2, '0');
+      //   const month = String(d.getMonth() + 1).padStart(2, '0');
+      //   const year = d.getFullYear();
+
+      //   return `${day}/${month}/${year}`;
+      // },
 
       Atras(){ //DGAE
           this.$router.push({
@@ -1046,7 +1053,7 @@
                     habilitacion : me.per_habilitacion,
                     linguistica : me.per_comlinguistica,
                     observacion : me.per_observaciones,
-                    fech_emision : me.per_fechaemision,
+                    // fech_emision : me.per_fechaemision,
                     fech_expiracion : me.per_fechaexpiracion,
 
                     doc_carnet_identidad : me.doc_ci,
@@ -1366,8 +1373,8 @@
       GenerarCarnet(id_personal){ //DGAE
           // this.$v.$reset();
           // if(!this.$v.$invalid){
-          // window.open('http://sipefab.fab.bo/certificadoDestAscenso?id_p='+id_personal);
-          window.open('http://127.0.0.1:8000/carnet?id_p='+id_personal);
+          window.open('/carnet?id_p='+id_personal);
+          // window.open('http://127.0.0.1:8000/carnet?id_p='+id_personal);
           // }else{
           //     this.$v.$touch();
           //     Swal.fire({
