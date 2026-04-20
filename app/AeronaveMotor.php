@@ -11,6 +11,7 @@ class AeronaveMotor extends Model
     protected $fillable = [
         'id', 
         'id_aeronave', 
+        'id_aeronave_cert',
         'posicion', 
         'fabrica', 
         'modelo', 

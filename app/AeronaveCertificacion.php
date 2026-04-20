@@ -4,15 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AeronaveDocumento extends Model
+class AeronaveCertificacion extends Model
 {
-    protected $table = 'aeronave_documentos';
+    protected $table = 'aeronave_certificacions';
     protected $primaryKey = 'id';
     protected $fillable = [
         'id', 
         'id_aeronave', 
-        'id_aeronave_cert',
-        'documento', 
+        'certificacion', 
+        'fecha_emision', 
+        'fecha_expiracion',  
         'observacion', 
         'estado', 
         'sysuser'

@@ -17229,6 +17229,84 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -145571,6 +145649,372 @@ var render = function() {
                         _vm._m(2),
                         _vm._v(" "),
                         _c("br"),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Fabrica")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.fabrica,
+                                  expression: "fabrica"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.fabrica.$error,
+                                "is-valid": !_vm.$v.fabrica.$invalid
+                              },
+                              staticStyle: { "text-transform": "uppercase" },
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.fabrica },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.fabrica = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.fabrica.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Modelo")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.modelo,
+                                  expression: "modelo"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.modelo.$error,
+                                "is-valid": !_vm.$v.modelo.$invalid
+                              },
+                              staticStyle: { "text-transform": "uppercase" },
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.modelo },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.modelo = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.modelo.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Serie")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.serie,
+                                  expression: "serie"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.$v.serie.$error,
+                                "is-valid": !_vm.$v.serie.$invalid
+                              },
+                              staticStyle: { "text-transform": "uppercase" },
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.serie },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.serie = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.serie.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Tipo de Aeronave")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.categoria,
+                                    expression: "categoria"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.categoria.$error,
+                                  "is-valid": !_vm.$v.categoria.$invalid
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.categoria = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("SELECCIONE")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arrayCategoriaAeronave, function(
+                                  categoria
+                                ) {
+                                  return _c("option", {
+                                    key: categoria.id,
+                                    domProps: {
+                                      value: categoria.id,
+                                      textContent: _vm._s(categoria.categoria)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.categoria.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : !_vm.$v.categoria.letrasSpanish
+                                ? _c("span", [_vm._v("Solo letras")])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Categoria")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.tipo,
+                                    expression: "tipo"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.tipo.$error,
+                                  "is-valid": !_vm.$v.tipo.$invalid
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.tipo = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("SELECCIONE")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arrayTipoAeronave, function(tipo) {
+                                  return _c("option", {
+                                    key: tipo.id,
+                                    domProps: {
+                                      value: tipo.id,
+                                      textContent: _vm._s(tipo.tipo)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.tipo.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : !_vm.$v.tipo.letrasSpanish
+                                ? _c("span", [_vm._v("Solo letras")])
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Condición")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.condicion,
+                                    expression: "condicion"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.$v.condicion.$error,
+                                  "is-valid": !_vm.$v.condicion.$invalid
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.condicion = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("SELECCIONE")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arrayCondicionAeronave, function(
+                                  condicion
+                                ) {
+                                  return _c("option", {
+                                    key: condicion.id,
+                                    domProps: {
+                                      value: condicion.id,
+                                      textContent: _vm._s(condicion.condicion)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "invalid-feedback" }, [
+                              !_vm.$v.condicion.required
+                                ? _c("span", [
+                                    _vm._v("Este campo es Requerido")
+                                  ])
+                                : !_vm.$v.condicion.letrasSpanish
+                                ? _c("span", [_vm._v("Solo letras")])
+                                : _vm._e()
+                            ])
+                          ])
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group row" }, [
                           _c("div", { staticClass: "col-md-3" }, [

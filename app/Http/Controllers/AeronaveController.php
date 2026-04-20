@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Aeronave;
+use App\AeronaveCertificacion;
+use App\AeronaveCondicion;
 use App\AeronaveDesignacion;
 use App\AeronaveDocumento;
 use App\AeronaveMotor;
@@ -50,14 +52,25 @@ class AeronaveController extends Controller
                 'serie' => mb_strtoupper($request->serie),
                 'id_tipo_aeronave' => $request->categoria,
                 'id_categoria_aeronave' => $request->tipo,
-                'id_condicion_aeronave' => $request->condicion,
+                // 'id_condicion_aeronave' => $request->condicion,
                 'fotografia' => $fileName,
                 'estado' => 1, 
                 'sysuser' => Auth::user()->id
             ]);
 
+            $aeronave_certificacion = AeronaveCertificacion::create([
+                'id_aeronave' => $aeronave->id,
+                'certificacion' => 'AERONAVEGABILIDAD',
+                'fecha_emision' => now(),
+                'fecha_expiracion' => now(),
+                'observacion' => 'SIN OBSERVACION',
+                'estado' => 1,
+                'sysuser' => Auth::user()->id
+            ]);
+
             $aeronave_designacion = AeronaveDesignacion::create([
                 'id_aeronave' => $aeronave->id,
+                'id_aeronave_cert' => $aeronave_certificacion->id,
                 'matricula' => mb_strtoupper($request->matricula),
                 'id_entidad' => $request->entidad,
                 'id_g_unidad' => $request->g_unidad,
@@ -70,9 +83,19 @@ class AeronaveController extends Controller
                 'sysuser' => Auth::user()->id
             ]);
 
+            $aeronave_condicion = AeronaveCondicion::create([
+                'id_aeronave' => $aeronave->id,
+                'id_aeronave_cert' => $aeronave_certificacion->id,
+                'id_condicion' => $request->condicion,
+                'observacion' => 'SIN OBSERVACION',
+                'estado' => 1,
+                'sysuser' => Auth::user()->id
+            ]);
+
             foreach ($request->motores as $motor) {
                 $aeronave_motor = AeronaveMotor::create([
                     'id_aeronave' => $aeronave->id,
+                    'id_aeronave_cert' => $aeronave_certificacion->id,
                     'posicion' => $motor['posicion_motor'],
                     'fabrica' => mb_strtoupper($motor['fabrica_motor']),
                     'modelo' => mb_strtoupper($motor['modelo_motor']),
@@ -259,9 +282,24 @@ class AeronaveController extends Controller
     public function DatosAeronave(Request $request)//DGAE
     {
         $aeronave = DB::table('aeronaves as a')
+                    ->join('aeronave_designacions as ad', 'a.id', 'ad.id_aeronave')
+                    ->join('tipo_aeronave as ta', 'a.id_tipo_aeronave', 'ta.id')
+                    ->join('categoria_aeronave as ca', 'a.id_categoria', 'ca.id')
+                    ->join('condicion_aeronave as coa', 'a.id_codicion_aeronave')
+
                     ->select('a.id',
-                            'a.matricula',
+                            'a.fabrica',
                             'a.modelo',
+                            'a.serie',
+                            'ta.id',
+                            'ta.tipo',
+                            'ca.id',
+                            'ca.categoria',
+
+
+
+                            'a.matricula',
+                            
                             'a.nombre',
                             'a.fotografia')
                     ->where('a.id',$request->aeronave_id)

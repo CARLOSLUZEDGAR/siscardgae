@@ -11,6 +11,7 @@ class AeronaveDesignacion extends Model
     protected $fillable = [
         'id', 
         'id_aeronave', 
+        'id_aeronave_cert',
         'matricula', 
         'id_entidad', 
         'id_g_unidad', 

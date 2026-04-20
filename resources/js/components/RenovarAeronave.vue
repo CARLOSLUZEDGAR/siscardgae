@@ -48,7 +48,85 @@
                         <!-- Paso 1 -->
                         <div class="step" v-if="currentStep === 1">
                             <h3><i class="fas fa-inbox"></i>&nbsp;PASO 1: INFORMACIÓN DE LA AERONAVE</h3>
-                            <br>                    
+                            <br> 
+                            
+
+
+
+                            
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    <label class="form-control-label" for="text-input">Fabrica</label>
+                                    <input type="text" v-model="fabrica" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.fabrica.$error, 'is-valid':!$v.fabrica.$invalid }" />
+                                    <div class="invalid-feedback">
+                                        <span v-if="!$v.fabrica.required">Este campo es Requerido</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-control-label" for="text-input">Modelo</label>
+                                    <input type="text" v-model="modelo" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.modelo.$error, 'is-valid':!$v.modelo.$invalid }" />
+                                    <div class="invalid-feedback">
+                                        <span v-if="!$v.modelo.required">Este campo es Requerido</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-control-label" for="text-input">Serie</label>
+                                    <input type="text" v-model="serie" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.serie.$error, 'is-valid':!$v.serie.$invalid }" />
+                                    <div class="invalid-feedback">
+                                        <span v-if="!$v.serie.required">Este campo es Requerido</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                  <label class="form-control-label" for="text-input">Tipo de Aeronave</label>
+                                  <select class="form-control" v-model="categoria" :class="{ 'is-invalid' : $v.categoria.$error, 'is-valid':!$v.categoria.$invalid }">
+                                      <option value="" disabled>SELECCIONE</option>
+                                      <option v-for="categoria in arrayCategoriaAeronave" :key="categoria.id" :value="categoria.id"  v-text="categoria.categoria"></option>                        
+                                  </select>                                   
+                                  <div class="invalid-feedback">
+                                      <span v-if="!$v.categoria.required">Este campo es Requerido</span>
+                                      <span v-else-if="!$v.categoria.letrasSpanish">Solo letras</span>
+                                  </div>
+                                </div>
+                                <div class="col-md-2">
+                                  <label class="form-control-label" for="text-input">Categoria</label>
+                                  <select class="form-control" v-model="tipo" :class="{ 'is-invalid' : $v.tipo.$error, 'is-valid':!$v.tipo.$invalid }">
+                                      <option value="" disabled>SELECCIONE</option>
+                                      <option v-for="tipo in arrayTipoAeronave" :key="tipo.id" :value="tipo.id"  v-text="tipo.tipo"></option>                        
+                                  </select>                                   
+                                  <div class="invalid-feedback">
+                                      <span v-if="!$v.tipo.required">Este campo es Requerido</span>
+                                      <span v-else-if="!$v.tipo.letrasSpanish">Solo letras</span>
+                                  </div>
+                                </div>
+                                <div class="col-md-2">
+                                  <label class="form-control-label" for="text-input">Condición</label>
+                                  <select class="form-control" v-model="condicion" :class="{ 'is-invalid' : $v.condicion.$error, 'is-valid':!$v.condicion.$invalid }">
+                                      <option value="" disabled>SELECCIONE</option>
+                                      <option v-for="condicion in arrayCondicionAeronave" :key="condicion.id" :value="condicion.id"  v-text="condicion.condicion"></option>                        
+                                  </select>                                
+                                  <div class="invalid-feedback">
+                                      <span v-if="!$v.condicion.required">Este campo es Requerido</span>
+                                      <span v-else-if="!$v.condicion.letrasSpanish">Solo letras</span>
+                                  </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             <div class="form-group row">
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Matricula</label>
