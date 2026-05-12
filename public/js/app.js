@@ -16238,6 +16238,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -144324,7 +144325,7 @@ var render = function() {
                                   attrs: {
                                     src:
                                       _vm.v === 0
-                                        ? "/img/avatar.jpg"
+                                        ? "URL_AVATAR_SUPABASE"
                                         : _vm.imagen,
                                     width: "150",
                                     height: "150"

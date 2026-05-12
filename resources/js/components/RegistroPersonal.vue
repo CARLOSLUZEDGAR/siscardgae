@@ -242,7 +242,8 @@
                             <div class="form-group row">
                                 <div class="col-md-3" style="text-align: center;">
                                   <template>
-                                    <img :src="v === 0 ? '/img/avatar.jpg' : imagen" width="150" height="150" style="border: 1.5px solid black;">
+                                    <!-- <img :src="v === 0 ? '/img/avatar.jpg' : imagen" width="150" height="150" style="border: 1.5px solid black;"> -->
+                                    <img :src="v === 0 ? 'URL_AVATAR_SUPABASE' : imagen" width="150" height="150" style="border: 1.5px solid black;">
                                   </template> 
                                 </div>
                                 <div class="col-md-3">

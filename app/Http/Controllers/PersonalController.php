@@ -11,6 +11,8 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Services\SupabaseStorageService;
+use Illuminate\Support\Facades\Log;
 
 class PersonalController extends Controller
 {
@@ -19,101 +21,213 @@ class PersonalController extends Controller
         $this->middleware('auth')->except(['VerificarPersonal']);
     }
 
-    public function CrearPersonal(Request $request) //DGAE
+    public function CrearPersonal(Request $request)
     {
+        DB::beginTransaction();
 
-        if ($request->foto != "") {
-            $exploded = explode(',', $request->foto);
-            $decoded = base64_decode($exploded[1]);
-            if (Str::contains($exploded[0], 'jpeg')) {
-                $extension = 'jpg';
-            } else {
-                $extension = 'png';
-            }
-            // $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            // $charactersLength = strlen($characters);
-            // $randomString = '';
-            // for ($i=0; $i < 10; $i++) {
-            //    $randomString .= $characters[rand(0,$charactersLength - 1)];
-            // }
+        try {
 
-            $fileName = $request->fech_emision.'_'.($request->ci).'.'.$extension;
-            $path = public_path().'/img/personal/'.$fileName;
-            file_put_contents($path, $decoded);
+            $storage = new \App\Services\SupabaseStorageService();
 
-        } else {
-            $fileName = 'avatar.png';
-        }
+            // =========================
+            // 📸 FOTO
+            // =========================
+            $urlFoto = null;
 
-        $personal = Personal::create([
-            'per_foto' => $fileName,
-            'id_nacionalidad' => $request->nacionalidad,
-            'per_ci' => $request->ci,
-            'per_cm' => $request->cm,
-            'per_nombre' => mb_strtoupper($request->nombre),
-            'per_paterno' =>  mb_strtoupper($request->ap_paterno),
-            'per_materno' => mb_strtoupper($request->ap_materno),
-            'per_sexo' => $request->sexo,
-            'per_celular' => $request->celular,
-            'per_mail' => $request->email,
-            'per_fecha_nacimiento' => $request->fech_nac,
-            'per_direccion'=> mb_strtoupper($request->direccion),
-            'estado' => '1',
-            'sysuser' => Auth::user()->id
+            if ($request->filled('foto') || $request->hasFile('foto')) {
+
+                try {
+
+                    $ci = preg_replace('/[^A-Za-z0-9]/', '', $request->ci);
+
+                    $customName = $ci . '_' . \Illuminate\Support\Str::uuid();
+
+                    // =====================================
+                    // 📌 CASO 1: BASE64
+                    // =====================================
+                    if (
+                        is_string($request->foto) &&
+                        str_contains($request->foto, 'base64')
+                    ) {
+
+                        // 🔥 subida directa del base64
+                        $urlFoto = $storage->upload(
+                            $request->foto,
+                            'img/personas',
+                            $customName
+                        );
+                    }
+
+                    // =====================================
+                    // 📌 CASO 2: ARCHIVO NORMAL
+                    // =====================================
+                    elseif ($request->hasFile('foto')) {
+
+                        $file = $request->file('foto');
+
+                        $urlFoto = $storage->upload(
+                            $file,
+                            'img/personas',
+                            $customName
+                        );
+                    }
+
+                    // =====================================
+                    // 📌 FORMATO INVÁLIDO
+                    // =====================================
+                    else {
+                        throw new \Exception('Formato de foto no reconocido');
+                    }
+
+                } catch (\Exception $e) {
+
+                    logger()->error('ERROR FOTO', [
+            'mensaje' => $e->getMessage()
         ]);
 
-        $personal_licencia = PersonalLicencia::create([
-            'id_personal' => $personal->id,
-            'id_categoria' => $request->categoria,
-            'id_entidad' => $request->entidad,
-            'id_grado' => $request->grado,
-            'id_licencia' => $request->tit_licencia,
-            'id_habilitacion' => $request->habilitacion,
-            'id_comp_linguistica' => $request->linguistica,
-            'observacion' => mb_strtoupper($request->observacion),
-            'fecha_emision' => now(),
-            'fecha_expiracion' => $request->fech_expiracion,
-            'estado' => '1',
-            'sysuser' => Auth::user()->id
-        ]);
-
-        $documentos = array($request->doc_carnet_identidad,
-                            $request->doc_cert_nacimineto,
-                            $request->doc_cert_egreso,
-                            $request->doc_cert_espe,
-                            $request->doc_cert_medico,
-                            $request->doc_dip_titulo,
-                            $request->doc_lib_mil,
-                            $request->doc_exa_aprobacion);
-        $cantDocument = sizeof($documentos);
-        $x = 1;
-        for ($i=0; $i < $cantDocument ; $i++) { 
-            if($documentos[$i] != ""){
-                $exploded = explode(',', $documentos[$i]);
-                $decoded = base64_decode($exploded[1]);
-                if (Str::contains($exploded[0], 'pdf')) {
-                    $extension = 'pdf';
-                } else {
-                    $extension = 'pdf';
+        throw new \Exception($e->getMessage());
                 }
-                $documentName = $x.'_'.$request->ci.'_'.$request->fech_emision.'.'.$extension;
-                $path = public_path().'/document/personal/'.$documentName;
-                file_put_contents($path, $decoded);
-                $x++;
-                $personal_documento = PersonalDocumento::create([
-                    'id_personal' => $personal->id,
-                    'id_licencia' => $personal_licencia->id,
-                    'documento' => $documentName,
-                    'estado' => '1',
-                    'sysuser' => Auth::user()->id
-                ]);
             }
-            else{
-                $x++;
-            }
-        }
 
-        return ['personal' => $personal_licencia];
+            // =========================
+            // 👤 REGISTRO PERSONAL
+            // =========================
+            $personal = Personal::create([
+                'per_foto' => $urlFoto,
+                'id_nacionalidad' => $request->nacionalidad,
+                'per_ci' => $request->ci,
+                'per_cm' => $request->cm,
+                'per_nombre' => mb_strtoupper($request->nombre),
+                'per_paterno' => mb_strtoupper($request->ap_paterno),
+                'per_materno' => mb_strtoupper($request->ap_materno),
+                'per_sexo' => $request->sexo,
+                'per_celular' => $request->celular,
+                'per_mail' => $request->email,
+                'per_fecha_nacimiento' => $request->fech_nac,
+                'per_direccion' => mb_strtoupper($request->direccion),
+                'estado' => '1',
+                'sysuser' => auth()->id()
+            ]);
+
+            // =========================
+            // 📄 LICENCIA
+            // =========================
+            $personal_licencia = PersonalLicencia::create([
+                'id_personal' => $personal->id,
+                'id_categoria' => $request->categoria,
+                'id_entidad' => $request->entidad,
+                'id_grado' => $request->grado,
+                'id_licencia' => $request->tit_licencia,
+                'id_habilitacion' => $request->habilitacion,
+                'id_comp_linguistica' => $request->linguistica,
+                'observacion' => mb_strtoupper($request->observacion),
+                'fecha_emision' => now(),
+                'fecha_expiracion' => $request->fech_expiracion,
+                'estado' => '1',
+                'sysuser' => auth()->id()
+            ]);
+
+            // =========================
+            // 📂 DOCUMENTOS
+            // =========================
+            $documentos = [
+                $request->doc_carnet_identidad,
+                $request->doc_cert_nacimineto,
+                $request->doc_cert_egreso,
+                $request->doc_cert_espe,
+                $request->doc_cert_medico,
+                $request->doc_dip_titulo,
+                $request->doc_lib_mil,
+                $request->doc_exa_aprobacion
+            ];
+
+            $x = 1;
+
+            foreach ($documentos as $doc) {
+
+                if ($doc) {
+
+                    try {
+
+                        // =========================
+                        // VALIDAR BASE64 PDF
+                        // =========================
+                        if (
+                            !str_contains($doc, 'base64') ||
+                            !str_contains($doc, 'pdf')
+                        ) {
+                            throw new \Exception(
+                                "El documento {$x} no es PDF válido"
+                            );
+                        }
+
+                        $ci = preg_replace(
+                            '/[^A-Za-z0-9]/',
+                            '',
+                            $request->ci
+                        );
+
+                        $customName = $x . '_' . $ci . '_' .
+                            \Illuminate\Support\Str::uuid();
+
+                        // =========================
+                        // 🚀 SUBIR DOCUMENTO
+                        // =========================
+                        $url = $storage->upload(
+                            $doc,
+                            'files/personas',
+                            $customName
+                        );
+
+                    } catch (\Exception $e) {
+
+                        logger()->error(
+                            "Error subiendo documento {$x}",
+                            [
+                                'error' => $e->getMessage()
+                            ]
+                        );
+
+                        throw new \Exception(
+                            "Error en documento {$x}"
+                        );
+                    }
+
+                    // =========================
+                    // 💾 GUARDAR DOCUMENTO
+                    // =========================
+                    PersonalDocumento::create([
+                        'id_personal' => $personal->id,
+                        'id_licencia' => $personal_licencia->id,
+                        'documento' => $url,
+                        'estado' => '1',
+                        'sysuser' => auth()->id()
+                    ]);
+                }
+
+                $x++;
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'personal' => $personal_licencia
+            ]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            logger()->error('Error en CrearPersonal', [
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'error' => 'Error al registrar personal',
+                'detalle' => $e->getMessage()
+            ], 500);
+        }
     }
     /**
      * FUNCION PARA EL LISTADOR DE PERSONAL EN TIEMPO REALs
