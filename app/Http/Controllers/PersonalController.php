@@ -346,60 +346,6 @@ class PersonalController extends Controller
 
     public function DatosPersonal(Request $request)//DGAE
     {
-        // $personal = DB::table('personals as p')
-        //             ->join('personal_licencias as pl','p.id','pl.id_personal')
-        //             ->join('nacionalidads as n','p.id_nacionalidad','n.id')
-        //             ->join('categorias as c','pl.id_categoria','c.id')
-        //             ->join('entidads as e','pl.id_entidad','e.id')
-        //             ->join('grados as g','pl.id_grado','g.id')
-        //             ->join('licencias as l','pl.id_licencia','l.id')
-        //             // ->join('habilitacions as h','pl.id_habilitacion','h.id')
-        //             ->join('competencia_linguisticas as cl','pl.id_comp_linguistica','cl.id')
-        //             ->select('p.id as id_personal',
-        //                 'n.id as idnacionalidad',
-        //                 'n.nacionalidad',
-        //                 'n.pais',
-        //                 'p.per_foto',
-        //                 'p.per_nombre',
-        //                 'p.per_paterno',
-        //                 'p.per_materno',
-        //                 'p.per_ci',
-        //                 'p.per_cm',
-        //                 'p.per_sexo',
-        //                 'p.per_fecha_nacimiento',
-        //                 'p.per_celular',
-        //                 'p.per_direccion',
-        //                 'p.per_mail',
-        //                 'pl.id as id_licencia',
-        //                 'pl.id_categoria',
-        //                 'pl.id_entidad',
-        //                 'pl.id_grado',
-        //                 'pl.id_licencia',
-        //                 'pl.id_habilitacion',
-        //                 'pl.id_comp_linguistica',
-        //                 'e.entidad',
-        //                 'g.abreviatura',
-        //                 'l.licencia',
-        //                 'l.traduccion',
-        //                 // 'h.habilitacion',
-        //                 // 'h.traduccion as htraduccion',
-        //                 'cl.id as idlinguistica',
-        //                 'cl.nivel',
-        //                 'cl.traduccion as cltraduccion',
-        //                 'pl.observacion',
-        //                 'pl.fecha_emision',
-        //                 'pl.fecha_expiracion'
-        //                 )
-        //             ->where('p.id',$request->personal_id)
-        //             ->where('pl.estado',1)
-        //             ->first();
-        // $personal_documento = DB::table('personal_documentos as pd')
-        //                     ->select('documento')
-        //                     ->where('id_personal',$request->personal_id)
-        //                     ->where('estado',1)
-        //                     ->get();
-
-        // return ['personal' => $personal, 'personal_documento' => $personal_documento];
         $personal = DB::table('personals as p')
             ->join('personal_licencias as pl','p.id','pl.id_personal')
             ->join('nacionalidads as n','p.id_nacionalidad','n.id')
@@ -463,121 +409,247 @@ class PersonalController extends Controller
         ];
     }
 
-    public function RenovarPersonal(Request $request) //DGAE
+    public function RenovarPersonal(Request $request)//DGAE
     {
-        $personal_foto = Personal::select('per_foto')
-                    ->where('id',$request->id_personal)
-                    ->first();
+        set_time_limit(300);
 
-        if($personal_foto->per_foto == $request->foto){
-            $fileName = $request->foto;
-        }
-        else{
-            if ($request->foto != "") {
-                $exploded = explode(',', $request->foto);
-                $decoded = base64_decode($exploded[1]);
-                if (Str::contains($exploded[0], 'jpeg')) {
-                    $extension = 'jpg';
-                } else {
-                    $extension = 'png';
+        DB::beginTransaction();
+
+        try {
+
+            $storage = new \App\Services\SupabaseStorageService();
+
+            // =========================
+            // 🔍 OBTENER PERSONAL
+            // =========================
+            $personal = Personal::where('id', $request->id_personal)
+                ->firstOrFail();
+
+            // =========================
+            // 📸 FOTO
+            // =========================
+            $urlFoto = $personal->per_foto;
+
+            if ($request->filled('foto')) {
+
+                // ==================================================
+                // SI LA FOTO ES LA MISMA URL NO SUBE NUEVAMENTE
+                // ==================================================
+                if ($request->foto !== $personal->per_foto) {
+
+                    try {
+
+                        $ci = preg_replace(
+                            '/[^A-Za-z0-9]/',
+                            '',
+                            $request->ci
+                        );
+
+                        $customName = $ci . '_' .
+                            \Illuminate\Support\Str::uuid();
+
+                        // =====================================
+                        // 📌 CASO 1: BASE64
+                        // =====================================
+                        if (
+                            is_string($request->foto) &&
+                            str_contains($request->foto, 'base64')
+                        ) {
+
+                            $urlFoto = $storage->upload(
+                                $request->foto,
+                                'img/personas',
+                                $customName
+                            );
+                        }
+
+                        // =====================================
+                        // 📌 FORMATO INVÁLIDO
+                        // =====================================
+                        else {
+
+                            throw new \Exception(
+                                'Formato de foto no reconocido'
+                            );
+                        }
+
+                    } catch (\Exception $e) {
+
+                        logger()->error('ERROR FOTO RENOVAR', [
+                            'mensaje' => $e->getMessage()
+                        ]);
+
+                        throw new \Exception(
+                            'Error al subir fotografía'
+                        );
+                    }
                 }
-                // $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                // $charactersLength = strlen($characters);
-                // $randomString = '';
-                // for ($i=0; $i < 10; $i++) {
-                //    $randomString .= $characters[rand(0,$charactersLength - 1)];
-                // }
-                $fileName = $request->fech_emision.'_'.($request->ci).'.'.$extension;
-                $path = public_path().'/img/personal/'.$fileName;
-                file_put_contents($path, $decoded);
-    
-            } else {
-                $fileName = 'avatar.png';
             }
-        }
 
-        $personal = Personal::where('id',$request->id_personal)
-                    ->first();
-        $personal -> update([
-            'per_foto' => $fileName,
-            'per_ci' => $request->ci,
-            'per_cm' => $request->cm,
-            'per_nombre' => mb_strtoupper($request->nombre),
-            'per_paterno' =>  mb_strtoupper($request->ap_paterno),
-            'per_materno' => mb_strtoupper($request->ap_materno),
-            'per_sexo' => $request->sexo,
-            'per_celular' => $request->celular,
-            'per_mail' => $request->email,
-            'per_direccion' => mb_strtoupper($request->direccion),
-            'estado' => '1',
-            'sysuser' => Auth::user()->id
-        ]);
+            // =========================
+            // 👤 ACTUALIZAR PERSONAL
+            // =========================
+            $personal->update([
+                'per_foto' => $urlFoto,
+                'per_ci' => $request->ci,
+                'per_cm' => $request->cm,
+                'per_nombre' => mb_strtoupper($request->nombre),
+                'per_paterno' => mb_strtoupper($request->ap_paterno),
+                'per_materno' => mb_strtoupper($request->ap_materno),
+                'per_sexo' => $request->sexo,
+                'per_celular' => $request->celular,
+                'per_mail' => $request->email,
+                'per_direccion' => mb_strtoupper($request->direccion),
+                'estado' => '1',
+                'sysuser' => auth()->id()
+            ]);
 
-        $id_personal_max = PersonalLicencia::where('id_personal',$request->id_personal)
-                            ->max('id');
-        
-        $personal_licencia = PersonalLicencia::where('id',$id_personal_max)
-                            -> update([
-                            'estado' => '0'
-                            ]);
+            // =========================
+            // 🔄 DESACTIVAR LICENCIA
+            // =========================
+            $id_personal_max = PersonalLicencia::where(
+                'id_personal',
+                $request->id_personal
+            )->max('id');
 
-        $personal_licencia = PersonalLicencia::create([
-            'id_personal' => $request->id_personal,
-            'id_categoria' => $request->categoria,
-            'id_entidad' => $request->entidad,
-            'id_grado' => $request->grado,
-            'id_licencia' => $request->tit_licencia,
-            'id_habilitacion' => $request->habilitacion,
-            'id_comp_linguistica' => $request->linguistica,
-            'observacion' => mb_strtoupper($request->observacion),
-            'fecha_emision' => now(),
-            'fecha_expiracion' => $request->fech_expiracion,
-            'estado' => '1',
-            'sysuser' => Auth::user()->id
-        ]);
+            if ($id_personal_max) {
 
-        $cambiar_estado_doc = PersonalDocumento::where('id_personal',$request->id_personal)
-                            -> update([
-                                'estado' => '0'
-                            ]);
+                PersonalLicencia::where('id', $id_personal_max)
+                    ->update([
+                        'estado' => '0'
+                    ]);
+            }
 
-        $documentos = array($request->doc_carnet_identidad,
-                            $request->doc_cert_nacimineto,
-                            $request->doc_cert_egreso,
-                            $request->doc_cert_espe,
-                            $request->doc_cert_medico,
-                            $request->doc_dip_titulo,
-                            $request->doc_lib_mil,
-                            $request->doc_exa_aprobacion);
-        $cantDocument = sizeof($documentos);
-        $x = 1;
-        for ($i=0; $i < $cantDocument ; $i++) { 
-            if($documentos[$i] != ""){
-                $exploded = explode(',', $documentos[$i]);
-                $decoded = base64_decode($exploded[1]);
-                if (Str::contains($exploded[0], 'pdf')) {
-                    $extension = 'pdf';
-                } else {
-                    $extension = 'pdf';
+            // =========================
+            // 📄 NUEVA LICENCIA
+            // =========================
+            $personal_licencia = PersonalLicencia::create([
+                'id_personal' => $request->id_personal,
+                'id_categoria' => $request->categoria,
+                'id_entidad' => $request->entidad,
+                'id_grado' => $request->grado,
+                'id_licencia' => $request->tit_licencia,
+                'id_habilitacion' => $request->habilitacion,
+                'id_comp_linguistica' => $request->linguistica,
+                'observacion' => mb_strtoupper($request->observacion),
+                'fecha_emision' => now(),
+                'fecha_expiracion' => $request->fech_expiracion,
+                'estado' => '1',
+                'sysuser' => auth()->id()
+            ]);
+
+            // =========================
+            // 🔄 DESACTIVAR DOCUMENTOS
+            // =========================
+            PersonalDocumento::where(
+                'id_personal',
+                $request->id_personal
+            )->update([
+                'estado' => '0'
+            ]);
+
+            // =========================
+            // 📂 DOCUMENTOS
+            // =========================
+            $documentos = [
+                $request->doc_carnet_identidad,
+                $request->doc_cert_nacimineto,
+                $request->doc_cert_egreso,
+                $request->doc_cert_espe,
+                $request->doc_cert_medico,
+                $request->doc_dip_titulo,
+                $request->doc_lib_mil,
+                $request->doc_exa_aprobacion
+            ];
+
+            $x = 1;
+
+            foreach ($documentos as $doc) {
+
+                if ($doc) {
+
+                    try {
+
+                        // =====================================
+                        // VALIDAR PDF BASE64
+                        // =====================================
+                        if (
+                            !str_contains($doc, 'base64') ||
+                            !str_contains($doc, 'pdf')
+                        ) {
+
+                            throw new \Exception(
+                                "Documento {$x} inválido"
+                            );
+                        }
+
+                        $ci = preg_replace(
+                            '/[^A-Za-z0-9]/',
+                            '',
+                            $request->ci
+                        );
+
+                        $customName = $x . '_' . $ci . '_' .
+                            \Illuminate\Support\Str::uuid();
+
+                        // =====================================
+                        // 🚀 SUBIR DOCUMENTO
+                        // =====================================
+                        $urlDocumento = $storage->upload(
+                            $doc,
+                            'files/personas',
+                            $customName
+                        );
+
+                    } catch (\Exception $e) {
+
+                        logger()->error(
+                            "ERROR DOCUMENTO {$x}",
+                            [
+                                'mensaje' => $e->getMessage()
+                            ]
+                        );
+
+                        throw new \Exception(
+                            "Error al subir documento {$x}"
+                        );
+                    }
+
+                    // =====================================
+                    // 💾 GUARDAR DOCUMENTO
+                    // =====================================
+                    PersonalDocumento::create([
+                        'id_personal' => $personal->id,
+                        'id_licencia' => $personal_licencia->id,
+                        'documento' => $urlDocumento,
+                        'estado' => '1',
+                        'sysuser' => auth()->id()
+                    ]);
                 }
-                $documentName = $x.'_'.$request->ci.'_'.$request->fech_emision.'.'.$extension;
-                $path = public_path().'/document/personal/'.$documentName;
-                file_put_contents($path, $decoded);
-                $x++;
-                $personal_documento = PersonalDocumento::create([
-                    'id_personal' => $personal->id,
-                    'id_licencia' => $personal_licencia->id,
-                    'documento' => $documentName,
-                    'estado' => '1',
-                    'sysuser' => Auth::user()->id
-                ]);
-            }
-            else{
-                $x++;
-            }
-        }
 
-        return ['personal' => $personal_licencia];
+                $x++;
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'personal' => $personal_licencia
+            ]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            logger()->error('Error en RenovarPersonal', [
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'error' => 'Error al renovar personal',
+                'detalle' => $e->getMessage()
+            ], 500);
+        }
     }
 
     //////////////////////////////////////////////////////////////

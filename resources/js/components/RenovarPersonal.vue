@@ -249,7 +249,7 @@
                             <div class="form-group row">
                                 <div class="col-md-3">
                                     <template>
-                                        <img :src="v === 0 ? '/img/personal/'+imagen : imagen" width="150" height="150" style="border: 1.5px solid black;">
+                                        <img :src="v === 0 ? imagen : per_foto" width="150" height="150" style="border: 1.5px solid black;">
                                     </template>
                                 </div>
                                 <div class="col-md-3">

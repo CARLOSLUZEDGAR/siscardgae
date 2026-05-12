@@ -275,7 +275,8 @@
             
 
             <div style="padding: 0.1cm; text-align: center; position: fixed; top: 0.75cm; left: 5.5cm; right: 0.2cm; font-size: 4pt; font-weight: bold; /*border: 1px solid #C00;*/">
-                <img style="width:2cm; height:2cm; /*border: 1px solid #142A98;*/" src="../public/img/personal/{{$personal->per_foto}}">
+                <!-- <img style="width:2cm; height:2cm; /*border: 1px solid #142A98;*/" src="../public/img/personal/{{$personal->per_foto}}"> -->
+                <img style="width:2cm; height:2cm; /*border: 1px solid #142A98;*/" src="{{ $personal->per_foto }}">
             </div>
             <!-- <div style="padding: 0.1cm; text-align: center; position: fixed; top: 3.2cm; left: 5.5cm; right: 0.2cm; font-size: 4pt; font-weight: normal; border: 1px solid #C00;">
                 <p style="margin: 1px">III. LICENCIA No. - LICENSE Nº:</p>

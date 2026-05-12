@@ -147722,9 +147722,7 @@ var render = function() {
                                   staticStyle: { border: "1.5px solid black" },
                                   attrs: {
                                     src:
-                                      _vm.v === 0
-                                        ? "/img/personal/" + _vm.imagen
-                                        : _vm.imagen,
+                                      _vm.v === 0 ? _vm.imagen : _vm.per_foto,
                                     width: "150",
                                     height: "150"
                                   }
