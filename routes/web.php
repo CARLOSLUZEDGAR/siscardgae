@@ -75,6 +75,7 @@ Route::get('/datosP','DatosController@datosP');
 Route::post('/listarEntidad','EntidadController@ListarEntidad');
 Route::post('/crearPersonal','PersonalController@CrearPersonal');
 Route::post('/listarGrado','GradoController@ListarGrado');
+Route::post('/selectGrado', 'GradoController@SelectGrado');
 Route::post('/listarNacionalidad','NacionalidadController@ListarNacionalidad');
 Route::post('/listarCategoria','CategoriaController@ListarCategoria');
 Route::post('/listarLicencia','LicenciaController@ListarLicencia');

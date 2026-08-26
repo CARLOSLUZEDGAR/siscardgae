@@ -46,4 +46,15 @@ class GradoController extends Controller
         }
         
     }
+
+    public function SelectGrado(Request $request)
+    {
+        $idgrado = $request->id_grado;
+        $grado = DB::table('grados')
+                ->select('id', 'id_entidad', 'nombre', 'abreviatura')
+                ->where('id', $idgrado)
+                ->first();
+
+        return ['grados' => $grado];
+    }
 }

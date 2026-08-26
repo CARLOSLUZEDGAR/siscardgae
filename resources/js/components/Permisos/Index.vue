@@ -141,7 +141,7 @@
 
 
       <div class="modal fade"  data-backdrop="static" id="ModalPermiso">
-        <div class="modal-dialog modal-sm ">
+        <div class="modal-dialog modal-md ">
           <div class="modal-content">
             <div class="modal-header">
                 <template v-if="modal == 0">
@@ -151,49 +151,66 @@
                     <h4 class="modal-title">EDITAR PERMISO</h4>
                 </template>
               
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Limpiar()">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <label for="">NOMBRE:</label>
-                        <input type="text" class="form-control" v-model="nombre">
+                    <div class="col-md-12">
+                        <label class="form-control-label" for="text-input">NOMBRE:</label>
+                        <input type="text" class="form-control" v-model="nombre" :class="{ 'is-invalid' : $v.nombre.$error, 'is-valid':!$v.nombre.$invalid }">
+                        <div class="invalid-feedback">
+                            <span v-if="!$v.nombre.required">Este campo es Requerido</span>
+                        </div>
                     </div>
-                    <div class="col-sm-12">
+
+                    <div class="col-md-12">
                         <label for="">DETALLE:</label>
-                        <textarea name="" class="form-control" v-model="detalle" cols="30" rows="2"></textarea>
+                        <textarea name="" class="form-control" v-model="detalle" style="text-transform:uppercase;" cols="30" rows="2" :class="{ 'is-invalid' : $v.detalle.$error, 'is-valid':!$v.detalle.$invalid }"></textarea>
+                        <div class="invalid-feedback">
+                            <span v-if="!$v.detalle.required">Este campo es Requerido</span>
+                        </div>
                     </div>
-                    <div class="col-sm-12">
-                        <label for="">MODULO:</label>
+                    <div class="col-md-12">
+                        <label>MODULO:</label>
+
                         <v-select
                             label="nombre"
                             :options="Amodulos"
                             v-model="modulo"
+                            :class="{
+                                'is-invalid': $v.modulo.$error,
+                                'is-valid': !$v.modulo.$invalid
+                            }"
                         >
-                            //EN CASO QUE NO SE ENCENTRE EL VALOR EN LA LISTA
+                            <!-- EN CASO QUE NO SE ENCUENTRE EL VALOR EN LA LISTA -->
                             <template v-slot:no-options="{ search, searching }">
-                            <template v-if="searching">
-                                Lo sentimos, no hay opciones de coincidencia.<em>{{
-                                search
-                                }}</em
-                                >.
-                            </template>
-                            <em v-else
-                                >Lo sentimos, no hay opciones de coincidencia.</em
-                            >
+                                <template v-if="searching">
+                                    Lo sentimos, no hay opciones de coincidencia para
+                                    <em>{{ search }}</em>.
+                                </template>
+
+                                <em v-else>
+                                    Lo sentimos, no hay opciones disponibles.
+                                </em>
                             </template>
                         </v-select>
 
+                        <div class="invalid-feedback">
+                            <span v-if="!$v.modulo.required">
+                                Este campo es requerido
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Limpiar()">CANCELAR</button>
               <button v-if="modal == 0" type="button" class="btn btn-primary" @click="Guardar()">GUARDAR</button>
               <button v-else type="button" class="btn btn-primary" @click="Editar()">EDITAR</button>
             </div>
+
           </div>
           <!-- /.modal-content -->
         </div>
@@ -206,6 +223,7 @@
 </template>
 
 <script>
+import { required, between, minLength, maxLength, alpha, numeric, email, helpers, date} from "vuelidate/lib/validators";
 export default {
     data() {
         return {
@@ -216,6 +234,7 @@ export default {
             modulo: '',
             nombre: '',
             detalle: '',
+            // v : 0,
             /**
              * Variables de recepcion 
              */
@@ -251,6 +270,25 @@ export default {
             idper: '',
         }
     },
+
+    validations: { 
+        modulo: { required },
+        nombre: { required },
+        detalle: { required },
+
+        validationsGroupReg: [
+            'nombre',
+            'detalle',
+            'modulo',
+        ],
+
+        validationsGroupMod: [
+            'nombre',
+            'detalle',
+            'modulo',
+        ],
+    },
+
     mounted() {
       this.ListarPermisos(1)
     },
@@ -310,107 +348,164 @@ export default {
               this.ListarPermisos(1)
           }, 360)
       },
-      NuevoPermiso(){
-          this.modal = 0;
-          this.ListarModulos();
-          $('#ModalPermiso').modal('show');
-      },
-      Limpiar(){
+
+    NuevoPermiso(){
+        this.$v.validationsGroupReg.$reset(),
+        this.modal = 0;
+        this.ListarModulos();
+        $('#ModalPermiso').modal('show');
+        $(".modal-header").css("background-color", "#007bff");
+        $(".modal-header").css("color", "white" );
+    },
+
+    Limpiar(){
         this.nombre = '',
         this.detalle = '',
         this.modulo = []
-      },
-      Guardar(){
-          let me = this;
-          axios
-          .post("/guadarPermiso", {
-              nombre: me.nombre.toLowerCase(),
-              detalle: me.detalle.toUpperCase(),
-              modulo: me.modulo.id
-          })
-          .then(function (response) {
-              
-              me.ListarPermisos(1);
-              me.Limpiar();
-              $('#ModalPermiso').modal('hide');
-          })
-          .catch(function (error) {
-              // handle error
-              console.log(error);
-          })
-      }, 
-      EditarPermiso(id){
+    },
+
+    Guardar(){
+        if(!this.$v.validationsGroupReg.$invalid){
+            swal.fire({
+                title: '¿Desea registrar este permiso?', // TITULO 
+                icon: 'question', //ICONO (success, warnning, error, info, question)
+                showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+                confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+                cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
+                confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
+                cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
+                buttonsStyling: true,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+                    axios
+                    .post("/guadarPermiso", {
+                        nombre: me.nombre.toLowerCase(),
+                        detalle: me.detalle.toUpperCase(),
+                        modulo: me.modulo.id
+                    })
+                    .then(function (response) {
+                        swal.fire(
+                            "REGISTRADO", //TITULO
+                            "Se registro correctamente el permiso.", //TEXTO DE MENSAJE
+                            "success" // TIPO DE MODAL (success, warnning, error, info)
+                        );
+                        $('#ModalPermiso').modal('hide');
+                        me.Limpiar();
+                        me.ListarPermisos(1);
+                        
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    })
+                }else{
+                    swal.fire(
+                        "Informacion", //TITULO
+                        "Solicitud cancelada.", //TEXTO DE MENSAJE
+                        "info" // TIPO DE MODAL (success, warnning, error, info)
+                    );
+                    $('#ModalPermiso').modal('hide');
+                    me.Limpiar();
+                }
+            })
+        }else{
+            this.$v.validationsGroupReg.$touch();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Ingrese todos los datos requeridos',
+                showConfirmButton: false,
+                timer: 2000
+            }) 
+        }
+    }, 
+
+    EditarPermiso(id){
         let me = this;
+        this.$v.validationsGroupMod.$reset(),
         me.modal = 1;
         me.ListarModulos();
         axios
-          .post("/datosPermiso", {
-              id: id
-          })
-          .then(function (response) {
-              
-              me.nombre = response.data.name,
-              me.detalle = response.data.detalle,
-              me.modulo = response.data.modnom,
-              me.idmod = response.data.idmod,
-              me.idper = response.data.id
-          })
-          .catch(function (error) {
-              // handle error
-              console.log(error);
-          })
+            .post("/datosPermiso", {
+                id: id
+            })
+            .then(function (response) {
+                me.nombre = response.data.name,
+                me.detalle = response.data.detalle,
+                me.modulo = response.data.modnom,
+                me.idmod = response.data.idmod,
+                me.idper = response.data.id
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
         $('#ModalPermiso').modal('show');
+    },
 
-      },
-      Editar(){
+    Editar(){
         let me = this;
         if (me.modulo.id) {
             var mod = me.modulo.id;
         } else {
             var mod = me.idmod;
         }
-        swal.fire({
-            title: '¿Desea editar este permiso?', // TITULO 
-            icon: 'question', //ICONO (success, warnning, error, info, question)
-            showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-            confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-            cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
-            confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
-            cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
-            buttonsStyling: true,
-            reverseButtons: true
-            }).then((result) => {
-            if (result.value) {
-                axios
-                .post("/editarPermiso", {
-                    id: me.idper,
-                    nombre: me.nombre.toLowerCase(),
-                    detalle: me.detalle.toUpperCase(),
-                    modulo: mod
-                })
-                .then(function (response) {
-                    
-                    me.ListarPermisos(1);
+        if(!this.$v.validationsGroupMod.$invalid){
+            swal.fire({
+                title: '¿Desea modificar este permiso?', // TITULO 
+                icon: 'question', //ICONO (success, warnning, error, info, question)
+                showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+                confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+                cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
+                confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
+                cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
+                buttonsStyling: true,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    axios
+                    .post("/editarPermiso", {
+                        id: me.idper,
+                        nombre: me.nombre.toLowerCase(),
+                        detalle: me.detalle.toUpperCase(),
+                        modulo: mod
+                    })
+                    .then(function (response) {
+                        swal.fire(
+                            "MODIFICADO", //TITULO
+                            "Se modifico correctamente el permiso.", //TEXTO DE MENSAJE
+                            "success" // TIPO DE MODAL (success, warnning, error, info)
+                        );
+                        $('#ModalPermiso').modal('hide');
+                        me.Limpiar();
+                        me.ListarPermisos(1);
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    })
+                }else{
                     swal.fire(
-                        "Editado", //TITULO
-                        "Se edito correctamente el permiso.", //TEXTO DE MENSAJE
-                        "success" // TIPO DE MODAL (success, warnning, error, info)
+                        "Informacion", //TITULO
+                        "Solicitud cancelada.", //TEXTO DE MENSAJE
+                        "info" // TIPO DE MODAL (success, warnning, error, info)
                     );
                     $('#ModalPermiso').modal('hide');
                     me.Limpiar();
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
-                })
-                
+                }
+            })
+        }else{
+            this.$v.validationsGroupMod.$touch();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Ingrese todos los datos requeridos',
+                showConfirmButton: false,
+                timer: 2000
+            }) 
+        }
+    },
 
-            }else{
-            console.log('no empezamos');
-            }
-        })
-
-      },
       ListarModulos(){
           let me = this;
           axios
@@ -422,6 +517,10 @@ export default {
             // handle error
             console.log(error);
             });
+      },
+
+      Cerrar(){
+
       }
 
     },

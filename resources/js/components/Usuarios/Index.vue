@@ -159,12 +159,12 @@
 
         <!-- Seccion de Modals -->
         <!-- Modal Nuevo Usuario -->
-        <div class="modal fade" id="ModalUsuario">
+        <div class="modal fade" data-backdrop="static" id="ModalUsuario">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title-registro"></h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar()">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar(1)">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -206,8 +206,7 @@
 
                 <div class="form-group row">
                     <div class="col-sm-12">
-                        <label for="">ROLES:</label>
-                        
+                        <label for="">Roles</label>
                         <select class="form-control" v-model="rol" :class="{ 'is-invalid' : $v.rol.$error, 'is-valid':!$v.rol.$invalid }">
                             <option value="" disabled>SELECCIONE</option>
                             <option v-for="rol in Aroles" :key="rol.id" :value="rol.id"  v-text="rol.name"></option>
@@ -217,20 +216,10 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="form-group row">
-                    <div class="col-md-12">
-                        <label class="form-control-label" for="text-input">Observación</label>
-                        <textarea name="textarea" class="form-control" rows="3" v-model="perespe_observacion" style="text-transform:uppercase"></textarea>
-                    </div>
-                </div> -->
-
             </div>
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" @click="CrearUsuario()">REGISTRAR</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">CERRAR</button>
-
+                <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar(1)">CERRAR</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -241,8 +230,8 @@
 
 
 
-        <div class="modal fade" id="NuevoUsuario">
-            <div class="modal-dialog modal-xl">
+        <div class="modal fade" data-backdrop="static" id="NuevoUsuario">
+            <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                 <h4 class="modal-title">{{datos.grado}} {{datos.complemento}} {{datos.nombre}} {{datos.paterno}} {{datos.materno}}</h4>
@@ -340,28 +329,23 @@
         <!-- /.modal -->
 
         <!-- Modal Editar Usuario -->
-        <div class="modal fade" id="EditarUsuario">
-            <div class="modal-dialog modal-xl">
+        <div class="modal fade" data-backdrop="static" id="EditarUsuario">
+            <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                 <h4 class="modal-title">{{Edatos.nombres}} {{Edatos.ap_paterno}} {{Edatos.ap_materno}}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar(2)">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
                 <div class="modal-body">
                     <!-- llenado de informacion de Datos -->
                         <div class="row">
-                            <!-- Foto del Personal -->
-                            <!-- <div  class="col-md-2" style="vertical-align:middle;">
-                                <img v-bind:src="'https://sipefab.fab.bo/img/personal/'+Edatos.foto" width="100%" height="100%">
-                            </div> -->
-                            <!-- Edatos personales -->
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <dl>
-                                            <dt class="st">NOMBRE</dt>
+                                            <dt class="st">Nonmbre</dt>
                                             <dd class="st">
                                                 <input type="text" v-model.trim="nom_usuA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.nom_usuA.$error, 'is-valid':!$v.nom_usuA.$invalid }">
                                                 <div class="invalid-feedback">
@@ -373,7 +357,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <dl>
-                                            <dt class="st">AP. PATERNO</dt>
+                                            <dt class="st">Ap. Paterno</dt>
                                             <dd class="st">
                                                 <input type="text" v-model.trim="appat_usuA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.appat_usuA.$error, 'is-valid':!$v.appat_usuA.$invalid }">
                                                 <div class="invalid-feedback">
@@ -385,7 +369,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <dl>
-                                            <dt class="st">AP. MATERNO</dt>
+                                            <dt class="st">Ap. Materno</dt>
                                             <dd class="st">
                                                 <input type="text" v-model.trim="apmat_usuA" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.apmat_usuA.$error, 'is-valid':!$v.apmat_usuA.$invalid }">
                                                 <div class="invalid-feedback">
@@ -400,7 +384,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <dl>
-                                            <dt class="st">EMAIL:</dt>
+                                            <dt class="st">Email</dt>
                                             <dd class="st"> 
                                                 <input type="text" v-model.trim="emailA" class="form-control" :class="{ 'is-invalid' : $v.emailA.$error, 'is-valid':!$v.emailA.$invalid }">
                                                 <div class="invalid-feedback">
@@ -413,25 +397,16 @@
                                 </div>
                                 <div class="row d-flex justify-content-center"> 
                                     <div class="col-md-4">
-                                        <label for="">NICK:</label>
+                                        <label for="">Nick</label>
                                         <input type="text" style=" background-color: rgba(182, 171, 171, 0.849); text-align: center;" class="form-control" disabled v-model="Edatos.nick">
                                     </div>
-                                    <!-- <div class="col-md-4">
-                                        <label class="col-md-12" for="">SECCION:</label>
-                                        <select class="form-control col-md-12" v-model="eseccion">
-                                            <option value="1">OFICIALES</option>
-                                            <option value="2">SUBOFICIALES Y SARGENTOS</option>
-                                            <option value="3">PERSONAL CIVIL</option>
-                                            <option value="4">TODOS</option>
-                                        </select>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" @click="EditarUsuario()">EDITAR</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar()">CERRAR</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar(2)">CERRAR</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -444,48 +419,57 @@
 
 
         <!-- AGREGAR ROLES A UN USUARIO -->
-        <div class="modal fade"  data-backdrop="static" id="AgregarRoles">
-            <div class="modal-dialog modal-xs ">
+        <div class="modal fade" data-backdrop="static" id="AgregarRoles">
+            <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">ASIGNAR ROLES</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Cerrar(3)">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">                    
-                        <div class="col-sm-12">
-                            <label for="">ROLES:</label>
+                        <div class="col-md-12">
+                            <label>Roles</label>
                             <v-select
                                 label="name"
                                 :options="Aroles"
                                 v-model="role"
+                                :class="{
+                                    'is-invalid': $v.role.$error,
+                                    'is-valid': !$v.role.$invalid
+                                }"
                             >
+                                <!-- EN CASO QUE NO SE ENCUENTRE EL VALOR EN LA LISTA -->
                                 <template v-slot:no-options="{ search, searching }">
-                                <template v-if="searching">
-                                    Lo sentimos, no hay opciones de coincidencia.<em>{{
-                                    search
-                                    }}</em
-                                    >.
-                                </template>
-                                <em v-else
-                                    >Lo sentimos, no hay opciones de coincidencia.</em
-                                >
+                                    <template v-if="searching">
+                                        Lo sentimos, no hay opciones de coincidencia para
+                                        <em>{{ search }}</em>.
+                                    </template>
+
+                                    <em v-else>
+                                        Lo sentimos, no hay opciones disponibles.
+                                    </em>
                                 </template>
                             </v-select>
 
+                            <div class="invalid-feedback">
+                                <span v-if="!$v.role.required">
+                                    Este campo es requerido
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <button type="button" class="btn btn-primary btn-block" @click="AgregarRol()">ASIGNAR ROL</button>
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        <label for="">ROLES ASIGNADOS</label>
+                        <label for="">Roles Asignados</label>
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
@@ -508,9 +492,10 @@
                         </table> 
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" @click="Cerrar(3)">CERRAR</button>
                 </div>
+
             </div>
             <!-- /.modal-content -->
             </div>
@@ -542,6 +527,11 @@ export default {
             emailA : '',
             // FIN VARIBLES MODIFICAR USER
 
+            iduser: '',
+            role:[],
+
+
+
             per: [],
             nick: '',
             password: null,
@@ -561,9 +551,9 @@ export default {
             Erol: [],
             idErol:'',
             Aroles:[],
-            role:[],
+            
             Usrol:[],
-            iduser: '',
+            
             /**
             * Variables paginacion
             */
@@ -600,6 +590,8 @@ export default {
         apmat_usuA : { letrasSpanishVacio: value => !value || /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(value) },
         emailA : { required, email},
 
+        role : { required },
+
         validationsGroupReg: [
             'nom_usu',
             'appat_usu',
@@ -614,6 +606,10 @@ export default {
             'apmat_usuA',
             'emailA',
             // 'rol'
+        ],
+
+        validationsGroupRol: [
+            'role'
         ],
     },
 
@@ -661,23 +657,7 @@ export default {
             $(".modal-header").css("color", "white" );
             $(".modal-title-registro").text("NUEVO USUARIO");
             this.ListarRoles();
-            // this.selectSubespecialidad()
-            // this.selectbuscarSubespecialidad(this.perespe_especialidad)
         },
-
-        // ListarPersonal(){
-        //   let me = this;
-        //    axios
-        //    .get('/listPer')
-        //    .then(function (response) {
-        //        
-        //        me.Apersonal = response.data;
-        //    })
-        //    .catch(function (error) {
-            // handle error
-        //    console.log(error);
-        //    });
-        //},
 
         ListarRoles(){ //BASE
             let me = this;
@@ -693,6 +673,7 @@ export default {
             console.log(error);
             });
         },
+
         NuevoUsuarioModal(){
             try {
                 if (this.per.id) {
@@ -731,6 +712,7 @@ export default {
             
             
         },
+
         CrearUsuario(){ //BASE
             if(!this.$v.validationsGroupReg.$invalid){
                 swal.fire({
@@ -747,17 +729,7 @@ export default {
                     if (result.value) {
                         let me = this;
                         axios
-                        .post("/crearUsuario", {
-                            // percodigo: me.datos.percodigo,
-                            // email:  me.datos.email,
-                            // nick: me.nick,
-                            // rol: me.rol.name,
-                            // des2: me.datos.des2,
-                            // des3: me.datos.des3,
-                            // nombre: me.datos.nombre,
-                            // paterno: me.datos.paterno,
-                            // materno: me.datos.materno,
-                            // seccion: me.seccion  
+                        .post("/crearUsuario", { 
                             nombres : me.nom_usu,
                             ap_paterno : me.appat_usu,
                             ap_materno : me.apmat_usu,
@@ -768,28 +740,29 @@ export default {
                         
                         console.log(response);
                             swal.fire(
-                                response.data.titulo, //TITULO
-                                response.data.mensaje, //TEXTO DE MENSAJE
-                                response.data.tipo // TIPO DE MODAL (success, warnning, error, info)
+                                "REGISTRADO", //TITULO
+                                "Se registro correctamente el usuario.", //TEXTO DE MENSAJE
+                                "success" // TIPO DE MODAL (success, warnning, error, info)
                             );
-                            if (!response.data.code) {
-                                // $('#NuevoUsuario').modal('hide');
-                                $('#ModalUsuario').modal('hide');
-                                me.nick = '';
-                                me.password = '';
-                                me.ListarUsuarios(1);
-                            } 
+                            // $('#NuevoUsuario').modal('hide');
+                            $('#ModalUsuario').modal('hide');
+                            me.Cerrar(1);
+                            me.ListarUsuarios(1);
                         })
                         .catch(function (error) {
                             // handle error
                             console.log(error);
                         })
                     }else{
+                        let me = this;
                         swal.fire(
                             "Informacion", //TITULO
                             "Solicitud cancelada.", //TEXTO DE MENSAJE
                             "info" // TIPO DE MODAL (success, warnning, error, info)
                         );
+                        $('#ModalUsuario').modal('hide');
+                        me.Cerrar(1);
+                        me.ListarUsuarios(1);
                     }
                 })
             }else{
@@ -804,11 +777,13 @@ export default {
         },
 
         ModalRoles(usuario_id,user_id){
+            this.$v.validationsGroupRol.$reset(),
             this.RolesNoUsuario(user_id);
             this.RolesUsuario(user_id);
             this.iduser = user_id;
             $('#AgregarRoles').modal('show');
-
+            $(".modal-header").css("background-color", "#007bff");
+            $(".modal-header").css("color", "white" );
         },
 
         RolesNoUsuario(user_id){
@@ -828,6 +803,7 @@ export default {
                 console.log(error);
             })
         },
+
         RolesUsuario(user_id){
             let me = this;
             
@@ -846,64 +822,121 @@ export default {
                 console.log(error);
             })
         },
+
         EliminarRol(name){
-            let me = this;
-            axios
-            .post("/quitarRol", {
-                user_id: me.iduser,
-                rol: name
-            })
-            .then(function (response) {
-                swal.fire(
-                    "Aceptado", //TITULO
-                    "Se elimino correctamente el rol.", //TEXTO DE MENSAJE
-                    "success" // TIPO DE MODAL (success, warning, error, info)
-                );
-                me.role = [];
-                $('#AgregarRoles').modal('hide');       
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })    
-        },
-        AgregarRol(){
-            let me = this;
-            if (me.role == '') {
-                swal.fire(
-                    "Precaución", //TITULO
-                    "Debe seleccionar un rol para agregar.", //TEXTO DE MENSAJE
-                    "warning" // TIPO DE MODAL (success, warning, error, info)
-                );
-
-            }else{
-                axios
-                .post("/agregarRol", {
-                    user_id: me.iduser,
-                    rol: me.role.name
-                })
-                .then(function (response) {
+            swal.fire({
+                title: '¿Desea eliminar este rol al usuario?', // TITULO 
+                icon: 'question', //ICONO (success, warnning, error, info, question)
+                showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+                confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+                cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
+                confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
+                cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
+                buttonsStyling: true,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+                    axios
+                    .post("/quitarRol", {
+                        user_id: me.iduser,
+                        rol: name
+                    })
+                    .then(function (response) {
+                    console.log(response);
+                        swal.fire(
+                            "ELIMINADO", //TITULO
+                            "Se elimino correctamente el rol al usuario.", //TEXTO DE MENSAJE
+                            "success" // TIPO DE MODAL (success, warnning, error, info)
+                        );
+                        // $('#NuevoUsuario').modal('hide');
+                        $('#AgregarRoles').modal('hide');
+                        me.Cerrar(3);
+                        me.ListarUsuarios(1);
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    })
+                }else{
+                    let me = this;
                     swal.fire(
-                        "Aceptado", //TITULO
-                        "Se añadio correctamente el nuevo rol.", //TEXTO DE MENSAJE
-                        "success" // TIPO DE MODAL (success, warning, error, info)
+                        "Informacion", //TITULO
+                        "Solicitud cancelada.", //TEXTO DE MENSAJE
+                        "info" // TIPO DE MODAL (success, warnning, error, info)
                     );
-                    me.role = [];
-                    $('#AgregarRoles').modal('hide');       
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
-                })    
-            }
-            
-
+                    $('#AgregarRoles').modal('hide');
+                    me.Cerrar(3);
+                    me.ListarUsuarios(1);
+                }
+            })
         },
+
+        AgregarRol(){
+            if(!this.$v.validationsGroupRol.$invalid){
+                swal.fire({
+                    title: '¿Desea agregar este rol al usuario?', // TITULO 
+                    icon: 'question', //ICONO (success, warnning, error, info, question)
+                    showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+                    confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+                    cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
+                    confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
+                    cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
+                    buttonsStyling: true,
+                    reverseButtons: true
+                    }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        axios
+                        .post("/agregarRol", {
+                            user_id: me.iduser,
+                            rol: me.role.name
+                        })
+                        .then(function (response) {
+                        console.log(response);
+                            swal.fire(
+                                "AGREGADO", //TITULO
+                                "Se agrego correctamente el rol al usuario.", //TEXTO DE MENSAJE
+                                "success" // TIPO DE MODAL (success, warnning, error, info)
+                            );
+                            // $('#NuevoUsuario').modal('hide');
+                            $('#AgregarRoles').modal('hide');
+                            me.Cerrar(3);
+                            me.ListarUsuarios(1);
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log(error);
+                        })
+                    }else{
+                        let me = this;
+                        swal.fire(
+                            "Informacion", //TITULO
+                            "Solicitud cancelada.", //TEXTO DE MENSAJE
+                            "info" // TIPO DE MODAL (success, warnning, error, info)
+                        );
+                        $('#AgregarRoles').modal('hide');
+                        me.Cerrar(3);
+                        me.ListarUsuarios(1);
+                    }
+                })
+            }else{
+                this.$v.validationsGroupRol.$touch();
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Ingrese todos los datos requeridos',
+                    showConfirmButton: false,
+                    timer: 2000
+                }) 
+            }
+        },
+
         cambiarPagina(page){
             let me = this;
             me.pagination.current_page = page;
             me.ListarUsuarios(page);
         },
+
         ListarUsuarios(page){
             let me = this;
             axios
@@ -932,6 +965,7 @@ export default {
 
         EditarModal(usuario_id,user_id){
             let me = this;
+            this.$v.validationsGroupMod.$reset(),
             me.Eid = usuario_id;
             me.ListarRoles();
             axios
@@ -957,6 +991,7 @@ export default {
                 console.log(error);
             })
         },
+
         EditarUsuario(){
             if(!this.$v.validationsGroupMod.$invalid){
             // if (this.Erol.name) {
@@ -965,7 +1000,7 @@ export default {
             //     var role = this.namErol;
             // }
                 swal.fire({
-                    title: '¿Desea editar este usuario?', // TITULO 
+                    title: '¿Desea modificar este usuario?', // TITULO 
                     icon: 'question', //ICONO (success, warnning, error, info, question)
                     showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
                     confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
@@ -987,26 +1022,29 @@ export default {
                             email: me.emailA,
                         })
                         .then(function (response) {
-                            
+                            swal.fire(
+                                "MODIFICADO", //TITULO
+                                "Se modifico correctamente el usuario.", //TEXTO DE MENSAJE
+                                "success" // TIPO DE MODAL (success, warnning, error, info)
+                            );
                             $('#EditarUsuario').modal('hide');
-                            setTimeout(function(){                                
-                                      location.reload();
-                                  }, 0);
+                            me.Cerrar(2);
                             me.ListarUsuarios(1);
-                            me.Eid = '';
-                            me.Epassword = '';
-                            me.eseccion = '';
                         })
                         .catch(function (error) {
                             // handle error
                             console.log(error);
                         })                    
                     }else{
-                            swal.fire(
+                        let me = this;
+                        swal.fire(
                             "Informacion", //TITULO
                             "Solicitud cancelada.", //TEXTO DE MENSAJE
                             "info" // TIPO DE MODAL (success, warnning, error, info)
                         );
+                        $('#EditarUsuario').modal('hide');
+                        me.Cerrar(2);
+                        me.ListarUsuarios(1);
                     }
                 })
             }else{
@@ -1069,7 +1107,30 @@ export default {
                     );
                 }
             })
-        }
+        },
+
+        Cerrar(valor){
+            switch (valor) {
+                case 1:
+                    this.nom_usu = '',
+                    this.appat_usu = '',
+                    this.apmat_usu = '',
+                    this.email = ''
+                    break;
+                case 2:
+                    this.nom_usuA = '',
+                    this.appat_usuA = '',
+                    this.apmat_usuA = '',
+                    this.emailA = ''
+                    break;
+                case 3:
+                    this.iduser = '',
+                    this.role = []
+                    break;
+                default:
+                    break;
+            }
+        },
     },
 };
 </script>

@@ -37,28 +37,34 @@
               <div class="card-body">
                 <div class="row">
                   <label for="">NOMBRE ROL</label>
-                  <input type="text" class="form-control" style="text-transform:uppercase;" v-model="nombre">
+                  <input type="text" class="form-control" style="text-transform:uppercase;" v-model="nombre" :class="{ 'is-invalid' : $v.nombre.$error, 'is-valid':!$v.nombre.$invalid }">
+                  <div class="invalid-feedback">
+                      <span v-if="!$v.nombre.required">Este campo es Requerido</span>
+                  </div>
                 </div> 
                 <div class="row">
                   <label for="">DESCRIPCION</label>
-                  <textarea name="" id="" class="form-control" style="text-transform:uppercase;" cols="30" rows="3" v-model="descripcion"></textarea>
+                  <textarea name="" id="" class="form-control" style="text-transform:uppercase;" cols="30" rows="3" v-model="descripcion" :class="{ 'is-invalid' : $v.descripcion.$error, 'is-valid':!$v.descripcion.$invalid }"></textarea>
+                  <div class="invalid-feedback">
+                      <span v-if="!$v.descripcion.required">Este campo es Requerido</span>
+                  </div>
                 </div>  
 
                 <div class="row">
                   <div class="col-md-12 d-flex">
-                            <div class="p-2">
-                                <button class="btn btn-sm btn-danger btn-block" @click="Cancelar()">
-                                    <i class="fas fa-undo-alt"></i> &nbsp;
-                                    CANCELAR
-                                </button>
-                            </div>
-                            <div class="ml-auto p-2">
-                                <button class="btn btn-sm btn-primary btn-block" @click="GuardarRol()">
-                                    <i class="fas fa-check-circle"></i> &nbsp;
-                                    REGISTRAR
-                                </button>
-                            </div>
-                        </div>
+                      <div class="p-2">
+                          <button class="btn btn-sm btn-danger btn-block" @click="Cancelar()">
+                              <i class="fas fa-undo-alt"></i> &nbsp;
+                              CANCELAR
+                          </button>
+                      </div>
+                      <div class="ml-auto p-2">
+                          <button class="btn btn-sm btn-primary btn-block" @click="GuardarRol()">
+                              <i class="fas fa-check-circle"></i> &nbsp;
+                              REGISTRAR
+                          </button>
+                      </div>
+                  </div>
                 </div>
               </div>
               <!-- /.card -->
@@ -93,10 +99,8 @@
                             <td class="text-center" style="vertical-align: middle">{{p.modulo}}</td>
                             <td class="text-center" style="vertical-align: middle">{{p.name}}</td>
                             <td class="text-center" style="vertical-align: middle">{{p.detalle}}</td>
-                            
                         </tr>
                     </tbody>
-                    
                 </table> 
               </div>
               <!-- /.card -->
@@ -113,6 +117,7 @@
 </template>
 
 <script>
+import { required, between, minLength, maxLength, alpha, numeric, email, helpers, date} from "vuelidate/lib/validators";
 export default {
   data() {
     return {
@@ -141,6 +146,19 @@ export default {
       code: "",
     }
   },
+
+  validations: {
+    nombre: { required },
+    descripcion: { required },
+    // listarpermisos: { required },
+
+    validationsGroupReg: [
+            'nombre',
+            'descripcion',
+            // 'listarpermisos'
+        ],
+  },
+
   computed:{
         isActived: function(){
             return this.pagination.current_page;
@@ -206,45 +224,61 @@ export default {
         })
       })
     },
+
     GuardarRol(){
-      swal.fire({
-          title: '¿DESEA GUARDAR ESTE ROL?', // TITULO 
-          icon: 'question', //ICONO (success, warnning, error, info, question)
-          showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-          confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-          cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
-          confirmButtonText: 'CONFIRMAR', //TITULO DEL BOTON CONFIRMAR
-          cancelButtonText: 'CANCELAR', //TIUTLO DEL BOTON CANCELAR
-          buttonsStyling: true,
-          reverseButtons: true
-          }).then((result) => {
-          if (result.value) {
-            let me = this;
-            axios
-            .post("/guardarRol", {
-              nombre: me.nombre.toUpperCase(),
-              descripcion: me.descripcion.toUpperCase(),
-              listarpermisos: me.listarpermisos
-            })
-            .then(function (response) {
-              
+      if(!this.$v.validationsGroupReg.$invalid){
+        swal.fire({
+            title: '¿Desea registrar este rol?', // TITULO 
+            icon: 'question', //ICONO (success, warnning, error, info, question)
+            showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+            confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+            cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
+            confirmButtonText: 'CONFIRMAR', //TITULO DEL BOTON CONFIRMAR
+            cancelButtonText: 'CANCELAR', //TIUTLO DEL BOTON CANCELAR
+            buttonsStyling: true,
+            reverseButtons: true
+            }).then((result) => {
+            if (result.value) {
+              let me = this;
+              axios
+              .post("/guardarRol", {
+                nombre: me.nombre.toUpperCase(),
+                descripcion: me.descripcion.toUpperCase(),
+                listarpermisos: me.listarpermisos
+              })
+              .then(function (response) {
+                swal.fire(
+                    "REGISTRADO", //TITULO
+                    "Se registro correctamente el rol", //TEXTO DE MENSAJE
+                    "success" // TIPO DE MODAL (success, warnning, error, info)
+                );
+                me.Cancelar();
+              })
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+              })
+            }else{
+              let me = this;
               swal.fire(
-                  "ACEPTADO", //TITULO
-                  "SE AÑADIO CORRECTAMENTE EL NUEVO ROL.", //TEXTO DE MENSAJE
-                  "success" // TIPO DE MODAL (success, warnning, error, info)
+                  "Informacion", //TITULO
+                  "Solicitud cancelada.", //TEXTO DE MENSAJE
+                  "info" // TIPO DE MODAL (success, warnning, error, info)
               );
-
               me.Cancelar();
-            })
-            .catch(function (error) {
-              // handle error
-              console.log(error);
-            })
-          }
-      })
-
-      
+            }
+        })
+      }else{
+          this.$v.validationsGroupReg.$touch();
+          Swal.fire({
+              icon: 'warning',
+              title: 'Ingrese todos los datos requeridos',
+              showConfirmButton: false,
+              timer: 2000
+          }) 
+      }
     },
+
     Cancelar(){
       this.$router.push({
           name: "Roles"

@@ -37,11 +37,17 @@
               <div class="card-body">
                 <div class="row">
                   <label for="">NOMBRE ROL:</label>
-                  <input type="text" class="form-control" v-model="nombre">
+                  <input type="text" class="form-control" v-model="nombre" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.nombre.$error, 'is-valid':!$v.nombre.$invalid }">
+                  <div class="invalid-feedback">
+                      <span v-if="!$v.nombre.required">Este campo es Requerido</span>
+                  </div>
                 </div> 
                 <div class="row">
                   <label for="">DETALLE:</label>
-                  <textarea name="" id="" class="form-control" cols="30" rows="3" v-model="descripcion"></textarea>
+                  <textarea name="" id="" class="form-control" cols="30" rows="3" v-model="descripcion" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.descripcion.$error, 'is-valid':!$v.descripcion.$invalid }"></textarea>
+                  <div class="invalid-feedback">
+                      <span v-if="!$v.descripcion.required">Este campo es Requerido</span>
+                  </div>
                 </div>  
 
                 <div class="row">
@@ -55,7 +61,7 @@
                             <div class="ml-auto p-2">
                                 <button class="btn btn-sm btn-primary btn-block" @click="EditarRol()">
                                     <i class="fas fa-check-circle"></i> &nbsp;
-                                    REGISTRAR
+                                    MODIFICAR
                                 </button>
                             </div>
                         </div>
@@ -113,6 +119,7 @@
 </template>
 
 <script>
+import { required, between, minLength, maxLength, alpha, numeric, email, helpers, date} from "vuelidate/lib/validators";
 export default {
   data() {
     return {
@@ -146,6 +153,19 @@ export default {
         code: "",
     }
   },
+
+  validations: {
+    nombre: { required },
+    descripcion: { required },
+    // listarpermisos: { required },
+
+    validationsGroupMod: [
+            'nombre',
+            'descripcion',
+            // 'listarpermisos'
+        ],
+  },
+
   mounted() {
     this.ListarPermisos();
     console.log(this.idr);
@@ -185,46 +205,62 @@ export default {
         })
       })
     },
+
     EditarRol(){
-      swal.fire({
-          title: '¿DESEA EDITAR ESTE ROL?', // TITULO 
-          icon: 'question', //ICONO (success, warnning, error, info, question)
-          showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-          confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-          cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
-          confirmButtonText: 'CONFIRMAR', //TITULO DEL BOTON CONFIRMAR
-          cancelButtonText: 'CANCELAR', //TIUTLO DEL BOTON CANCELAR
-          buttonsStyling: true,
-          reverseButtons: true
-          }).then((result) => {
-          if (result.value) {
-            let me = this;
-            axios
-            .post("/editarRol", {
+      if(!this.$v.validationsGroupMod.$invalid){
+        swal.fire({
+            title: '¿Desea modificar este rol?', // TITULO 
+            icon: 'question', //ICONO (success, warnning, error, info, question)
+            showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+            confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+            cancelButtonColor: '#868077', // CLOR DEL BOTON CANCELAR
+            confirmButtonText: 'CONFIRMAR', //TITULO DEL BOTON CONFIRMAR
+            cancelButtonText: 'CANCELAR', //TIUTLO DEL BOTON CANCELAR
+            buttonsStyling: true,
+            reverseButtons: true
+            }).then((result) => {
+            if (result.value) {
+              let me = this;
+              axios
+              .post("/editarRol", {
                 id: me.idr,
                 nombre: me.nombre.toUpperCase(),
                 descripcion: me.descripcion.toUpperCase(),
                 listarpermisos: me.listarpermisos
-            })
-            .then(function (response) {
-              
+              })
+              .then(function (response) {
+                swal.fire(
+                    "MODIFICADO", //TITULO
+                    "Se modifico correctamente el rol", //TEXTO DE MENSAJE
+                    "success" // TIPO DE MODAL (success, warnning, error, info)
+                );
+                me.Cancelar();
+              })
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+              })
+            }else{
+              let me = this;
               swal.fire(
-                  "ACEPTADO", //TITULO
-                  "SE EDITO CORRECTAMENTE EL NUEVO ROL.", //TEXTO DE MENSAJE
-                  "success" // TIPO DE MODAL (success, warnning, error, info)
+                  "Informacion", //TITULO
+                  "Solicitud cancelada.", //TEXTO DE MENSAJE
+                  "info" // TIPO DE MODAL (success, warnning, error, info)
               );
-
               me.Cancelar();
-            })
-            .catch(function (error) {
-              // handle error
-              console.log(error);
-            })
-          }
-      })
-
-      
+            }
+        })
+      }else{
+          this.$v.validationsGroupReg.$touch();
+          Swal.fire({
+              icon: 'warning',
+              title: 'Ingrese todos los datos requeridos',
+              showConfirmButton: false,
+              timer: 2000
+          }) 
+      }
     },
+
     Cancelar(){
       this.$router.push({
           name: "Roles"

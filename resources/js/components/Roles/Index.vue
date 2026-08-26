@@ -60,7 +60,7 @@
                   
                   <router-link to='/nuevoRol'>
                       <button type="button" class="btn btn-success btn-sm">
-                      <i class="fas fa-plus"></i> NUEVO
+                       <i class="fas fa-plus"></i> NUEVO
                       </button>
                   </router-link>
                       

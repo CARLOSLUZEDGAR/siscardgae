@@ -101,7 +101,7 @@
                                 
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Grado</label>
-                                    <select class="form-control" v-model="per_grado" :class="{ 'is-invalid' : $v.per_grado.$error, 'is-valid':!$v.per_grado.$invalid }">
+                                    <select class="form-control" v-model="per_grado" @change="selectGrado(per_grado)" :class="{ 'is-invalid' : $v.per_grado.$error, 'is-valid':!$v.per_grado.$invalid }">
                                         <option value="" disabled>SELECCIONE</option>
                                         <option v-for="grado in arrayGrado" :key="grado.id" :value="grado.id" v-text="grado.nombre"></option>                        
                                     </select>
@@ -278,7 +278,7 @@
                             <br>
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">GRADO, NOMBRES Y APELLIDOS: {{per_grado}} {{per_nombre}} {{per_appaterno}} {{per_apmaterno}}</h4></label>
+                                    <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">GRADO, NOMBRES Y APELLIDOS: {{grado_seleccionado}} {{per_nombre}} {{per_appaterno}} {{per_apmaterno}}</h4></label>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -420,7 +420,7 @@
                         </div>
 
                     <!-- Paso 3 -->
-                    <div class="step" v-if="currentStep === 3">
+                    <!-- <div class="step" v-if="currentStep === 3">
                         <h3>Paso 3: Confirmación</h3>
                         <p>Por favor, confirma la información:</p>
                         <p>Nombre: {{ per_nombre }}</p>
@@ -429,7 +429,7 @@
                         <p>Dirección: {{ per_nombre }}</p>
                         <button type="button" @click="previousStep">Anterior</button>
                         <button type="submit">Enviar</button>
-                    </div>
+                    </div> -->
                     </form>
                 </div>
                 <!-- /.card -->
@@ -1316,6 +1316,21 @@
         })
         .catch(function (error) {
           // handle error
+          console.log(error);
+        })
+      },
+
+      selectGrado(idgrado){
+        let me = this;
+        axios
+        .post("/selectGrado", {
+          id_grado : idgrado,
+        })
+        .then(function (response) {
+          me.arraySelectGrado = response.data.grados;
+          me.grado_seleccionado = me.arraySelectGrado.abreviatura;
+        })
+        .catch(function (error) {
           console.log(error);
         })
       },
