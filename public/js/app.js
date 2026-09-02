@@ -124412,21 +124412,21 @@ var staticRenderFns = [
                   _c("div", { staticClass: "col-md-12" }, [
                     _c("div", { staticClass: "col-md-12 title-credit my-2" }, [
                       _vm._v(
-                        "\n                                    GESTIÓN DE MANDO 2024\n                                "
+                        "\n                                    GESTIÓN DE MANDO 2026\n                                "
                       )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-12 text-center" }, [
                       _vm._v(
-                        "\n                                        Gral. Div. Aé. Gerardo Zabala Álvarez\n                                    "
+                        "\n                                        Gral. Div. Aé. Sergio Fernando Lora Araoz\n                                    "
                       ),
                       _c("div", { staticClass: "cargo mb-1" }, [
                         _vm._v(
-                          "\n                                        COMANDANTE GENERAL DE LA FUERZA AÉREA\n                                    "
+                          "\n                                        COMANDANTE GENERAL DE LA FUERZA AÉREA BOLIVIANA\n                                    "
                         )
                       ]),
                       _vm._v(
-                        "                       \n                                        Gral. Brig. Aé. Gonzalo Edwin Ruiz Cisneros\n                                    "
+                        "                       \n                                        Gral. Brig. Aé. Jaime Antonio Quevedo Guzmán\n                                    "
                       ),
                       _c("div", { staticClass: "cargo  mb-1" }, [
                         _vm._v(
@@ -124482,6 +124482,23 @@ var staticRenderFns = [
                               _c("td", { staticClass: "space content2" }, [
                                 _vm._v(
                                   "Sof. 2do. DESA. Carlos Alejandro Alberto Machicado"
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("tr", [
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "cargo2 space mb-1",
+                                  attrs: { rowspan: "8" }
+                                },
+                                [_vm._v("DEVELOPERS")]
+                              ),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "space content2" }, [
+                                _vm._v(
+                                  "Sof. 2do. DESA. Heber Gutierrez Villazante"
                                 )
                               ])
                             ])

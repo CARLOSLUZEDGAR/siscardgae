@@ -20,14 +20,14 @@
                                 
                                 <div class="col-md-12">
                                     <div class="col-md-12 title-credit my-2">
-                                        GESTIÓN DE MANDO 2024
+                                        GESTIÓN DE MANDO 2026
                                     </div>
                                     <div class="col-md-12 text-center">
-                                            Gral. Div. Aé. Gerardo Zabala Álvarez
+                                            Gral. Div. Aé. Sergio Fernando Lora Araoz
                                         <div class="cargo mb-1">
-                                            COMANDANTE GENERAL DE LA FUERZA AÉREA
+                                            COMANDANTE GENERAL DE LA FUERZA AÉREA BOLIVIANA
                                         </div>                       
-                                            Gral. Brig. Aé. Gonzalo Edwin Ruiz Cisneros
+                                            Gral. Brig. Aé. Jaime Antonio Quevedo Guzmán
                                         <div class="cargo  mb-1">
                                             JEFE DE ESTADO MAYOR GENERAL DE LA FAB
                                         </div>
@@ -55,11 +55,11 @@
                                                 <td class="cargo2 space mb-1">SCRUM MASTER</td>
                                                 <td class="space content2">Sof. 2do. DESA. Carlos Alejandro Alberto Machicado</td>
                                             </tr>
-                                            <!-- <tr>
-                                                <td class="cargo2 space mb-1" rowspan="8">DEVELOPERS</td>
-                                                <td class="space content2">Tte. DIM. Christian Cruz Felipez</td>
-                                            </tr>
                                             <tr>
+                                                <td class="cargo2 space mb-1" rowspan="8">DEVELOPERS</td>
+                                                <td class="space content2">Sof. 2do. DESA. Heber Gutierrez Villazante</td>
+                                            </tr>
+                                            <!-- <tr>
                                                 <td class="space content2">Sof. Inc. Téc. Carlos Alejandro Alberto Machicado</td>
                                             </tr>
                                             <tr>
