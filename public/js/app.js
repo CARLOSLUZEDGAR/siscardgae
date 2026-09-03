@@ -5455,6 +5455,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -128266,8 +128270,23 @@ var render = function() {
                               }),
                               _vm._v(" "),
                               _c("td", {
+                                staticStyle: { "text-align": "center" },
+                                domProps: {
+                                  textContent: _vm._s(personal.nacionalidad)
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("td", {
+                                staticStyle: { "text-align": "center" },
                                 domProps: {
                                   textContent: _vm._s(personal.per_ci)
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("td", {
+                                staticStyle: { "text-align": "center" },
+                                domProps: {
+                                  textContent: _vm._s(personal.per_celular)
                                 }
                               }),
                               _vm._v(" "),
@@ -128887,7 +128906,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("NOMBRES")]),
         _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("NACIONALIDAD")]),
+        _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("C. IDENTIDAD")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("NRO. CELULAR")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("OPCIONES")])
       ])

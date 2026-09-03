@@ -63,7 +63,9 @@
                                     <th class="text-center">AP. PATERNO</th>
                                     <th class="text-center">AP. MATERNO</th>
                                     <th class="text-center">NOMBRES</th>
+                                    <th class="text-center">NACIONALIDAD</th>
                                     <th class="text-center">C. IDENTIDAD</th>
+                                    <th class="text-center">NRO. CELULAR</th>
                                     <th class="text-center">OPCIONES</th>
                                 </tr>
                             </thead>
@@ -74,7 +76,9 @@
                                     <td v-text="personal.per_paterno"></td>
                                     <td v-text="personal.per_materno"></td>
                                     <td v-text="personal.per_nombre"></td>
-                                    <td v-text="personal.per_ci"></td>
+                                    <td style="text-align:center" v-text="personal.nacionalidad"></td>
+                                    <td style="text-align:center" v-text="personal.per_ci"></td>
+                                    <td style="text-align:center" v-text="personal.per_celular"></td>
                                     <td style="width:100px; text-align:center">
                                       <div v-if="$auth.can('view-renew-per')">
                                         <button type="button" @click="Renovar(personal.id)" class="btn btn-success btn-sm">
