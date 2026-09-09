@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Services\SupabaseStorageService;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class PersonalController extends Controller
@@ -105,6 +106,7 @@ class PersonalController extends Controller
                 'per_mail' => $request->email,
                 'per_fecha_nacimiento' => $request->fech_nac,
                 'per_direccion' => mb_strtoupper($request->direccion),
+                'per_password' => Hash::make($request->ci),
                 'estado' => '1',
                 'sysuser' => auth()->id()
             ]);
