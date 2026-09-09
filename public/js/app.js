@@ -16341,13 +16341,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       // INICIO VARIABLES DGAE
       currentStep: 1,
-      per_foto: '',
+      per_foto: null,
+      preview_foto: null,
       per_categoria: '',
       per_entidad: '',
       per_grado: '',
@@ -16368,14 +16370,14 @@ __webpack_require__.r(__webpack_exports__);
       per_observaciones: '',
       // per_fechaemision : this.getFechaHoy(),
       per_fechaexpiracion: '',
-      doc_ci: '',
-      doc_nacimiento: '',
-      doc_egreso: '',
-      doc_especializacion: '',
-      doc_medico: '',
-      doc_titulo: '',
-      doc_libreta: '',
-      doc_aprobacion: '',
+      doc_ci: null,
+      doc_nacimiento: null,
+      doc_egreso: null,
+      doc_especializacion: null,
+      doc_medico: null,
+      doc_titulo: null,
+      doc_libreta: null,
+      doc_aprobacion: null,
       // per_fechaemision : new Date(),
       // per_fechaexpiracion : new Date(),
       arrayCategoria: [],
@@ -16570,13 +16572,16 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return pagesArray;
-    },
-    imagen: function imagen() {
-      return this.per_foto;
-    },
-    imagenA: function imagenA() {
-      return this.per_fotoA;
-    }
+    } // imagen() {
+    //     if (!this.per_foto) {
+    //         return null;
+    //     }
+    //     return URL.createObjectURL(this.per_foto);
+    // },
+    // imagenA(){
+    //     return this.per_fotoA;
+    // }
+
   },
   mounted: function mounted() {
     this.NuevoPersonal(); // this.ListarPersonal(1);
@@ -16620,127 +16625,397 @@ __webpack_require__.r(__webpack_exports__);
         this.currentStep--;
       }
     },
+    // obtenerCi(e){
+    //   try {
+    //           var fileReader = new FileReader();
+    //           fileReader.onload = (e) => {
+    //               this.doc_ci = e.target.result;
+    //           }
+    //           fileReader.readAsDataURL(e.target.files[0])
+    //           // this.vCI = 1;
+    //       } catch (error) {
+    //       }
+    // },
+    // obtenerNacimiento(e){
+    //   try {
+    //           var fileReader = new FileReader();
+    //           fileReader.onload = (e) => {
+    //               this.doc_nacimiento = e.target.result;
+    //           }
+    //           fileReader.readAsDataURL(e.target.files[0])
+    //           // this.vNAC = 1;
+    //       } catch (error) {
+    //       }
+    // },
+    // obtenerEgreso(e){
+    //   try {
+    //           var fileReader = new FileReader();
+    //           fileReader.onload = (e) => {
+    //               this.doc_egreso = e.target.result;
+    //           }
+    //           fileReader.readAsDataURL(e.target.files[0])
+    //           // this.vNAC = 1;
+    //       } catch (error) {
+    //       }
+    // },
+    // obtenerEspecializacion(e){
+    //   try {
+    //           var fileReader = new FileReader();
+    //           fileReader.onload = (e) => {
+    //               this.doc_especializacion = e.target.result;
+    //           }
+    //           fileReader.readAsDataURL(e.target.files[0])
+    //           // this.vNAC = 1;
+    //       } catch (error) {
+    //       }
+    // },
+    // obtenerMedico(e){
+    //   try {
+    //           var fileReader = new FileReader();
+    //           fileReader.onload = (e) => {
+    //               this.doc_medico = e.target.result;
+    //           }
+    //           fileReader.readAsDataURL(e.target.files[0])
+    //           // this.vNAC = 1;
+    //       } catch (error) {
+    //       }
+    // },
+    // obtenerTitulo(e){
+    //   try {
+    //           var fileReader = new FileReader();
+    //           fileReader.onload = (e) => {
+    //               this.doc_titulo = e.target.result;
+    //           }
+    //           fileReader.readAsDataURL(e.target.files[0])
+    //           // this.vNAC = 1;
+    //       } catch (error) {
+    //       }
+    // },
+    // obtenerLibreta(e){
+    //   try {
+    //           var fileReader = new FileReader();
+    //           fileReader.onload = (e) => {
+    //               this.doc_libreta = e.target.result;
+    //           }
+    //           fileReader.readAsDataURL(e.target.files[0])
+    //           // this.vNAC = 1;
+    //       } catch (error) {
+    //       }
+    // },
+    // obtenerAprobacion(e){
+    //   try {
+    //           var fileReader = new FileReader();
+    //           fileReader.onload = (e) => {
+    //               this.doc_aprobacion = e.target.result;
+    //           }
+    //           fileReader.readAsDataURL(e.target.files[0])
+    //           // this.vNAC = 1;
+    //       } catch (error) {
+    //       }
+    // },
+    // obtenerImagen(e){
+    //     try {
+    //         var fileReader = new FileReader();
+    //         fileReader.onload = (e) => {
+    //             this.per_foto = e.target.result;
+    //         }
+    //         fileReader.readAsDataURL(e.target.files[0])
+    //         this.v = 1;
+    //     } catch (error) {
+    //     }
+    // },
+    obtenerImagen: function obtenerImagen(e) {
+      var file = e.target.files[0];
+
+      if (!file) {
+        this.per_foto = null;
+        this.preview_foto = null;
+        return;
+      } // ==========================================
+      // VALIDAR TIPO DE IMAGEN
+      // ==========================================
+
+
+      if (!file.type.startsWith('image/')) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo no válido',
+          text: 'Por favor, seleccione una imagen.'
+        });
+        e.target.value = '';
+        this.per_foto = null;
+        this.preview_foto = null;
+        return;
+      } // ==========================================
+      // VALIDAR TAMAÑO - MÁXIMO 2 MB
+      // ==========================================
+
+
+      if (file.size > 2 * 1024 * 1024) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Imagen demasiado grande',
+          text: 'La fotografía no debe superar los 2 MB.'
+        });
+        e.target.value = '';
+        this.per_foto = null;
+        this.preview_foto = null;
+        return;
+      } // ==========================================
+      // GUARDAR ARCHIVO REAL
+      // ==========================================
+
+
+      this.per_foto = file; // ==========================================
+      // GENERAR VISTA PREVIA
+      // ==========================================
+
+      this.preview_foto = URL.createObjectURL(file);
+      this.v = 1;
+    },
     obtenerCi: function obtenerCi(e) {
-      var _this = this;
+      var file = e.target.files[0];
 
-      try {
-        var fileReader = new FileReader();
+      if (!file) {
+        return;
+      }
 
-        fileReader.onload = function (e) {
-          _this.doc_ci = e.target.result;
-        };
+      if (file.type !== 'application/pdf') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo no válido',
+          text: 'El documento debe estar en formato PDF.'
+        });
+        e.target.value = '';
+        return;
+      } // Máximo 5 MB
 
-        fileReader.readAsDataURL(e.target.files[0]); // this.vCI = 1;
-      } catch (error) {}
+
+      if (file.size > 5 * 1024 * 1024) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo demasiado grande',
+          text: 'El PDF no debe superar los 5 MB.'
+        });
+        e.target.value = '';
+        return;
+      }
+
+      this.doc_ci = file;
     },
     obtenerNacimiento: function obtenerNacimiento(e) {
-      var _this2 = this;
+      var file = e.target.files[0];
 
-      try {
-        var fileReader = new FileReader();
+      if (!file) {
+        return;
+      }
 
-        fileReader.onload = function (e) {
-          _this2.doc_nacimiento = e.target.result;
-        };
+      if (file.type !== 'application/pdf') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo no válido',
+          text: 'El documento debe estar en formato PDF.'
+        });
+        e.target.value = '';
+        return;
+      } // Máximo 5 MB
 
-        fileReader.readAsDataURL(e.target.files[0]); // this.vNAC = 1;
-      } catch (error) {}
+
+      if (file.size > 5 * 1024 * 1024) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo demasiado grande',
+          text: 'El PDF no debe superar los 5 MB.'
+        });
+        e.target.value = '';
+        return;
+      }
+
+      this.doc_nacimiento = file;
     },
     obtenerEgreso: function obtenerEgreso(e) {
-      var _this3 = this;
+      var file = e.target.files[0];
 
-      try {
-        var fileReader = new FileReader();
+      if (!file) {
+        return;
+      }
 
-        fileReader.onload = function (e) {
-          _this3.doc_egreso = e.target.result;
-        };
+      if (file.type !== 'application/pdf') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo no válido',
+          text: 'El documento debe estar en formato PDF.'
+        });
+        e.target.value = '';
+        return;
+      } // Máximo 5 MB
 
-        fileReader.readAsDataURL(e.target.files[0]); // this.vNAC = 1;
-      } catch (error) {}
+
+      if (file.size > 5 * 1024 * 1024) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo demasiado grande',
+          text: 'El PDF no debe superar los 5 MB.'
+        });
+        e.target.value = '';
+        return;
+      }
+
+      this.doc_egreso = file;
     },
     obtenerEspecializacion: function obtenerEspecializacion(e) {
-      var _this4 = this;
+      var file = e.target.files[0];
 
-      try {
-        var fileReader = new FileReader();
+      if (!file) {
+        return;
+      }
 
-        fileReader.onload = function (e) {
-          _this4.doc_especializacion = e.target.result;
-        };
+      if (file.type !== 'application/pdf') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo no válido',
+          text: 'El documento debe estar en formato PDF.'
+        });
+        e.target.value = '';
+        return;
+      } // Máximo 5 MB
 
-        fileReader.readAsDataURL(e.target.files[0]); // this.vNAC = 1;
-      } catch (error) {}
+
+      if (file.size > 5 * 1024 * 1024) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo demasiado grande',
+          text: 'El PDF no debe superar los 5 MB.'
+        });
+        e.target.value = '';
+        return;
+      }
+
+      this.doc_especializacion = file;
     },
     obtenerMedico: function obtenerMedico(e) {
-      var _this5 = this;
+      var file = e.target.files[0];
 
-      try {
-        var fileReader = new FileReader();
+      if (!file) {
+        return;
+      }
 
-        fileReader.onload = function (e) {
-          _this5.doc_medico = e.target.result;
-        };
+      if (file.type !== 'application/pdf') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo no válido',
+          text: 'El documento debe estar en formato PDF.'
+        });
+        e.target.value = '';
+        return;
+      } // Máximo 5 MB
 
-        fileReader.readAsDataURL(e.target.files[0]); // this.vNAC = 1;
-      } catch (error) {}
+
+      if (file.size > 5 * 1024 * 1024) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo demasiado grande',
+          text: 'El PDF no debe superar los 5 MB.'
+        });
+        e.target.value = '';
+        return;
+      }
+
+      this.doc_medico = file;
     },
     obtenerTitulo: function obtenerTitulo(e) {
-      var _this6 = this;
+      var file = e.target.files[0];
 
-      try {
-        var fileReader = new FileReader();
+      if (!file) {
+        return;
+      }
 
-        fileReader.onload = function (e) {
-          _this6.doc_titulo = e.target.result;
-        };
+      if (file.type !== 'application/pdf') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo no válido',
+          text: 'El documento debe estar en formato PDF.'
+        });
+        e.target.value = '';
+        return;
+      } // Máximo 5 MB
 
-        fileReader.readAsDataURL(e.target.files[0]); // this.vNAC = 1;
-      } catch (error) {}
+
+      if (file.size > 5 * 1024 * 1024) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo demasiado grande',
+          text: 'El PDF no debe superar los 5 MB.'
+        });
+        e.target.value = '';
+        return;
+      }
+
+      this.doc_titulo = file;
     },
     obtenerLibreta: function obtenerLibreta(e) {
-      var _this7 = this;
+      var file = e.target.files[0];
 
-      try {
-        var fileReader = new FileReader();
+      if (!file) {
+        return;
+      }
 
-        fileReader.onload = function (e) {
-          _this7.doc_libreta = e.target.result;
-        };
+      if (file.type !== 'application/pdf') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo no válido',
+          text: 'El documento debe estar en formato PDF.'
+        });
+        e.target.value = '';
+        return;
+      } // Máximo 5 MB
 
-        fileReader.readAsDataURL(e.target.files[0]); // this.vNAC = 1;
-      } catch (error) {}
+
+      if (file.size > 5 * 1024 * 1024) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo demasiado grande',
+          text: 'El PDF no debe superar los 5 MB.'
+        });
+        e.target.value = '';
+        return;
+      }
+
+      this.doc_libreta = file;
     },
     obtenerAprobacion: function obtenerAprobacion(e) {
-      var _this8 = this;
+      var file = e.target.files[0];
 
-      try {
-        var fileReader = new FileReader();
+      if (!file) {
+        return;
+      }
 
-        fileReader.onload = function (e) {
-          _this8.doc_aprobacion = e.target.result;
-        };
+      if (file.type !== 'application/pdf') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo no válido',
+          text: 'El documento debe estar en formato PDF.'
+        });
+        e.target.value = '';
+        return;
+      } // Máximo 5 MB
 
-        fileReader.readAsDataURL(e.target.files[0]); // this.vNAC = 1;
-      } catch (error) {}
-    },
-    obtenerImagen: function obtenerImagen(e) {
-      var _this9 = this;
 
-      try {
-        var fileReader = new FileReader();
+      if (file.size > 5 * 1024 * 1024) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Archivo demasiado grande',
+          text: 'El PDF no debe superar los 5 MB.'
+        });
+        e.target.value = '';
+        return;
+      }
 
-        fileReader.onload = function (e) {
-          _this9.per_foto = e.target.result;
-        };
-
-        fileReader.readAsDataURL(e.target.files[0]);
-        this.v = 1;
-      } catch (error) {}
+      this.doc_aprobacion = file;
     },
     NuevoPersonal: function NuevoPersonal() {
       //DGAE
-      this.$v.validationGroupReg.$reset(), this.per_foto = '', this.per_categoria = '', this.per_nacionalidad = '', this.per_entidad = '', this.per_grado = '', this.per_ci = '', this.per_cm = '', this.per_nombre = '', this.per_appaterno = '', this.per_apmaterno = '', this.per_sexo = '', this.per_celular = '', this.per_email = '', this.per_fechnac = '', this.per_titlic = '', this.per_direccion = '', this.per_habilitacion = [], this.per_comlinguistica = '', this.per_observaciones = '', this.per_fechaexpiracion = '', this.doc_ci = '', this.doc_nacimiento = '', this.doc_titulo = '', this.doc_aprobacion = '', this.doc_egreso = '', this.doc_especializacion = '', this.doc_libreta = '', this.doc_medico = '', this.v = 0, this.listarCategoria();
+      this.$v.validationGroupReg.$reset(), this.per_foto = null, this.preview_foto = null, this.per_categoria = '', this.per_nacionalidad = '', this.per_entidad = '', this.per_grado = '', this.per_ci = '', this.per_cm = '', this.per_nombre = '', this.per_appaterno = '', this.per_apmaterno = '', this.per_sexo = '', this.per_celular = '', this.per_email = '', this.per_fechnac = '', this.per_titlic = '', this.per_direccion = '', this.per_habilitacion = [], this.per_comlinguistica = '', this.per_observaciones = '', this.per_fechaexpiracion = '', this.doc_ci = null, this.doc_nacimiento = null, this.doc_titulo = null, this.doc_aprobacion = null, this.doc_egreso = null, this.doc_especializacion = null, this.doc_libreta = null, this.doc_medico = null, this.v = 0, this.listarCategoria();
       this.listarNacionalidad();
       this.listarEntidad(this.per_nacionalidad);
       this.listarGrado(this.per_entidad);
@@ -16795,93 +17070,235 @@ __webpack_require__.r(__webpack_exports__);
       this.listarNacionalidad();
       this.listarEntidad(this.per_nacionalidad);
     },
+    // CrearPersonal(){ //DGAE
+    //   if(!this.$v.validationGroupDocument.$invalid){
+    //     swal.fire({
+    //         title: '¿Desea registrar?', // TITULO 
+    //         icon: 'question', //ICONO (success, warnning, error, info, question)
+    //         showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+    //         confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+    //         cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
+    //         confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
+    //         cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
+    //         buttonsStyling: true,
+    //         reverseButtons: true
+    //         }).then((result) => {
+    //         if (result.value) {
+    //             let me = this;
+    //             axios
+    //             .post("/crearPersonal", {
+    //               foto : me.per_foto,
+    //               categoria : me.per_categoria,
+    //               nacionalidad: me.per_nacionalidad,
+    //               entidad : me.per_entidad,
+    //               grado : me.per_grado,
+    //               ci : me.per_ci,
+    //               cm : me. per_cm,
+    //               nombre : me.per_nombre,
+    //               ap_paterno : me.per_appaterno,
+    //               ap_materno : me.per_apmaterno,
+    //               sexo : me.per_sexo,
+    //               celular : me.per_celular,
+    //               email : me.per_email,
+    //               fech_nac : me.per_fechnac,
+    //               direccion : me.per_direccion,
+    //               tit_licencia : me.per_titlic,
+    //               habilitacion : me.per_habilitacion,
+    //               linguistica : me.per_comlinguistica,
+    //               observacion : me.per_observaciones,
+    //               // fech_emision : me.per_fechaemision,
+    //               fech_expiracion : me.per_fechaexpiracion,
+    //               doc_carnet_identidad : me.doc_ci,
+    //               doc_cert_nacimineto : me.doc_nacimiento,
+    //               doc_cert_egreso : me.doc_egreso,
+    //               doc_cert_espe : me.doc_especializacion,
+    //               doc_cert_medico : me.doc_medico,
+    //               doc_dip_titulo : me.doc_titulo,
+    //               doc_lib_mil : me.doc_libreta,
+    //               doc_exa_aprobacion : me.doc_aprobacion,
+    //             })
+    //             .then(function (response) {
+    //                 console.log(response);
+    //                 swal.fire({
+    //                     title: 'Se realizo el registro correctamente', //TITULO
+    //                     // response.data.mensaje, //TEXTO DE MENSAJE
+    //                     // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
+    //                     // response.personal
+    //                 });
+    //                 if (!response.data.code) {
+    //                     // $('#NuevoUsuario').modal('hide');
+    //                     // $('#ModalNewPersonal').modal('hide');
+    //                     // me.nick = '';
+    //                     // me.password = '';
+    //                     me.arrayDatPer = response.data.personal;
+    //                     me.GenerarCarnet(me.arrayDatPer.id_personal);
+    //                     me.Atras();
+    //                     this.$v.$reset();
+    //                 } 
+    //             })
+    //             .catch(function (error) {
+    //                 // handle error
+    //                 console.log(error);
+    //             })
+    //         }else{
+    //               swal.fire(
+    //                 "Informacion", //TITULO
+    //                 "Solicitud cancelada.", //TEXTO DE MENSAJE
+    //                 "info" // TIPO DE MODAL (success, warnning, error, info)
+    //             );
+    //         }
+    //     })
+    //   }else{
+    //       this.$v.validationGroupDocument.$touch();
+    //       Swal.fire({
+    //           icon: 'warning',
+    //           title: 'Ingrese todos los datos requeridos',
+    //           showConfirmButton: false,
+    //           timer: 2000
+    //       })
+    //   }
+    // },
     CrearPersonal: function CrearPersonal() {
-      var _this10 = this;
+      var _this = this;
 
-      //DGAE
+      // DGAE
       if (!this.$v.validationGroupDocument.$invalid) {
         swal.fire({
           title: '¿Desea registrar?',
-          // TITULO 
           icon: 'question',
-          //ICONO (success, warnning, error, info, question)
           showCancelButton: true,
-          //HABILITACION DEL BOTON CANCELAR
           confirmButtonColor: 'info',
-          // COLOR DEL BOTON PARA CONFIRMAR
           cancelButtonColor: '#868077',
-          // COLOR DEL BOTON CANCELAR
           confirmButtonText: 'Confirmar',
-          //TITULO DEL BOTON CONFIRMAR
           cancelButtonText: 'Cancelar',
-          //TIUTLO DEL BOTON CANCELAR
           buttonsStyling: true,
           reverseButtons: true
         }).then(function (result) {
           if (result.value) {
-            var me = _this10;
-            axios.post("/crearPersonal", {
-              foto: me.per_foto,
-              categoria: me.per_categoria,
-              nacionalidad: me.per_nacionalidad,
-              entidad: me.per_entidad,
-              grado: me.per_grado,
-              ci: me.per_ci,
-              cm: me.per_cm,
-              nombre: me.per_nombre,
-              ap_paterno: me.per_appaterno,
-              ap_materno: me.per_apmaterno,
-              sexo: me.per_sexo,
-              celular: me.per_celular,
-              email: me.per_email,
-              fech_nac: me.per_fechnac,
-              direccion: me.per_direccion,
-              tit_licencia: me.per_titlic,
-              habilitacion: me.per_habilitacion,
-              linguistica: me.per_comlinguistica,
-              observacion: me.per_observaciones,
-              // fech_emision : me.per_fechaemision,
-              fech_expiracion: me.per_fechaexpiracion,
-              doc_carnet_identidad: me.doc_ci,
-              doc_cert_nacimineto: me.doc_nacimiento,
-              doc_cert_egreso: me.doc_egreso,
-              doc_cert_espe: me.doc_especializacion,
-              doc_cert_medico: me.doc_medico,
-              doc_dip_titulo: me.doc_titulo,
-              doc_lib_mil: me.doc_libreta,
-              doc_exa_aprobacion: me.doc_aprobacion
-            }).then(function (response) {
-              console.log(response);
-              swal.fire({
-                title: 'Se realizo el registro correctamente' //TITULO
-                // response.data.mensaje, //TEXTO DE MENSAJE
-                // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
-                // response.personal
+            var me = _this; // =====================================================
+            // 📦 CREAR FORMDATA
+            // =====================================================
 
-              });
+            var formData = new FormData(); // =====================================================
+            // 📸 FOTO
+            // =====================================================
+
+            if (me.per_foto) {
+              formData.append('foto', me.per_foto);
+            } // =====================================================
+            // 👤 DATOS PERSONALES
+            // =====================================================
+
+
+            formData.append('categoria', me.per_categoria);
+            formData.append('nacionalidad', me.per_nacionalidad);
+            formData.append('entidad', me.per_entidad);
+            formData.append('grado', me.per_grado);
+            formData.append('ci', me.per_ci);
+            formData.append('cm', me.per_cm);
+            formData.append('nombre', me.per_nombre);
+            formData.append('ap_paterno', me.per_appaterno);
+            formData.append('ap_materno', me.per_apmaterno);
+            formData.append('sexo', me.per_sexo);
+            formData.append('celular', me.per_celular);
+            formData.append('email', me.per_email);
+            formData.append('fech_nac', me.per_fechnac);
+            formData.append('direccion', me.per_direccion); // =====================================================
+            // 📄 LICENCIA
+            // =====================================================
+
+            formData.append('tit_licencia', me.per_titlic);
+            formData.append('habilitacion', JSON.stringify(me.per_habilitacion));
+            formData.append('linguistica', me.per_comlinguistica);
+            formData.append('observacion', me.per_observaciones);
+            formData.append('fech_expiracion', me.per_fechaexpiracion); // =====================================================
+            // 📂 DOCUMENTOS
+            // =====================================================
+
+            if (me.doc_ci) {
+              formData.append('doc_carnet_identidad', me.doc_ci);
+            }
+
+            if (me.doc_nacimiento) {
+              formData.append('doc_cert_nacimineto', me.doc_nacimiento);
+            }
+
+            if (me.doc_egreso) {
+              formData.append('doc_cert_egreso', me.doc_egreso);
+            }
+
+            if (me.doc_especializacion) {
+              formData.append('doc_cert_espe', me.doc_especializacion);
+            }
+
+            if (me.doc_medico) {
+              formData.append('doc_cert_medico', me.doc_medico);
+            }
+
+            if (me.doc_titulo) {
+              formData.append('doc_dip_titulo', me.doc_titulo);
+            }
+
+            if (me.doc_libreta) {
+              formData.append('doc_lib_mil', me.doc_libreta);
+            }
+
+            if (me.doc_aprobacion) {
+              formData.append('doc_exa_aprobacion', me.doc_aprobacion);
+            } // =====================================================
+            // 🚀 ENVIAR A LARAVEL
+            // =====================================================
+
+
+            axios.post('/crearPersonal', formData).then(function (response) {
+              console.log(response); // =================================================
+              // REGISTRO CORRECTO
+              // =================================================
 
               if (!response.data.code) {
-                // $('#NuevoUsuario').modal('hide');
-                // $('#ModalNewPersonal').modal('hide');
-                // me.nick = '';
-                // me.password = '';
+                swal.fire({
+                  title: 'Se realizó el registro correctamente',
+                  icon: 'success'
+                });
                 me.arrayDatPer = response.data.personal;
                 me.GenerarCarnet(me.arrayDatPer.id_personal);
                 me.Atras();
-                this.$v.$reset();
+                me.$v.$reset();
+              } else {
+                swal.fire({
+                  title: 'No se pudo realizar el registro',
+                  text: response.data.mensaje,
+                  icon: 'warning'
+                });
               }
             })["catch"](function (error) {
-              // handle error
+              // =================================================
+              // ERROR
+              // =================================================
               console.log(error);
+              var mensaje = 'Ocurrió un error al registrar el personal.';
+
+              if (error.response && error.response.data && error.response.data.detalle) {
+                mensaje = error.response.data.detalle;
+              }
+
+              swal.fire({
+                title: 'Error',
+                text: mensaje,
+                icon: 'error'
+              });
             });
           } else {
-            swal.fire("Informacion", //TITULO
-            "Solicitud cancelada.", //TEXTO DE MENSAJE
-            "info" // TIPO DE MODAL (success, warnning, error, info)
-            );
+            // =====================================================
+            // SOLICITUD CANCELADA
+            // =====================================================
+            swal.fire("Información", "Solicitud cancelada.", "info");
           }
         });
       } else {
+        // =========================================================
+        // VALIDACIÓN
+        // =========================================================
         this.$v.validationGroupDocument.$touch();
         Swal.fire({
           icon: 'warning',
@@ -16892,7 +17309,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     CrearNacionalidad: function CrearNacionalidad() {
-      var _this11 = this;
+      var _this2 = this;
 
       //DGAE
       if (!this.$v.validationGroupNewNacionalidad.$invalid) {
@@ -16915,7 +17332,7 @@ __webpack_require__.r(__webpack_exports__);
           reverseButtons: true
         }).then(function (result) {
           if (result.value) {
-            var me = _this11;
+            var me = _this2;
             axios.post("/crearNacionalidad", {
               pais: me.na_pais,
               nacionalidad: me.na_nacionalidad,
@@ -16960,7 +17377,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     CrearEntidad: function CrearEntidad() {
-      var _this12 = this;
+      var _this3 = this;
 
       //DGAE
       if (!this.$v.validationGroupNewEntidad.$invalid) {
@@ -16983,7 +17400,7 @@ __webpack_require__.r(__webpack_exports__);
           reverseButtons: true
         }).then(function (result) {
           if (result.value) {
-            var me = _this12;
+            var me = _this3;
             axios.post("/crearEntidad", {
               pais: me.en_pais,
               entidad: me.en_entidad,
@@ -144678,7 +145095,7 @@ var render = function() {
                                     src:
                                       _vm.v === 0
                                         ? "URL_AVATAR_SUPABASE"
-                                        : _vm.imagen,
+                                        : _vm.preview_foto,
                                     width: "150",
                                     height: "150"
                                   }
