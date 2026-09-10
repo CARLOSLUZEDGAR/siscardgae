@@ -50,6 +50,11 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 
 # =========================
+# 5.1 Configuración PHP
+# =========================
+COPY php.ini /usr/local/etc/php/conf.d/uploads.ini
+
+# =========================
 # 6. Copiar proyecto
 # =========================
 COPY . .
