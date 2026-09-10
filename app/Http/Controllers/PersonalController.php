@@ -387,7 +387,7 @@ class PersonalController extends Controller
                 'per_mail' => $request->email,
                 'per_fecha_nacimiento' => $request->fech_nac,
                 'per_direccion' => mb_strtoupper($request->direccion),
-                'per_password' => Hash::make($request->ci),
+                // 'per_password' => Hash::make($request->ci),
                 'estado' => '1',
                 'sysuser' => auth()->id()
             ]);
