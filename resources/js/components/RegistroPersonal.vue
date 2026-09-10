@@ -1500,7 +1500,6 @@
 
                       let formData = new FormData();
 
-
                       // =====================================================
                       // 📸 FOTO
                       // =====================================================
@@ -1508,7 +1507,6 @@
                       if (me.per_foto) {
                           formData.append('foto', me.per_foto);
                       }
-
 
                       // =====================================================
                       // 👤 DATOS PERSONALES
@@ -1529,7 +1527,6 @@
                       formData.append('fech_nac', me.per_fechnac);
                       formData.append('direccion', me.per_direccion);
 
-
                       // =====================================================
                       // 📄 LICENCIA
                       // =====================================================
@@ -1543,67 +1540,41 @@
                       formData.append('observacion', me.per_observaciones);
                       formData.append('fech_expiracion', me.per_fechaexpiracion);
 
-
                       // =====================================================
                       // 📂 DOCUMENTOS
                       // =====================================================
 
                       if (me.doc_ci) {
-                          formData.append(
-                              'doc_carnet_identidad',
-                              me.doc_ci
-                          );
+                          formData.append('doc_carnet_identidad', me.doc_ci);
                       }
 
                       if (me.doc_nacimiento) {
-                          formData.append(
-                              'doc_cert_nacimineto',
-                              me.doc_nacimiento
-                          );
+                          formData.append('doc_cert_nacimineto', me.doc_nacimiento);
                       }
 
                       if (me.doc_egreso) {
-                          formData.append(
-                              'doc_cert_egreso',
-                              me.doc_egreso
-                          );
+                          formData.append('doc_cert_egreso', me.doc_egreso);
                       }
 
                       if (me.doc_especializacion) {
-                          formData.append(
-                              'doc_cert_espe',
-                              me.doc_especializacion
-                          );
+                          formData.append('doc_cert_espe', me.doc_especializacion);
                       }
 
                       if (me.doc_medico) {
-                          formData.append(
-                              'doc_cert_medico',
-                              me.doc_medico
-                          );
+                          formData.append('doc_cert_medico', me.doc_medico);
                       }
 
                       if (me.doc_titulo) {
-                          formData.append(
-                              'doc_dip_titulo',
-                              me.doc_titulo
-                          );
+                          formData.append('doc_dip_titulo', me.doc_titulo);
                       }
 
                       if (me.doc_libreta) {
-                          formData.append(
-                              'doc_lib_mil',
-                              me.doc_libreta
-                          );
+                          formData.append('doc_lib_mil', me.doc_libreta);
                       }
 
                       if (me.doc_aprobacion) {
-                          formData.append(
-                              'doc_exa_aprobacion',
-                              me.doc_aprobacion
-                          );
+                          formData.append('doc_exa_aprobacion', me.doc_aprobacion);
                       }
-
 
                       // =====================================================
                       // 🚀 ENVIAR A LARAVEL
@@ -1627,13 +1598,8 @@
                               });
 
                               me.arrayDatPer = response.data.personal;
-
-                              me.GenerarCarnet(
-                                  me.arrayDatPer.id_personal
-                              );
-
+                              me.GenerarCarnet(me.arrayDatPer.id_personal);
                               me.Atras();
-
                               me.$v.$reset();
 
                           } else {
@@ -1650,32 +1616,64 @@
 
                       .catch(function (error) {
 
-                          // =================================================
-                          // ERROR
-                          // =================================================
+                            // =========================================
+                            // ERROR
+                            // =========================================
 
-                          console.log(error);
+                            console.log(error);
 
-                          let mensaje =
-                              'Ocurrió un error al registrar el personal.';
+                            let mensaje =
+                                'Ocurrió un error al registrar el personal.';
 
-                          if (
-                              error.response &&
-                              error.response.data &&
-                              error.response.data.detalle
-                          ) {
+                            if (
+                                error.response &&
+                                error.response.data
+                            ) {
 
-                              mensaje =
-                                  error.response.data.detalle;
-                          }
+                                const data = error.response.data;
 
-                          swal.fire({
-                              title: 'Error',
-                              text: mensaje,
-                              icon: 'error'
-                          });
+                                // Detalle como texto
+                                if (
+                                    data.detalle &&
+                                    typeof data.detalle === 'string'
+                                ) {
+                                    mensaje = data.detalle;
+                                }
 
-                      });
+                                // Detalle como objeto de validación
+                                else if (
+                                    data.detalle &&
+                                    typeof data.detalle === 'object'
+                                ) {
+
+                                    const errores = data.detalle;
+
+                                    const primeraClave =
+                                        Object.keys(errores)[0];
+
+                                    if (
+                                        primeraClave &&
+                                        errores[primeraClave] &&
+                                        errores[primeraClave][0]
+                                    ) {
+                                        mensaje =
+                                            errores[primeraClave][0];
+                                    }
+                                }
+
+                                // Mensaje directo
+                                else if (data.mensaje) {
+                                    mensaje = data.mensaje;
+                                }
+                            }
+
+                            swal.fire({
+                                title: 'Error',
+                                text: mensaje,
+                                icon: 'error'
+                            });
+
+                        });
 
                   } else {
 

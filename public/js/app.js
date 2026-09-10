@@ -15797,6 +15797,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 //
 //
 //
@@ -17272,14 +17274,29 @@ __webpack_require__.r(__webpack_exports__);
                 });
               }
             })["catch"](function (error) {
-              // =================================================
+              // =========================================
               // ERROR
-              // =================================================
+              // =========================================
               console.log(error);
               var mensaje = 'Ocurrió un error al registrar el personal.';
 
-              if (error.response && error.response.data && error.response.data.detalle) {
-                mensaje = error.response.data.detalle;
+              if (error.response && error.response.data) {
+                var data = error.response.data; // Detalle como texto
+
+                if (data.detalle && typeof data.detalle === 'string') {
+                  mensaje = data.detalle;
+                } // Detalle como objeto de validación
+                else if (data.detalle && _typeof(data.detalle) === 'object') {
+                    var errores = data.detalle;
+                    var primeraClave = Object.keys(errores)[0];
+
+                    if (primeraClave && errores[primeraClave] && errores[primeraClave][0]) {
+                      mensaje = errores[primeraClave][0];
+                    }
+                  } // Mensaje directo
+                  else if (data.mensaje) {
+                      mensaje = data.mensaje;
+                    }
               }
 
               swal.fire({

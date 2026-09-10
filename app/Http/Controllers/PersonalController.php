@@ -258,6 +258,29 @@ class PersonalController extends Controller
                 'doc_exa_aprobacion' => 'nullable|file|mimes:pdf|max:5120',
             ]);
 
+            // VERIFICAR SI EL CORREO YA EXISTE
+                $existeCorreo = DB::table('personals')
+                    ->where('per_mail', $request->email)
+                    ->exists();
+
+                if ($existeCorreo) {
+                    return response()->json([
+                        'success' => false,
+                        'detalle' => 'El email del usuario ya se encuentra registrado.'
+                    ], 422);
+                }
+
+            // VERIFICAR SI EL CORREO YA EXISTE
+                $existeCi = DB::table('personals')
+                    ->where('per_ci', $request->ci,)
+                    ->exists();
+
+                if ($existeCi) {
+                    return response()->json([
+                        'success' => false,
+                        'detalle' => 'El nro. de documento del usuario ya se encuentra registrado.'
+                    ], 422);
+                }
 
             // =====================================================
             // SERVICIO SUPABASE
@@ -353,48 +376,20 @@ class PersonalController extends Controller
             $personal = Personal::create([
 
                 'per_foto' => $urlFoto,
-
-                'id_nacionalidad' =>
-                    $request->nacionalidad,
-
-                'per_ci' =>
-                    $request->ci,
-
-                'per_cm' =>
-                    $request->cm,
-
-                'per_nombre' =>
-                    mb_strtoupper($request->nombre),
-
-                'per_paterno' =>
-                    mb_strtoupper($request->ap_paterno),
-
-                'per_materno' =>
-                    mb_strtoupper($request->ap_materno),
-
-                'per_sexo' =>
-                    $request->sexo,
-
-                'per_celular' =>
-                    $request->celular,
-
-                'per_mail' =>
-                    $request->email,
-
-                'per_fecha_nacimiento' =>
-                    $request->fech_nac,
-
-                'per_direccion' =>
-                    mb_strtoupper($request->direccion),
-
-                'per_password' =>
-                    Hash::make($request->ci),
-
-                'estado' =>
-                    '1',
-
-                'sysuser' =>
-                    auth()->id()
+                'id_nacionalidad' => $request->nacionalidad,
+                'per_ci' => $request->ci,
+                'per_cm' => $request->cm,
+                'per_nombre' => mb_strtoupper($request->nombre),
+                'per_paterno' => mb_strtoupper($request->ap_paterno),
+                'per_materno' => mb_strtoupper($request->ap_materno),
+                'per_sexo' => $request->sexo,
+                'per_celular' => $request->celular,
+                'per_mail' => $request->email,
+                'per_fecha_nacimiento' => $request->fech_nac,
+                'per_direccion' => mb_strtoupper($request->direccion),
+                'per_password' => Hash::make($request->ci),
+                'estado' => '1',
+                'sysuser' => auth()->id()
             ]);
 
 
@@ -415,43 +410,18 @@ class PersonalController extends Controller
 
             $personal_licencia = PersonalLicencia::create([
 
-                'id_personal' =>
-                    $personal->id,
-
-                'id_categoria' =>
-                    $request->categoria,
-
-                'id_entidad' =>
-                    $request->entidad,
-
-                'id_grado' =>
-                    $request->grado,
-
-                'id_licencia' =>
-                    $request->tit_licencia,
-
-                'id_habilitacion' =>
-                    $habilitacion,
-
-                'id_comp_linguistica' =>
-                    $request->linguistica,
-
-                'observacion' =>
-                    mb_strtoupper(
-                        $request->observacion
-                    ),
-
-                'fecha_emision' =>
-                    now(),
-
-                'fecha_expiracion' =>
-                    $request->fech_expiracion,
-
-                'estado' =>
-                    '1',
-
-                'sysuser' =>
-                    auth()->id()
+                'id_personal' => $personal->id,
+                'id_categoria' => $request->categoria,
+                'id_entidad' => $request->entidad,
+                'id_grado' => $request->grado,
+                'id_licencia' => $request->tit_licencia,
+                'id_habilitacion' => $habilitacion,
+                'id_comp_linguistica' => $request->linguistica,
+                'observacion' => mb_strtoupper($request->observacion),
+                'fecha_emision' => now(),
+                'fecha_expiracion' => $request->fech_expiracion,
+                'estado' => '1',
+                'sysuser' => auth()->id()
             ]);
 
 
@@ -461,34 +431,17 @@ class PersonalController extends Controller
 
             $documentos = [
 
-                'doc_carnet_identidad' =>
-                    $request->file('doc_carnet_identidad'),
-
-                'doc_cert_nacimineto' =>
-                    $request->file('doc_cert_nacimineto'),
-
-                'doc_cert_egreso' =>
-                    $request->file('doc_cert_egreso'),
-
-                'doc_cert_espe' =>
-                    $request->file('doc_cert_espe'),
-
-                'doc_cert_medico' =>
-                    $request->file('doc_cert_medico'),
-
-                'doc_dip_titulo' =>
-                    $request->file('doc_dip_titulo'),
-
-                'doc_lib_mil' =>
-                    $request->file('doc_lib_mil'),
-
-                'doc_exa_aprobacion' =>
-                    $request->file('doc_exa_aprobacion')
+                'doc_carnet_identidad' => $request->file('doc_carnet_identidad'),
+                'doc_cert_nacimineto' => $request->file('doc_cert_nacimineto'),
+                'doc_cert_egreso' => $request->file('doc_cert_egreso'),
+                'doc_cert_espe' => $request->file('doc_cert_espe'),
+                'doc_cert_medico' => $request->file('doc_cert_medico'),
+                'doc_dip_titulo' => $request->file('doc_dip_titulo'),
+                'doc_lib_mil' => $request->file('doc_lib_mil'),
+                'doc_exa_aprobacion' => $request->file('doc_exa_aprobacion')
             ];
 
-
             $x = 1;
-
 
             foreach ($documentos as $nombreCampo => $file) {
 
@@ -511,7 +464,6 @@ class PersonalController extends Controller
                             );
                         }
 
-
                         // =============================================
                         // VALIDAR PDF
                         // =============================================
@@ -522,7 +474,6 @@ class PersonalController extends Controller
                                 "El documento {$x} debe estar en formato PDF."
                             );
                         }
-
 
                         // =============================================
                         // VALIDAR TAMAÑO
@@ -535,7 +486,6 @@ class PersonalController extends Controller
                             );
                         }
 
-
                         // =============================================
                         // OBTENER CI
                         // =============================================
@@ -546,7 +496,6 @@ class PersonalController extends Controller
                             $request->ci
                         );
 
-
                         // =============================================
                         // GENERAR NOMBRE
                         // =============================================
@@ -555,7 +504,6 @@ class PersonalController extends Controller
                             $x . '_' .
                             $ci . '_' .
                             \Illuminate\Support\Str::uuid();
-
 
                         // =============================================
                         // 🚀 SUBIR A SUPABASE
@@ -567,20 +515,15 @@ class PersonalController extends Controller
                             $customName
                         );
 
-
                     } catch (\Exception $e) {
 
                         logger()->error(
                             "Error subiendo documento {$x}",
                             [
-                                'campo' =>
-                                    $nombreCampo,
-
-                                'error' =>
-                                    $e->getMessage()
+                                'campo' => $nombreCampo,
+                                'error' => $e->getMessage()
                             ]
                         );
-
 
                         throw new \Exception(
                             "Error en documento {$x}: " .
@@ -588,33 +531,22 @@ class PersonalController extends Controller
                         );
                     }
 
-
                     // =============================================
                     // 💾 GUARDAR URL EN BASE DE DATOS
                     // =============================================
 
                     PersonalDocumento::create([
 
-                        'id_personal' =>
-                            $personal->id,
-
-                        'id_licencia' =>
-                            $personal_licencia->id,
-
-                        'documento' =>
-                            $url,
-
-                        'estado' =>
-                            '1',
-
-                        'sysuser' =>
-                            auth()->id()
+                        'id_personal' => $personal->id,
+                        'id_licencia' => $personal_licencia->id,
+                        'documento' => $url,
+                        'estado' => '1',
+                        'sysuser' => auth()->id()
                     ]);
                 }
 
                 $x++;
             }
-
 
             // =====================================================
             // 💾 CONFIRMAR TRANSACCIÓN
@@ -622,20 +554,14 @@ class PersonalController extends Controller
 
             DB::commit();
 
-
             // =====================================================
             // RESPUESTA
             // =====================================================
 
             return response()->json([
-
-                'success' =>
-                    true,
-
-                'personal' =>
-                    $personal_licencia
+                'success' => true,
+                'personal' => $personal_licencia
             ]);
-
 
         } catch (\Illuminate\Validation\ValidationException $e) {
 
@@ -646,15 +572,9 @@ class PersonalController extends Controller
             DB::rollBack();
 
             return response()->json([
-
-                'error' =>
-                    'Error de validación',
-
-                'detalle' =>
-                    $e->errors()
-
+                'error' => 'Error de validación',
+                'detalle' => $e->errors()
             ], 422);
-
 
         } catch (\Exception $e) {
 
@@ -667,26 +587,15 @@ class PersonalController extends Controller
             logger()->error(
                 'Error en CrearPersonal',
                 [
-                    'error' =>
-                        $e->getMessage(),
-
-                    'linea' =>
-                        $e->getLine(),
-
-                    'archivo' =>
-                        $e->getFile()
+                    'error' => $e->getMessage(),
+                    'linea' => $e->getLine(),
+                    'archivo' => $e->getFile()
                 ]
             );
 
-
             return response()->json([
-
-                'error' =>
-                    'Error al registrar personal',
-
-                'detalle' =>
-                    $e->getMessage()
-
+                'error' => 'Error al registrar personal',
+                'detalle' => $e->getMessage()
             ], 500);
         }
     }
