@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Loading :loading="loading" />
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
@@ -65,7 +66,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Nacionalidad</label>
-                                    <select class="form-control"
+                                    <select class="form-control" disabled
                                         v-model="per_nacionalidad"
                                         @change="verificarSeleccion(1), listarEntidad(per_nacionalidad, 0), listarLicencia(per_entidad, per_categoria, 0)"
                                         :class="{ 'is-invalid': $v.per_nacionalidad.$error, 'is-valid': !$v.per_nacionalidad.$invalid }">
@@ -113,21 +114,21 @@
                             <div class="form-group row">
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Carnet de Identidad (Identificación Personal)</label>
-                                    <input type="text" v-model="per_ci" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_ci.$error, 'is-valid':!$v.per_ci.$invalid }">
+                                    <input type="text" v-model="per_ci" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_ci.$error, 'is-valid':!$v.per_ci.$invalid }" disabled>
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_ci.required">Este campo es Requerido</span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Carnet Militar (Identificación Institucional)</label>
-                                    <input type="text" v-model="per_cm" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_cm.$error, 'is-valid':!$v.per_cm.$invalid }">
+                                    <input type="text" v-model="per_cm" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_cm.$error, 'is-valid':!$v.per_cm.$invalid }" disabled>
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_cm.required">Este campo es Requerido</span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Nombres</label>
-                                    <input type="text" v-model.trim="per_nombre" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_nombre.$error, 'is-valid':!$v.per_nombre.$invalid }">
+                                    <input type="text" v-model.trim="per_nombre" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_nombre.$error, 'is-valid':!$v.per_nombre.$invalid }" disabled>
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_nombre.required">Este campo es Requerido</span>
                                         <span v-else-if="!$v.per_nombre.letrasSpanish">Solo letras</span>
@@ -135,7 +136,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Ap. Paterno</label>
-                                    <input type="text" v-model.trim="per_appaterno" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_appaterno.$error, 'is-valid':!$v.per_appaterno.$invalid }">
+                                    <input type="text" v-model.trim="per_appaterno" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_appaterno.$error, 'is-valid':!$v.per_appaterno.$invalid }" disabled>
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_appaterno.required && !$v.per_appaterno.letrasSpanish">Solo letras o Vacio</span>
                                         <span v-else-if="!$v.per_appaterno.letrasSpanish">Solo letras</span>
@@ -145,7 +146,7 @@
                             <div class="form-group row">
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Ap. Materno</label>
-                                    <input type="text" v-model.trim="per_apmaterno" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_apmaterno.$error, 'is-valid':!$v.per_apmaterno.$invalid }">
+                                    <input type="text" v-model.trim="per_apmaterno" class="form-control" style="text-transform:uppercase;" :class="{ 'is-invalid' : $v.per_apmaterno.$error, 'is-valid':!$v.per_apmaterno.$invalid }"disabled>
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_apmaterno.required && !$v.per_apmaterno.letrasSpanish">Solo letras o Vacio</span>
                                         <span v-else-if="!$v.per_apmaterno.letrasSpanish">Solo letras</span>
@@ -153,14 +154,14 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Fecha Nacimiento</label>
-                                    <input type="date" v-model="per_fechnac" class="form-control" :class="{ 'is-invalid' : $v.per_fechnac.$error, 'is-valid':!$v.per_fechnac.$invalid }">
+                                    <input type="date" v-model="per_fechnac" class="form-control" :class="{ 'is-invalid' : $v.per_fechnac.$error, 'is-valid':!$v.per_fechnac.$invalid }" disabled>
                                     <div class="invalid-feedback">
                                         <span v-if="!$v.per_fechnac.required">Este campo es Requerido</span>
                                     </div>
                                 </div> 
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="text-input">Sexo</label>
-                                    <select class="form-control" v-model="per_sexo" :class="{ 'is-invalid' : $v.per_sexo.$error, 'is-valid':!$v.per_sexo.$invalid }">
+                                    <select class="form-control" v-model="per_sexo" :class="{ 'is-invalid' : $v.per_sexo.$error, 'is-valid':!$v.per_sexo.$invalid }" disabled>
                                         <option value="" disabled>SELECCIONE</option>
                                         <option value="MASCULINO">MASCULINO</option>
                                         <option value="FEMENINO">FEMENINO</option>
@@ -249,7 +250,8 @@
                             <div class="form-group row">
                                 <div class="col-md-3">
                                     <template>
-                                        <img :src="v === 0 ? imagen : per_foto" width="150" height="150" style="border: 1.5px solid black;">
+                                        <!-- <img :src="v === 0 ? imagen : per_foto" width="150" height="150" style="border: 1.5px solid black;"> -->
+                                        <img :src="v === 0 ? 'URL_AVATAR_SUPABASE' : preview_foto" width="150" height="150" style="border: 1.5px solid black;">
                                     </template>
                                 </div>
                                 <div class="col-md-3">
@@ -289,7 +291,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label class="form-control-label" for="text-input">GRADO Y NOMBRE: {{grado_seleccionado}} {{per_nombre}} {{per_appaterno}} {{per_apmaterno}}</label>
+                                    <label class="form-control-label" for="text-input"><h4 style="text-transform:uppercase;">GRADO, NOMBRES Y APELLIDOS: {{grado_seleccionado}} {{per_nombre}} {{per_appaterno}} {{per_apmaterno}}</h4></label>
                                 </div>
                             </div>
                             <div class="table-wrapper-scroll-y my-custom-scrollbar" id="myTable" style="font-size: 12pt;">
@@ -418,10 +420,10 @@
                                 </table>
                             </div>
                             <div class="form-group row justify-content-end">
-                                <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
+                                <button type="button" class="btn btn-primary" @click="previousStep" :disabled="loading"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
                                 &nbsp;
                                 <!-- <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button> -->
-                                <button type="button" class="btn btn-danger" @click="RenovarPersonal()"><i class="fas fa-address-card"></i>&nbsp; GUARDAR/GENERAR</button>
+                                <button type="button" class="btn btn-danger" @click="RenovarPersonal()" :disabled="loading"><i class="fas fa-address-card"></i>&nbsp; {{ loading ? 'PROCESANDO...' : 'GUARDAR/GENERAR' }}</button>
                             </div>
                         </div>
 
@@ -549,15 +551,21 @@
   </template>
   
   <script>
+  import Loading from './Loading.vue'
   import { required, between, minLength, maxLength, alpha, numeric, email, helpers, date} from "vuelidate/lib/validators";
   export default {
+    components: {
+        Loading
+    },
     data() {
       return {
         // INICIO VARIABLES DGAE
         personal_id : this.$route.params.personalid,
+        loading: false,
 
         currentStep: 1,
-        per_foto : '',
+        per_foto : null,
+        preview_foto : null,
         per_categoria : '',
         per_entidad : '',
         per_grado : '',
@@ -585,14 +593,14 @@
         // }).format(new Date()),
         per_fechaexpiracion : '',
 
-        doc_ci : '',
-        doc_nacimiento : '',
-        doc_egreso : '',
-        doc_especializacion : '',
-        doc_medico : '',
-        doc_titulo : '',
-        doc_libreta : '',
-        doc_aprobacion : '',
+        doc_ci : null,
+        doc_nacimiento : null,
+        doc_egreso : null,
+        doc_especializacion : null,
+        doc_medico : null,
+        doc_titulo : null,
+        doc_libreta : null,
+        doc_aprobacion : null,
 
         arrayDatosPersonal : [],
 
@@ -759,7 +767,7 @@
       },
     mounted() {
         this.DatosPersonal(this.personal_id);
-        this.selectGrado(this.arrayDatosPersonal.id_grado);
+        // this.selectGrado(this.arrayDatosPersonal.id_grado);
         // this.EditarPersonal(this.array);
     },
     methods: {
@@ -811,135 +819,492 @@
           }
         },
 
-        obtenerCi(e){
-        try {
-                var fileReader = new FileReader();
+        // obtenerCi(e){
+        // try {
+        //         var fileReader = new FileReader();
     
-                fileReader.onload = (e) => {
-                    this.doc_ci = e.target.result;
-                }
-                fileReader.readAsDataURL(e.target.files[0])
-                this.vCI = 1;
-            } catch (error) {
+        //         fileReader.onload = (e) => {
+        //             this.doc_ci = e.target.result;
+        //         }
+        //         fileReader.readAsDataURL(e.target.files[0])
+        //         this.vCI = 1;
+        //     } catch (error) {
                 
+        //     }
+        // },
+
+        // obtenerNacimiento(e){
+        // try {
+        //         var fileReader = new FileReader();
+    
+        //         fileReader.onload = (e) => {
+        //             this.doc_nacimiento = e.target.result;
+        //         }
+        //         fileReader.readAsDataURL(e.target.files[0])
+        //         this.vNAC = 1;
+        //     } catch (error) {
+                
+        //     }
+        // },
+
+        // obtenerEgreso(e){
+        // try {
+        //         var fileReader = new FileReader();
+    
+        //         fileReader.onload = (e) => {
+        //             this.doc_egreso = e.target.result;
+        //         }
+        //         fileReader.readAsDataURL(e.target.files[0])
+        //         this.vNAC = 1;
+        //     } catch (error) {
+                
+        //     }
+        // },
+
+        // obtenerEspecializacion(e){
+        // try {
+        //         var fileReader = new FileReader();
+    
+        //         fileReader.onload = (e) => {
+        //             this.doc_especializacion = e.target.result;
+        //         }
+        //         fileReader.readAsDataURL(e.target.files[0])
+        //         this.vNAC = 1;
+        //     } catch (error) {
+                
+        //     }
+        // },
+
+        // obtenerMedico(e){
+        // try {
+        //         var fileReader = new FileReader();
+    
+        //         fileReader.onload = (e) => {
+        //             this.doc_medico = e.target.result;
+        //         }
+        //         fileReader.readAsDataURL(e.target.files[0])
+        //         this.vNAC = 1;
+        //     } catch (error) {
+                
+        //     }
+        // },
+
+        // obtenerTitulo(e){
+        // try {
+        //         var fileReader = new FileReader();
+    
+        //         fileReader.onload = (e) => {
+        //             this.doc_titulo = e.target.result;
+        //         }
+        //         fileReader.readAsDataURL(e.target.files[0])
+        //         this.vNAC = 1;
+        //     } catch (error) {
+                
+        //     }
+        // },
+
+        // obtenerLibreta(e){
+        // try {
+        //         var fileReader = new FileReader();
+    
+        //         fileReader.onload = (e) => {
+        //             this.doc_libreta = e.target.result;
+        //         }
+        //         fileReader.readAsDataURL(e.target.files[0])
+        //         this.vNAC = 1;
+        //     } catch (error) {
+                
+        //     }
+        // },
+    
+        // obtenerAprobacion(e){
+        // try {
+        //         var fileReader = new FileReader();
+    
+        //         fileReader.onload = (e) => {
+        //             this.doc_aprobacion = e.target.result;
+        //         }
+        //         fileReader.readAsDataURL(e.target.files[0])
+        //         this.vNAC = 1;
+        //     } catch (error) {
+                
+        //     }
+        // },
+
+        // obtenerImagen(e){
+        //     try {
+        //         var fileReader = new FileReader();
+    
+        //         fileReader.onload = (e) => {
+        //             this.per_foto = e.target.result;
+        //         }
+        //         fileReader.readAsDataURL(e.target.files[0])
+        //         this.v = 1;
+        //     } catch (error) {
+                
+        //     }
+        // },
+
+        obtenerImagen(e) {
+
+            const file = e.target.files[0];
+
+            if (!file) {
+
+                this.per_foto = null;
+                this.preview_foto = null;
+
+                return;
             }
+
+            // ==========================================
+            // VALIDAR TIPO DE IMAGEN
+            // ==========================================
+
+            if (!file.type.startsWith('image/')) {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo no válido',
+                    text: 'Por favor, seleccione una imagen.'
+                });
+
+                e.target.value = '';
+
+                this.per_foto = null;
+                this.preview_foto = null;
+
+                return;
+            }
+
+            // ==========================================
+            // VALIDAR TAMAÑO - MÁXIMO 2 MB
+            // ==========================================
+
+            if (file.size > 2 * 1024 * 1024) {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Imagen demasiado grande',
+                    text: 'La fotografía no debe superar los 2 MB.'
+                });
+
+                e.target.value = '';
+
+                this.per_foto = null;
+                this.preview_foto = null;
+
+                return;
+            }
+
+            // ==========================================
+            // GUARDAR ARCHIVO REAL
+            // ==========================================
+
+            this.per_foto = file;
+
+            // ==========================================
+            // GENERAR VISTA PREVIA
+            // ==========================================
+
+            this.preview_foto = URL.createObjectURL(file);
+
+            this.v = 1;
         },
 
-        obtenerNacimiento(e){
-        try {
-                var fileReader = new FileReader();
-    
-                fileReader.onload = (e) => {
-                    this.doc_nacimiento = e.target.result;
-                }
-                fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
-            } catch (error) {
-                
+        obtenerCi(e) {
+
+            const file = e.target.files[0];
+
+            if (!file) {
+                return;
             }
+
+            if (file.type !== 'application/pdf') {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo no válido',
+                    text: 'El documento debe estar en formato PDF.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            // Máximo 5 MB
+            if (file.size > 5 * 1024 * 1024) {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo demasiado grande',
+                    text: 'El PDF no debe superar los 5 MB.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            this.doc_ci = file;
         },
 
-        obtenerEgreso(e){
-        try {
-                var fileReader = new FileReader();
-    
-                fileReader.onload = (e) => {
-                    this.doc_egreso = e.target.result;
-                }
-                fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
-            } catch (error) {
-                
+        obtenerNacimiento(e) {
+
+            const file = e.target.files[0];
+
+            if (!file) {
+                return;
             }
+
+            if (file.type !== 'application/pdf') {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo no válido',
+                    text: 'El documento debe estar en formato PDF.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            // Máximo 5 MB
+            if (file.size > 5 * 1024 * 1024) {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo demasiado grande',
+                    text: 'El PDF no debe superar los 5 MB.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            this.doc_nacimiento = file;
         },
 
-        obtenerEspecializacion(e){
-        try {
-                var fileReader = new FileReader();
-    
-                fileReader.onload = (e) => {
-                    this.doc_especializacion = e.target.result;
-                }
-                fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
-            } catch (error) {
-                
+        obtenerEgreso(e) {
+
+            const file = e.target.files[0];
+
+            if (!file) {
+                return;
             }
+
+            if (file.type !== 'application/pdf') {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo no válido',
+                    text: 'El documento debe estar en formato PDF.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            // Máximo 5 MB
+            if (file.size > 5 * 1024 * 1024) {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo demasiado grande',
+                    text: 'El PDF no debe superar los 5 MB.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            this.doc_egreso = file;
         },
 
-        obtenerMedico(e){
-        try {
-                var fileReader = new FileReader();
-    
-                fileReader.onload = (e) => {
-                    this.doc_medico = e.target.result;
-                }
-                fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
-            } catch (error) {
-                
+        obtenerEspecializacion(e) {
+
+            const file = e.target.files[0];
+
+            if (!file) {
+                return;
             }
+
+            if (file.type !== 'application/pdf') {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo no válido',
+                    text: 'El documento debe estar en formato PDF.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            // Máximo 5 MB
+            if (file.size > 5 * 1024 * 1024) {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo demasiado grande',
+                    text: 'El PDF no debe superar los 5 MB.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            this.doc_especializacion = file;
         },
 
-        obtenerTitulo(e){
-        try {
-                var fileReader = new FileReader();
-    
-                fileReader.onload = (e) => {
-                    this.doc_titulo = e.target.result;
-                }
-                fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
-            } catch (error) {
-                
+        obtenerMedico(e) {
+
+            const file = e.target.files[0];
+
+            if (!file) {
+                return;
             }
+
+            if (file.type !== 'application/pdf') {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo no válido',
+                    text: 'El documento debe estar en formato PDF.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            // Máximo 5 MB
+            if (file.size > 5 * 1024 * 1024) {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo demasiado grande',
+                    text: 'El PDF no debe superar los 5 MB.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            this.doc_medico = file;
         },
 
-        obtenerLibreta(e){
-        try {
-                var fileReader = new FileReader();
-    
-                fileReader.onload = (e) => {
-                    this.doc_libreta = e.target.result;
-                }
-                fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
-            } catch (error) {
-                
+        obtenerTitulo(e) {
+
+            const file = e.target.files[0];
+
+            if (!file) {
+                return;
             }
-        },
-    
-        obtenerAprobacion(e){
-        try {
-                var fileReader = new FileReader();
-    
-                fileReader.onload = (e) => {
-                    this.doc_aprobacion = e.target.result;
-                }
-                fileReader.readAsDataURL(e.target.files[0])
-                this.vNAC = 1;
-            } catch (error) {
-                
+
+            if (file.type !== 'application/pdf') {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo no válido',
+                    text: 'El documento debe estar en formato PDF.'
+                });
+
+                e.target.value = '';
+                return;
             }
+
+            // Máximo 5 MB
+            if (file.size > 5 * 1024 * 1024) {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo demasiado grande',
+                    text: 'El PDF no debe superar los 5 MB.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            this.doc_titulo = file;
         },
 
-        obtenerImagen(e){
-            try {
-                var fileReader = new FileReader();
-    
-                fileReader.onload = (e) => {
-                    this.per_foto = e.target.result;
-                }
-                fileReader.readAsDataURL(e.target.files[0])
-                this.v = 1;
-            } catch (error) {
-                
+        obtenerLibreta(e) {
+
+            const file = e.target.files[0];
+
+            if (!file) {
+                return;
             }
+
+            if (file.type !== 'application/pdf') {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo no válido',
+                    text: 'El documento debe estar en formato PDF.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            // Máximo 5 MB
+            if (file.size > 5 * 1024 * 1024) {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo demasiado grande',
+                    text: 'El PDF no debe superar los 5 MB.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            this.doc_libreta = file;
         },
+
+        obtenerAprobacion(e) {
+
+            const file = e.target.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            if (file.type !== 'application/pdf') {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo no válido',
+                    text: 'El documento debe estar en formato PDF.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            // Máximo 5 MB
+            if (file.size > 5 * 1024 * 1024) {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Archivo demasiado grande',
+                    text: 'El PDF no debe superar los 5 MB.'
+                });
+
+                e.target.value = '';
+                return;
+            }
+
+            this.doc_aprobacion = file;
+        },
+
   
         EditarPersonal(personal){ //DGAE
             this.$v.validationGroupReg.$reset(),
-            this.per_foto = personal.per_foto,
+            this.per_foto = null,
+            this.preview_foto = null,
             this.per_categoria = personal.id_categoria,
             this.per_nacionalidad = personal.idnacionalidad,
             this.per_entidad = personal.id_entidad,
@@ -960,14 +1325,14 @@
             this.per_comlinguistica = personal.id_comp_linguistica,
             this.per_observaciones = '',
             this.per_fechaexpiracion = '',
-            this.doc_ci = '',
-            this.doc_nacimiento = '',
-            this.doc_titulo = '',
-            this.doc_aprobacion = '',
-            this.doc_egreso = '',
-            this.doc_especializacion = '',
-            this.doc_libreta = '',
-            this.doc_medico = '',
+            this.doc_ci = null,
+            this.doc_nacimiento = null,
+            this.doc_titulo = null,
+            this.doc_aprobacion = null,
+            this.doc_egreso = null,
+            this.doc_especializacion = null,
+            this.doc_libreta = null,
+            this.doc_medico = null,
             this.v = 0,
             this.listarCategoria();
             this.listarNacionalidad();
@@ -976,6 +1341,7 @@
             this.listarLicencia(this.per_entidad,this.per_categoria, 1);
             this.listarHabilitacion(this.per_titlic, 1);
             this.listarCompetenciaLinguistica()
+            this.selectGrado(this.per_grado);
         },
 
         verificarSeleccion(opcion) {
@@ -1034,97 +1400,339 @@
             this.listarEntidad(this.per_nacionalidad, 0);
         },
   
-        RenovarPersonal(){ //DGAE
-            if(!this.$v.validationGroupDocument.$invalid){
-            swal.fire({
-                title: '¿Desea Renovar?', // TITULO 
-                icon: 'question', //ICONO (success, warnning, error, info, question)
-                showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-                confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-                cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
-                confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
-                cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
-                buttonsStyling: true,
-                reverseButtons: true
-                }).then((result) => {
-                if (result.value) {
-                    let me = this;
-                    axios
-                    .post("/renovarPersonal", {
-                        id_personal : me.personal_id,
-                        foto : me.per_foto,
-                        categoria : me.per_categoria,
-                        nacionalidad: me.per_nacionalidad,
-                        entidad : me.per_entidad,
-                        grado : me.per_grado,
-                        ci : me.per_ci,
-                        cm : me.per_cm,
-                        nombre : me.per_nombre,
-                        ap_paterno : me.per_appaterno,
-                        ap_materno : me.per_apmaterno,
-                        sexo : me.per_sexo,
-                        celular : me.per_celular,
-                        email : me.per_email,
-                        fech_nac : me.per_fechnac,
-                        direccion : me.per_direccion,
-                        tit_licencia : me.per_titlic,
-                        habilitacion : me.per_habilitacion,
-                        linguistica : me.per_comlinguistica,
-                        observacion : me.per_observaciones,
-                        // fech_emision : me.per_fechaemision,
-                        fech_expiracion : me.per_fechaexpiracion,
+        // RenovarPersonal(){ //DGAE
+        //     if(!this.$v.validationGroupDocument.$invalid){
+        //     swal.fire({
+        //         title: '¿Desea Renovar?', // TITULO 
+        //         icon: 'question', //ICONO (success, warnning, error, info, question)
+        //         showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
+        //         confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
+        //         cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
+        //         confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
+        //         cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
+        //         buttonsStyling: true,
+        //         reverseButtons: true
+        //         }).then((result) => {
+        //         if (result.value) {
+        //             let me = this;
+        //             axios
+        //             .post("/renovarPersonal", {
+        //                 id_personal : me.personal_id,
+        //                 foto : me.per_foto,
+        //                 categoria : me.per_categoria,
+        //                 nacionalidad: me.per_nacionalidad,
+        //                 entidad : me.per_entidad,
+        //                 grado : me.per_grado,
+        //                 ci : me.per_ci,
+        //                 cm : me.per_cm,
+        //                 nombre : me.per_nombre,
+        //                 ap_paterno : me.per_appaterno,
+        //                 ap_materno : me.per_apmaterno,
+        //                 sexo : me.per_sexo,
+        //                 celular : me.per_celular,
+        //                 email : me.per_email,
+        //                 fech_nac : me.per_fechnac,
+        //                 direccion : me.per_direccion,
+        //                 tit_licencia : me.per_titlic,
+        //                 habilitacion : me.per_habilitacion,
+        //                 linguistica : me.per_comlinguistica,
+        //                 observacion : me.per_observaciones,
+        //                 // fech_emision : me.per_fechaemision,
+        //                 fech_expiracion : me.per_fechaexpiracion,
 
-                        doc_carnet_identidad :me.doc_ci,
-                        doc_cert_nacimineto : me.doc_nacimiento,
-                        doc_cert_egreso : me.doc_egreso,
-                        doc_cert_espe : me.doc_especializacion,
-                        doc_cert_medico : me.doc_medico,
-                        doc_dip_titulo : me.doc_titulo,
-                        doc_lib_mil : me.doc_libreta,
-                        doc_exa_aprobacion : me.doc_aprobacion,
-                    })
-                    .then(function (response) {
+        //                 doc_carnet_identidad :me.doc_ci,
+        //                 doc_cert_nacimineto : me.doc_nacimiento,
+        //                 doc_cert_egreso : me.doc_egreso,
+        //                 doc_cert_espe : me.doc_especializacion,
+        //                 doc_cert_medico : me.doc_medico,
+        //                 doc_dip_titulo : me.doc_titulo,
+        //                 doc_lib_mil : me.doc_libreta,
+        //                 doc_exa_aprobacion : me.doc_aprobacion,
+        //             })
+        //             .then(function (response) {
                         
-                        console.log(response);
-                        swal.fire({
-                            title: 'Se realizo el renovación correctamente', //TITULO
-                            // response.data.mensaje, //TEXTO DE MENSAJE
-                            // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
-                            // response.personal_foto
-                        });
-                        if (!response.data.code) {
-                            // $('#NuevoUsuario').modal('hide');
-                            // $('#ModalRenewPersonal').modal('hide');
-                            // me.nick = '';
-                            // me.password = '';
-                            me.arrayDatPer = response.data.personal;
-                            //   me.GenerarCarnet(me.arrayDatPer.id_personal);
-                            me.GenerarCarnet(me.personal_id);
-                            me.Atras();
-                            this.$v.$reset();
-                        } 
-                    })
-                    .catch(function (error) {
-                        // handle error
-                        console.log(error);
-                    })
-                }else{
+        //                 console.log(response);
+        //                 swal.fire({
+        //                     title: 'Se realizo el renovación correctamente', //TITULO
+        //                     // response.data.mensaje, //TEXTO DE MENSAJE
+        //                     // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
+        //                     // response.personal_foto
+        //                 });
+        //                 if (!response.data.code) {
+        //                     // $('#NuevoUsuario').modal('hide');
+        //                     // $('#ModalRenewPersonal').modal('hide');
+        //                     // me.nick = '';
+        //                     // me.password = '';
+        //                     me.arrayDatPer = response.data.personal;
+        //                     //   me.GenerarCarnet(me.arrayDatPer.id_personal);
+        //                     me.GenerarCarnet(me.personal_id);
+        //                     me.Atras();
+        //                     this.$v.$reset();
+        //                 } 
+        //             })
+        //             .catch(function (error) {
+        //                 // handle error
+        //                 console.log(error);
+        //             })
+        //         }else{
+        //                 swal.fire(
+        //                 "Informacion", //TITULO
+        //                 "Solicitud cancelada.", //TEXTO DE MENSAJE
+        //                 "info" // TIPO DE MODAL (success, warnning, error, info)
+        //             );
+        //         }
+        //     })
+        //     }else{
+        //         this.$v.validationGroupDocument.$touch();
+        //         Swal.fire({
+        //             icon: 'warning',
+        //             title: 'Ingrese todos los datos requeridos',
+        //             showConfirmButton: false,
+        //             timer: 2000
+        //         })
+                
+        //     }
+        // },
+
+        RenovarPersonal() { // DGAE
+
+            if (!this.$v.validationGroupDocument.$invalid) {
+
+                swal.fire({
+                    title: '¿Desea renovar?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: 'info',
+                    cancelButtonColor: '#868077',
+                    confirmButtonText: 'Confirmar',
+                    cancelButtonText: 'Cancelar',
+                    buttonsStyling: true,
+                    reverseButtons: true
+
+                }).then((result) => {
+
+                    if (result.value) {
+
+                        let me = this;
+
+                        // =====================================================
+                        // 📦 CREAR FORMDATA
+                        // =====================================================
+
+                        let formData = new FormData();
+
+                        // =====================================================
+                        // 📸 FOTO
+                        // =====================================================
+
+                        if (me.per_foto) {
+                            formData.append('foto', me.per_foto);
+                        }
+
+                        // =====================================================
+                        // 👤 DATOS PERSONALES
+                        // =====================================================
+                        formData.append('id_personal', me.personal_id);
+                        formData.append('categoria', me.per_categoria);
+                        // formData.append('nacionalidad', me.per_nacionalidad);
+                        formData.append('entidad', me.per_entidad);
+                        formData.append('grado', me.per_grado);
+                        // formData.append('ci', me.per_ci);
+                        // formData.append('cm', me.per_cm);
+                        // formData.append('nombre', me.per_nombre);
+                        // formData.append('ap_paterno', me.per_appaterno);
+                        // formData.append('ap_materno', me.per_apmaterno);
+                        // formData.append('sexo', me.per_sexo);
+                        formData.append('celular', me.per_celular);
+                        formData.append('email', me.per_email);
+                        // formData.append('fech_nac', me.per_fechnac);
+                        formData.append('direccion', me.per_direccion);
+
+                        // =====================================================
+                        // 📄 LICENCIA
+                        // =====================================================
+
+                        formData.append('tit_licencia', me.per_titlic);
+                        formData.append(
+                            'habilitacion',
+                            JSON.stringify(me.per_habilitacion)
+                        );
+                        formData.append('linguistica', me.per_comlinguistica);
+                        formData.append('observacion', me.per_observaciones);
+                        formData.append('fech_expiracion', me.per_fechaexpiracion);
+
+                        // =====================================================
+                        // 📂 DOCUMENTOS
+                        // =====================================================
+
+                        if (me.doc_ci) {
+                            formData.append('doc_carnet_identidad', me.doc_ci);
+                        }
+
+                        if (me.doc_nacimiento) {
+                            formData.append('doc_cert_nacimineto', me.doc_nacimiento);
+                        }
+
+                        if (me.doc_egreso) {
+                            formData.append('doc_cert_egreso', me.doc_egreso);
+                        }
+
+                        if (me.doc_especializacion) {
+                            formData.append('doc_cert_espe', me.doc_especializacion);
+                        }
+
+                        if (me.doc_medico) {
+                            formData.append('doc_cert_medico', me.doc_medico);
+                        }
+
+                        if (me.doc_titulo) {
+                            formData.append('doc_dip_titulo', me.doc_titulo);
+                        }
+
+                        if (me.doc_libreta) {
+                            formData.append('doc_lib_mil', me.doc_libreta);
+                        }
+
+                        if (me.doc_aprobacion) {
+                            formData.append('doc_exa_aprobacion', me.doc_aprobacion);
+                        }
+
+                        // =====================================================
+                        // 🚀 ENVIAR A LARAVEL
+                        // =====================================================
+                        this.loading = true;
+                        axios.post('/renovarPersonal', formData)
+
+                        .then(function (response) {
+
+                            console.log(response);
+
+                            // =================================================
+                            // REGISTRO CORRECTO
+                            // =================================================
+
+                            if (!response.data.code) {
+
+                                swal.fire({
+                                    title: 'Se realizó la renovación correctamente',
+                                    icon: 'success'
+                                });
+
+                                me.arrayDatPer = response.data.personal;
+                                me.GenerarCarnet(me.arrayDatPer.id_personal);
+                                me.Atras();
+                                me.$v.$reset();
+
+                            } else {
+
+                                swal.fire({
+                                    title: 'No se pudo realizar la renovación',
+                                    text: response.data.mensaje,
+                                    icon: 'warning'
+                                });
+
+                            }
+
+                        })
+
+                        .catch(function (error) {
+
+                                // =========================================
+                                // ERROR
+                                // =========================================
+
+                                console.log(error);
+
+                                let mensaje =
+                                    'Ocurrió un error al renovar al personal.';
+
+                                if (
+                                    error.response &&
+                                    error.response.data
+                                ) {
+
+                                    const data = error.response.data;
+
+                                    // Detalle como texto
+                                    if (
+                                        data.detalle &&
+                                        typeof data.detalle === 'string'
+                                    ) {
+                                        mensaje = data.detalle;
+                                    }
+
+                                    // Detalle como objeto de validación
+                                    else if (
+                                        data.detalle &&
+                                        typeof data.detalle === 'object'
+                                    ) {
+
+                                        const errores = data.detalle;
+
+                                        const primeraClave =
+                                            Object.keys(errores)[0];
+
+                                        if (
+                                            primeraClave &&
+                                            errores[primeraClave] &&
+                                            errores[primeraClave][0]
+                                        ) {
+                                            mensaje =
+                                                errores[primeraClave][0];
+                                        }
+                                    }
+
+                                    // Mensaje directo
+                                    else if (data.mensaje) {
+                                        mensaje = data.mensaje;
+                                    }
+                                }
+
+                                swal.fire({
+                                    title: 'Error',
+                                    text: mensaje,
+                                    icon: 'error'
+                                });
+
+                            })
+                        .finally(function () {
+
+                            // Ocultar Loading cuando termine TODO
+                            me.loading = false;
+
+                        })
+
+                    } else {
+
+                        // =====================================================
+                        // SOLICITUD CANCELADA
+                        // =====================================================
+
                         swal.fire(
-                        "Informacion", //TITULO
-                        "Solicitud cancelada.", //TEXTO DE MENSAJE
-                        "info" // TIPO DE MODAL (success, warnning, error, info)
-                    );
-                }
-            })
-            }else{
+                            "Información",
+                            "Solicitud cancelada.",
+                            "info"
+                        );
+
+                    }
+
+                });
+
+            } else {
+
+                // =========================================================
+                // VALIDACIÓN
+                // =========================================================
+
                 this.$v.validationGroupDocument.$touch();
+
                 Swal.fire({
                     icon: 'warning',
                     title: 'Ingrese todos los datos requeridos',
                     showConfirmButton: false,
                     timer: 2000
-                })
-                
+                });
+
             }
         },
 

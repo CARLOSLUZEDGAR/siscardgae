@@ -23,7 +23,8 @@
             margin-left: 0.1cm;
             margin-right: 0.1cm;
             /* border: 1px solid red; */
-            background-image: url(../public/img/centenario_tranparencia.jpg);
+            /* background-image: url(../public/img/centenario_tranparencia.jpg); */
+            background-color: #c7ddff;
             /* background-size: 100% 110%; */
             background-size: 8.2cm 5cm;
 
@@ -61,6 +62,22 @@
             border: 1px solid #C00;*/
         }
 
+        .watermark {
+            position: fixed;        /* se repite en todas las páginas */
+            top: 2.6cm;           /* margen superior + mitad del body */
+            left: 4.2cm;         /* margen izquierdo + mitad del body */
+            width: 3cm;
+            height: 3cm;
+            transform: translate(-50%, -50%); /* centra exactamente */
+            z-index: -1000;         /* detrás del contenido */
+        }
+
+        .watermark img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
 
         * {
             font-family: verdana, arial, sans-serif;
@@ -90,6 +107,9 @@
     </style>
 </head>
 <body>
+    <div class="watermark">
+        <img src="{{ public_path('img/dgae_agua.png') }}">
+    </div>
 
 <header>        
     <!-- <div style="padding-top: 22px; padding-bottom: 1px;">

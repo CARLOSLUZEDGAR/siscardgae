@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Loading :loading="loading" />
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
@@ -413,10 +414,10 @@
                                 </table>
                             </div>
                             <div class="form-group row justify-content-end">
-                              <button type="button" class="btn btn-primary" @click="previousStep"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
+                              <button type="button" class="btn btn-primary" @click="previousStep" :disabled="loading"><i class="fas fa-backward"></i>&nbsp; ANTERIOR</button>
                                 &nbsp;
                                 <!-- <button type="button" class="btn btn-danger" @click="nextStep"><i class="fas fa-forward"></i>&nbsp; SIGUIENTE</button> -->
-                                <button type="button" class="btn btn-danger" @click="CrearPersonal()"><i class="fas fa-address-card"></i>&nbsp; GUARDAR/GENERAR</button>
+                                <button type="button" class="btn btn-danger" @click="CrearPersonal()" :disabled="loading"><i class="fas fa-address-card"></i>&nbsp; {{ loading ? 'PROCESANDO...' : 'GUARDAR/GENERAR' }}</button>
                             </div>
                         </div>
 
@@ -544,12 +545,16 @@
   </template>
   
   <script>
+    import Loading from './Loading.vue'
   import { required, between, minLength, maxLength, alpha, numeric, email, helpers, date} from "vuelidate/lib/validators";
   export default {
+    components: {
+        Loading
+    },
     data() {
       return {
         // INICIO VARIABLES DGAE
-        
+        loading: false,
         currentStep: 1,
         per_foto : null,
         preview_foto: null,
@@ -1579,7 +1584,7 @@
                       // =====================================================
                       // 🚀 ENVIAR A LARAVEL
                       // =====================================================
-
+                      this.loading = true;
                       axios.post('/crearPersonal', formData)
 
                       .then(function (response) {
@@ -1673,7 +1678,14 @@
                                 icon: 'error'
                             });
 
-                        });
+                        })
+
+                        .finally(function () {
+
+                            // Ocultar Loading cuando termine TODO
+                            me.loading = false;
+
+                        })
 
                   } else {
 
