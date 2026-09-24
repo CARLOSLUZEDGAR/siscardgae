@@ -22,583 +22,374 @@ class PersonalController extends Controller
         $this->middleware('auth')->except(['VerificarPersonal']);
     }
 
-    // public function CrearPersonal(Request $request)
-    // {
-    //     DB::beginTransaction();
-
-    //     try {
-
-    //         $storage = new \App\Services\SupabaseStorageService();
-
-    //         // =========================
-    //         // 📸 FOTO
-    //         // =========================
-    //         $urlFoto = null;
-
-    //         if ($request->filled('foto') || $request->hasFile('foto')) {
-
-    //             try {
-
-    //                 $ci = preg_replace('/[^A-Za-z0-9]/', '', $request->ci);
-
-    //                 $customName = $ci . '_' . \Illuminate\Support\Str::uuid();
-
-    //                 // =====================================
-    //                 // 📌 CASO 1: BASE64
-    //                 // =====================================
-    //                 if (
-    //                     is_string($request->foto) &&
-    //                     str_contains($request->foto, 'base64')
-    //                 ) {
-
-    //                     // 🔥 subida directa del base64
-    //                     $urlFoto = $storage->upload(
-    //                         $request->foto,
-    //                         'img/personas',
-    //                         $customName
-    //                     );
-    //                 }
-
-    //                 // =====================================
-    //                 // 📌 CASO 2: ARCHIVO NORMAL
-    //                 // =====================================
-    //                 elseif ($request->hasFile('foto')) {
-
-    //                     $file = $request->file('foto');
-
-    //                     $urlFoto = $storage->upload(
-    //                         $file,
-    //                         'img/personas',
-    //                         $customName
-    //                     );
-    //                 }
-
-    //                 // =====================================
-    //                 // 📌 FORMATO INVÁLIDO
-    //                 // =====================================
-    //                 else {
-    //                     throw new \Exception('Formato de foto no reconocido');
-    //                 }
-
-    //             } catch (\Exception $e) {
-
-    //                 logger()->error('ERROR FOTO', [
-    //         'mensaje' => $e->getMessage()
-    //     ]);
-
-    //     throw new \Exception($e->getMessage());
-    //             }
-    //         }
-
-    //         // =========================
-    //         // 👤 REGISTRO PERSONAL
-    //         // =========================
-    //         $personal = Personal::create([
-    //             'per_foto' => $urlFoto,
-    //             'id_nacionalidad' => $request->nacionalidad,
-    //             'per_ci' => $request->ci,
-    //             'per_cm' => $request->cm,
-    //             'per_nombre' => mb_strtoupper($request->nombre),
-    //             'per_paterno' => mb_strtoupper($request->ap_paterno),
-    //             'per_materno' => mb_strtoupper($request->ap_materno),
-    //             'per_sexo' => $request->sexo,
-    //             'per_celular' => $request->celular,
-    //             'per_mail' => $request->email,
-    //             'per_fecha_nacimiento' => $request->fech_nac,
-    //             'per_direccion' => mb_strtoupper($request->direccion),
-    //             'per_password' => Hash::make($request->ci),
-    //             'estado' => '1',
-    //             'sysuser' => auth()->id()
-    //         ]);
-
-    //         // =========================
-    //         // 📄 LICENCIA
-    //         // =========================
-    //         $personal_licencia = PersonalLicencia::create([
-    //             'id_personal' => $personal->id,
-    //             'id_categoria' => $request->categoria,
-    //             'id_entidad' => $request->entidad,
-    //             'id_grado' => $request->grado,
-    //             'id_licencia' => $request->tit_licencia,
-    //             'id_habilitacion' => $request->habilitacion,
-    //             'id_comp_linguistica' => $request->linguistica,
-    //             'observacion' => mb_strtoupper($request->observacion),
-    //             'fecha_emision' => now(),
-    //             'fecha_expiracion' => $request->fech_expiracion,
-    //             'estado' => '1',
-    //             'sysuser' => auth()->id()
-    //         ]);
-
-    //         // =========================
-    //         // 📂 DOCUMENTOS
-    //         // =========================
-    //         $documentos = [
-    //             $request->doc_carnet_identidad,
-    //             $request->doc_cert_nacimineto,
-    //             $request->doc_cert_egreso,
-    //             $request->doc_cert_espe,
-    //             $request->doc_cert_medico,
-    //             $request->doc_dip_titulo,
-    //             $request->doc_lib_mil,
-    //             $request->doc_exa_aprobacion
-    //         ];
-
-    //         $x = 1;
-
-    //         foreach ($documentos as $doc) {
-
-    //             if ($doc) {
-
-    //                 try {
-
-    //                     // =========================
-    //                     // VALIDAR BASE64 PDF
-    //                     // =========================
-    //                     if (
-    //                         !str_contains($doc, 'base64') ||
-    //                         !str_contains($doc, 'pdf')
-    //                     ) {
-    //                         throw new \Exception(
-    //                             "El documento {$x} no es PDF válido"
-    //                         );
-    //                     }
-
-    //                     $ci = preg_replace(
-    //                         '/[^A-Za-z0-9]/',
-    //                         '',
-    //                         $request->ci
-    //                     );
-
-    //                     $customName = $x . '_' . $ci . '_' .
-    //                         \Illuminate\Support\Str::uuid();
-
-    //                     // =========================
-    //                     // 🚀 SUBIR DOCUMENTO
-    //                     // =========================
-    //                     $url = $storage->upload(
-    //                         $doc,
-    //                         'files/personas',
-    //                         $customName
-    //                     );
-
-    //                 } catch (\Exception $e) {
-
-    //                     logger()->error(
-    //                         "Error subiendo documento {$x}",
-    //                         [
-    //                             'error' => $e->getMessage()
-    //                         ]
-    //                     );
-
-    //                     throw new \Exception(
-    //                         "Error en documento {$x}"
-    //                     );
-    //                 }
-
-    //                 // =========================
-    //                 // 💾 GUARDAR DOCUMENTO
-    //                 // =========================
-    //                 PersonalDocumento::create([
-    //                     'id_personal' => $personal->id,
-    //                     'id_licencia' => $personal_licencia->id,
-    //                     'documento' => $url,
-    //                     'estado' => '1',
-    //                     'sysuser' => auth()->id()
-    //                 ]);
-    //             }
-
-    //             $x++;
-    //         }
-
-    //         DB::commit();
-
-    //         return response()->json([
-    //             'success' => true,
-    //             'personal' => $personal_licencia
-    //         ]);
-
-    //     } catch (\Exception $e) {
-
-    //         DB::rollBack();
-
-    //         logger()->error('Error en CrearPersonal', [
-    //             'error' => $e->getMessage()
-    //         ]);
-
-    //         return response()->json([
-    //             'error' => 'Error al registrar personal',
-    //             'detalle' => $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
-
     public function CrearPersonal(Request $request)
-    {
-        DB::beginTransaction();
+{
+    DB::beginTransaction();
 
-        try {
+    // Archivos subidos durante esta operación
+    $uploadedFiles = [];
 
-            // =====================================================
-            // VALIDACIÓN DE ARCHIVOS
-            // =====================================================
+    try {
 
-            $request->validate([
+        // =====================================================
+        // VALIDACIÓN DE ARCHIVOS
+        // =====================================================
 
-                // Fotografía
-                'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+        $request->validate([
 
-                // Documentos PDF
-                'doc_carnet_identidad' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_cert_nacimineto' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_cert_egreso' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_cert_espe' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_cert_medico' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_dip_titulo' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_lib_mil' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_exa_aprobacion' => 'nullable|file|mimes:pdf|max:5120',
-            ]);
+            // Fotografía
+            'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
 
-            // VERIFICAR SI EL CORREO YA EXISTE
-                $existeCorreo = DB::table('personals')
-                    ->where('per_mail', $request->email)
-                    ->exists();
+            // Documentos PDF
+            'doc_carnet_identidad' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_cert_nacimineto' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_cert_egreso' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_cert_espe' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_cert_medico' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_dip_titulo' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_lib_mil' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_exa_aprobacion' => 'nullable|file|mimes:pdf|max:5120',
+        ]);
 
-                if ($existeCorreo) {
-                    return response()->json([
-                        'success' => false,
-                        'detalle' => 'El email del usuario ya se encuentra registrado.'
-                    ], 422);
+        // =====================================================
+        // VERIFICAR SI EL CORREO YA EXISTE
+        // =====================================================
+
+        $existeCorreo = DB::table('personals')
+            ->where('per_mail', $request->email)
+            ->exists();
+
+        if ($existeCorreo) {
+            return response()->json([
+                'success' => false,
+                'detalle' => 'El email del usuario ya se encuentra registrado.'
+            ], 422);
+        }
+
+        // =====================================================
+        // VERIFICAR SI EL CI YA EXISTE
+        // =====================================================
+
+        $existeCi = DB::table('personals')
+            ->where('per_ci', $request->ci)
+            ->exists();
+
+        if ($existeCi) {
+            return response()->json([
+                'success' => false,
+                'detalle' => 'El nro. de documento del usuario ya se encuentra registrado.'
+            ], 422);
+        }
+
+        // =====================================================
+        // SERVICIO SUPABASE
+        // =====================================================
+
+        $storage = new \App\Services\SupabaseStorageService();
+
+        // =====================================================
+        // FOTO
+        // =====================================================
+
+        $urlFoto = null;
+
+        if ($request->hasFile('foto')) {
+
+            try {
+
+                $file = $request->file('foto');
+
+                // Validar archivo
+                if (!$file->isValid()) {
+                    throw new \Exception(
+                        'La fotografía no es válida.'
+                    );
                 }
 
-            // VERIFICAR SI EL CORREO YA EXISTE
-                $existeCi = DB::table('personals')
-                    ->where('per_ci', $request->ci,)
-                    ->exists();
+                // Validar tipo MIME
+                $mimesPermitidos = [
+                    'image/jpeg',
+                    'image/jpg',
+                    'image/png'
+                ];
 
-                if ($existeCi) {
-                    return response()->json([
-                        'success' => false,
-                        'detalle' => 'El nro. de documento del usuario ya se encuentra registrado.'
-                    ], 422);
+                if (!in_array($file->getMimeType(), $mimesPermitidos)) {
+                    throw new \Exception(
+                        'La fotografía debe estar en formato JPG, JPEG o PNG.'
+                    );
                 }
 
-            // =====================================================
-            // SERVICIO SUPABASE
-            // =====================================================
+                // Validar tamaño máximo 2 MB
+                if ($file->getSize() > 2 * 1024 * 1024) {
+                    throw new \Exception(
+                        'La fotografía no debe superar los 2 MB.'
+                    );
+                }
 
-            $storage = new \App\Services\SupabaseStorageService();
+                // =================================================
+                // NOMBRE DE LA FOTO
+                // =================================================
 
+                $ci = preg_replace(
+                    '/[^A-Za-z0-9]/',
+                    '',
+                    $request->ci
+                );
 
-            // =====================================================
-            // 📸 FOTO
-            // =====================================================
+                $customName =
+                    $ci . '_' .
+                    \Illuminate\Support\Str::uuid();
 
-            $urlFoto = null;
+                // =================================================
+                // SUBIR A SUPABASE
+                // =================================================
 
-            if ($request->hasFile('foto')) {
+                $urlFoto = $storage->upload(
+                    $file,
+                    'img/personas',
+                    $customName
+                );
+
+                // Registrar archivo para posible eliminación
+                $uploadedFiles[] = $urlFoto;
+
+            } catch (\Exception $e) {
+
+                logger()->error('ERROR FOTO', [
+                    'mensaje' => $e->getMessage()
+                ]);
+
+                throw new \Exception(
+                    'Error al subir la fotografía: ' .
+                    $e->getMessage()
+                );
+            }
+        }
+
+        // =====================================================
+        // REGISTRO PERSONAL
+        // =====================================================
+
+        $personal = Personal::create([
+
+            'per_foto' => $urlFoto,
+            'id_nacionalidad' => $request->nacionalidad,
+            'per_ci' => $request->ci,
+            'per_cm' => $request->cm,
+            'per_nombre' => mb_strtoupper($request->nombre),
+            'per_paterno' => mb_strtoupper($request->ap_paterno),
+            'per_materno' => mb_strtoupper($request->ap_materno),
+            'per_sexo' => $request->sexo,
+            'per_celular' => $request->celular,
+            'per_mail' => $request->email,
+            'per_fecha_nacimiento' => $request->fech_nac,
+            'per_direccion' => mb_strtoupper($request->direccion),
+            'estado' => '1',
+            'sysuser' => auth()->id()
+        ]);
+
+        // =====================================================
+        // LICENCIA
+        // =====================================================
+
+        $habilitacion = $request->habilitacion;
+
+        if (is_string($habilitacion)) {
+            $habilitacion = json_decode($habilitacion, true);
+        }
+
+        $personal_licencia = PersonalLicencia::create([
+
+            'id_personal' => $personal->id,
+            'id_categoria' => $request->categoria,
+            'id_entidad' => $request->entidad,
+            'id_grado' => $request->grado,
+            'id_licencia' => $request->tit_licencia,
+            'id_habilitacion' => $habilitacion,
+            'id_comp_linguistica' => $request->linguistica,
+            'observacion' => mb_strtoupper($request->observacion),
+            'fecha_emision' => now(),
+            'fecha_expiracion' => $request->fech_expiracion,
+            'estado' => '1',
+            'sysuser' => auth()->id()
+        ]);
+
+        // =====================================================
+        // DOCUMENTOS
+        // =====================================================
+
+        $documentos = [
+
+            'doc_carnet_identidad' => $request->file('doc_carnet_identidad'),
+            'doc_cert_nacimineto' => $request->file('doc_cert_nacimineto'),
+            'doc_cert_egreso' => $request->file('doc_cert_egreso'),
+            'doc_cert_espe' => $request->file('doc_cert_espe'),
+            'doc_cert_medico' => $request->file('doc_cert_medico'),
+            'doc_dip_titulo' => $request->file('doc_dip_titulo'),
+            'doc_lib_mil' => $request->file('doc_lib_mil'),
+            'doc_exa_aprobacion' => $request->file('doc_exa_aprobacion')
+        ];
+
+        $x = 1;
+
+        foreach ($documentos as $nombreCampo => $file) {
+
+            if ($file) {
 
                 try {
 
-                    $file = $request->file('foto');
-
                     // Validar archivo
                     if (!$file->isValid()) {
-
                         throw new \Exception(
-                            'La fotografía no es válida.'
+                            "El documento {$x} no es válido."
                         );
                     }
 
-                    // Validar tipo MIME
-                    $mimesPermitidos = [
-                        'image/jpeg',
-                        'image/jpg',
-                        'image/png'
-                    ];
-
-                    if (!in_array($file->getMimeType(), $mimesPermitidos)) {
-
+                    // Validar PDF
+                    if ($file->getMimeType() !== 'application/pdf') {
                         throw new \Exception(
-                            'La fotografía debe estar en formato JPG, JPEG o PNG.'
+                            "El documento {$x} debe estar en formato PDF."
                         );
                     }
 
-                    // Validar tamaño máximo 2 MB
-                    if ($file->getSize() > 2 * 1024 * 1024) {
-
+                    // Validar tamaño
+                    if ($file->getSize() > 5 * 1024 * 1024) {
                         throw new \Exception(
-                            'La fotografía no debe superar los 2 MB.'
+                            "El documento {$x} supera los 5 MB."
                         );
                     }
 
-                    // =================================================
-                    // NOMBRE DE LA FOTO
-                    // =================================================
-
+                    // Obtener CI
                     $ci = preg_replace(
                         '/[^A-Za-z0-9]/',
                         '',
                         $request->ci
                     );
 
+                    // Generar nombre
                     $customName =
+                        $x . '_' .
                         $ci . '_' .
                         \Illuminate\Support\Str::uuid();
 
-                    // =================================================
-                    // SUBIR A SUPABASE
-                    // =================================================
-
-                    $urlFoto = $storage->upload(
+                    // Subir a Supabase
+                    $url = $storage->upload(
                         $file,
-                        'img/personas',
+                        'files/personas',
                         $customName
                     );
 
+                    // Registrar archivo para posible eliminación
+                    $uploadedFiles[] = $url;
+
                 } catch (\Exception $e) {
 
-                    logger()->error('ERROR FOTO', [
-                        'mensaje' => $e->getMessage()
-                    ]);
+                    logger()->error(
+                        "Error subiendo documento {$x}",
+                        [
+                            'campo' => $nombreCampo,
+                            'error' => $e->getMessage()
+                        ]
+                    );
 
                     throw new \Exception(
-                        'Error al subir la fotografía: ' .
+                        "Error en documento {$x}: " .
                         $e->getMessage()
                     );
                 }
+
+                // Guardar URL en BD
+                PersonalDocumento::create([
+
+                    'id_personal' => $personal->id,
+                    'id_licencia' => $personal_licencia->id,
+                    'documento' => $url,
+                    'estado' => '1',
+                    'sysuser' => auth()->id()
+                ]);
             }
 
-
-            // =====================================================
-            // 👤 REGISTRO PERSONAL
-            // =====================================================
-
-            $personal = Personal::create([
-
-                'per_foto' => $urlFoto,
-                'id_nacionalidad' => $request->nacionalidad,
-                'per_ci' => $request->ci,
-                'per_cm' => $request->cm,
-                'per_nombre' => mb_strtoupper($request->nombre),
-                'per_paterno' => mb_strtoupper($request->ap_paterno),
-                'per_materno' => mb_strtoupper($request->ap_materno),
-                'per_sexo' => $request->sexo,
-                'per_celular' => $request->celular,
-                'per_mail' => $request->email,
-                'per_fecha_nacimiento' => $request->fech_nac,
-                'per_direccion' => mb_strtoupper($request->direccion),
-                // 'per_password' => Hash::make($request->ci),
-                'estado' => '1',
-                'sysuser' => auth()->id()
-            ]);
-
-
-            // =====================================================
-            // 📄 LICENCIA
-            // =====================================================
-
-            // Como desde Vue enviamos:
-            // JSON.stringify(me.per_habilitacion)
-
-            $habilitacion = $request->habilitacion;
-
-            if (is_string($habilitacion)) {
-
-                $habilitacion =
-                    json_decode($habilitacion, true);
-            }
-
-            $personal_licencia = PersonalLicencia::create([
-
-                'id_personal' => $personal->id,
-                'id_categoria' => $request->categoria,
-                'id_entidad' => $request->entidad,
-                'id_grado' => $request->grado,
-                'id_licencia' => $request->tit_licencia,
-                'id_habilitacion' => $habilitacion,
-                'id_comp_linguistica' => $request->linguistica,
-                'observacion' => mb_strtoupper($request->observacion),
-                'fecha_emision' => now(),
-                'fecha_expiracion' => $request->fech_expiracion,
-                'estado' => '1',
-                'sysuser' => auth()->id()
-            ]);
-
-
-            // =====================================================
-            // 📂 DOCUMENTOS
-            // =====================================================
-
-            $documentos = [
-
-                'doc_carnet_identidad' => $request->file('doc_carnet_identidad'),
-                'doc_cert_nacimineto' => $request->file('doc_cert_nacimineto'),
-                'doc_cert_egreso' => $request->file('doc_cert_egreso'),
-                'doc_cert_espe' => $request->file('doc_cert_espe'),
-                'doc_cert_medico' => $request->file('doc_cert_medico'),
-                'doc_dip_titulo' => $request->file('doc_dip_titulo'),
-                'doc_lib_mil' => $request->file('doc_lib_mil'),
-                'doc_exa_aprobacion' => $request->file('doc_exa_aprobacion')
-            ];
-
-            $x = 1;
-
-            foreach ($documentos as $nombreCampo => $file) {
-
-                // =================================================
-                // VERIFICAR SI EXISTE EL DOCUMENTO
-                // =================================================
-
-                if ($file) {
-
-                    try {
-
-                        // =============================================
-                        // VALIDAR ARCHIVO
-                        // =============================================
-
-                        if (!$file->isValid()) {
-
-                            throw new \Exception(
-                                "El documento {$x} no es válido."
-                            );
-                        }
-
-                        // =============================================
-                        // VALIDAR PDF
-                        // =============================================
-
-                        if ($file->getMimeType() !== 'application/pdf') {
-
-                            throw new \Exception(
-                                "El documento {$x} debe estar en formato PDF."
-                            );
-                        }
-
-                        // =============================================
-                        // VALIDAR TAMAÑO
-                        // =============================================
-
-                        if ($file->getSize() > 5 * 1024 * 1024) {
-
-                            throw new \Exception(
-                                "El documento {$x} supera los 5 MB."
-                            );
-                        }
-
-                        // =============================================
-                        // OBTENER CI
-                        // =============================================
-
-                        $ci = preg_replace(
-                            '/[^A-Za-z0-9]/',
-                            '',
-                            $request->ci
-                        );
-
-                        // =============================================
-                        // GENERAR NOMBRE
-                        // =============================================
-
-                        $customName =
-                            $x . '_' .
-                            $ci . '_' .
-                            \Illuminate\Support\Str::uuid();
-
-                        // =============================================
-                        // 🚀 SUBIR A SUPABASE
-                        // =============================================
-
-                        $url = $storage->upload(
-                            $file,
-                            'files/personas',
-                            $customName
-                        );
-
-                    } catch (\Exception $e) {
-
-                        logger()->error(
-                            "Error subiendo documento {$x}",
-                            [
-                                'campo' => $nombreCampo,
-                                'error' => $e->getMessage()
-                            ]
-                        );
-
-                        throw new \Exception(
-                            "Error en documento {$x}: " .
-                            $e->getMessage()
-                        );
-                    }
-
-                    // =============================================
-                    // 💾 GUARDAR URL EN BASE DE DATOS
-                    // =============================================
-
-                    PersonalDocumento::create([
-
-                        'id_personal' => $personal->id,
-                        'id_licencia' => $personal_licencia->id,
-                        'documento' => $url,
-                        'estado' => '1',
-                        'sysuser' => auth()->id()
-                    ]);
-                }
-
-                $x++;
-            }
-
-            // =====================================================
-            // 💾 CONFIRMAR TRANSACCIÓN
-            // =====================================================
-
-            DB::commit();
-
-            // =====================================================
-            // RESPUESTA
-            // =====================================================
-
-            return response()->json([
-                'success' => true,
-                'personal' => $personal_licencia
-            ]);
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
-
-            // =====================================================
-            // ERROR DE VALIDACIÓN
-            // =====================================================
-
-            DB::rollBack();
-
-            return response()->json([
-                'error' => 'Error de validación',
-                'detalle' => $e->errors()
-            ], 422);
-
-        } catch (\Exception $e) {
-
-            // =====================================================
-            // ERROR GENERAL
-            // =====================================================
-
-            DB::rollBack();
-
-            logger()->error(
-                'Error en CrearPersonal',
-                [
-                    'error' => $e->getMessage(),
-                    'linea' => $e->getLine(),
-                    'archivo' => $e->getFile()
-                ]
-            );
-
-            return response()->json([
-                'error' => 'Error al registrar personal',
-                'detalle' => $e->getMessage()
-            ], 500);
+            $x++;
         }
+
+        // =====================================================
+        // CONFIRMAR TRANSACCIÓN
+        // =====================================================
+
+        DB::commit();
+
+        return response()->json([
+            'success' => true,
+            'personal' => $personal_licencia
+        ]);
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+
+        DB::rollBack();
+
+        // En este punto normalmente todavía no hay archivos,
+        // porque la validación ocurre al principio.
+
+        foreach ($uploadedFiles as $file) {
+            try {
+                $storage->delete($file);
+            } catch (\Throwable $deleteError) {
+                logger()->error(
+                    'No se pudo eliminar archivo de Supabase',
+                    [
+                        'archivo' => $file,
+                        'error' => $deleteError->getMessage()
+                    ]
+                );
+            }
+        }
+
+        return response()->json([
+            'error' => 'Error de validación',
+            'detalle' => $e->errors()
+        ], 422);
+
+    } catch (\Throwable $e) {
+
+        DB::rollBack();
+
+        // =====================================================
+        // ELIMINAR ARCHIVOS SUBIDOS SI ALGO FALLÓ
+        // =====================================================
+
+        foreach ($uploadedFiles as $file) {
+
+            try {
+
+                $storage->delete($file);
+
+            } catch (\Throwable $deleteError) {
+
+                logger()->error(
+                    'No se pudo eliminar archivo de Supabase',
+                    [
+                        'archivo' => $file,
+                        'error' => $deleteError->getMessage()
+                    ]
+                );
+            }
+        }
+
+        logger()->error(
+            'Error en CrearPersonal',
+            [
+                'error' => $e->getMessage(),
+                'linea' => $e->getLine(),
+                'archivo' => $e->getFile()
+            ]
+        );
+
+        return response()->json([
+            'error' => 'Error al registrar personal',
+            'detalle' => $e->getMessage()
+        ], 500);
     }
+}
     /**
      * FUNCION PARA EL LISTADOR DE PERSONAL EN TIEMPO REALs
      */
@@ -1022,396 +813,777 @@ class PersonalController extends Controller
     //     }
     // }
 
+    // public function RenovarPersonal(Request $request)
+    // {
+    //     DB::beginTransaction();
+
+    //     try {
+
+    //         // =====================================================
+    //         // VALIDACIÓN DE ARCHIVOS
+    //         // =====================================================
+
+    //         $request->validate([
+
+    //             // Fotografía
+    //             'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+
+    //             // Documentos PDF
+    //             'doc_carnet_identidad' => 'nullable|file|mimes:pdf|max:5120',
+    //             'doc_cert_nacimineto' => 'nullable|file|mimes:pdf|max:5120',
+    //             'doc_cert_egreso' => 'nullable|file|mimes:pdf|max:5120',
+    //             'doc_cert_espe' => 'nullable|file|mimes:pdf|max:5120',
+    //             'doc_cert_medico' => 'nullable|file|mimes:pdf|max:5120',
+    //             'doc_dip_titulo' => 'nullable|file|mimes:pdf|max:5120',
+    //             'doc_lib_mil' => 'nullable|file|mimes:pdf|max:5120',
+    //             'doc_exa_aprobacion' => 'nullable|file|mimes:pdf|max:5120',
+    //         ]);
+
+    //         // VERIFICAR SI EL CORREO YA EXISTE
+    //             // $existeCorreo = DB::table('personals')
+    //             //     ->where('per_mail', $request->email)
+    //             //     ->exists();
+
+    //             // if ($existeCorreo) {
+    //             //     return response()->json([
+    //             //         'success' => false,
+    //             //         'detalle' => 'El email del usuario ya se encuentra registrado.'
+    //             //     ], 422);
+    //             // }
+
+    //         // VERIFICAR SI EL CI YA EXISTE
+    //             // $existeCi = DB::table('personals')
+    //             //     ->where('per_ci', $request->ci,)
+    //             //     ->exists();
+
+    //             // if ($existeCi) {
+    //             //     return response()->json([
+    //             //         'success' => false,
+    //             //         'detalle' => 'El nro. de documento del usuario ya se encuentra registrado.'
+    //             //     ], 422);
+    //             // }
+
+    //         // =====================================================
+    //         // SERVICIO SUPABASE
+    //         // =====================================================
+
+    //         $storage = new \App\Services\SupabaseStorageService();
+
+    //         // =========================
+    //         // 🔍 OBTENER PERSONAL
+    //         // =========================
+    //         $personal = Personal::where('id', $request->id_personal)
+    //             ->firstOrFail();
+
+
+    //         // =====================================================
+    //         // 📸 FOTO
+    //         // =====================================================
+
+    //         $urlFoto = null;
+
+    //         if ($request->hasFile('foto')) {
+
+    //             try {
+
+    //                 $file = $request->file('foto');
+
+    //                 // Validar archivo
+    //                 if (!$file->isValid()) {
+
+    //                     throw new \Exception(
+    //                         'La fotografía no es válida.'
+    //                     );
+    //                 }
+
+    //                 // Validar tipo MIME
+    //                 $mimesPermitidos = [
+    //                     'image/jpeg',
+    //                     'image/jpg',
+    //                     'image/png'
+    //                 ];
+
+    //                 if (!in_array($file->getMimeType(), $mimesPermitidos)) {
+
+    //                     throw new \Exception(
+    //                         'La fotografía debe estar en formato JPG, JPEG o PNG.'
+    //                     );
+    //                 }
+
+    //                 // Validar tamaño máximo 2 MB
+    //                 if ($file->getSize() > 2 * 1024 * 1024) {
+
+    //                     throw new \Exception(
+    //                         'La fotografía no debe superar los 2 MB.'
+    //                     );
+    //                 }
+
+    //                 // =================================================
+    //                 // NOMBRE DE LA FOTO
+    //                 // =================================================
+
+    //                 $ci = preg_replace(
+    //                     '/[^A-Za-z0-9]/',
+    //                     '',
+    //                     $request->ci
+    //                 );
+
+    //                 $customName =
+    //                     $ci . '_' .
+    //                     \Illuminate\Support\Str::uuid();
+
+    //                 // =================================================
+    //                 // SUBIR A SUPABASE
+    //                 // =================================================
+
+    //                 $urlFoto = $storage->upload(
+    //                     $file,
+    //                     'img/personas',
+    //                     $customName
+    //                 );
+
+    //             } catch (\Exception $e) {
+
+    //                 logger()->error('ERROR FOTO', [
+    //                     'mensaje' => $e->getMessage()
+    //                 ]);
+
+    //                 throw new \Exception(
+    //                     'Error al subir la fotografía: ' .
+    //                     $e->getMessage()
+    //                 );
+    //             }
+    //         }
+
+    //     // =========================
+    //         // 👤 ACTUALIZAR PERSONAL
+    //         // =========================
+    //         $personal->update([
+    //             'per_foto' => $urlFoto,
+    //             // 'per_ci' => $request->ci,
+    //             // 'per_cm' => $request->cm,
+    //             // 'per_nombre' => mb_strtoupper($request->nombre),
+    //             // 'per_paterno' => mb_strtoupper($request->ap_paterno),
+    //             // 'per_materno' => mb_strtoupper($request->ap_materno),
+    //             // 'per_sexo' => $request->sexo,
+    //             'per_celular' => $request->celular,
+    //             'per_mail' => $request->email,
+    //             'per_direccion' => mb_strtoupper($request->direccion),
+    //             'estado' => '1',
+    //             'sysuser' => auth()->id()
+    //         ]);
+
+    //         // =========================
+    //         // 🔄 DESACTIVAR LICENCIA
+    //         // =========================
+    //         $id_personal_max = PersonalLicencia::where(
+    //             'id_personal',
+    //             $request->id_personal
+    //         )->max('id');
+
+    //         if ($id_personal_max) {
+    //             PersonalLicencia::where('id', $id_personal_max)
+    //                 ->update([
+    //                     'estado' => '0'
+    //                 ]);
+    //         }
+
+    //         // =====================================================
+    //         // 📄 LICENCIA
+    //         // =====================================================
+
+    //         // Como desde Vue enviamos:
+    //         // JSON.stringify(me.per_habilitacion)
+
+    //         $habilitacion = $request->habilitacion;
+
+    //         if (is_string($habilitacion)) {
+
+    //             $habilitacion =
+    //                 json_decode($habilitacion, true);
+    //         }
+
+    //         $personal_licencia = PersonalLicencia::create([
+
+    //             'id_personal' => $personal->id,
+    //             'id_categoria' => $request->categoria,
+    //             'id_entidad' => $request->entidad,
+    //             'id_grado' => $request->grado,
+    //             'id_licencia' => $request->tit_licencia,
+    //             'id_habilitacion' => $habilitacion,
+    //             'id_comp_linguistica' => $request->linguistica,
+    //             'observacion' => mb_strtoupper($request->observacion),
+    //             'fecha_emision' => now(),
+    //             'fecha_expiracion' => $request->fech_expiracion,
+    //             'estado' => '1',
+    //             'sysuser' => auth()->id()
+    //         ]);
+
+    //         // =========================
+    //         // 🔄 DESACTIVAR DOCUMENTOS
+    //         // =========================
+    //         PersonalDocumento::where(
+    //             'id_personal',
+    //             $request->id_personal
+    //         )->update([
+    //             'estado' => '0'
+    //         ]);
+
+    //         // =====================================================
+    //         // 📂 DOCUMENTOS
+    //         // =====================================================
+
+    //         $documentos = [
+
+    //             'doc_carnet_identidad' => $request->file('doc_carnet_identidad'),
+    //             'doc_cert_nacimineto' => $request->file('doc_cert_nacimineto'),
+    //             'doc_cert_egreso' => $request->file('doc_cert_egreso'),
+    //             'doc_cert_espe' => $request->file('doc_cert_espe'),
+    //             'doc_cert_medico' => $request->file('doc_cert_medico'),
+    //             'doc_dip_titulo' => $request->file('doc_dip_titulo'),
+    //             'doc_lib_mil' => $request->file('doc_lib_mil'),
+    //             'doc_exa_aprobacion' => $request->file('doc_exa_aprobacion')
+    //         ];
+
+    //         $x = 1;
+
+    //         foreach ($documentos as $nombreCampo => $file) {
+
+    //             // =================================================
+    //             // VERIFICAR SI EXISTE EL DOCUMENTO
+    //             // =================================================
+
+    //             if ($file) {
+
+    //                 try {
+
+    //                     // =============================================
+    //                     // VALIDAR ARCHIVO
+    //                     // =============================================
+
+    //                     if (!$file->isValid()) {
+
+    //                         throw new \Exception(
+    //                             "El documento {$x} no es válido."
+    //                         );
+    //                     }
+
+    //                     // =============================================
+    //                     // VALIDAR PDF
+    //                     // =============================================
+
+    //                     if ($file->getMimeType() !== 'application/pdf') {
+
+    //                         throw new \Exception(
+    //                             "El documento {$x} debe estar en formato PDF."
+    //                         );
+    //                     }
+
+    //                     // =============================================
+    //                     // VALIDAR TAMAÑO
+    //                     // =============================================
+
+    //                     if ($file->getSize() > 5 * 1024 * 1024) {
+
+    //                         throw new \Exception(
+    //                             "El documento {$x} supera los 5 MB."
+    //                         );
+    //                     }
+
+    //                     // =============================================
+    //                     // OBTENER CI
+    //                     // =============================================
+
+    //                     $ci = preg_replace(
+    //                         '/[^A-Za-z0-9]/',
+    //                         '',
+    //                         $request->ci
+    //                     );
+
+    //                     // =============================================
+    //                     // GENERAR NOMBRE
+    //                     // =============================================
+
+    //                     $customName =
+    //                         $x . '_' .
+    //                         $ci . '_' .
+    //                         \Illuminate\Support\Str::uuid();
+
+    //                     // =============================================
+    //                     // 🚀 SUBIR A SUPABASE
+    //                     // =============================================
+
+    //                     $url = $storage->upload(
+    //                         $file,
+    //                         'files/personas',
+    //                         $customName
+    //                     );
+
+    //                 } catch (\Exception $e) {
+
+    //                     logger()->error(
+    //                         "Error subiendo documento {$x}",
+    //                         [
+    //                             'campo' => $nombreCampo,
+    //                             'error' => $e->getMessage()
+    //                         ]
+    //                     );
+
+    //                     throw new \Exception(
+    //                         "Error en documento {$x}: " .
+    //                         $e->getMessage()
+    //                     );
+    //                 }
+
+    //                 // =============================================
+    //                 // 💾 GUARDAR URL EN BASE DE DATOS
+    //                 // =============================================
+
+    //                 PersonalDocumento::create([
+
+    //                     'id_personal' => $personal->id,
+    //                     'id_licencia' => $personal_licencia->id,
+    //                     'documento' => $url,
+    //                     'estado' => '1',
+    //                     'sysuser' => auth()->id()
+    //                 ]);
+    //             }
+
+    //             $x++;
+    //         }
+
+    //         // =====================================================
+    //         // 💾 CONFIRMAR TRANSACCIÓN
+    //         // =====================================================
+
+    //         DB::commit();
+
+    //         // =====================================================
+    //         // RESPUESTA
+    //         // =====================================================
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'personal' => $personal_licencia
+    //         ]);
+
+    //     } catch (\Illuminate\Validation\ValidationException $e) {
+
+    //         // =====================================================
+    //         // ERROR DE VALIDACIÓN
+    //         // =====================================================
+
+    //         DB::rollBack();
+
+    //         return response()->json([
+    //             'error' => 'Error de validación',
+    //             'detalle' => $e->errors()
+    //         ], 422);
+
+    //     } catch (\Exception $e) {
+
+    //         // =====================================================
+    //         // ERROR GENERAL
+    //         // =====================================================
+
+    //         DB::rollBack();
+
+    //         logger()->error(
+    //             'Error en RenovarPersonal',
+    //             [
+    //                 'error' => $e->getMessage(),
+    //                 'linea' => $e->getLine(),
+    //                 'archivo' => $e->getFile()
+    //             ]
+    //         );
+
+    //         return response()->json([
+    //             'error' => 'Error al renovar personal',
+    //             'detalle' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
     public function RenovarPersonal(Request $request)
-    {
-        DB::beginTransaction();
+{
+    DB::beginTransaction();
 
-        try {
+    // Archivos subidos durante esta operación
+    $uploadedFiles = [];
 
-            // =====================================================
-            // VALIDACIÓN DE ARCHIVOS
-            // =====================================================
+    try {
 
-            $request->validate([
+        // =====================================================
+        // VALIDACIÓN DE ARCHIVOS
+        // =====================================================
 
-                // Fotografía
-                'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+        $request->validate([
 
-                // Documentos PDF
-                'doc_carnet_identidad' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_cert_nacimineto' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_cert_egreso' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_cert_espe' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_cert_medico' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_dip_titulo' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_lib_mil' => 'nullable|file|mimes:pdf|max:5120',
-                'doc_exa_aprobacion' => 'nullable|file|mimes:pdf|max:5120',
+            // Fotografía
+            'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+
+            // Documentos PDF
+            'doc_carnet_identidad' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_cert_nacimineto' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_cert_egreso' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_cert_espe' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_cert_medico' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_dip_titulo' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_lib_mil' => 'nullable|file|mimes:pdf|max:5120',
+            'doc_exa_aprobacion' => 'nullable|file|mimes:pdf|max:5120',
+        ]);
+
+        // =====================================================
+        // SERVICIO SUPABASE
+        // =====================================================
+
+        $storage = new \App\Services\SupabaseStorageService();
+
+        // =====================================================
+        // OBTENER PERSONAL
+        // =====================================================
+
+        $personal = Personal::where(
+            'id',
+            $request->id_personal
+        )->firstOrFail();
+
+        // =====================================================
+        // FOTO
+        // =====================================================
+
+        $urlFoto = null;
+
+        if ($request->hasFile('foto')) {
+
+            try {
+
+                $file = $request->file('foto');
+
+                // Validar archivo
+                if (!$file->isValid()) {
+                    throw new \Exception(
+                        'La fotografía no es válida.'
+                    );
+                }
+
+                // Validar tipo MIME
+                $mimesPermitidos = [
+                    'image/jpeg',
+                    'image/jpg',
+                    'image/png'
+                ];
+
+                if (!in_array($file->getMimeType(), $mimesPermitidos)) {
+                    throw new \Exception(
+                        'La fotografía debe estar en formato JPG, JPEG o PNG.'
+                    );
+                }
+
+                // Validar tamaño máximo 2 MB
+                if ($file->getSize() > 2 * 1024 * 1024) {
+                    throw new \Exception(
+                        'La fotografía no debe superar los 2 MB.'
+                    );
+                }
+
+                // =================================================
+                // NOMBRE DE LA FOTO
+                // =================================================
+
+                $ci = preg_replace(
+                    '/[^A-Za-z0-9]/',
+                    '',
+                    $personal->per_ci
+                );
+
+                $customName =
+                    $ci . '_' .
+                    \Illuminate\Support\Str::uuid();
+
+                // =================================================
+                // SUBIR A SUPABASE
+                // =================================================
+
+                $urlFoto = $storage->upload(
+                    $file,
+                    'img/personas',
+                    $customName
+                );
+
+                // Registrar archivo para posible eliminación
+                $uploadedFiles[] = $urlFoto;
+
+            } catch (\Exception $e) {
+
+                logger()->error('ERROR FOTO', [
+                    'mensaje' => $e->getMessage()
+                ]);
+
+                throw new \Exception(
+                    'Error al subir la fotografía: ' .
+                    $e->getMessage()
+                );
+            }
+        }
+
+        // =====================================================
+        // ACTUALIZAR PERSONAL
+        // =====================================================
+
+        $personal->update([
+
+            'per_foto' => $urlFoto,
+
+            // 'per_ci' => $request->ci,
+            // 'per_cm' => $request->cm,
+            // 'per_nombre' => mb_strtoupper($request->nombre),
+            // 'per_paterno' => mb_strtoupper($request->ap_paterno),
+            // 'per_materno' => mb_strtoupper($request->ap_materno),
+            // 'per_sexo' => $request->sexo,
+
+            'per_celular' => $request->celular,
+            'per_mail' => $request->email,
+            'per_direccion' => mb_strtoupper($request->direccion),
+            'estado' => '1',
+            'sysuser' => auth()->id()
+        ]);
+
+        // =====================================================
+        // DESACTIVAR LICENCIA
+        // =====================================================
+
+        $id_personal_max = PersonalLicencia::where(
+            'id_personal',
+            $request->id_personal
+        )->max('id');
+
+        if ($id_personal_max) {
+
+            PersonalLicencia::where(
+                'id',
+                $id_personal_max
+            )->update([
+                'estado' => '0'
             ]);
+        }
 
-            // VERIFICAR SI EL CORREO YA EXISTE
-                // $existeCorreo = DB::table('personals')
-                //     ->where('per_mail', $request->email)
-                //     ->exists();
+        // =====================================================
+        // LICENCIA
+        // =====================================================
 
-                // if ($existeCorreo) {
-                //     return response()->json([
-                //         'success' => false,
-                //         'detalle' => 'El email del usuario ya se encuentra registrado.'
-                //     ], 422);
-                // }
+        $habilitacion = $request->habilitacion;
 
-            // VERIFICAR SI EL CI YA EXISTE
-                // $existeCi = DB::table('personals')
-                //     ->where('per_ci', $request->ci,)
-                //     ->exists();
+        if (is_string($habilitacion)) {
 
-                // if ($existeCi) {
-                //     return response()->json([
-                //         'success' => false,
-                //         'detalle' => 'El nro. de documento del usuario ya se encuentra registrado.'
-                //     ], 422);
-                // }
+            $habilitacion =
+                json_decode($habilitacion, true);
+        }
 
-            // =====================================================
-            // SERVICIO SUPABASE
-            // =====================================================
+        $personal_licencia = PersonalLicencia::create([
 
-            $storage = new \App\Services\SupabaseStorageService();
+            'id_personal' => $personal->id,
+            'id_categoria' => $request->categoria,
+            'id_entidad' => $request->entidad,
+            'id_grado' => $request->grado,
+            'id_licencia' => $request->tit_licencia,
+            'id_habilitacion' => $habilitacion,
+            'id_comp_linguistica' => $request->linguistica,
+            'observacion' => mb_strtoupper($request->observacion),
+            'fecha_emision' => now(),
+            'fecha_expiracion' => $request->fech_expiracion,
+            'estado' => '1',
+            'sysuser' => auth()->id()
+        ]);
 
-            // =========================
-            // 🔍 OBTENER PERSONAL
-            // =========================
-            $personal = Personal::where('id', $request->id_personal)
-                ->firstOrFail();
+        // =====================================================
+        // DESACTIVAR DOCUMENTOS
+        // =====================================================
 
+        PersonalDocumento::where(
+            'id_personal',
+            $request->id_personal
+        )->update([
+            'estado' => '0'
+        ]);
 
-            // =====================================================
-            // 📸 FOTO
-            // =====================================================
+        // =====================================================
+        // DOCUMENTOS
+        // =====================================================
 
-            $urlFoto = null;
+        $documentos = [
 
-            if ($request->hasFile('foto')) {
+            'doc_carnet_identidad' => $request->file('doc_carnet_identidad'),
+            'doc_cert_nacimineto' => $request->file('doc_cert_nacimineto'),
+            'doc_cert_egreso' => $request->file('doc_cert_egreso'),
+            'doc_cert_espe' => $request->file('doc_cert_espe'),
+            'doc_cert_medico' => $request->file('doc_cert_medico'),
+            'doc_dip_titulo' => $request->file('doc_dip_titulo'),
+            'doc_lib_mil' => $request->file('doc_lib_mil'),
+            'doc_exa_aprobacion' => $request->file('doc_exa_aprobacion')
+        ];
+
+        $x = 1;
+
+        foreach ($documentos as $nombreCampo => $file) {
+
+            if ($file) {
 
                 try {
 
-                    $file = $request->file('foto');
-
                     // Validar archivo
                     if (!$file->isValid()) {
-
                         throw new \Exception(
-                            'La fotografía no es válida.'
+                            "El documento {$x} no es válido."
                         );
                     }
 
-                    // Validar tipo MIME
-                    $mimesPermitidos = [
-                        'image/jpeg',
-                        'image/jpg',
-                        'image/png'
-                    ];
-
-                    if (!in_array($file->getMimeType(), $mimesPermitidos)) {
-
+                    // Validar PDF
+                    if ($file->getMimeType() !== 'application/pdf') {
                         throw new \Exception(
-                            'La fotografía debe estar en formato JPG, JPEG o PNG.'
+                            "El documento {$x} debe estar en formato PDF."
                         );
                     }
 
-                    // Validar tamaño máximo 2 MB
-                    if ($file->getSize() > 2 * 1024 * 1024) {
-
+                    // Validar tamaño
+                    if ($file->getSize() > 5 * 1024 * 1024) {
                         throw new \Exception(
-                            'La fotografía no debe superar los 2 MB.'
+                            "El documento {$x} supera los 5 MB."
                         );
                     }
 
-                    // =================================================
-                    // NOMBRE DE LA FOTO
-                    // =================================================
-
+                    // Obtener CI
                     $ci = preg_replace(
                         '/[^A-Za-z0-9]/',
                         '',
                         $request->ci
                     );
 
+                    // Generar nombre
                     $customName =
-                        $ci . '_' .
+                        $x . '_' .
+                        $personal->per_ci . '_' .
                         \Illuminate\Support\Str::uuid();
 
-                    // =================================================
-                    // SUBIR A SUPABASE
-                    // =================================================
-
-                    $urlFoto = $storage->upload(
+                    // Subir a Supabase
+                    $url = $storage->upload(
                         $file,
-                        'img/personas',
+                        'files/personas',
                         $customName
                     );
 
+                    // Registrar archivo para posible eliminación
+                    $uploadedFiles[] = $url;
+
                 } catch (\Exception $e) {
 
-                    logger()->error('ERROR FOTO', [
-                        'mensaje' => $e->getMessage()
-                    ]);
+                    logger()->error(
+                        "Error subiendo documento {$x}",
+                        [
+                            'campo' => $nombreCampo,
+                            'error' => $e->getMessage()
+                        ]
+                    );
 
                     throw new \Exception(
-                        'Error al subir la fotografía: ' .
+                        "Error en documento {$x}: " .
                         $e->getMessage()
                     );
                 }
+
+                // Guardar URL en BD
+                PersonalDocumento::create([
+
+                    'id_personal' => $personal->id,
+                    'id_licencia' => $personal_licencia->id,
+                    'documento' => $url,
+                    'estado' => '1',
+                    'sysuser' => auth()->id()
+                ]);
             }
 
-        // =========================
-            // 👤 ACTUALIZAR PERSONAL
-            // =========================
-            $personal->update([
-                'per_foto' => $urlFoto,
-                // 'per_ci' => $request->ci,
-                // 'per_cm' => $request->cm,
-                // 'per_nombre' => mb_strtoupper($request->nombre),
-                // 'per_paterno' => mb_strtoupper($request->ap_paterno),
-                // 'per_materno' => mb_strtoupper($request->ap_materno),
-                // 'per_sexo' => $request->sexo,
-                'per_celular' => $request->celular,
-                'per_mail' => $request->email,
-                'per_direccion' => mb_strtoupper($request->direccion),
-                'estado' => '1',
-                'sysuser' => auth()->id()
-            ]);
-
-            // =========================
-            // 🔄 DESACTIVAR LICENCIA
-            // =========================
-            $id_personal_max = PersonalLicencia::where(
-                'id_personal',
-                $request->id_personal
-            )->max('id');
-
-            if ($id_personal_max) {
-                PersonalLicencia::where('id', $id_personal_max)
-                    ->update([
-                        'estado' => '0'
-                    ]);
-            }
-
-            // =====================================================
-            // 📄 LICENCIA
-            // =====================================================
-
-            // Como desde Vue enviamos:
-            // JSON.stringify(me.per_habilitacion)
-
-            $habilitacion = $request->habilitacion;
-
-            if (is_string($habilitacion)) {
-
-                $habilitacion =
-                    json_decode($habilitacion, true);
-            }
-
-            $personal_licencia = PersonalLicencia::create([
-
-                'id_personal' => $personal->id,
-                'id_categoria' => $request->categoria,
-                'id_entidad' => $request->entidad,
-                'id_grado' => $request->grado,
-                'id_licencia' => $request->tit_licencia,
-                'id_habilitacion' => $habilitacion,
-                'id_comp_linguistica' => $request->linguistica,
-                'observacion' => mb_strtoupper($request->observacion),
-                'fecha_emision' => now(),
-                'fecha_expiracion' => $request->fech_expiracion,
-                'estado' => '1',
-                'sysuser' => auth()->id()
-            ]);
-
-            // =========================
-            // 🔄 DESACTIVAR DOCUMENTOS
-            // =========================
-            PersonalDocumento::where(
-                'id_personal',
-                $request->id_personal
-            )->update([
-                'estado' => '0'
-            ]);
-
-            // =====================================================
-            // 📂 DOCUMENTOS
-            // =====================================================
-
-            $documentos = [
-
-                'doc_carnet_identidad' => $request->file('doc_carnet_identidad'),
-                'doc_cert_nacimineto' => $request->file('doc_cert_nacimineto'),
-                'doc_cert_egreso' => $request->file('doc_cert_egreso'),
-                'doc_cert_espe' => $request->file('doc_cert_espe'),
-                'doc_cert_medico' => $request->file('doc_cert_medico'),
-                'doc_dip_titulo' => $request->file('doc_dip_titulo'),
-                'doc_lib_mil' => $request->file('doc_lib_mil'),
-                'doc_exa_aprobacion' => $request->file('doc_exa_aprobacion')
-            ];
-
-            $x = 1;
-
-            foreach ($documentos as $nombreCampo => $file) {
-
-                // =================================================
-                // VERIFICAR SI EXISTE EL DOCUMENTO
-                // =================================================
-
-                if ($file) {
-
-                    try {
-
-                        // =============================================
-                        // VALIDAR ARCHIVO
-                        // =============================================
-
-                        if (!$file->isValid()) {
-
-                            throw new \Exception(
-                                "El documento {$x} no es válido."
-                            );
-                        }
-
-                        // =============================================
-                        // VALIDAR PDF
-                        // =============================================
-
-                        if ($file->getMimeType() !== 'application/pdf') {
-
-                            throw new \Exception(
-                                "El documento {$x} debe estar en formato PDF."
-                            );
-                        }
-
-                        // =============================================
-                        // VALIDAR TAMAÑO
-                        // =============================================
-
-                        if ($file->getSize() > 5 * 1024 * 1024) {
-
-                            throw new \Exception(
-                                "El documento {$x} supera los 5 MB."
-                            );
-                        }
-
-                        // =============================================
-                        // OBTENER CI
-                        // =============================================
-
-                        $ci = preg_replace(
-                            '/[^A-Za-z0-9]/',
-                            '',
-                            $request->ci
-                        );
-
-                        // =============================================
-                        // GENERAR NOMBRE
-                        // =============================================
-
-                        $customName =
-                            $x . '_' .
-                            $ci . '_' .
-                            \Illuminate\Support\Str::uuid();
-
-                        // =============================================
-                        // 🚀 SUBIR A SUPABASE
-                        // =============================================
-
-                        $url = $storage->upload(
-                            $file,
-                            'files/personas',
-                            $customName
-                        );
-
-                    } catch (\Exception $e) {
-
-                        logger()->error(
-                            "Error subiendo documento {$x}",
-                            [
-                                'campo' => $nombreCampo,
-                                'error' => $e->getMessage()
-                            ]
-                        );
-
-                        throw new \Exception(
-                            "Error en documento {$x}: " .
-                            $e->getMessage()
-                        );
-                    }
-
-                    // =============================================
-                    // 💾 GUARDAR URL EN BASE DE DATOS
-                    // =============================================
-
-                    PersonalDocumento::create([
-
-                        'id_personal' => $personal->id,
-                        'id_licencia' => $personal_licencia->id,
-                        'documento' => $url,
-                        'estado' => '1',
-                        'sysuser' => auth()->id()
-                    ]);
-                }
-
-                $x++;
-            }
-
-            // =====================================================
-            // 💾 CONFIRMAR TRANSACCIÓN
-            // =====================================================
-
-            DB::commit();
-
-            // =====================================================
-            // RESPUESTA
-            // =====================================================
-
-            return response()->json([
-                'success' => true,
-                'personal' => $personal_licencia
-            ]);
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
-
-            // =====================================================
-            // ERROR DE VALIDACIÓN
-            // =====================================================
-
-            DB::rollBack();
-
-            return response()->json([
-                'error' => 'Error de validación',
-                'detalle' => $e->errors()
-            ], 422);
-
-        } catch (\Exception $e) {
-
-            // =====================================================
-            // ERROR GENERAL
-            // =====================================================
-
-            DB::rollBack();
-
-            logger()->error(
-                'Error en RenovarPersonal',
-                [
-                    'error' => $e->getMessage(),
-                    'linea' => $e->getLine(),
-                    'archivo' => $e->getFile()
-                ]
-            );
-
-            return response()->json([
-                'error' => 'Error al renovar personal',
-                'detalle' => $e->getMessage()
-            ], 500);
+            $x++;
         }
+
+        // =====================================================
+        // CONFIRMAR TRANSACCIÓN
+        // =====================================================
+
+        DB::commit();
+
+        return response()->json([
+            'success' => true,
+            'personal' => $personal_licencia
+        ]);
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+
+        DB::rollBack();
+
+        foreach ($uploadedFiles as $file) {
+
+            try {
+
+                $storage->delete($file);
+
+            } catch (\Throwable $deleteError) {
+
+                logger()->error(
+                    'No se pudo eliminar archivo de Supabase',
+                    [
+                        'archivo' => $file,
+                        'error' => $deleteError->getMessage()
+                    ]
+                );
+            }
+        }
+
+        return response()->json([
+            'error' => 'Error de validación',
+            'detalle' => $e->errors()
+        ], 422);
+
+    } catch (\Throwable $e) {
+
+        DB::rollBack();
+
+        // =====================================================
+        // ELIMINAR ARCHIVOS SUBIDOS SI ALGO FALLÓ
+        // =====================================================
+
+        foreach ($uploadedFiles as $file) {
+
+            try {
+
+                $storage->delete($file);
+
+            } catch (\Throwable $deleteError) {
+
+                logger()->error(
+                    'No se pudo eliminar archivo de Supabase',
+                    [
+                        'archivo' => $file,
+                        'error' => $deleteError->getMessage()
+                    ]
+                );
+            }
+        }
+
+        logger()->error(
+            'Error en RenovarPersonal',
+            [
+                'error' => $e->getMessage(),
+                'linea' => $e->getLine(),
+                'archivo' => $e->getFile()
+            ]
+        );
+
+        return response()->json([
+            'error' => 'Error al renovar personal',
+            'detalle' => $e->getMessage()
+        ], 500);
     }
+}
 
     //////////////////////////////////////////////////////////////
 
