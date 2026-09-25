@@ -1653,7 +1653,7 @@ class PersonalController extends Controller
                         'pl.fecha_emision',
                         'pl.fecha_expiracion'
                         )
-                    ->where('pl.id',$token_id)
+                    ->where('pl.token',$token_id)
                     ->where('pl.estado',1)
                     ->first();
 
