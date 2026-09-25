@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" style="/*border: 1px solid #000;*/ padding: 1px; text-align: center; vertical-align: middle;">
-                        <img style="width: 4cm; height: 4cm; border: 2px solid #142A98;" src="../img/personal/{{$personal->per_foto}}">
+                        <img style="width: 4cm; height: 4cm; border: 2px solid #142A98;" src="{{$personal->per_foto}}">
                     </td>
                 </tr>
                 <tr>
