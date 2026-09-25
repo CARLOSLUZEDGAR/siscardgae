@@ -16661,105 +16661,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         this.currentStep--;
       }
     },
-    // obtenerCi(e){
-    //   try {
-    //           var fileReader = new FileReader();
-    //           fileReader.onload = (e) => {
-    //               this.doc_ci = e.target.result;
-    //           }
-    //           fileReader.readAsDataURL(e.target.files[0])
-    //           // this.vCI = 1;
-    //       } catch (error) {
-    //       }
-    // },
-    // obtenerNacimiento(e){
-    //   try {
-    //           var fileReader = new FileReader();
-    //           fileReader.onload = (e) => {
-    //               this.doc_nacimiento = e.target.result;
-    //           }
-    //           fileReader.readAsDataURL(e.target.files[0])
-    //           // this.vNAC = 1;
-    //       } catch (error) {
-    //       }
-    // },
-    // obtenerEgreso(e){
-    //   try {
-    //           var fileReader = new FileReader();
-    //           fileReader.onload = (e) => {
-    //               this.doc_egreso = e.target.result;
-    //           }
-    //           fileReader.readAsDataURL(e.target.files[0])
-    //           // this.vNAC = 1;
-    //       } catch (error) {
-    //       }
-    // },
-    // obtenerEspecializacion(e){
-    //   try {
-    //           var fileReader = new FileReader();
-    //           fileReader.onload = (e) => {
-    //               this.doc_especializacion = e.target.result;
-    //           }
-    //           fileReader.readAsDataURL(e.target.files[0])
-    //           // this.vNAC = 1;
-    //       } catch (error) {
-    //       }
-    // },
-    // obtenerMedico(e){
-    //   try {
-    //           var fileReader = new FileReader();
-    //           fileReader.onload = (e) => {
-    //               this.doc_medico = e.target.result;
-    //           }
-    //           fileReader.readAsDataURL(e.target.files[0])
-    //           // this.vNAC = 1;
-    //       } catch (error) {
-    //       }
-    // },
-    // obtenerTitulo(e){
-    //   try {
-    //           var fileReader = new FileReader();
-    //           fileReader.onload = (e) => {
-    //               this.doc_titulo = e.target.result;
-    //           }
-    //           fileReader.readAsDataURL(e.target.files[0])
-    //           // this.vNAC = 1;
-    //       } catch (error) {
-    //       }
-    // },
-    // obtenerLibreta(e){
-    //   try {
-    //           var fileReader = new FileReader();
-    //           fileReader.onload = (e) => {
-    //               this.doc_libreta = e.target.result;
-    //           }
-    //           fileReader.readAsDataURL(e.target.files[0])
-    //           // this.vNAC = 1;
-    //       } catch (error) {
-    //       }
-    // },
-    // obtenerAprobacion(e){
-    //   try {
-    //           var fileReader = new FileReader();
-    //           fileReader.onload = (e) => {
-    //               this.doc_aprobacion = e.target.result;
-    //           }
-    //           fileReader.readAsDataURL(e.target.files[0])
-    //           // this.vNAC = 1;
-    //       } catch (error) {
-    //       }
-    // },
-    // obtenerImagen(e){
-    //     try {
-    //         var fileReader = new FileReader();
-    //         fileReader.onload = (e) => {
-    //             this.per_foto = e.target.result;
-    //         }
-    //         fileReader.readAsDataURL(e.target.files[0])
-    //         this.v = 1;
-    //     } catch (error) {
-    //     }
-    // },
     obtenerImagen: function obtenerImagen(e) {
       var file = e.target.files[0];
 
@@ -17106,94 +17007,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       this.listarNacionalidad();
       this.listarEntidad(this.per_nacionalidad);
     },
-    // CrearPersonal(){ //DGAE
-    //   if(!this.$v.validationGroupDocument.$invalid){
-    //     swal.fire({
-    //         title: '¿Desea registrar?', // TITULO 
-    //         icon: 'question', //ICONO (success, warnning, error, info, question)
-    //         showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-    //         confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-    //         cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
-    //         confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
-    //         cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
-    //         buttonsStyling: true,
-    //         reverseButtons: true
-    //         }).then((result) => {
-    //         if (result.value) {
-    //             let me = this;
-    //             axios
-    //             .post("/crearPersonal", {
-    //               foto : me.per_foto,
-    //               categoria : me.per_categoria,
-    //               nacionalidad: me.per_nacionalidad,
-    //               entidad : me.per_entidad,
-    //               grado : me.per_grado,
-    //               ci : me.per_ci,
-    //               cm : me. per_cm,
-    //               nombre : me.per_nombre,
-    //               ap_paterno : me.per_appaterno,
-    //               ap_materno : me.per_apmaterno,
-    //               sexo : me.per_sexo,
-    //               celular : me.per_celular,
-    //               email : me.per_email,
-    //               fech_nac : me.per_fechnac,
-    //               direccion : me.per_direccion,
-    //               tit_licencia : me.per_titlic,
-    //               habilitacion : me.per_habilitacion,
-    //               linguistica : me.per_comlinguistica,
-    //               observacion : me.per_observaciones,
-    //               // fech_emision : me.per_fechaemision,
-    //               fech_expiracion : me.per_fechaexpiracion,
-    //               doc_carnet_identidad : me.doc_ci,
-    //               doc_cert_nacimineto : me.doc_nacimiento,
-    //               doc_cert_egreso : me.doc_egreso,
-    //               doc_cert_espe : me.doc_especializacion,
-    //               doc_cert_medico : me.doc_medico,
-    //               doc_dip_titulo : me.doc_titulo,
-    //               doc_lib_mil : me.doc_libreta,
-    //               doc_exa_aprobacion : me.doc_aprobacion,
-    //             })
-    //             .then(function (response) {
-    //                 console.log(response);
-    //                 swal.fire({
-    //                     title: 'Se realizo el registro correctamente', //TITULO
-    //                     // response.data.mensaje, //TEXTO DE MENSAJE
-    //                     // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
-    //                     // response.personal
-    //                 });
-    //                 if (!response.data.code) {
-    //                     // $('#NuevoUsuario').modal('hide');
-    //                     // $('#ModalNewPersonal').modal('hide');
-    //                     // me.nick = '';
-    //                     // me.password = '';
-    //                     me.arrayDatPer = response.data.personal;
-    //                     me.GenerarCarnet(me.arrayDatPer.id_personal);
-    //                     me.Atras();
-    //                     this.$v.$reset();
-    //                 } 
-    //             })
-    //             .catch(function (error) {
-    //                 // handle error
-    //                 console.log(error);
-    //             })
-    //         }else{
-    //               swal.fire(
-    //                 "Informacion", //TITULO
-    //                 "Solicitud cancelada.", //TEXTO DE MENSAJE
-    //                 "info" // TIPO DE MODAL (success, warnning, error, info)
-    //             );
-    //         }
-    //     })
-    //   }else{
-    //       this.$v.validationGroupDocument.$touch();
-    //       Swal.fire({
-    //           icon: 'warning',
-    //           title: 'Ingrese todos los datos requeridos',
-    //           showConfirmButton: false,
-    //           timer: 2000
-    //       })
-    //   }
-    // },
     CrearPersonal: function CrearPersonal() {
       var _this = this;
 
@@ -17388,6 +17201,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }).then(function (result) {
           if (result.value) {
             var me = _this2;
+            _this2.loading = true;
             axios.post("/crearNacionalidad", {
               pais: me.na_pais,
               nacionalidad: me.na_nacionalidad,
@@ -17413,6 +17227,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             })["catch"](function (error) {
               // handle error
               console.log(error);
+            })["finally"](function () {
+              // Ocultar Loading cuando termine TODO
+              me.loading = false;
             });
           } else {
             swal.fire("Informacion", //TITULO
@@ -17456,6 +17273,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }).then(function (result) {
           if (result.value) {
             var me = _this3;
+            _this3.loading = true;
             axios.post("/crearEntidad", {
               pais: me.en_pais,
               entidad: me.en_entidad,
@@ -17481,6 +17299,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             })["catch"](function (error) {
               // handle error
               console.log(error);
+            })["finally"](function () {
+              // Ocultar Loading cuando termine TODO
+              me.loading = false;
             });
           } else {
             swal.fire("Informacion", //TITULO
@@ -19216,105 +19037,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         this.currentStep--;
       }
     },
-    // obtenerCi(e){
-    // try {
-    //         var fileReader = new FileReader();
-    //         fileReader.onload = (e) => {
-    //             this.doc_ci = e.target.result;
-    //         }
-    //         fileReader.readAsDataURL(e.target.files[0])
-    //         this.vCI = 1;
-    //     } catch (error) {
-    //     }
-    // },
-    // obtenerNacimiento(e){
-    // try {
-    //         var fileReader = new FileReader();
-    //         fileReader.onload = (e) => {
-    //             this.doc_nacimiento = e.target.result;
-    //         }
-    //         fileReader.readAsDataURL(e.target.files[0])
-    //         this.vNAC = 1;
-    //     } catch (error) {
-    //     }
-    // },
-    // obtenerEgreso(e){
-    // try {
-    //         var fileReader = new FileReader();
-    //         fileReader.onload = (e) => {
-    //             this.doc_egreso = e.target.result;
-    //         }
-    //         fileReader.readAsDataURL(e.target.files[0])
-    //         this.vNAC = 1;
-    //     } catch (error) {
-    //     }
-    // },
-    // obtenerEspecializacion(e){
-    // try {
-    //         var fileReader = new FileReader();
-    //         fileReader.onload = (e) => {
-    //             this.doc_especializacion = e.target.result;
-    //         }
-    //         fileReader.readAsDataURL(e.target.files[0])
-    //         this.vNAC = 1;
-    //     } catch (error) {
-    //     }
-    // },
-    // obtenerMedico(e){
-    // try {
-    //         var fileReader = new FileReader();
-    //         fileReader.onload = (e) => {
-    //             this.doc_medico = e.target.result;
-    //         }
-    //         fileReader.readAsDataURL(e.target.files[0])
-    //         this.vNAC = 1;
-    //     } catch (error) {
-    //     }
-    // },
-    // obtenerTitulo(e){
-    // try {
-    //         var fileReader = new FileReader();
-    //         fileReader.onload = (e) => {
-    //             this.doc_titulo = e.target.result;
-    //         }
-    //         fileReader.readAsDataURL(e.target.files[0])
-    //         this.vNAC = 1;
-    //     } catch (error) {
-    //     }
-    // },
-    // obtenerLibreta(e){
-    // try {
-    //         var fileReader = new FileReader();
-    //         fileReader.onload = (e) => {
-    //             this.doc_libreta = e.target.result;
-    //         }
-    //         fileReader.readAsDataURL(e.target.files[0])
-    //         this.vNAC = 1;
-    //     } catch (error) {
-    //     }
-    // },
-    // obtenerAprobacion(e){
-    // try {
-    //         var fileReader = new FileReader();
-    //         fileReader.onload = (e) => {
-    //             this.doc_aprobacion = e.target.result;
-    //         }
-    //         fileReader.readAsDataURL(e.target.files[0])
-    //         this.vNAC = 1;
-    //     } catch (error) {
-    //     }
-    // },
-    // obtenerImagen(e){
-    //     try {
-    //         var fileReader = new FileReader();
-    //         fileReader.onload = (e) => {
-    //             this.per_foto = e.target.result;
-    //         }
-    //         fileReader.readAsDataURL(e.target.files[0])
-    //         this.v = 1;
-    //     } catch (error) {
-    //     }
-    // },
     obtenerImagen: function obtenerImagen(e) {
       var file = e.target.files[0];
 
@@ -19662,96 +19384,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       this.listarNacionalidad();
       this.listarEntidad(this.per_nacionalidad, 0);
     },
-    // RenovarPersonal(){ //DGAE
-    //     if(!this.$v.validationGroupDocument.$invalid){
-    //     swal.fire({
-    //         title: '¿Desea Renovar?', // TITULO 
-    //         icon: 'question', //ICONO (success, warnning, error, info, question)
-    //         showCancelButton: true, //HABILITACION DEL BOTON CANCELAR
-    //         confirmButtonColor: 'info', // COLOR DEL BOTON PARA CONFIRMAR
-    //         cancelButtonColor: '#868077', // COLOR DEL BOTON CANCELAR
-    //         confirmButtonText: 'Confirmar', //TITULO DEL BOTON CONFIRMAR
-    //         cancelButtonText: 'Cancelar', //TIUTLO DEL BOTON CANCELAR
-    //         buttonsStyling: true,
-    //         reverseButtons: true
-    //         }).then((result) => {
-    //         if (result.value) {
-    //             let me = this;
-    //             axios
-    //             .post("/renovarPersonal", {
-    //                 id_personal : me.personal_id,
-    //                 foto : me.per_foto,
-    //                 categoria : me.per_categoria,
-    //                 nacionalidad: me.per_nacionalidad,
-    //                 entidad : me.per_entidad,
-    //                 grado : me.per_grado,
-    //                 ci : me.per_ci,
-    //                 cm : me.per_cm,
-    //                 nombre : me.per_nombre,
-    //                 ap_paterno : me.per_appaterno,
-    //                 ap_materno : me.per_apmaterno,
-    //                 sexo : me.per_sexo,
-    //                 celular : me.per_celular,
-    //                 email : me.per_email,
-    //                 fech_nac : me.per_fechnac,
-    //                 direccion : me.per_direccion,
-    //                 tit_licencia : me.per_titlic,
-    //                 habilitacion : me.per_habilitacion,
-    //                 linguistica : me.per_comlinguistica,
-    //                 observacion : me.per_observaciones,
-    //                 // fech_emision : me.per_fechaemision,
-    //                 fech_expiracion : me.per_fechaexpiracion,
-    //                 doc_carnet_identidad :me.doc_ci,
-    //                 doc_cert_nacimineto : me.doc_nacimiento,
-    //                 doc_cert_egreso : me.doc_egreso,
-    //                 doc_cert_espe : me.doc_especializacion,
-    //                 doc_cert_medico : me.doc_medico,
-    //                 doc_dip_titulo : me.doc_titulo,
-    //                 doc_lib_mil : me.doc_libreta,
-    //                 doc_exa_aprobacion : me.doc_aprobacion,
-    //             })
-    //             .then(function (response) {
-    //                 console.log(response);
-    //                 swal.fire({
-    //                     title: 'Se realizo el renovación correctamente', //TITULO
-    //                     // response.data.mensaje, //TEXTO DE MENSAJE
-    //                     // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
-    //                     // response.personal_foto
-    //                 });
-    //                 if (!response.data.code) {
-    //                     // $('#NuevoUsuario').modal('hide');
-    //                     // $('#ModalRenewPersonal').modal('hide');
-    //                     // me.nick = '';
-    //                     // me.password = '';
-    //                     me.arrayDatPer = response.data.personal;
-    //                     //   me.GenerarCarnet(me.arrayDatPer.id_personal);
-    //                     me.GenerarCarnet(me.personal_id);
-    //                     me.Atras();
-    //                     this.$v.$reset();
-    //                 } 
-    //             })
-    //             .catch(function (error) {
-    //                 // handle error
-    //                 console.log(error);
-    //             })
-    //         }else{
-    //                 swal.fire(
-    //                 "Informacion", //TITULO
-    //                 "Solicitud cancelada.", //TEXTO DE MENSAJE
-    //                 "info" // TIPO DE MODAL (success, warnning, error, info)
-    //             );
-    //         }
-    //     })
-    //     }else{
-    //         this.$v.validationGroupDocument.$touch();
-    //         Swal.fire({
-    //             icon: 'warning',
-    //             title: 'Ingrese todos los datos requeridos',
-    //             showConfirmButton: false,
-    //             timer: 2000
-    //         })
-    //     }
-    // },
     RenovarPersonal: function RenovarPersonal() {
       var _this = this;
 
@@ -19947,6 +19579,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }).then(function (result) {
           if (result.value) {
             var me = _this2;
+            _this2.loading = true;
             axios.post("/crearNacionalidad", {
               pais: me.na_pais,
               nacionalidad: me.na_nacionalidad,
@@ -19972,6 +19605,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             })["catch"](function (error) {
               // handle error
               console.log(error);
+            })["finally"](function () {
+              // Ocultar Loading cuando termine TODO
+              me.loading = false;
             });
           } else {
             swal.fire("Informacion", //TITULO
@@ -20015,6 +19651,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }).then(function (result) {
           if (result.value) {
             var me = _this3;
+            _this3.loading = true;
             axios.post("/crearEntidad", {
               pais: me.en_pais,
               entidad: me.en_entidad,
@@ -20040,6 +19677,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             })["catch"](function (error) {
               // handle error
               console.log(error);
+            })["finally"](function () {
+              // Ocultar Loading cuando termine TODO
+              me.loading = false;
             });
           } else {
             swal.fire("Informacion", //TITULO
@@ -146413,21 +146053,29 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
+                      attrs: { type: "button", disabled: _vm.loading },
                       on: {
                         click: function($event) {
                           return _vm.CrearNacionalidad()
                         }
                       }
                     },
-                    [_vm._v("Registrar")]
+                    [
+                      _vm._v(
+                        _vm._s(_vm.loading ? "Procesando..." : "Registrar")
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
                     "button",
                     {
                       staticClass: "btn btn-danger",
-                      attrs: { type: "button", "data-dismiss": "modal" },
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        disabled: _vm.loading
+                      },
                       on: {
                         click: function($event) {
                           return _vm.Cerrar(1)
@@ -146653,21 +146301,29 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
+                      attrs: { type: "button", disabled: _vm.loading },
                       on: {
                         click: function($event) {
                           return _vm.CrearEntidad()
                         }
                       }
                     },
-                    [_vm._v("Registrar")]
+                    [
+                      _vm._v(
+                        _vm._s(_vm.loading ? "Procesando..." : "Registrar")
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
                     "button",
                     {
                       staticClass: "btn btn-danger",
-                      attrs: { type: "button", "data-dismiss": "modal" },
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        disabled: _vm.loading
+                      },
                       on: {
                         click: function($event) {
                           return _vm.Cerrar(2)
@@ -149895,21 +149551,29 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
+                      attrs: { type: "button", disabled: _vm.loading },
                       on: {
                         click: function($event) {
                           return _vm.CrearNacionalidad()
                         }
                       }
                     },
-                    [_vm._v("Registrar")]
+                    [
+                      _vm._v(
+                        _vm._s(_vm.loading ? "Procesando..." : "Registrar")
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
                     "button",
                     {
                       staticClass: "btn btn-danger",
-                      attrs: { type: "button", "data-dismiss": "modal" },
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        disabled: _vm.loading
+                      },
                       on: {
                         click: function($event) {
                           return _vm.Cerrar(1)
@@ -150135,21 +149799,29 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
+                      attrs: { type: "button", disabled: _vm.loading },
                       on: {
                         click: function($event) {
                           return _vm.CrearEntidad()
                         }
                       }
                     },
-                    [_vm._v("Registrar")]
+                    [
+                      _vm._v(
+                        _vm._s(_vm.loading ? "Procesando..." : "Registrar")
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
                     "button",
                     {
                       staticClass: "btn btn-danger",
-                      attrs: { type: "button", "data-dismiss": "modal" },
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        disabled: _vm.loading
+                      },
                       on: {
                         click: function($event) {
                           return _vm.Cerrar(2)
