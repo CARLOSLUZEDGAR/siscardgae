@@ -33,6 +33,7 @@ class ReporteController extends Controller
                         'p.per_fecha_nacimiento',
                         'p.per_direccion',
                         'pl.id as id_licencia',
+                        'pl.token_id',
                         'pl.id_entidad',
                         'e.entidad',
                         'g.abreviatura',
@@ -61,7 +62,7 @@ class ReporteController extends Controller
 
         // $url_verificacion = '127.0.0.1:8000/verificarPersonal/'.$personal->id_licencia;
         // $url_verificacion = '192.168.0.15:8000/verificarPersonal/'.$personal->id_licencia;
-        $url_verificacion = 'siscardgae2.onrender.com/verificarPersonal/'.$personal->id_licencia;
+        $url_verificacion = 'siscardgae2.onrender.com/verificarPersonal/'.$personal->token_id;
 
 
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");

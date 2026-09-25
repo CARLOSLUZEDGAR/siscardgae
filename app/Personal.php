@@ -23,6 +23,7 @@ class Personal extends Model
         'per_foto', 
         'per_direccion', 
         'per_password',
+        'per_dispositivo',
         'estado', 
         'sysuser'
     ];

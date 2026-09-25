@@ -200,6 +200,7 @@ class PersonalController extends Controller
 
         $personal_licencia = PersonalLicencia::create([
 
+            'token_id' => Str::random(64),
             'id_personal' => $personal->id,
             'id_categoria' => $request->categoria,
             'id_entidad' => $request->entidad,
