@@ -1616,8 +1616,8 @@ class PersonalController extends Controller
             return response()->json($datos);
     }
 
-    public function VerificarPersonal($id_per_lic) {
-        $id_per_licen = $id_per_lic;
+    public function VerificarPersonal($token) {
+        $token_id = $token;
 
         $personal = DB::table('personals as p')
                     ->join('personal_licencias as pl','p.id','pl.id_personal')
@@ -1653,7 +1653,7 @@ class PersonalController extends Controller
                         'pl.fecha_emision',
                         'pl.fecha_expiracion'
                         )
-                    ->where('pl.id',$id_per_licen)
+                    ->where('pl.id',$token_id)
                     ->where('pl.estado',1)
                     ->first();
 
