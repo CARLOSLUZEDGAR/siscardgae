@@ -1534,38 +1534,44 @@
                     this.loading = true;
                     axios
                     .post("/crearNacionalidad", {
-                        pais : me.na_pais,
-                        nacionalidad: me.na_nacionalidad,
-                        abreviatura : me.na_abreviatura,
+                        pais : me.na_pais.toUpperCase(),
+                        nacionalidad: me.na_nacionalidad.toUpperCase(),
+                        abreviatura : me.na_abreviatura.toUpperCase(),
                     })
                     .then(function (response) {
-                        
                         console.log(response);
-                        swal.fire({
-                            title: 'Se realizo el registro correctamente', //TITULO
-                            // response.data.mensaje, //TEXTO DE MENSAJE
-                            // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
-                            // response.personal
-                        });
-                        // this.listarNacionalidad();
-                        if (!response.data.code) {
-                            // $('#NuevoUsuario').modal('hide');
-                            $('#ModalNewNacionalidad').modal('hide');
-                            me.listarNacionalidad();
-                            // me.nick = '';
-                            // me.password = '';
-                            this.$v.$reset();
-                        } 
+                            if (response.data.success) {
+                                    swal.fire({
+                                        icon: 'success',
+                                        title: 'CORRECTO',
+                                        text: response.data.mensaje
+                                });
+                                if (!response.data.code) {
+                                    $('#ModalNewNacionalidad').modal('hide');
+                                    me.listarNacionalidad();
+                                    this.$v.$reset();
+                                } 
+                            } else {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'ADVERTENCIA',
+                                    text: response.data.mensaje
+                                });
+                            } 
                     })
                     .catch(function (error) {
                         // handle error
                         console.log(error);
+                        swal.fire({
+                                icon: 'error',
+                                title: 'ERROR',
+                                text: response.data.mensaje
+                        });
                     })
                     .finally(function () {
-                        // Ocultar Loading cuando termine TODO
-                        me.loading = false;
-
-                    })
+                            // Ocultar Loading cuando termine TODO
+                            me.loading = false;
+                        })
                 }else{
                         swal.fire(
                         "Informacion", //TITULO
@@ -1582,10 +1588,9 @@
                     showConfirmButton: false,
                     timer: 2000
                 })
-                
             }
         },
-  
+    
         CrearEntidad(){ //DGAE
             if(!this.$v.validationGroupNewEntidad.$invalid){
             swal.fire({
@@ -1605,36 +1610,44 @@
                     axios
                     .post("/crearEntidad", {
                         pais : me.en_pais,
-                        entidad: me.en_entidad,
-                        sigla : me.en_sigla,
+                        entidad: me.en_entidad.toUpperCase(),
+                        sigla : me.en_sigla.toUpperCase(),
                     })
                     .then(function (response) {
-                        
                         console.log(response);
-                        swal.fire({
-                            title: 'Se realizo el registro correctamente', //TITULO
-                            // response.data.mensaje, //TEXTO DE MENSAJE
-                            // response.data.tipo, // TIPO DE MODAL (success, warnning, error, info)
-                            // response.personal
-                        });
-                        // this.listarNacionalidad();
-                        if (!response.data.code) {
-                            // $('#NuevoUsuario').modal('hide');
-                            $('#ModalNewEntidad').modal('hide');
-                            me.listarEntidad(me.per_nacionalidad, 0);
-                            // me.nick = '';
-                            // me.password = '';
-                            this.$v.$reset();
-                        } 
+                            if (response.data.success) {
+                                swal.fire({
+                                        icon: 'success',
+                                        title: 'CORRECTO',
+                                        text: response.data.mensaje
+                                });
+                                if (!response.data.code) {
+                                    $('#ModalNewEntidad').modal('hide');
+                                    me.listarEntidad(me.per_nacionalidad);
+                                    this.$v.$reset();
+                                } 
+                            } else {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'ADVERTENCIA',
+                                    text: response.data.mensaje
+                                });
+                            } 
                     })
                     .catch(function (error) {
                         // handle error
                         console.log(error);
+                        swal.fire({
+                                icon: 'error',
+                                title: 'ERROR',
+                                text: response.data.mensaje
+                        });
                     })
                     .finally(function () {
-                        // Ocultar Loading cuando termine TODO
-                        me.loading = false;
-                    })
+                            // Ocultar Loading cuando termine TODO
+                            me.loading = false;
+
+                        })
                 }else{
                         swal.fire(
                         "Informacion", //TITULO

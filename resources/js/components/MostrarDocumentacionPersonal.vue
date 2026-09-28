@@ -82,12 +82,7 @@
                                             <td v-if="index == 5"><label class="form-control-label" for="text-input">TITULO EDUCATIVO</label></td>
                                             <td v-if="index == 6"><label class="form-control-label" for="text-input">LIBRETA MILITAR</label></td>
                                             <td v-if="index == 7"><label class="form-control-label" for="text-input">CERTIFICADO DE APROBACIÓN DE EXAMEN</label></td>
-                                            <td><a :href="`/document/personal/${documento.documento}`" :download='documento.documento'>{{documento.documento}}</a></td>
-                                            <!-- <td>
-                                                <button class="btn btn-success btn-sm float-center" type="submit" @click="Descarga(documento.documento)">
-                                                    <i class="fas fa-download"></i>&nbsp; DESCARGAR
-                                                </button>
-                                            </td> -->
+                                            <td><a :href="documento.documento" target="_blank">{{documento.documento}}</a></td>
                                         </tr>                                        
                                     </tbody>
                                 </table>

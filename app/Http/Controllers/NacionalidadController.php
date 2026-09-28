@@ -11,13 +11,54 @@ class NacionalidadController extends Controller
 {
     public function CrearNacionalidad(Request $request) //BASE
     {
-        $nacionalidad = Nacionalidad::create([
-            'pais' => mb_strtoupper($request->pais),
-            'nacionalidad' => mb_strtoupper($request->nacionalidad),
-            'abreviatura' => mb_strtoupper($request->abreviatura),
-            'estado' => '1',
-            'sysuser' => Auth::user()->id
-        ]);
+        try {
+            $request->validate([
+                'pais'          => 'required',
+                'nacionalidad'  => 'required',
+                'abreviatura'   => 'required',
+            ]);
+
+            // VERIFICAR SI EL PAIS EXISTE
+
+            $existePais = DB::table('nacionalidads')
+                ->where('pais', $request->pais)
+                ->exists();
+
+            if ($existePais) {
+                return response()->json([
+                    'success' => false,
+                    'mensaje' => 'El pais ya se encuentra registrado.'
+                ], 200);
+            }
+
+            DB::beginTransaction();
+
+            Nacionalidad::create([
+                'pais' => mb_strtoupper($request->pais),
+                'nacionalidad' => mb_strtoupper($request->nacionalidad),
+                'abreviatura' => mb_strtoupper($request->abreviatura),
+                'estado' => '1',
+                'sysuser' => Auth::user()->id
+            ]);
+
+            // CONFIRMAR
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'mensaje' => 'Pais registrado correctamente',
+                // 'evento' => $evento,
+                // 'situacion_evento' => $situacion_evento
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'mensaje' => 'Ocurrió un error al registrar el pais',
+                'error'   => $e->getMessage()
+            ], 500);
+        }  
     }
 
     public function EditarNacionalidad(Request $request) //BASE
